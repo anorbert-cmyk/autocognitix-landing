@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Landing Pages -->
+  <url>
+    <loc>https://autocognitix.hu/hu/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Blog Index Pages -->
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Hungarian Blog Articles -->
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/ai-diagnosztika-hogyan-mukodik.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/akkumulator-5-figyelmezteto-jel.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/autodiagnosztika-otthon-kezdoknek.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/blog/p0420-hibakod-utmutato.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- English Blog Articles -->
+  <url>
+    <loc>https://autocognitix.hu/en/blog/5-signs-car-battery-dying.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/car-diagnostics-at-home-beginners-guide.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/dtc-trouble-code-lookup-guide.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/how-ai-car-diagnostics-works.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/p0171-dtc-code-causes-symptoms-cost.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/blog/p0420-dtc-code-complete-guide.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Hungarian Legal Pages -->
+  <url>
+    <loc>https://autocognitix.hu/hu/legal/adatvedelmi-szabalyzat.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/legal/ai-felelossegi-nyilatkozat.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/legal/cookie-szabalyzat.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/legal/felhasznalasi-feltetelek.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- English Legal Pages -->
+  <url>
+    <loc>https://autocognitix.hu/en/legal/ai-disclaimer.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/legal/cookie-policy.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/legal/privacy-policy.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/legal/terms-of-service.html</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+</urlset>
