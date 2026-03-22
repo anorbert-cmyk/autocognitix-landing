@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mesterséges intelligencia alapú autódiagnosztika. OBD2 hibakódok elemzése, tünet-alapú diagnózis, alkatrészárak, javítási útmutatók. Ingyenesen elérhető.">
+    <meta name="keywords" content="AI autódiagnosztika, gépjármű diagnosztika, hibakód elemzés, autó AI, intelligens diagnosztika, OBD hibakód">
+    <meta property="og:title" content="AutoCognitix | AI Gépjármű Diagnosztika — Szkenner Nélkül, Azonnal">
+    <meta property="og:description" content="Mesterséges intelligencia alapú autódiagnosztika. Szkenner nélkül, azonnali eredmény.">
+    <meta property="og:image" content="/og-image.png">
+    <meta property="og:url" content="https://autocognitix.hu">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AutoCognitix | AI Gépjármű Diagnosztika">
+    <meta name="twitter:description" content="Mesterséges intelligencia alapú autódiagnosztika. Szkenner nélkül, azonnali eredmény.">
+    <link rel="canonical" href="https://autocognitix.hu">
+    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu">
+    <title>AutoCognitix | AI Gépjármű Diagnosztika — Szkenner Nélkül, Azonnal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #a3a3a3;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(26,26,26,.05) 25%, rgba(26,26,26,.05) 26%, transparent 27%, transparent 74%, rgba(26,26,26,.05) 75%, rgba(26,26,26,.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(26,26,26,.05) 25%, rgba(26,26,26,.05) 26%, transparent 27%, transparent 74%, rgba(26,26,26,.05) 75%, rgba(26,26,26,.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Mouse follower gradient */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 212, 255, 0.08), transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Animated gradient border property */
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes gradient-rotate {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 1.5rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 101;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .cta-nav {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #00d4ff;
+            background: transparent;
+            color: #00d4ff;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            z-index: -1;
+            transition: left 0.3s ease;
+        }
+
+        .cta-nav:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            color: #000;
+        }
+
+        .cta-nav:hover::before {
+            left: 0;
+        }
+
+        /* Container & common */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1, h2 {
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(48px, 10vw, 76px);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: clamp(32px, 8vw, 56px);
+            font-weight: 700;
+        }
+
+        h3 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        a {
+            color: #00d4ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #00ff88;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(0, 212, 255, 0.2), transparent),
+                radial-gradient(2px 2px at 60px 70px, rgba(0, 255, 136, 0.15), transparent),
+                radial-gradient(1px 1px at 50px 50px, rgba(0, 212, 255, 0.15), transparent);
+            background-size: 200px 200px;
+            animation: dot-field 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes dot-field {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            border: 2px solid #00d4ff;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 2rem;
+            color: #00d4ff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #a3a3a3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #a3a3a3;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .email-cta {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .email-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.875rem 1.5rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 2px solid #00d4ff;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .email-input:focus {
+            outline: none;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            background: rgba(17, 17, 17, 1);
+        }
+
+        .email-input::placeholder {
+            color: #666;
+        }
+
+        .cta-button {
+            padding: 0.875rem 2.5rem;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            border: 2px solid transparent;
+            color: #000;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .cta-button:hover {
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 20px rgba(0, 255, 136, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hero-trust {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            color: #888;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-viz {
+            margin-top: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-viz::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+        }
+
+        .gauge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gauge {
+            padding: 1.5rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 0.75rem;
+            text-align: center;
+            animation: gauge-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes gauge-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+        }
+
+        .gauge-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .gauge-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #00d4ff;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Metrics Section */
+        .metrics {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.02), transparent);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .metric-card {
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            animation: number-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes number-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .metric-label {
+            color: #a3a3a3;
+            font-size: 0.95rem;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(255, 68, 68, 0.02));
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(255, 68, 68, 0.2);
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .problem-icon {
+            font-size: 2.5rem;
+            color: #ff4444;
+        }
+
+        .problem-title {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .problem-desc {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .stat-highlight {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 2px solid #ff4444;
+            margin: 2rem 0;
+            color: #ffffff;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(0, 255, 136, 0.02), transparent);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #00ff88;
+            line-height: 1.8;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .step::before {
+            content: '> ';
+            color: #888;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+        }
+
+        .step-number {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 0.25rem;
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #00d4ff, #00ff88) 1;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            animation: feature-glow 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes feature-glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+                border-color: rgba(0, 212, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
+                border-color: rgba(0, 255, 136, 0.3);
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* Mobile App Section */
+        .mobile-app {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.02));
+            position: relative;
+        }
+
+        .mobile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .mobile-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mobile-feature {
+            padding: 1.5rem;
+            background: rgba(17, 17, 17, 0.6);
+            border-left: 2px solid #00d4ff;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-feature:hover {
+            border-left-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .phone-frame {
+            aspect-ratio: 9 / 20;
+            max-width: 300px;
+            margin: 0 auto;
+            border: 12px solid #1a1a1a;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.2);
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .phone-content {
+            width: 100%;
+            height: 100%;
+            padding: 2rem 1rem;
+            text-align: center;
+            color: #00d4ff;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            padding: 2.5rem;
+            background: rgba(17, 17, 17, 0.8);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid transparent;
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)) padding-box,
+                        linear-gradient(135deg, #00d4ff, #00ff88) border-box;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #000;
+            font-weight: 700;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .pricing-tier {
+            font-size: 1.25rem;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-feature {
+            display: flex;
+            gap: 0.75rem;
+            color: #a3a3a3;
+            font-size: 0.95rem;
+        }
+
+        .check {
+            color: #00ff88;
+            font-weight: 700;
+        }
+
+        /* VS Competitors */
+        .vs {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(0, 255, 136, 0.02), transparent);
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            margin-top: 3rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(17, 17, 17, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        thead {
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        th, td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        th {
+            color: #00d4ff;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            color: #a3a3a3;
+        }
+
+        tbody tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .check-mark {
+            color: #00ff88;
+            font-weight: 700;
+        }
+
+        .x-mark {
+            color: #ff4444;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 2rem;
+        }
+
+        .faq-list {
+            max-width: 700px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: rgba(17, 17, 17, 0.8);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .faq-question:hover {
+            background: rgba(26, 26, 26, 0.8);
+            border-left: 2px solid #00d4ff;
+        }
+
+        .faq-toggle {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(26, 26, 26, 0.5);
+            padding: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .faq-answer {
+            color: #a3a3a3;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .final-cta-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-subtitle {
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            text-align: center;
+            color: #666;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-section h4 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .footer-section a {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #888;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00d4ff;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .email-cta {
+                flex-direction: column;
+            }
+
+            .email-input {
+                width: 100%;
+            }
+
+            .hero-trust {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .gauge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation for counters */
+        @keyframes count-up {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .metric-number {
+            animation: count-up 1s ease-out, number-pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AutoCognitix</div>
+            <button class="cta-nav">Feliratkozom</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">⚡ KORAI HOZZÁFÉRÉS</div>
+                
+                <h1>Diagnosztika.<br>Újragondolva.</h1>
+                
+                <p class="hero-subtitle">
+                    Mesterséges intelligencia, amely másodpercek alatt megérti az autód hibakódjait. 
+                    Nem kell szkenner. Nem kell szervíz. Csak te és az AI.
+                </p>
+
+                <div class="email-cta">
+                    <input type="email" class="email-input" placeholder="az@email.com" required>
+                    <button class="cta-button">Csatlakozom</button>
+                </div>
+
+                <div class="hero-trust">
+                    <span>🔒 Ingyenes</span>
+                    <span>•</span>
+                    <span>Szkenner nem kell</span>
+                    <span>•</span>
+                    <span>Azonnali eredmény</span>
+                </div>
+
+                <div class="dashboard-viz">
+                    <div class="gauge-grid">
+                        <div class="gauge">
+                            <div class="gauge-label">Jármű Típusok</div>
+                            <div class="gauge-value">8,145</div>
+                        </div>
+                        <div class="gauge">
+                            <div class="gauge-label">Tudásgráf Csomópontok</div>
+                            <div class="gauge-value">26.8K</div>
+                        </div>
+                        <div class="gauge">
+                            <div class="gauge-label">Vektor Adatbázis</div>
+                            <div class="gauge-value">35K+</div>
+                        </div>
+                        <div class="gauge">
+                            <div class="gauge-label">DTC Hibakódok</div>
+                            <div class="gauge-value">63+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Section -->
+    <section class="metrics">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number" data-count="8145">0</div>
+                    <div class="metric-label">Jármű típus adatbázisban</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number" data-count="26816">0</div>
+                    <div class="metric-label">DTC-Tünet kapcsolat</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number" data-count="35000">0</div>
+                    <div class="metric-label">AI embeddings indexelve</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number" data-count="94">0</div>
+                    <div class="metric-label">% diagnosztikai pontosság</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mennyit költesz évente felesleges szervízre?</h2>
+            </div>
+
+            <div class="stat-highlight">
+                ⚠️ Átlag 45,000 Ft/év felesleges diagnosztikai díj — csak a szkennerezésre
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">💸</div>
+                    <div class="problem-title">Szkenner költség</div>
+                    <div class="problem-desc">8,000–15,000 Ft egy diagnosztikai felmérésre. Minden szervízben újra.</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">⏱️</div>
+                    <div class="problem-title">Vesztegetett idő</div>
+                    <div class="problem-desc">Szervízhez menni, várni a diagnosztikára, majd megint menni otthonig.</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🔐</div>
+                    <div class="problem-title">Bizalmi aszimmetria</div>
+                    <div class="problem-desc">Nem tudod, hogy miért cseréli azt az alkatrészt — csak elhiszed.</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📊</div>
+                    <div class="problem-title">Szervíz monopol</div>
+                    <div class="problem-desc">Szervízek versenyeznek, de diagnosztikai adatok akkor is titkosak.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>3 lépés. 3 perc. Teljes diagnózis.</h2>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">Lépés 1: Beviteled</div>
+                    autocognitix --analyze "P0420 hibakód"
+                    <br><br>Vagy: "Motor rezeg induláskor"
+                </div>
+                <div class="step">
+                    <div class="step-number">Lépés 2: AI Analízis</div>
+                    ✓ Járműadatbázis: 8,145 típus
+                    <br>✓ Tudásgráf: 26,816 csomópont
+                    <br>✓ RAG keresés: 35,000+ vektor
+                </div>
+                <div class="step">
+                    <div class="step-number">Lépés 3: Diagnózis</div>
+                    Főproblém, összes valószínű oka,
+                    <br>szükséges szerszámok, alkatrész árak,
+                    <br>DIY vagy szervíz?
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Képességek, amelyek az AI-t autódiagnosztika standard-nak teszik</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3 class="feature-title">Szkenner nélkül</h3>
+                    <p class="feature-desc">Csak a hibakód vagy a tünetek. Nincs hardver szükséges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Tudásgráf AI</h3>
+                    <p class="feature-desc">26,800+ kapcsolat a DTC-k, tünetek és alkatrészek között.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Forintos árak</h3>
+                    <p class="feature-desc">Valódi alkatrész árak, munkaórák, szerelői díjak.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3 class="feature-title">Biztonsági visszahívások</h3>
+                    <p class="feature-desc">NHTSA integrálva — ismerjük az összes aktív visszahívást.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">VIN dekódolás</h3>
+                    <p class="feature-desc">Jármű azonosítás szkenner nélkül — csak a VIN kód.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h3 class="feature-title">Javítási útmutató</h3>
+                    <p class="feature-desc">Lépésről lépésre utasítások, szakértői tippek, DIY nehézségi szint.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile App Section -->
+    <section class="mobile-app">
+        <div class="container">
+            <div class="section-title">
+                <h2>Készül: AI Szerelőmester — mobilon, valós időben</h2>
+            </div>
+
+            <div class="mobile-content">
+                <div class="mobile-features">
+                    <div class="mobile-feature">
+                        <h3 class="feature-title">📸 Fotó felismerés</h3>
+                        <p class="feature-desc">Készítsd el a hibaüzenetet, az AI megsemmisíti azt.</p>
+                    </div>
+                    <div class="mobile-feature">
+                        <h3 class="feature-title">🎤 Hangparancsok</h3>
+                        <p class="feature-desc">"Motortünetek" — az AI természetes nyelven beszél.</p>
+                    </div>
+                    <div class="mobile-feature">
+                        <h3 class="feature-title">🔔 Valós idejű értesítés</h3>
+                        <p class="feature-desc">Visszahívások, biztonsági frissítések, szervíz emlékeztetők.</p>
+                    </div>
+                    <div class="mobile-feature">
+                        <h3 class="feature-title">🌐 Offline mód</h3>
+                        <p class="feature-desc">Még akkor is működik, amikor nincs internet — majd szinkronizálódik.</p>
+                    </div>
+                </div>
+
+                <div class="phone-frame">
+                    <div class="phone-content">
+                        <div style="font-size: 2rem;">📱</div>
+                        <div style="color: #a3a3a3; font-size: 0.9rem;">AI Szerelőmester</div>
+                        <div style="color: #666;">Hamarosan elérhető</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Árak, amelyek értelmesek</h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-tier">Alapszintű</div>
+                    <div class="pricing-price">Ingyenes</div>
+                    <div class="pricing-desc">Naponta 3 diagnózis</div>
+                    <div class="pricing-features">
+                        <div class="pricing-feature"><span class="check">✓</span> DTC/tünet keresés</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Alapvető diagnózis</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Alkatrész árak</div>
+                        <div class="pricing-feature"><span class="x-mark">✗</span> Korlátlan diagnózis</div>
+                    </div>
+                    <button class="cta-button">Ingyenes próba</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">AJÁNLOTT</div>
+                    <div class="pricing-tier">Szakemberek</div>
+                    <div class="pricing-price">2,490 Ft</div>
+                    <div class="pricing-desc">/hó — 4,990 Ft megtakarítás</div>
+                    <div class="pricing-features">
+                        <div class="pricing-feature"><span class="check">✓</span> Korlátlan diagnózis</div>
+                        <div class="pricing-feature"><span class="check">✓</span> API hozzáférés</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Diagnosztikai előzmények</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Prioritás támogatás</div>
+                    </div>
+                    <button class="cta-button">Feliratkozom</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-tier">Szervizelés</div>
+                    <div class="pricing-price">9,990 Ft</div>
+                    <div class="pricing-desc">/hó — szervízeknek</div>
+                    <div class="pricing-features">
+                        <div class="pricing-feature"><span class="check">✓</span> Teljes API</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Csapatlicenc (5)</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Speciális integrálás</div>
+                        <div class="pricing-feature"><span class="check">✓</span> Dedikált támogatás</div>
+                    </div>
+                    <button class="cta-button">Megbeszélés</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VS Competitors -->
+    <section class="vs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hogyan versenyezünk?</h2>
+            </div>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Funkció</th>
+                            <th>AutoCognitix</th>
+                            <th>Szkenner (hagyományos)</th>
+                            <th>Online diagnosztika</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Szkenner nem kell</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="x-mark">✗</td>
+                        </tr>
+                        <tr>
+                            <td>AI diagnózis</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="check-mark">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Alkatrészárak (Ft)</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="x-mark">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Magyar nyelvű</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="x-mark">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Valós idejű visszahívások</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="x-mark">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Korlátlan diagnózis</td>
+                            <td class="check-mark">✓</td>
+                            <td class="check-mark">✓</td>
+                            <td class="check-mark">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Szervíz nélkül</td>
+                            <td class="check-mark">✓</td>
+                            <td class="x-mark">✗</td>
+                            <td class="check-mark">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Gyakran ismételt kérdések</h2>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Valóban szükségtelen a szkenner?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Igen. A szkenner csak olyan kódot olvas le, amely az OBD2 portról elérhető. Mi ezt a kódot + a saját tüneteidet használjuk. Az AI összekapcsol ezt az információt a gépjárműadatbázisunkkal, hogy megtalálja az igazi oka.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Mennyire pontos az AI?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A diagnosztikai pontosságunk 94%. Ez az OBD2 szint (hibakódok, tünetek) elemzésére korlátozódik. A szervízeknek még mindig szükséges a fizikai ellenőrzés a végleges megerősítéshez, de tudjuk, mit keresenek.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Mi az az "korai hozzáférés"?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A terméket kiadás előtt finomítjuk. A korai felhasználók ingyenes vagy kedvezményes hozzáférést kapnak cserébe a visszajelzésért. Kattints a "Feliratkozom" gombra.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Van API a szervízeknek?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Igen. A szervízkezelő szint (9,990 Ft/hó) teljes REST API hozzáférést tartalmaz, amely szervíz munkafolyamatokba integrálható.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Az adataim biztonságban vannak?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Teljes mértékben. A diagnosztikai adatokat titkosítjuk (AES-256), a szerveren SSL/TLS-t használunk, és soha nem osztjuk meg az adataidat szervízekkel anélkül, hogy te ezt kifejezetten engedélyezted volna.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Működik offline?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A webváltozat online szükségletet igényel. A mobilalkalmazás (hamarosan) teljes offline támogatást tartalmaz — helyi AI modell, szinkronizálás amikor elérhető az internet.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2>A jövő autódiagnosztikája — itt és most</h2>
+                <p class="cta-subtitle">
+                    Csatlakozz az 1,000+ korai felhasználóhoz, akik már 45,000+ Ft/év megtakarítást érnek el.
+                </p>
+                
+                <div class="email-cta">
+                    <input type="email" class="email-input" placeholder="az@email.com" required>
+                    <button class="cta-button">Csatlakozom</button>
+                </div>
+
+                <p style="color: #666; font-size: 0.9rem; margin-top: 2rem;">
+                    🔒 Ingyenes próba, nincs hitelkártya szükséges
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Termék</h4>
+                    <a href="#features">Képességek</a>
+                    <a href="#pricing">Árjegyzék</a>
+                    <a href="#faq">GYIK</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Vállalat</h4>
+                    <a href="#">Blog</a>
+                    <a href="#">Sobre</a>
+                    <a href="#">Karrier</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Jogi</h4>
+                    <a href="#">Adatvédelem</a>
+                    <a href="#">Feltételek</a>
+                    <a href="#">Cookie</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Kapcsolat</h4>
+                    <a href="mailto:hello@autocognitix.hu">hello@autocognitix.hu</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 AutoCognitix. Összes jog fenntartva.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AutoCognitix",
+        "description": "Mesterséges intelligencia alapú autódiagnosztika platform. OBD2 hibakódok elemzése, tünet-alapú diagnózis, alkatrészárak, javítási útmutatók.",
+        "applicationCategory": "Automotive",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "145"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HUF"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AutoCognitix",
+        "url": "https://autocognitix.hu",
+        "description": "AI alapú gépjármű-diagnosztikai platform magyar nyelvtámogatással",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "hello@autocognitix.hu"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Valóban szükségtelen a szkenner?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Igen. A szkenner csak olyan kódot olvas le, amely az OBD2 portról elérhető. Mi ezt a kódot + a saját tüneteidet használjuk."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mennyire pontos az AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A diagnosztikai pontosságunk 94%."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Mouse follower gradient
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.documentElement.style.setProperty('--mouse-x', x + '%');
+            document.documentElement.style.setProperty('--mouse-y', y + '%');
+        });
+
+        // Counter animation for metrics
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.textContent = target.toLocaleString('hu-HU');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString('hu-HU');
+                }
+            }, 16);
+        }
+
+        // Intersection Observer for metrics
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
+                    entry.target.setAttribute('data-animated', 'true');
+                    animateCounter(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Email subscription
+        document.querySelectorAll('.email-cta').forEach(form => {
+            const button = form.querySelector('.cta-button');
+            const input = form.querySelector('.email-input');
+
+            if (button) {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const email = input.value;
+                    if (email && email.includes('@')) {
+                        alert(`Köszönjük a feliratkozásért! Hamarosan csatlakozási e-mailt küldünk ${email} -ra.`);
+                        input.value = '';
+                    } else {
+                        alert('Kérjük, adj meg egy érvényes e-mail címet!');
+                    }
+                });
+
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        button.click();
+                    }
+                });
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

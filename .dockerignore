@@ -1,0 +1,14 @@
+# Don't include non-site files in Docker image
+design/
+*.md
+communication/
+content/
+market-research/
+seo/
+seo-strategy/
+legal/*.md
+shared/
+assets/
+*.docx
+.git/
+.gitignore

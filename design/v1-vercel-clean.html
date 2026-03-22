@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Autódiagnosztika mesterséges intelligenciával. OBD2 hibakódok, tünetek elemzése, alkatrészárak és javítási útmutatók. Szkenner nélkül, ingyen kipróbálható.">
+  <meta name="keywords" content="autódiagnosztika, OBD2 hibakódok, motor hibakód, autó diagnosztika szoftver, check engine lámpa, AI diagnosztika, gépjármű diagnosztika">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AutoCognitix - AI Autódiagnosztika Online | Szkenner Nélkül, Ingyen">
+  <meta property="og:description" content="Autódiagnosztika mesterséges intelligenciával. OBD2 hibakódok, tünetek elemzése, alkatrészárak és javítási útmutatók. Szkenner nélkül, ingyen kipróbálható.">
+  <meta property="og:url" content="https://autocognitix.com">
+  <meta property="og:image" content="https://autocognitix.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AutoCognitix - AI Autódiagnosztika">
+  <meta name="twitter:description" content="Autódiagnosztika szkenner nélkül, AI-val">
+  <link rel="canonical" href="https://autocognitix.com">
+  <link rel="alternate" hreflang="hu" href="https://autocognitix.com/hu">
+  <link rel="alternate" hreflang="en" href="https://autocognitix.com/en">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <title>AutoCognitix - AI Autódiagnosztika Online | Szkenner Nélkül, Ingyen</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* Utility Classes */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: #0a1628;
+    }
+
+    h2 {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 32px;
+      color: #0a1628;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+
+    p {
+      color: #4a4a4a;
+      margin-bottom: 16px;
+    }
+
+    .text-sm {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .text-muted {
+      color: #9ca3af;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #00d4ff;
+      color: #0a1628;
+    }
+
+    .btn-primary:hover {
+      background: #00b8d4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #0a1628;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      background: #f5f5f7;
+      border-color: #d1d5db;
+    }
+
+    .btn-large {
+      padding: 16px 40px;
+      font-size: 16px;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: transparent;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom-color: #e5e7eb;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0a1628;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #00d4ff, #0a1628);
+      border-radius: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #4a4a4a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #00d4ff;
+    }
+
+    nav.scrolled .nav-links a {
+      color: #1a1a1a;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 80px 24px;
+      }
+    }
+
+    .hero-content h1 {
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #f5f5f7;
+      border: 1px solid #e5e7eb;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #0a1628;
+      margin-bottom: 24px;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #4a4a4a;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 500px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-line {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .trust-line span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Product Mockup (CSS only) */
+    .mockup {
+      position: relative;
+      background: linear-gradient(135deg, #fafafa, #f5f5f7);
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 24px;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      animation: fadeInRight 0.8s ease-out;
+    }
+
+    .mockup-card {
+      width: 100%;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .mockup-header {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .mockup-text {
+      height: 6px;
+      background: #f5f5f7;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    .mockup-accent {
+      width: 60%;
+      height: 32px;
+      background: #00d4ff;
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+
+    /* Social Proof Bar */
+    .social-proof {
+      background: #fafafa;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .social-proof-content {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      font-size: 14px;
+      color: #4a4a4a;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .social-proof-content {
+        gap: 16px;
+        flex-direction: column;
+      }
+    }
+
+    /* Section Styling */
+    section {
+      padding: 80px 24px;
+    }
+
+    section.alt {
+      background: #fafafa;
+    }
+
+    /* Problem Cards */
+    .problem-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .problem-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+    }
+
+    .problem-card h3 {
+      color: #d32f2f;
+      margin-bottom: 12px;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #00d4ff, #0a1628);
+      border-radius: 8px;
+      margin: 0 auto 16px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* Pricing Cards */
+    .pricing-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: #00d4ff;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(10, 22, 40, 0.02));
+    }
+
+    .pricing-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+    }
+
+    .price {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0a1628;
+      margin: 16px 0;
+    }
+
+    .price-unit {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .price-features {
+      list-style: none;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .price-features li {
+      padding: 12px 0;
+      border-top: 1px solid #e5e7eb;
+      font-size: 14px;
+      color: #4a4a4a;
+    }
+
+    /* FAQ Accordion */
+    .faq-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 24px 0;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      color: #0a1628;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+      color: #00d4ff;
+    }
+
+    .faq-toggle {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 16px;
+      color: #4a4a4a;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 32px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .comparison-table thead {
+      background: #fafafa;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .comparison-table th {
+      padding: 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+      color: #0a1628;
+    }
+
+    .comparison-table td {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+      color: #4a4a4a;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .checkmark {
+      color: #00d4ff;
+      font-weight: 700;
+    }
+
+    .cross {
+      color: #d32f2f;
+    }
+
+    /* Mobile App Teaser */
+    .teaser {
+      background: linear-gradient(135deg, #0a1628, #1a1a1a);
+      color: white;
+      border-radius: 12px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .teaser h2 {
+      color: white;
+    }
+
+    .teaser p {
+      color: #d1d5db;
+    }
+
+    /* Footer */
+    footer {
+      background: #fafafa;
+      border-top: 1px solid #e5e7eb;
+      padding: 60px 24px 32px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0a1628;
+      margin-bottom: 16px;
+    }
+
+    .footer-column a {
+      display: block;
+      font-size: 14px;
+      color: #6b7280;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.2s;
+    }
+
+    .footer-column a:hover {
+      color: #00d4ff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 32px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* Email Form */
+    .email-form {
+      display: flex;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .email-form input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .email-form input:focus {
+      outline: none;
+      border-color: #00d4ff;
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .email-form input::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      section {
+        padding: 60px 24px;
+      }
+
+      .teaser {
+        padding: 32px 24px;
+      }
+
+      .comparison-table {
+        font-size: 12px;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <div class="logo-icon"></div>
+          AutoCognitix
+        </div>
+        <ul class="nav-links">
+          <li><a href="#features">Funkciók</a></li>
+          <li><a href="#howitworks">Hogyan működik</a></li>
+          <li><a href="#pricing">Árak</a></li>
+          <li><a href="#faq">GYIK</a></li>
+          <li><button class="btn btn-primary" onclick="scrollToWaitlist()">Feliratkozom</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="badge">🚀 Hamarosan elérhető — Csatlakozz az első 1000 felhasználó közé</div>
+      <h1>Autódiagnosztika mesterséges intelligenciával — szkenner nélkül</h1>
+      <p class="subtitle">Add meg a hibakódot vagy írd le a tüneteket, és kapj részletes AI-diagnosztikát valós alkatrészárakkal. Nem kell OBD2 szkenner, nem kell szervíz.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-large" onclick="scrollToWaitlist()">Feliratkozom a várólistára</button>
+        <a href="#howitworks" class="btn btn-secondary btn-large">Hogyan működik? ↓</a>
+      </div>
+      <div class="trust-line">
+        <span>✓ Ingyenesen kipróbálható</span>
+        <span>✓ Szkenner nem szükséges</span>
+        <span>✓ Magyar nyelven</span>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-card">
+        <div class="mockup-header"></div>
+        <div class="mockup-text"></div>
+        <div class="mockup-text"></div>
+        <div class="mockup-accent"></div>
+      </div>
+      <div class="mockup-card">
+        <div class="mockup-header"></div>
+        <div class="mockup-text"></div>
+        <div class="mockup-text"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof Bar -->
+  <div class="social-proof">
+    <div class="social-proof-content">
+      <span>✓ 8,145+ jármű adatbázis</span>
+      <span>✓ 26,816 tudásgráf csomópont</span>
+      <span>✓ 35,000+ tanult vektor</span>
+      <span>✓ 63+ OBD2 hibakód</span>
+    </div>
+  </div>
+
+  <!-- Problem Section -->
+  <section class="alt" id="problems">
+    <div class="container">
+      <h2>Az autódiagnosztika 2026-ban még mindig átláthatatlan</h2>
+      <div class="grid-2">
+        <div class="problem-card fade-in">
+          <h3>💰 Drága szervízdíjak</h3>
+          <p>8,000–15,000 Ft csak a diagnosztikáért, még mielőtt tudnád, mi a baj.</p>
+        </div>
+        <div class="problem-card fade-in">
+          <h3>🔧 Átláthatatlan hibakódok</h3>
+          <p>P0420 semmit nem mond. Mit kell csinálni? Milyen alkatrészre van szükség?</p>
+        </div>
+        <div class="problem-card fade-in">
+          <h3>💵 Nincs előzetes árajánlat</h3>
+          <p>Csak a számla végén derül ki, hogy 50,000 Ft-ba kerül az autó javítása.</p>
+        </div>
+        <div class="problem-card fade-in">
+          <h3>🎓 Nem elérhető szakértelem</h3>
+          <p>A jó diagnosztikus nem a szomszédban lakik. De mi kell az autódnak?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="howitworks">
+    <div class="container">
+      <h2>3 perc alatt teljes diagnózis — szakértelem nélkül</h2>
+      <div class="grid-3">
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Írd be a hibakódot vagy a tünetet</h3>
+          <p>Nincs szükség OBD2 adapterre vagy csatlakozó nélküli autó esetén. Csak írj le mindent, amit látsz vagy érzékelsz.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Az AI elemzi a tudásgráfot és vektorokat</h3>
+          <p>26,816 csomópontos gráf, 35,000+ tanult vektor, RAG technológia — milliszekundum alatt.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Kapj részletes jelentést valós árakkal</h3>
+          <p>Lépésről lépésre útmutató, szükséges szerszámok, alkatrészárak forintban, NHTSA visszahívások.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="alt" id="features">
+    <div class="container">
+      <h2>Miért az AutoCognitix?</h2>
+      <div class="grid-3">
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Szkenner nélkül működik</h3>
+          <p>Nincs szükség OBD2 adapterre. Add be a hibakódot, és kész. Nem szükséges drága hardver.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>AI diagnózis tudásgráffal</h3>
+          <p>26,816 csomópont, valós járműadatok, hibakódok, alkatrészek és kapcsolatok egy gráfban.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Valós alkatrészárak</h3>
+          <p>Aktuális magyar piaci árak forintban. Tudd meg, mennyibe kerül az alkatrész, mielőtt a szervízben lenne.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Visszahívások és panaszok</h3>
+          <p>NHTSA adatbázis integráció. Tudd meg, ha az autódnak ismert problémái vannak.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>VIN dekódolás</h3>
+          <p>Egy kattintás, és teljes járműazonosítás. Lóvér, típus, év, motor — egy pillanat alatt.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon"></div>
+          <h3>Javítási útmutatók</h3>
+          <p>Lépésről lépésre útmutató, szükséges szerszámok listája, idő becslés — ha magad szeretnéd csinálni.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile App Teaser -->
+  <section id="mobile">
+    <div class="container">
+      <div class="teaser">
+        <h2>Készül: AI Szerelőasszisztens mobilon</h2>
+        <p style="font-size: 18px; margin-top: 16px; margin-bottom: 32px; color: #d1d5db; max-width: 600px; margin-left: auto; margin-right: auto;">
+          Interaktív AI ágensünk valós időben segít a szerelésben. Telefon kamerájával vizuálisan végigkísér a javítási lépéseken, miközben hangvezérelt utasítások irányítanak — a kezed a motorban marad.
+        </p>
+        <button class="btn btn-primary btn-large" onclick="scrollToWaitlist()">Értesíts a megjelenéskor</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="alt" id="pricing">
+    <div class="container">
+      <h2>Egyszerű, átlátható árazás</h2>
+      <div class="grid-3">
+        <div class="pricing-card fade-in">
+          <h3>Ingyenes</h3>
+          <p class="text-sm" style="color: #6b7280;">Próbáld ki, kötelezettség nélkül</p>
+          <div class="price">0 <span class="price-unit">Ft</span></div>
+          <ul class="price-features">
+            <li>✓ 1 diagnózis/hó</li>
+            <li>✓ Alap jelentés</li>
+            <li>✓ DTC definíciók</li>
+            <li>✗ Alkatrészárak</li>
+            <li>✗ PDF export</li>
+          </ul>
+          <button class="btn btn-secondary btn-large" onclick="scrollToWaitlist()">Feliratkozok</button>
+        </div>
+        <div class="pricing-card featured fade-in">
+          <h3>Pro</h3>
+          <p class="text-sm" style="color: #00d4ff;">Legjobb az egyéneknek</p>
+          <div class="price">1,990 <span class="price-unit">Ft/hó</span></div>
+          <ul class="price-features">
+            <li>✓ Korlátlan diagnózis</li>
+            <li>✓ Teljes árelemzés</li>
+            <li>✓ PDF export</li>
+            <li>✓ Prioritás támogatás</li>
+            <li>✓ Szerelési útmutatók</li>
+          </ul>
+          <button class="btn btn-primary btn-large" onclick="scrollToWaitlist()">Feliratkozom</button>
+        </div>
+        <div class="pricing-card fade-in">
+          <h3>Szervíz</h3>
+          <p class="text-sm" style="color: #6b7280;">Automata műhelyek számára</p>
+          <div class="price">9,990 <span class="price-unit">Ft/hó</span></div>
+          <ul class="price-features">
+            <li>✓ Több felhasználó</li>
+            <li>✓ Tömeges elemzés</li>
+            <li>✓ API hozzáférés</li>
+            <li>✓ Dedikált support</li>
+            <li>✓ Integrációs segítség</li>
+          </ul>
+          <button class="btn btn-secondary btn-large" onclick="scrollToWaitlist()">Kapcsolat felvétel</button>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 48px; color: #4a4a4a;">
+        <strong>Speciális ajánlat:</strong> A várólistán regisztrálók <strong>50% kedvezményt</strong> kapnak az első 6 hónapra.
+      </p>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section id="comparison">
+    <div class="container">
+      <h2>AutoCognitix vs. Konkurencia</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Funkció</th>
+            <th><strong>AutoCognitix</strong></th>
+            <th>FIXD</th>
+            <th>Carly</th>
+            <th>OBDeleven</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Szkenner szükséges?</strong></td>
+            <td><span class="checkmark">✗ Nem</span></td>
+            <td>Igen</td>
+            <td>Igen</td>
+            <td>Igen</td>
+          </tr>
+          <tr>
+            <td><strong>AI diagnózis</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Nem</td>
+            <td>Nem</td>
+            <td>Nem</td>
+          </tr>
+          <tr>
+            <td><strong>Alkatrészárak (HU)</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Nem</td>
+            <td>Nem</td>
+            <td>Nem</td>
+          </tr>
+          <tr>
+            <td><strong>Magyar nyelv</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Nem</td>
+            <td>Nem</td>
+            <td>Nem</td>
+          </tr>
+          <tr>
+            <td><strong>Indulási költség</strong></td>
+            <td><span class="checkmark">0 Ft</span></td>
+            <td>$4,500 (szkenner)</td>
+            <td>$3,900 (szkenner)</td>
+            <td>$4,200 (szkenner)</td>
+          </tr>
+          <tr>
+            <td><strong>NHTSA visszahívások</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Igen</td>
+            <td>Igen</td>
+            <td>Nem</td>
+          </tr>
+          <tr>
+            <td><strong>Javítási útmutatók</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Nem</td>
+            <td>Nem</td>
+            <td>Nem</td>
+          </tr>
+          <tr>
+            <td><strong>VIN dekódolás</strong></td>
+            <td><span class="checkmark">✓ Igen</span></td>
+            <td>Nem</td>
+            <td>Igen</td>
+            <td>Igen</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt" id="faq">
+    <div class="container">
+      <h2>Gyakran Ismételt Kérdések</h2>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Szükségem van OBD2 szkennerre?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Nem. Az AutoCognitix a hibakódok vagy a feltüntetett tünetek alapján működik. Ha van OBD2 kódod (pl. P0420), egyszerűen írja be. Ha nem, csak írja le, hogy mit tapasztal — az AI diagnosztizálja. Nem szükséges drága szkenner.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Mennyire pontos az AI diagnózis?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Az AI diagnosztika a valós járműadatok, hibakódok és alkatrészek 26,816 csomópontos gráfja alapján működik, valamint 35,000+ tanult vektor segítségével. A pontosság a bemeneti adatok minőségén múlik — minél részletesebb a hibakód vagy a tünet leírása, annál jobb az eredmény. Ez nem helyettesíti az alapos fizikai ellenőrzést, de nagyon segít a diagnózisban.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Milyen járművekkel működik?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Az AutoCognitix 8,145+ jármű adatbázissal rendelkezik, amely 1996-2024 közötti járműveket fedez le (amikor az OBD2 obdigitosan kötelezővé vált az Egyesült Államokban). Ez magában foglalja a legtöbb europea járművet. Az adatbázis folyamatosan bővül.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Tényleg ingyenes?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Igen, az ingyenes csomag valóban ingyenes — 1 diagnózis/hó az alap funkciókat is beleértve. Nincs bankkártyára szükség. A Pro csomag hozzáadott funkciókat kínál (korlátlan diagnózis, alkatrészárak, PDF export), de az alapok mindenki számára ingyenesek.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Hogyan működik a tudásgráf?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            A tudásgráf a Neo4j adatbázisban tárolódik, és a hibakódokat, tüneteket, komponenseket, javítási lépéseket és alkatrészeket összeköti. Amikor egy hibakódot megadsz, az AI követi ezeket az összefüggéseket, és ajánlja a lehetséges alkatrészeket és javítási lépéseket. Ez sokkal több, mint egy egyszerű szótár — ez kapcsolatokból álló térkép.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Lesz mobilalkalmazás?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Igen. Jelenleg egy AI Szerelőasszisztensz mobilappon dolgozunk, amely valós idejű útmutatást nyújt a szereléshez. A telefon kamerája segítségével lépésről lépésre végigvezet, és hangutasítások irányítanak. Hamarosan érkezik — jelezd, hogy szeretnél értesülni!
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Biztonságban vannak az adataim?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Igen. Az adataink PostgreSQL-ben tárolódnak (titkosítottan az átmenetben), és soha nem osztjuk meg harmadik felekkel. A diagnosztikai lekérdezések nem tárolódnak az alapértelmezés szerint, és a fiók beállításoktól függnek. Az AI feldolgozás helyben történik — nem küldünk adatot külső LLM-hez az alapértelmezés szerint.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Mikor indul el a szolgáltatás?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            A beta hamarosan indul — várhatóan 2026 Q1 vége / Q2 eleje. A várólistán regisztrálók az első hozzáférési lehetőséget kapják, és 50% kedvezményt az első 6 hónapra. Iratkozz fel, hogy értesüljön!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="final-cta">
+    <div class="container" style="text-align: center;">
+      <h2>Csatlakozz a jövő autódiagnosztikájához</h2>
+      <p style="font-size: 18px; color: #4a4a4a; max-width: 500px; margin: 0 auto 32px;">
+        Iratkozz fel a várólistára és kapj 50% kedvezményt az első 6 hónapra. Nincs kötelezettség, nincs bankkártya szükséges.
+      </p>
+      <div class="email-form">
+        <input type="email" id="email-input" placeholder="a.kovacs@example.com" required>
+        <button class="btn btn-primary btn-large" onclick="submitEmail()">Feliratkozom</button>
+      </div>
+      <p class="text-sm">
+        ✓ Ingyenes próba · ✓ Nincs elköteleződés · ✓ Azonnal értesítünk
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>AutoCognitix</h4>
+        <a href="#hero">Főoldal</a>
+        <a href="#features">Funkciók</a>
+        <a href="#pricing">Árak</a>
+        <a href="#faq">GYIK</a>
+      </div>
+      <div class="footer-column">
+        <h4>Terméks</h4>
+        <a href="#howitworks">Hogyan működik</a>
+        <a href="#mobile">Mobilalkalmazás</a>
+        <a href="#comparison">Összehasonlítás</a>
+        <a href="#">Dokumentáció</a>
+      </div>
+      <div class="footer-column">
+        <h4>Jogi</h4>
+        <a href="#">Adatkezelési szabályzat</a>
+        <a href="#">Szolgáltatási feltételek</a>
+        <a href="#">GYIK</a>
+        <a href="#">Kapcsolat</a>
+      </div>
+      <div class="footer-column">
+        <h4>Közösség</h4>
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+        <a href="#">Twitter</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AutoCognitix. Minden jog fenntartva.</p>
+    </div>
+  </footer>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AutoCognitix",
+      "url": "https://autocognitix.com",
+      "logo": "https://autocognitix.com/logo.png",
+      "description": "AI-alapú autódiagnosztikai platform magyar nyelvtámogatással, szkenner nélkül",
+      "sameAs": [
+        "https://www.linkedin.com/company/autocognitix",
+        "https://github.com/autocognitix"
+      ]
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AutoCognitix",
+      "description": "Autódiagnosztika mesterséges intelligenciával — szkenner nélkül",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "2341",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "HUF"
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Szükségem van OBD2 szkennerre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nem. Az AutoCognitix a hibakódok vagy a feltüntetett tünetek alapján működik."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mennyire pontos az AI diagnózis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Az AI diagnosztika a valós járműadatok, hibakódok és alkatrészek 26,816 csomópontos gráfja alapján működik."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Milyen járművekkel működik?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Az AutoCognitix 8,145+ jármű adatbázissal rendelkezik, amely 1996-2024 közötti járműveket fedez le."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Tényleg ingyenes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Igen, az ingyenes csomag valóban ingyenes — 1 diagnózis/hó az alap funkciókat is beleértve."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <!-- JavaScript -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // FAQ Toggle
+    function toggleFAQ(element) {
+      const faqItem = element.parentElement;
+      faqItem.classList.toggle('active');
+    }
+
+    // Scroll to waitlist
+    function scrollToWaitlist() {
+      document.getElementById('final-cta').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        document.getElementById('email-input').focus();
+      }, 500);
+    }
+
+    // Email submission
+    function submitEmail() {
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim();
+      
+      if (!email || !email.includes('@')) {
+        alert('Kérjük, adjon meg egy érvényes e-mail címet.');
+        return;
+      }
+
+      // Simulate submission
+      const button = event.target;
+      const originalText = button.textContent;
+      button.textContent = '✓ Köszönünk!';
+      button.style.background = '#00d4ff';
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        emailInput.value = '';
+      }, 3000);
+
+      console.log('Email submitted:', email);
+    }
+
+    // Allow Enter key to submit email
+    document.getElementById('email-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitEmail();
+      }
+    });
+  </script>
+
+</body>
+</html>

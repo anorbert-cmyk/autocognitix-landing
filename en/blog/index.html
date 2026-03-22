@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Diagnostics Blog: DTC Codes, Repair Guides & AI Tech | AutoCognitix</title>
+  <meta name="description" content="Expert car diagnostics blog covering DTC codes, repair costs, symptoms & AI-powered troubleshooting. Learn P0420, P0171 & more with step-by-step guides.">
+  <meta name="keywords" content="car diagnostics, DTC codes, OBD2 codes, automotive repair, check engine light, catalytic converter, battery dying, MAF sensor">
+  <meta name="author" content="AutoCognitix Team">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://www.autocognitix.com/en/blog/">
+  <link rel="alternate" hreflang="hu" href="https://www.autocognitix.com/hu/blog/">
+  <meta property="og:title" content="Car Diagnostics Blog: DTC Codes & Repair Guides">
+  <meta property="og:description" content="Expert guides on DTC codes, symptoms, repair costs & AI diagnostics.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.autocognitix.com/en/blog/">
+  <meta property="og:image" content="https://www.autocognitix.com/images/blog-hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Car Diagnostics Blog">
+  <meta name="twitter:description" content="Learn car troubleshooting with expert DTC code guides">
+  <meta name="twitter:image" content="https://www.autocognitix.com/images/blog-hero.jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background-color: #ffffff;
+    }
+    header.main-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    nav.main-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    nav.main-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    nav.main-nav a:hover {
+      opacity: 0.7;
+    }
+    .lang-switch {
+      background-color: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .lang-switch:hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .blog-hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .blog-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+    .blog-hero p {
+      font-size: 1.1rem;
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+    .search-box button {
+      padding: 0.75rem 1.5rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .search-box button:hover {
+      background-color: #2563eb;
+    }
+    .filter-section {
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid #e5e7eb;
+      background-color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: #3b82f6;
+      color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .article-card {
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .article-card-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+    .article-card-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-card-category {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #3b82f6;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .article-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #0f172a;
+      text-decoration: none;
+    }
+    .article-card-title:hover {
+      color: #3b82f6;
+    }
+    .article-card-excerpt {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .article-card-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: auto;
+    }
+    .article-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .read-more {
+      color: #3b82f6;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .read-more:hover {
+      color: #2563eb;
+    }
+    .newsletter-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .newsletter-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .newsletter-section p {
+      font-size: 1rem;
+      color: #e0e7ff;
+      margin-bottom: 1.5rem;
+    }
+    .newsletter-form {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .newsletter-form button {
+      padding: 0.75rem 1.5rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background-color 0.2s;
+    }
+    .newsletter-form button:hover {
+      background-color: #2563eb;
+    }
+    footer {
+      background-color: #0f172a;
+      color: white;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-section h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .footer-section a {
+      color: #d1d5db;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .footer-section a:hover {
+      color: #3b82f6;
+    }
+    .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: 1.5rem;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      nav.main-nav {
+        gap: 1rem;
+        font-size: 0.85rem;
+      }
+      .blog-hero h1 {
+        font-size: 2rem;
+      }
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <a href="/en/" class="logo">AutoCognitix</a>
+      <nav class="main-nav">
+        <a href="/en/">Home</a>
+        <a href="/en/#features">Features</a>
+        <a href="/en/#pricing">Pricing</a>
+        <a href="/en/blog/">Blog</a>
+        <a href="/en/#faq">FAQ</a>
+        <button class="lang-switch" onclick="location.href='/hu/blog/'">HU</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-hero">
+      <h1>Car Diagnostics Blog</h1>
+      <p>Expert guides on DTC codes, repair costs, symptoms, and AI-powered troubleshooting</p>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search articles...">
+        <button onclick="searchArticles()">Search</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="filter-section">
+        <button class="filter-btn active" onclick="filterArticles('all')">All Articles</button>
+        <button class="filter-btn" onclick="filterArticles('dtc-codes')">DTC Codes</button>
+        <button class="filter-btn" onclick="filterArticles('diagnostics')">Diagnostics</button>
+        <button class="filter-btn" onclick="filterArticles('repair-guide')">Repair Guides</button>
+        <button class="filter-btn" onclick="filterArticles('ai-tech')">AI & Technology</button>
+      </div>
+
+      <div class="articles-grid" id="articlesGrid">
+        <!-- Articles will be populated here -->
+      </div>
+    </section>
+
+    <section class="newsletter-section">
+      <h2>Stay Updated on Car Diagnostics</h2>
+      <p>Get weekly tips, DTC code explanations, and repair guides delivered to your inbox</p>
+      <form class="newsletter-form" onsubmit="return handleNewsletter(event)">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Product</h3>
+        <a href="/en/">Home</a>
+        <a href="/en/#features">Features</a>
+        <a href="/en/#pricing">Pricing</a>
+        <a href="/en/#faq">FAQ</a>
+      </div>
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <a href="/en/blog/">Blog</a>
+        <a href="/en/blog/dtc-trouble-code-lookup-guide.html">DTC Code Lookup</a>
+        <a href="/en/blog/car-diagnostics-at-home-beginners-guide.html">DIY Diagnostics</a>
+        <a href="/en/blog/how-ai-car-diagnostics-works.html">About AI Diagnostics</a>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <a href="/en/">About Us</a>
+        <a href="/en/legal/privacy-policy.html">Privacy Policy</a>
+        <a href="/en/legal/terms-of-service.html">Terms of Service</a>
+        <a href="/en/">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <a href="https://twitter.com/autocognitix">Twitter</a>
+        <a href="https://facebook.com/autocognitix">Facebook</a>
+        <a href="https://linkedin.com/company/autocognitix">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 AutoCognitix. All rights reserved. | Built with AI-powered diagnostics</p>
+    </div>
+  </footer>
+
+  <script>
+    const articles = [
+      {
+        title: "P0420 Code: What It Means, Causes, Fixes & Cost [2026 Guide]",
+        excerpt: "Complete guide to P0420 DTC code covering catalyst system efficiency, 7 causes, symptoms, diagnostic steps, repair costs, and DIY considerations.",
+        category: "dtc-codes",
+        date: "March 18, 2026",
+        readTime: "8 min",
+        url: "/en/blog/p0420-dtc-code-complete-guide.html",
+        icon: "⚠️"
+      },
+      {
+        title: "5 Warning Signs Your Car Battery Is Dying (And What To Do) [2026]",
+        excerpt: "Learn the 5 critical warning signs of a failing car battery, how to test it at home, replacement costs, and maintenance tips for longevity.",
+        category: "diagnostics",
+        date: "March 16, 2026",
+        readTime: "6 min",
+        url: "/en/blog/5-signs-car-battery-dying.html",
+        icon: "🔋"
+      },
+      {
+        title: "How AI Car Diagnostics Works: The Technology Behind Smart Repair [2026]",
+        excerpt: "Discover how AI and machine learning revolutionize car diagnostics, including RAG technology, knowledge graphs, and NLP processing.",
+        category: "ai-tech",
+        date: "March 14, 2026",
+        readTime: "9 min",
+        url: "/en/blog/how-ai-car-diagnostics-works.html",
+        icon: "🤖"
+      },
+      {
+        title: "P0171 Code: System Too Lean — Causes, Symptoms & Repair Cost [2026]",
+        excerpt: "Complete breakdown of P0171 code meaning, 8 detailed causes including MAF sensor and vacuum leaks, symptoms, and step-by-step diagnostic guide.",
+        category: "dtc-codes",
+        date: "March 12, 2026",
+        readTime: "8 min",
+        url: "/en/blog/p0171-dtc-code-causes-symptoms-cost.html",
+        icon: "⛽"
+      },
+      {
+        title: "DTC Code Lookup: Complete Guide to Reading Car Trouble Codes [2026]",
+        excerpt: "Master DTC code interpretation with this comprehensive guide covering code structure, top 10 common codes, and multiple lookup methods.",
+        category: "dtc-codes",
+        date: "March 10, 2026",
+        readTime: "7 min",
+        url: "/en/blog/dtc-trouble-code-lookup-guide.html",
+        icon: "🔍"
+      },
+      {
+        title: "Car Diagnostics at Home: A Beginner's Guide to DIY Troubleshooting [2026]",
+        excerpt: "Learn DIY car diagnostics without expensive tools, including 5 senses method, 10-point checklist, and when to call a professional.",
+        category: "repair-guide",
+        date: "March 8, 2026",
+        readTime: "10 min",
+        url: "/en/blog/car-diagnostics-at-home-beginners-guide.html",
+        icon: "🔧"
+      }
+    ];
+
+    function renderArticles(articlesToShow = articles) {
+      const grid = document.getElementById('articlesGrid');
+      grid.innerHTML = articlesToShow.map(article => `
+        <article class="article-card">
+          <div class="article-card-image">${article.icon}</div>
+          <div class="article-card-content">
+            <span class="article-card-category">${article.category.replace('-', ' ')}</span>
+            <h2 class="article-card-title">${article.title}</h2>
+            <p class="article-card-excerpt">${article.excerpt}</p>
+            <div class="article-card-meta">
+              <span>📅 ${article.date}</span>
+              <span>⏱️ ${article.readTime} read</span>
+            </div>
+            <a href="${article.url}" class="read-more">Read Article →</a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterArticles(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      if (category === 'all') {
+        renderArticles(articles);
+      } else {
+        renderArticles(articles.filter(a => a.category === category));
+      }
+    }
+
+    function searchArticles() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = articles.filter(a => 
+        a.title.toLowerCase().includes(query) || 
+        a.excerpt.toLowerCase().includes(query)
+      );
+      renderArticles(filtered);
+    }
+
+    function handleNewsletter(event) {
+      event.preventDefault();
+      alert('Thanks for subscribing! Check your email for a confirmation link.');
+      event.target.reset();
+      return false;
+    }
+
+    // Initial render
+    renderArticles();
+  </script>
+</body>
+</html>

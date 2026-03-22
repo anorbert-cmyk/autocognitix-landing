@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AutoCognitix AI Felelőségi Nyilatkozat - AI diagnosztikai rendszer korlátozásai és felelősségkizárások">
+    <meta name="robots" content="index, follow">
+    <meta name="canonical" href="https://autocognitix.hu/legal/ai-felelossegi-nyilatkozat.html">
+    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/legal/ai-felelossegi-nyilatkozat.html">
+    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/legal/ai-disclaimer.html">
+    <meta property="og:title" content="AI Felelőségi Nyilatkozat — AutoCognitix" />
+    <meta property="og:description" content="AI Felelőségi Nyilatkozat - AutoCognitix. Ismerd meg az AI diagnosztikai rendszer korlátait, felelősségkizárásait és biztonsági figyelmeztetéseit." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://autocognitix.hu/legal/ai-felelossegi-nyilatkozat.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AI Felelőségi Nyilatkozat — AutoCognitix" />
+    <meta name="twitter:description" content="AI Felelőségi Nyilatkozat - AutoCognitix. Ismerd meg az AI diagnosztikai rendszer korlátait, felelősségkizárásait és biztonsági figyelmeztetéseit." />
+    <title>AI Felelőségi Nyilatkozat - AutoCognitix</title>
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A24;
+            --secondary: #1E3A8A;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --warning: #DC2626;
+            --success: #16A34A;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--gray-800);
+            background: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: var(--spacing-md) var(--spacing-xl);
+        }
+
+        nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        nav-links {
+            display: flex;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        nav-link {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav-link:hover {
+            color: var(--primary);
+        }
+
+        language-switcher {
+            display: flex;
+            gap: var(--spacing-sm);
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: var(--spacing-xs);
+        }
+
+        lang-btn {
+            padding: 0.375rem 0.75rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        lang-btn:hover {
+            background: var(--gray-100);
+        }
+
+        lang-btn.active:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 6rem auto 0;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+        }
+
+        header {
+            margin-bottom: var(--spacing-2xl);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: var(--spacing-xl);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+        }
+
+        .document-meta {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            display: flex;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--gray-800);
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #FEE2E2;
+            border-left: 4px solid var(--warning);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box-title {
+            color: var(--warning);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .warning-box-content {
+            color: var(--gray-800);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Important Box */
+        .important-box {
+            background: var(--gray-50);
+            border-left: 4px solid var(--primary);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+            border-radius: 4px;
+        }
+
+        .important-box-title {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .important-box-content {
+            color: var(--gray-800);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-xl) 0;
+        }
+
+        th, td {
+            border: 1px solid var(--gray-200);
+            padding: var(--spacing-md);
+            text-align: left;
+        }
+
+        th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        tr:nth-child(even) {
+            background: var(--gray-50);
+        }
+
+        /* Highlight */
+        .highlight {
+            background: #FEF3C7;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        /* Section */
+        section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .toc-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.1rem;
+        }
+
+        .toc-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .toc-list a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+            border-top: 4px solid var(--primary);
+        }
+
+        footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        footer-title {
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            font-size: 1rem;
+        }
+
+        footer-links {
+            display: flex;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        footer a {
+            color: #F0F0F0;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--primary);
+        }
+
+        footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+            font-size: 0.875rem;
+            color: #F0F0F0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: var(--spacing-xl) var(--spacing-md);
+                margin-top: 5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            nav {
+                padding: var(--spacing-md);
+            }
+
+            nav-links {
+                gap: var(--spacing-md);
+            }
+
+            table {
+                font-size: 0.875rem;
+            }
+
+            th, td {
+                padding: var(--spacing-sm);
+            }
+
+            footer-links {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <nav-container>
+            <nav-logo href="/">AutoCognitix</nav-logo>
+            <nav-links>
+                <a href="/" class="nav-link">Főoldal</a>
+                <a href="/hu/legal/adatvedelmi-szabalyzat.html" class="nav-link">Adatvédelem</a>
+                <a href="/hu/legal/felhasznalasi-feltetelek.html" class="nav-link">Felhasználási feltételek</a>
+                <a href="/hu/legal/cookie-szabalyzat.html" class="nav-link">Cookie Szabályzat</a>
+                <language-switcher>
+                    <lang-btn class="active" onclick="window.location.href='/hu/legal/ai-felelossegi-nyilatkozat.html'">HU</lang-btn>
+                    <lang-btn onclick="window.location.href='/en/legal/ai-disclaimer.html'">EN</lang-btn>
+                </language-switcher>
+            </nav-links>
+        </nav-container>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <header>
+            <h1>AI Felelőségi Nyilatkozat</h1>
+            <div class="document-meta">
+                <span>Utolsó frissítés: 2026. március 21.</span>
+                <span>Verzió: 1.0</span>
+                <span>Hatályos: 2026. március 21.</span>
+            </div>
+        </header>
+
+        <section class="toc">
+            <div class="toc-title">Tartalomjegyzék</div>
+            <ul class="toc-list">
+                <li><a href="#1-bevezetes">1. Bevezetés</a></li>
+                <li><a href="#2-ai-szabalyozas">2. AI Diagnosztikai Rendszer Szabályzása</a></li>
+                <li><a href="#3-felelossegkizaras">3. Felelősségkizárás</a></li>
+                <li><a href="#4-korlatok">4. AI Rendszer Korlátai</a></li>
+                <li><a href="#5-biztonsag">5. Biztonsági Figyelmeztetések</a></li>
+                <li><a href="#6-felelosseg">6. Felelősség Korlátozása</a></li>
+                <li><a href="#7-jogok">7. Felhasználó Jogai és Kötelezettségei</a></li>
+                <li><a href="#8-szerzodes">8. Szerződéses Kijelentések</a></li>
+                <li><a href="#9-kapcsolat">9. Kapcsolatfelvétel</a></li>
+            </ul>
+        </section>
+
+        <section id="1-bevezetes">
+            <h2>1. Bevezetés</h2>
+            <p>Az AutoCognitix ("Vállalkozás", "mi", "bennünk") egy mesterséges intelligenciával (AI) működő gépjármű-diagnosztikai platform, amely felhasználói által bevitt adatok alapján diagnosztikai javaslatokat nyújt. Ez a Felelőségi Nyilatkozat ("Dokumentum") kijelenti az AI rendszer alkalmazásának korlátait, képességeit és jogi felelősségét.</p>
+
+            <div class="warning-box">
+                <div class="warning-box-title">⚠️ KRITIKUS FIGYELMEZTETÉS</div>
+                <div class="warning-box-content">
+                    <strong>Az AutoCognitix AI diagnosztikai rendszere NEM helyettesíti a hivatásos autószerelő vagy szerviz végzett vizsgálatát és javítását.</strong> A platform által nyújtott javaslatok kizárólag informatív célúak és nem tekinthetők végső diagnosztikának. Minden diagnosztikai javaslatot szakképzett szerelővel kell konzultálni a javítást vagy további vizsgálatot megelőzően.
+                </div>
+            </div>
+
+            <p>A felhasználók kifejezetten ismerik fel és elfogadják, hogy az AI alapú diagnosztikai rendszer emberi hiba, hiányzó információk, korlátozott tanítási adatok és a gépjárműdiagnosztika lényegéből fakadó bizonytalanságok miatt téves vagy hiányos diagnosztikákat adhat. A felhasználók saját felelősségüket viselik az AI javaslatok alapján hozott döntésekért és azok következményeiért.</p>
+        </section>
+
+        <section id="2-ai-szabalyozas">
+            <h2>2. AI Diagnosztikai Rendszer Szabályzása</h2>
+
+            <h3>2.1 Működési Elv</h3>
+            <p>Az AutoCognitix AI rendszere a következő információk kombinációjával működik:</p>
+            <ul>
+                <li><span class="highlight">Felhasználó által bevitt OBD-II hibakódok (DTC)</span> - Diagnosztikai Hibajelek</li>
+                <li><span class="highlight">Gépjármű végazonosító szám (VIN)</span> - Járműmodell és évjárat azonosítására</li>
+                <li><span class="highlight">Felhasználó által leírt tünetek</span> - Szabad szöveges panaszok</li>
+                <li><span class="highlight">Technikai specifikus adatok</span> - Motor típus, km-állás, szokások</li>
+                <li><span class="highlight">Történeti adatok</span> - Korábbi hibák, javítások, emlékeztetők</li>
+            </ul>
+
+            <p>A rendszer ezeket az adatokat feldolgozva:</p>
+            <ol>
+                <li>Ismert DTC kódokkal összeveti az információkat</li>
+                <li>Hasonló gépjárműModellekben tapasztalt problémákat keresi meg</li>
+                <li>Lehetséges gyökerő okokat azonosít, súlyosságuk szerint rangsorolva</li>
+                <li>Ajánlott diagnosztikai lépéseket és lehetséges javítási lehetőségeket javasol</li>
+            </ol>
+
+            <h3>2.2 Tanítási Adatok és Modell Korlátozások</h3>
+            <p>Az AutoCognitix AI modelljeinek pontossága a tanítási adatok minőségétől, mennyiségétől és reprezentativitásától függ. Az alábbi tényezők hatással vannak a diagnosztikai javaslatok megbízhatóságára:</p>
+            <ul>
+                <li>Korlátozott vagy hiányzó tanítási adatok bizonyos járműmodellekhez</li>
+                <li>Ritka vagy új típusú hibák az általános tanítási adatokban való alulreprezentáltsága</li>
+                <li>Geografiai vagy szezonális sajátosságok a tanítási adatokban</li>
+                <li>Az OBD-II standardban nem szereplő járműspecifikus hibák nem azonosíthatók</li>
+                <li>Gyártók közötti eltérések a diagnosztikai rendszerek implementációjában</li>
+            </ul>
+
+            <h3>2.3 Modell Pontossága</h3>
+            <p>Az AutoCognitix AI rendszere kb. 78-85% pontosságot ér el a tanítási tesztkészleten bizonyos járműosztályok és hibatípusok esetén. Ez az arány az alábbiak szerint változhat:</p>
+            <ul>
+                <li><strong>Magas pontosság (85%+)</strong>: Közös gyártók (Volkswagen, Ford, Toyota, Audi), gyakori hibatípusok</li>
+                <li><strong>Közepes pontosság (70-84%)</strong>: Kevésbé gyakori járműmodellok, vegyes hibatípusok</li>
+                <li><strong>Alacsony pontosság (< 70%)</strong>: Ritka járműtípusok, kevésbé dokumentált problémák</li>
+            </ul>
+
+            <div class="important-box">
+                <div class="important-box-title">ℹ️ Figyelem</div>
+                <div class="important-box-content">
+                    A modell pontossága nem jelent jogi garantiát. Az AI diagnosztikai javaslatok kizárólag útmutatásul szolgálnak, és szakmai felülvizsgálat szükséges az érdemleges döntéshozatal előtt.
+                </div>
+            </div>
+        </section>
+
+        <section id="3-felelossegkizaras">
+            <h2>3. Felelősségkizárás</h2>
+
+            <p><strong>Az AutoCognitix kijelenti, hogy az AI diagnosztikai rendszer "ahogyan van" ("as is") alapon kerül nyújtásra, és nem vállal semmilyen explicit vagy implicit garanciát a diagnosztikai javaslatok pontosságára, teljességére, vagy alkalmasságára.</strong></p>
+
+            <h3>3.1 Explicit Felelősségkizárások</h3>
+            <p>Az AutoCognitix nem garantálja:</p>
+            <ul>
+                <li>Az AI diagnosztikai javaslatok 100% pontosságát vagy teljességét</li>
+                <li>Hogy az AI javaslatok egy adott gépjárműre alkalmazhatók vagy megfelelőek</li>
+                <li>Hogy az AI javaslatok az összes lehetséges gyökerő okot azonosít</li>
+                <li>Hogy a javasolt javítások a járműhiba kijavítanák</li>
+                <li>Hogy az AI javaslatok költségbecslései pontosak vagy véglegesen kötelezőek</li>
+                <li>Hogy az AutoCognitix szerviz, alkatrészcsere vagy egyéb javítási szolgáltatást nyújt</li>
+                <li>Hogy az AI diagnosztikai rendszer működésben van, hozzáférhető, vagy hibaadó lesz</li>
+            </ul>
+
+            <h3>3.2 Implicit Felelősségkizárások</h3>
+            <p>Az AutoCognitix kizárja a szokásos és hallgatólagos garantiákat, köztük:</p>
+            <ul>
+                <li><strong>Eladhatóságra vonatkozó garancia</strong> - Az AI rendszer nem garantáltan megfelelő kereskedelmi célokra</li>
+                <li><strong>Alkalmasságra vonatkozó garancia</strong> - Az AI rendszer nem garantáltan alkalmas egy adott felhasználó céljára</li>
+                <li><strong>Jogosultságra vonatkozó garancia</strong> - Az AutoCognitix nem felel az intellektuális tulajdonjogi sérelemért harmadik féltől</li>
+                <li><strong>Jogkövetkezetes működésre vonatkozó garancia</strong> - Az AI rendszer nem feltétlenül szabad hibáktól</li>
+            </ul>
+
+            <h3>3.3 Felhasználó Elfogadása</h3>
+            <p>Az AutoCognitix Platform felhasználása azzal jár, hogy a felhasználó:</p>
+            <ul>
+                <li>Megérti az AI alapú diagnosztikai rendszer korlátait és hibázási lehetőségeit</li>
+                <li>Elfogadja az AI javaslatok alapján történő döntések kockázatát</li>
+                <li>Felelősséget visel az AI javaslatok alapján hozott vagy nem hozott döntésekért</li>
+                <li>Nem tekinti az AI javaslatokat végső diagnózisnak vagy jogi tanácsnak</li>
+                <li>Szerzez szakmai tanácsot szakképzett szerelőktől a végleges döntés előtt</li>
+            </ul>
+        </section>
+
+        <section id="4-korlatok">
+            <h2>4. AI Rendszer Korlátai</h2>
+
+            <h3>4.1 Technikai Korlátok</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Korlát</th>
+                        <th>Leírás</th>
+                        <th>Hatás</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>OBD-II Függőség</td>
+                        <td>Rendszer csak az OBD-II standardban szereplő hibakódokkal működik</td>
+                        <td>Járműspecifikus vagy nem szabványos hibák nem azonosíthatók</td>
+                    </tr>
+                    <tr>
+                        <td>Gyártó Variáció</td>
+                        <td>Eltérő gyártók eltérő DTC kódozást és diagnosztikai logikát használnak</td>
+                        <td>Az egy gyártóra betanított modell más gyártók járműveiben kevésbé pontosabb lehet</td>
+                    </tr>
+                    <tr>
+                        <td>Szöveg Feldolgozás</td>
+                        <td>Az AI alapú természetesnyelv-feldolgozás nyelvtani ambiguitásokra érzékeny</td>
+                        <td>Félreértelmezhetőség a felhasználó által leírt tünetek értelmezésében</td>
+                    </tr>
+                    <tr>
+                        <td>Korlátozott Kontextus</td>
+                        <td>Az AI rendszer nem rendelkezik a gépjármű fizikai vizsgálatának lehetőségével</td>
+                        <td>Vizuális vagy tapintható tünetek (pl. szivárgás, zajok) nem azonosíthatók</td>
+                    </tr>
+                    <tr>
+                        <td>Tanítási Adatok Minősége</td>
+                        <td>Az AI pontossága szorosan kapcsolódik a tanítási adatok minőségéhez és mennyiségéhez</td>
+                        <td>Ritka hibatípusok vagy járműmodellekhez alacsonyabb pontosság</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.2 Diagnosztikai Korlátok</h3>
+            <p>Az alábbi helyzetekben az AutoCognitix AI rendszere nem nyújthat megbízható diagnosztikai javaslatokat:</p>
+            <ul>
+                <li><strong>Többszörös egyidejű hibák</strong> - Ha több különböző rendszer egyszerre hibás</li>
+                <li><strong>Intermittens hibák</strong> - Időnkénti, nem állandó problémák</li>
+                <li><strong>Elektromos problémák</strong> - Szoros elektromos rendszeri hibák összetett volta miatt</li>
+                <li><strong>Szenzor kalibrációs problémák</strong> - Hibás szenzor kalibrációból fakadó hamis jelek</li>
+                <li><strong>Szoftver problémák</strong> - Járműszoftveres hibák vagy korrupció</li>
+                <li><strong>Mechanikai kopás</strong> - Az OBD-II rendszer nem észleli az általános kopást</li>
+                <li><strong>Karosszéria és üléskárések</strong> - Külsődleges javítási igények</li>
+            </ul>
+
+            <h3>4.3 Adatminőségi Korlátok</h3>
+            <p>Az AutoCognitix diagnosztikai pontosságot az alábbiak korlátozhatják:</p>
+            <ul>
+                <li>Hiányzó vagy hiányos OBD-II hibakódok</li>
+                <li>Felhasználó által pontatlanul leírt tünetek</li>
+                <li>Nem pontosan beírt VIN vagy jármű adatok</li>
+                <li>Hamis vagy félrevezető diagnosztikai információk</li>
+                <li>Szavas nyomok vagy tipográfiai hibák a beviteli mezőkben</li>
+            </ul>
+        </section>
+
+        <section id="5-biztonsag">
+            <h2>5. Biztonsági Figyelmeztetések</h2>
+
+            <div class="warning-box">
+                <div class="warning-box-title">⚠️ BIZTONSÁGI FIGYELMEZTETÉS</div>
+                <div class="warning-box-content">
+                    A gépjármű szerkezeti és biztonsági rendszerei közvetlenül befolyásolják az Ön és utasai biztonságát. Az alábbi rendszereket érintő hibákhoz azonnal szerviz szakembert kell igénybe venni, függetlenül az AutoCognitix AI javaslataitól.
+                </div>
+            </div>
+
+            <h3>5.1 Kritikus Biztonsági Rendszerek</h3>
+            <p>Az alábbi gépjárműrendszerekben tapasztalt hibákhoz <span class="highlight">AZONNAL szervizbe kell menni, az AI diagnosztikai javaslatokat megelőzően</span>:</p>
+
+            <h4>5.1.1 Fékezési Rendszer</h4>
+            <ul>
+                <li>Nem megfelelő fékezési erő vagy puha féklábazat</li>
+                <li>ABS (Anti-lock Braking System) vigyázó lámpa világít</li>
+                <li>Fékfolyadék szivárgása</li>
+                <li>Hosszabb fékezési távolság vagy fékrezonancia zajok</li>
+            </ul>
+
+            <h4>5.1.2 Kormányzás és Felfüggesztés</h4>
+            <ul>
+                <li>Könnyű vagy kemény kormányzás</li>
+                <li>Kormány rezgése vagy vibrációja</li>
+                <li>Felfüggesztési zörgések vagy abnormális zajos hangok</li>
+                <li>Gépjármű oldalirányú eltolódása vagy instabilitása</li>
+            </ul>
+
+            <h4>5.1.3 Légzsákrendszer és Biztonsági Felszerelés</h4>
+            <ul>
+                <li>Airbag vigyázó lámpa világít (SRS)</li>
+                <li>Biztonsági öv rendszer zavarai</li>
+                <li>Fékezés stabilizáló rendszer (ESP) vigyázó lámpa</li>
+                <li>Sávtartó asszisztens vagy automatikus vészfékezés zavarai</li>
+            </ul>
+
+            <h4>5.1.4 Üzemanyag Rendszer</h4>
+            <ul>
+                <li>Üzemanyag szivárgása a tank vagy vezetékekből</li>
+                <li>Benzin szaga a járműből</li>
+                <li>Pump zavarai vagy üzemanyagzáva problémái</li>
+                <li>Hidegen nem indulás vagy megállt üzemanyag ellátás</li>
+            </ul>
+
+            <h4>5.1.5 Elektromos és Tűz Biztonsági Rendszer</h4>
+            <ul>
+                <li>Füst vagy égési szag a járműből</li>
+                <li>Izzódrótok túlmelegedése vagy olvadása</li>
+                <li>Elektromos vezetékek vagy csatlakozók korrózója</li>
+                <li>Tüzet okozó anyagok a motorháztető vagy alváz alatt</li>
+            </ul>
+
+            <h3>5.2 Elektromos Járművek Specifikus Figyelmeztetések</h3>
+            <p>Az elektromos és hibrid járművek felhasználóinak:</p>
+            <ul>
+                <li>Nem szabad magas feszültségű rendszerre rákötni az AI javaslat alapján</li>
+                <li>Azonnal szervizbe kell menni tünetekre az akkumulátor vagy töltőrendszerben</li>
+                <li>Azon feszültség-rendszert csak szakterület végezheti el</li>
+                <li>Az AutoCognitix nem nyújt diagnosztikai javaslatokat elektromos meghajtásrendszerekhez</li>
+            </ul>
+
+            <h3>5.3 Járműhasználat Tilalmazása</h3>
+            <p>Az alábbi helyzetekben a járművet <strong>nem szabad vezetni</strong>, amíg a probléma nem kerül megoldásra:</p>
+            <ul>
+                <li>Fékezési rendszer hibái</li>
+                <li>Kormányzási vagy felfüggesztési kritikus problémák</li>
+                <li>Tüzet okozó anyagok vagy füst a járműből</li>
+                <li>Üzemanyag vagy elektromos folyadék szivárgása</li>
+                <li>Szellőztetési rendszer hibái (pl. CO szivárgás)</li>
+                <li>Szélvédő vagy visszapillantó tükör nélkülözése</li>
+            </ul>
+        </section>
+
+        <section id="6-felelosseg">
+            <h2>6. Felelősség Korlátozása</h2>
+
+            <h3>6.1 Kár Limitáció</h3>
+            <p><strong>Az AutoCognitix teljes felelőssége (akár szerződésből, szerzódésen kívüli felelősségből vagy más jogcímen fakad) az AutoCognitix Platform felhasználásából vagy annak használatának lehetetlenségéből eredő bármely kár tekintetében korlátozódik az alábbiak közül a nagyobbra:</strong></p>
+            <ul>
+                <li>Az utolsó 12 hónapban az AutoCognitix Platform használatáért fizetett teljes díj, vagy</li>
+                <li>100 EUR (vagy helyi pénznem megfelelője)</li>
+            </ul>
+
+            <h3>6.2 Kizárt Kárfajták</h3>
+            <p><strong>Az AutoCognitix semmilyen körülmények között nem felel az alábbiak által okozott vagy azokkal kapcsolatos kárért:</strong></p>
+            <ul>
+                <li><strong>Közvetett vagy járulékos kár</strong> - Például veszteség, szalmas kiadások, elmaradott haszon</li>
+                <li><strong>Közvetlen kár</strong> - Az AI diagnosztikai javaslatok alapján okozott gépjármű javítási költségek</li>
+                <li><strong>Adatok elvesztése</strong> - Az AutoCognitix platformon tárolt adatok megsemmisülése</li>
+                <li><strong>Személyi sérülés vagy halál</strong> - Az AI diagnosztikai javaslatok alapján történt baleset vagy egyéb sérülés</li>
+                <li><strong>Bevételvesztés vagy üzlet zavara</strong> - Szállítás vagy üzlet szünetelésből fakadó veszteség</li>
+                <li><strong>Jó hírnév és megítélés károsodása</strong> - Az AutoCognitix AI tanácsaiból fakadó reputációs kár</li>
+            </ul>
+
+            <h3>6.3 Oka Értelmezés</h3>
+            <p>Az AutoCognitix nem felel az alábbiak által okozott vagy azokkal kapcsolatos kárért, még akkor sem, ha az AutoCognitix tudatott vagy tudatában lehetett volna annak:</p>
+            <ul>
+                <li>Az AI diagnosztikai rendszer korlátai vagy hibái</li>
+                <li>Felhasználó hibás adatok bevitelében</li>
+                <li>Jármű nem szabványos vagy módosított diagnosztikai rendszere</li>
+                <li>Harmadik féltől származó diagnosztikai eszközök vagy szoftverek használata</li>
+                <li>Szövetekezet vagy megállapodás az AutoCognitix és felhasználó között</li>
+            </ul>
+
+            <h3>6.4 Japán Elhatárolás</h3>
+            <p>Az AutoCognitix és felhasználó között felmerülő vitákra az alábbi kifejtésben érvényes:</p>
+            <ul>
+                <li>Az AutoCognitix kizárja a jogi felelősséget az AI diagnosztikai javaslatok alapján hozott döntésekért</li>
+                <li>Az AutoCognitix kizárja a polgári felelősséget az AI javaslatok hiától vagy pontatlanságától</li>
+                <li>Az AutoCognitix kizárja a szerződésen kívüli felelősséget az AI rendszer működésétől</li>
+            </ul>
+        </section>
+
+        <section id="7-jogok">
+            <h2>7. Felhasználó Jogai és Kötelezettségei</h2>
+
+            <h3>7.1 Felhasználó Jogai</h3>
+            <p>Az AutoCognitix Platform felhasználóinak joga van:</p>
+            <ul>
+                <li>Hozzáférni az AI diagnosztikai javaslatokhoz a Platform-on keresztül</li>
+                <li>Másodlagos vizsgálatot kérni az AI javaslatok helyességéről</li>
+                <li>Az AI javaslatok alapján járműszervizet igénybe venni</li>
+                <li>Elutasítani az AI javaslatokat és alternatív megoldásokat keresni</li>
+                <li>Az AutoCognitix-hoz fordulni az AI rendszer működésétől vagy javaslataitól</li>
+                <li>Személyes adataihoz hozzáférni és azokat módosítani a GDPR szerint</li>
+            </ul>
+
+            <h3>7.2 Felhasználó Kötelezettségei</h3>
+            <p>Az AutoCognitix Platform felhasználói kötelesek:</p>
+            <ul>
+                <li>Pontos és valós adatokat biztosítani az AI diagnosztikai javaslatokhoz</li>
+                <li>Az AI javaslatok alapján közlekedési biztonsági előírásokat betartani</li>
+                <li>Nem használni az AI rendszert jogellenesen vagy óbudához köttett célokra</li>
+                <li>A Platform feltételeit és ezt a Felelőségi Nyilatkozatot betartani</li>
+                <li>Szakterület segítségét kérni a kritikus biztonsági problémáknál</li>
+                <li>Nem állítani, hogy az AI javaslatok végső vagy jogi diagnosztikát jelentenek</li>
+            </ul>
+
+            <h3>7.3 Felhasználó Felelőssége</h3>
+            <p><strong>A felhasználók teljes felelősséggel viselik az AI diagnosztikai javaslatok alapján hozott döntésekből fakadó összes következményt.</strong> Az AutoCognitix nem felel:</p>
+            <ul>
+                <li>Az AI javaslatok alapján végzett járműjavítások költségeiért vagy eredményeiért</li>
+                <li>Az AI javaslatok figyelmen kívül hagyásából fakadó járműhiba romlásáért</li>
+                <li>Baleset vagy sérülésből fakadó kárért az AI javaslatok alapján</li>
+                <li>A felhasználó személyes vagy harmadik féltől származó adatainak elvesztéséből</li>
+            </ul>
+        </section>
+
+        <section id="8-szerzodes">
+            <h2>8. Szerződéses Kijelentések</h2>
+
+            <h3>8.1 Teljes Megállapodás</h3>
+            <p>Ez a Felelőségi Nyilatkozat, valamint az AutoCognitix Felhasználási Feltételei, Adatvédelmi Szabályzata és Cookie Szabályzata az AutoCognitix AI Platform és a felhasználó közötti teljes megállapodást képezvén. Minden korábbi vagy egyidejű szóbeli vagy írásbeli megállapodás, szerzódés vagy utasítás helyébe lép.</p>
+
+            <h3>8.2 Módosítások</h3>
+            <p>Az AutoCognitix fenntartja a jogot, hogy módosítsa ezt a Felelőségi Nyilatkozatot bármikor, anélkül, hogy előzetes értesítést adna. A módosítások azonnal hatályba lépnek az AutoCognitix Platform-on való közzététel után. A felhasználók kötelesek rendszeresen áttekinteni ezt a dokumentumot. A módosított feltételek alkalmazott felhasználása a felhasználó hozzájárulásként értelmezendő.</p>
+
+            <h3>8.3 Érvénytelenítési Záradék</h3>
+            <p>Ha a Felelőségi Nyilatkozat bármely rendelkezése jogellenes vagy érvénytelen, az nem érinti az egyéb rendelkezések érvényességét. Az ilyen rendelkezés helyébe az alkalmazható jogban megfelelő helyettesítés kerül.</p>
+
+            <h3>8.4 Nem Lemondás</h3>
+            <p>Az AutoCognitix nem lemondott jogára, ha nem gyakorol jogot vagy nem követeli meg a feltételek betartása. Egy alkalommal történő nem-gyakorlás nem jelent jövőbeni joglemond.</p>
+
+            <h3>8.5 Felfüggesztés</h3>
+            <p>Az AutoCognitix fenntartja a jogot, hogy felfüggeszsze vagy véget vessen a Platform-hoz való hozzáférésnek bármely felhasználónak, akik megsértik ezt a Felelőségi Nyilatkozatot.</p>
+        </section>
+
+        <section id="9-kapcsolat">
+            <h2>9. Kapcsolatfelvétel</h2>
+
+            <p>Ha kérdése vagy aggálya van az AI diagnosztikai rendszerrel vagy ezzel a Felelőségi Nyilatkozattal kapcsolatban, kérjük, forduljon az alábbiakhoz:</p>
+
+            <h3>9.1 AutoCognitix Kapcsolat</h3>
+            <ul>
+                <li><strong>E-mail:</strong> legal@autocognitix.hu</li>
+                <li><strong>Telefon:</strong> +36 1 XXX-XXXX</li>
+                <li><strong>Postacím:</strong> AutoCognitix Kft., Budapest, 1234, Magyar Utca 123.</li>
+                <li><strong>Weboldal:</strong> https://www.autocognitix.hu</li>
+            </ul>
+
+            <h3>9.2 Adatvédelmi Hatóság</h3>
+            <p>Ha az adatvédelmével kapcsolatban panasza van, fordulhat a magyar Nemzeti Adatvédelmi és Információszabadság Hatóságához:</p>
+            <ul>
+                <li><strong>Szervezet:</strong> Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH)</li>
+                <li><strong>E-mail:</strong> ugyfelszolgalat@naih.hu</li>
+                <li><strong>Telefon:</strong> +36 1 391-1400</li>
+                <li><strong>Weboldal:</strong> https://www.naih.hu</li>
+            </ul>
+
+            <h3>9.3 Panaszbenyújtás Eljárása</h3>
+            <p>A felhasználók jogukban állnak panaszt benyújtani az AI diagnosztikai javaslatok pontosságáról vagy az AutoCognitix Platform működéséről. A panaszokat az alábbi adatok megadásával kell benyújtani:</p>
+            <ul>
+                <li>Felhasználó neve és kapcsolatadatai</li>
+                <li>Gépjármű azonosítása (VIN vagy típus)</li>
+                <li>Az AI diagnosztikai javaslat dátuma és tartalma</li>
+                <li>A panasz leírása és jogalapja</li>
+                <li>A felhasználó által végzett szervizelés eredménye (ha van)</li>
+                <li>A szerzódés vagy egyéb támogató dokumentumok másolata</li>
+            </ul>
+
+            <p>Az AutoCognitix 30 napon belül válaszol a panaszra. Ha a panasz megalapozottnak bizonyul, az AutoCognitix utlólagos mérlegelési alapján korrekciót vagy visszatérítést ajánlhat fel.</p>
+
+            <div class="important-box">
+                <div class="important-box-title">ℹ️ Végső Megjegyzés</div>
+                <div class="important-box-content">
+                    Ez a Felelőségi Nyilatkozat nem váltja fel a szakterület tanácsot vagy a hivatásos szerelő vizsgálatát. Az AutoCognitix AI diagnosztikai rendszere kiegészítő eszköz, amely nem helyettesíti a szakképzett gépjárműszerelő szakterületét. Minden diagnosztikai javaslatot szakmailag kell felülvizsgálni a végleges javítás előtt.
+                </div>
+            </div>
+        </section>
+
+        <p style="text-align: center; margin-top: var(--spacing-2xl); color: var(--gray-700); font-size: 0.875rem;">
+            <strong>Utolsó frissítés: 2026. március 21.</strong><br>
+            Ez a dokumentum jogi tanácsot nem helyettesít. A szakterület jogi vagy technikai tanácsért forduljon a megfelelő szakemberhez.
+        </p>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <footer-container>
+            <footer-section>
+                <footer-title>Jogi Dokumentumok</footer-title>
+                <footer-links>
+                    <a href="/hu/legal/adatvedelmi-szabalyzat.html">Adatvédelmi Szabályzat</a>
+                    <a href="/hu/legal/felhasznalasi-feltetelek.html">Felhasználási Feltételek</a>
+                    <a href="/hu/legal/cookie-szabalyzat.html">Cookie Szabályzat</a>
+                    <a href="/hu/legal/ai-felelossegi-nyilatkozat.html">AI Felelőségi Nyilatkozat</a>
+                </footer-links>
+            </footer-section>
+            <footer-section>
+                <footer-title>Angol Verzió</footer-title>
+                <footer-links>
+                    <a href="/en/legal/privacy-policy.html">Privacy Policy</a>
+                    <a href="/en/legal/terms-of-service.html">Terms of Service</a>
+                    <a href="/en/legal/cookie-policy.html">Cookie Policy</a>
+                    <a href="/en/legal/ai-disclaimer.html">AI Disclaimer</a>
+                </footer-links>
+            </footer-section>
+            <footer-section>
+                <footer-title>Vállalat</footer-title>
+                <footer-links>
+                    <a href="/">Főoldal</a>
+                    <a href="/hu/">Rólunk</a>
+                    <a href="/hu/">Kapcsolat</a>
+                </footer-links>
+            </footer-section>
+            <footer-bottom>
+                <p>&copy; 2026 AutoCognitix Kft. Minden jog fenntartva. | Adatvédelmi Szabályzat | Felhasználási Feltételek | Cookie Szabályzat</p>
+            </footer-bottom>
+        </footer-container>
+    </footer>
+</body>
+</html>
