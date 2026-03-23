@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliratkozás megerősítve — AutoCognitix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Funnel Sans', Arial, sans-serif;
+            background-color: #F2F2F4;
+            color: #12110E;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: #12110E;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 60px auto 40px;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #22C55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 32px;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #12110E;
+        }
+        
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: #12110E;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #22C55E;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            color: #888;
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AutoCognitix</h1>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="success-icon">✓</div>
+            <h2>Sikeres megerősítés!</h2>
+            <p>Köszönjük! Az email címed megerősítve. Mostantól megkapod a heti DTC kódszótárat, DIY útmutatókat és szerviz tippeket.</p>
+            <a href="/hu/" class="button">Vissza a főoldalra</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 AutoCognitix. Minden jog fenntartva.</p>
+    </div>
+    
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+        if (token) {
+            fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({type: 'welcome', token: token, language: 'hu'})
+            }).catch(() => {});
+        }
+    </script>
+</body>
+</html>

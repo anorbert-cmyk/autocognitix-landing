@@ -2281,7 +2281,7 @@
       const submitBtn = document.querySelector('.newsletter-submit');
       const n8nWebhook = 'https://valid8strategy.app.n8n.cloud/webhook/newsletter-email';
       const language = 'hu';
-      const domain = 'https://autocognitix.hu';
+      const domain = 'https://autocognitix-landing-production.up.railway.app';
       
       if (!emailInput || !submitBtn) return;
       
@@ -2317,7 +2317,8 @@
               type: 'confirm',
               email: email,
               language: language,
-              confirmUrl: confirmUrl
+              token: token,
+              base_url: domain
             })
           });
           
