@@ -106,5 +106,29 @@
             <a href="/" class="back-link">← Vissza a kezdőoldalra / Back to Homepage</a>
         </div>
     </div>
+
+    <script>
+        // Extract token from URL and process unsubscription
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+
+        if (token) {
+            // Call n8n webhook to process unsubscription
+            fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: 'unsubscribe',
+                    token: token
+                })
+            })
+            .catch(error => {
+                // Silently fail - user sees success message regardless
+                console.error('Unsubscribe webhook error:', error);
+            });
+        }
+    </script>
 </body>
 </html>

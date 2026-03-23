@@ -1424,7 +1424,6 @@
       .pricing-header { flex-direction: column; align-items: flex-start; }
     }
   </style>
-</head>
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
   {
@@ -1541,6 +1540,7 @@
     ]
   }
   </script>
+</head>
 <body>
 
   <!-- ═══════════════ NAVIGATION ═══════════════ -->
@@ -2299,7 +2299,7 @@
         
         // Generate random token
         const token = generateToken();
-        const confirmUrl = `${domain}/confirm?token=${token}`;
+        const confirmUrl = `${domain}/hu/confirm?token=${token}`;
         
         // Show loading state
         const originalText = submitBtn.textContent;
