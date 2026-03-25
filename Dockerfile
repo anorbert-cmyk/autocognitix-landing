@@ -5,11 +5,11 @@ RUN pip install --no-cache-dir --target=/proxy/deps -r requirements.txt
 
 FROM nginx:1.27-alpine
 
-# Install Python runtime (minimal)
-RUN apk add --no-cache python3 supervisor
+# Install Python runtime only (no supervisor needed)
+RUN apk add --no-cache python3
 
 # Copy proxy deps and code
-COPY --from=proxy-build /proxy/deps /usr/lib/python3/site-packages
+COPY --from=proxy-build /proxy/deps /opt/proxy/deps
 COPY proxy/main.py /opt/proxy/main.py
 
 # Remove default nginx config
@@ -28,8 +28,9 @@ COPY en/ /usr/share/nginx/html/en/
 COPY shared/ /usr/share/nginx/html/shared/
 COPY unsubscribe.html /usr/share/nginx/html/unsubscribe.html
 
-# Supervisord config to run both nginx and proxy
-COPY supervisord.conf /etc/supervisord.conf
+# Startup script: proxy in background, nginx in foreground
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Railway uses PORT env var
 ENV PORT=8080
@@ -38,4 +39,4 @@ EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s CMD wget --no-verbose --tries=1 --spider http://localhost:8080/hu/ || exit 1
 
-CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
+CMD ["/start.sh"]
