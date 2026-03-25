@@ -484,7 +484,7 @@
     function renderArticles(articlesToShow = articles) {
       const grid = document.getElementById('articlesGrid');
       grid.innerHTML = articlesToShow.map(article => `
-        <article class="article-card">
+        <a href="${article.url}" class="article-card" style="text-decoration:none;color:inherit;">
           <div class="article-card-image">${article.icon}</div>
           <div class="article-card-content">
             <span class="article-card-category">${article.category.replace('-', ' ')}</span>
@@ -494,9 +494,9 @@
               <span>📅 ${article.date}</span>
               <span>⏱️ ${article.readTime} read</span>
             </div>
-            <a href="${article.url}" class="read-more">Read Article →</a>
+            <span class="read-more">Read Article →</span>
           </div>
-        </article>
+        </a>
       `).join('');
     }
 
