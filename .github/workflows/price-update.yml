@@ -13,27 +13,25 @@ on:
 env:
   # 5 brands per day rotation — cycles through all 25 brands in 5 days
   BRANDS_PER_DAY: 5
+  PYTHON_VERSION: '3.11'
 
 jobs:
-  update-prices:
+  # ==================================================================
+  # Job 1: Fetch MNB exchange rate + determine today's brand rotation
+  # ==================================================================
+  fetch-rate:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
 
-      # ------------------------------------------------------------------
-      # Step 1: Fetch MNB exchange rate (EUR/HUF)
-      # ------------------------------------------------------------------
       - name: Fetch MNB exchange rate
         run: python scripts/fetch-mnb-rate.py
 
-      # ------------------------------------------------------------------
-      # Step 2: Determine today's brand rotation
-      # ------------------------------------------------------------------
       - name: Determine brand rotation
         id: rotation
         run: |
@@ -41,7 +39,6 @@ jobs:
           import json, sys
           from datetime import date
 
-          # All brands from scraper config
           brands = [
               'Suzuki', 'Opel', 'Volkswagen', 'Toyota', 'Ford',
               'Skoda', 'BMW', 'Mercedes-Benz', 'Audi', 'Renault',
@@ -54,7 +51,6 @@ jobs:
           if force_all:
               today_brands = brands
           else:
-              # Rotate: day_of_year mod (total / per_day) gives the slot
               day = date.today().timetuple().tm_yday
               per_day = ${{ env.BRANDS_PER_DAY }}
               total_slots = (len(brands) + per_day - 1) // per_day
@@ -64,101 +60,146 @@ jobs:
 
           print(f'Today slot brands ({len(today_brands)}): {today_brands}')
 
-          # Write to file for subsequent steps
-          with open('/tmp/today_brands.json', 'w') as f:
+          with open('today_brands.json', 'w') as f:
               json.dump(today_brands, f)
           "
 
-      # ------------------------------------------------------------------
-      # Step 3: Run hasznaltauto.hu parser (5 brands/day rotation)
-      # ------------------------------------------------------------------
-      - name: Run hasznaltauto.hu parser
+      - name: Upload exchange rate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: exchange-rate
+          path: shared/data/exchange-rate.json
+          retention-days: 1
+
+      - name: Upload brand rotation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: today-brands
+          path: today_brands.json
+          retention-days: 1
+
+  # ==================================================================
+  # Job 2: Parallel scraping via matrix strategy
+  # ==================================================================
+  scrape:
+    needs: fetch-rate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        source:
+          - name: hasznaltauto
+            script: hasznaltauto
+            max_per_model: 50
+            output: shared/data/hasznaltauto-prices.json
+          - name: ooyyo
+            script: ooyyo
+            max_per_model: 30
+            output: shared/data/ooyyo-prices.json
+          - name: autobazar
+            script: autobazar
+            max_per_model: 60
+            output: shared/data/autobazar-prices.json
+          - name: bazos
+            script: bazos
+            max_per_model: 40
+            output: shared/data/bazos-prices.json
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Download exchange rate
+        uses: actions/download-artifact@v4
+        with:
+          name: exchange-rate
+          path: shared/data/
+
+      - name: Download brand rotation
+        uses: actions/download-artifact@v4
+        with:
+          name: today-brands
+          path: /tmp/
+
+      - name: Run ${{ matrix.source.name }} scraper
         run: |
-          python -c "
-          import json, sys, os, time
-
-          sys.path.insert(0, 'scripts/scrapers')
-          from hasznaltauto_parser import scrape_brand_model
-          from config import BRANDS
-
-          with open('/tmp/today_brands.json') as f:
-              today_brands = json.load(f)
-
-          all_results = {'_meta': {'source': 'hasznaltauto.hu', 'currency': 'HUF'}, 'brands': {}}
-          total_listings = 0
-
-          for brand_name in today_brands:
-              if brand_name not in BRANDS:
-                  print(f'[SKIP] {brand_name} not in hasznaltauto config')
-                  continue
-
-              brand_info = BRANDS[brand_name]
-              all_results['brands'][brand_name] = {}
-
-              for model_name in brand_info['models']:
-                  print(f'\n--- Scraping {brand_name} {model_name} ---')
-                  try:
-                      result = scrape_brand_model(brand_name, model_name, max_listings=50)
-                      by_year = result.get('by_year', {})
-
-                      model_data = {}
-                      for year, stats in by_year.items():
-                          if year == 'unknown_year':
-                              continue
-                          model_data[year] = {
-                              'min': stats.get('min', 0),
-                              'avg': stats.get('median', stats.get('avg', 0)),
-                              'max': stats.get('max', 0),
-                              'count': stats.get('count', 0),
-                              'prices': stats.get('prices', []),
-                          }
-
-                      if model_data:
-                          all_results['brands'][brand_name][model_name] = model_data
-                          total_listings += result.get('listings_scraped', 0)
-
-                      print(f'  -> {result.get(\"listings_scraped\", 0)} listings, {len(model_data)} year buckets')
-                  except Exception as e:
-                      print(f'  [ERROR] {brand_name} {model_name}: {e}')
-
-                  # Polite delay between models
-                  time.sleep(2)
-
-          print(f'\nTotal listings scraped: {total_listings}')
-
-          os.makedirs('shared/data', exist_ok=True)
-          with open('shared/data/hasznaltauto-prices.json', 'w', encoding='utf-8') as f:
-              json.dump(all_results, f, ensure_ascii=False, indent=2)
-          print('Saved to shared/data/hasznaltauto-prices.json')
-          "
+          python scripts/run-scraper.py \
+            --scraper ${{ matrix.source.script }} \
+            --brands-file /tmp/today_brands.json \
+            --max ${{ matrix.source.max_per_model }} \
+            --output ${{ matrix.source.output }}
         continue-on-error: true
 
-      # ------------------------------------------------------------------
-      # Step 4: Run OOYYO parser (5 brands/day rotation)
-      # ------------------------------------------------------------------
-      - name: Run OOYYO parser
-        run: |
-          python -c "
-          import os
-          # OOYYO scraper placeholder — runs if the scraper script exists
-          scraper = 'scripts/scrapers/ooyyo_parser.py'
-          if os.path.exists(scraper):
-              print(f'Running {scraper}...')
-              os.system(f'python {scraper} --brands-file /tmp/today_brands.json --output shared/data/ooyyo-prices.json')
-          else:
-              print(f'[SKIP] {scraper} not yet implemented')
-          "
+      - name: Upload scraper output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-${{ matrix.source.name }}
+          path: ${{ matrix.source.output }}
+          retention-days: 1
+          if-no-files-found: ignore
+
+  # ==================================================================
+  # Job 3: Aggregate all sources, validate, commit
+  # ==================================================================
+  aggregate:
+    needs: [scrape]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Download exchange rate
+        uses: actions/download-artifact@v4
+        with:
+          name: exchange-rate
+          path: shared/data/
+
+      - name: Download hasznaltauto output
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-hasznaltauto
+          path: shared/data/
         continue-on-error: true
 
-      # ------------------------------------------------------------------
-      # Step 5: Run aggregator — merge all sources
-      # ------------------------------------------------------------------
+      - name: Download ooyyo output
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-ooyyo
+          path: shared/data/
+        continue-on-error: true
+
+      - name: Download autobazar output
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-autobazar
+          path: shared/data/
+        continue-on-error: true
+
+      - name: Download bazos output
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-bazos
+          path: shared/data/
+        continue-on-error: true
+
+      - name: List downloaded artifacts
+        run: |
+          echo "=== shared/data/ contents ==="
+          ls -la shared/data/ || echo "No shared/data directory"
+
       - name: Aggregate all price sources
         run: python scripts/aggregate-prices.py
 
-      # ------------------------------------------------------------------
-      # Step 6: Validate output JSON
-      # ------------------------------------------------------------------
       - name: Validate output JSON
         run: |
           python -c "
@@ -169,17 +210,14 @@ jobs:
 
           errors = []
 
-          # Must have brands key
           if 'brands' not in data:
               errors.append('Missing brands key')
 
           brands = data.get('brands', {})
 
-          # Must have at least 20 brands (some may be missing if rotation just started)
           if len(brands) < 20:
               errors.append(f'Only {len(brands)} brands (expected >= 20)')
 
-          # Validate price consistency: min <= avg <= max, all positive
           invalid_count = 0
           for brand, models in brands.items():
               for model, years in models.items():
@@ -203,7 +241,6 @@ jobs:
                   print(f'  - {e}')
               sys.exit(1)
 
-          # Meta info
           meta = data.get('_meta', {})
           print(f'Validation passed:')
           print(f'  Brands: {len(brands)}')
@@ -212,9 +249,6 @@ jobs:
           print(f'  Published price points: {meta.get(\"published_price_points\", \"?\")}')
           "
 
-      # ------------------------------------------------------------------
-      # Step 7: Commit and push updated data
-      # ------------------------------------------------------------------
       - name: Commit and push updated data
         run: |
           git config user.name "github-actions[bot]"
