@@ -176,5 +176,82 @@ window.VehicleDB = {
   getExpectedKm: function(fuelType) {
     var ft = this.fuelTypes.find(function(f) { return f.id === fuelType; });
     return ft ? ft.expectedKmPerYear : 15000;
+  },
+
+  // ─── Real market price data (loaded async) ───
+  _marketPrices: null,
+
+  loadMarketPrices: function() {
+    if (this._marketPrices) return Promise.resolve(this._marketPrices);
+    var self = this;
+    return new Promise(function(resolve) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/shared/data/hungarian-market-prices.json', true);
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          try {
+            self._marketPrices = JSON.parse(xhr.responseText);
+            resolve(self._marketPrices);
+          } catch(e) { resolve(null); }
+        } else { resolve(null); }
+      };
+      xhr.onerror = function() { resolve(null); };
+      xhr.timeout = 5000;
+      xhr.ontimeout = function() { resolve(null); };
+      xhr.send();
+    });
+  },
+
+  getMarketPrice: function(brand, model, year) {
+    if (!this._marketPrices || !this._marketPrices.brands) return null;
+    var brandData = this._marketPrices.brands[brand];
+    if (!brandData) return null;
+    var modelData = brandData[model];
+    if (!modelData) return null;
+
+    // Find exact year or interpolate between nearest years
+    var yearStr = String(year);
+    if (modelData[yearStr]) return modelData[yearStr];
+
+    // Interpolate: find nearest available years
+    var years = Object.keys(modelData).map(Number).sort(function(a, b) { return a - b; });
+    if (year <= years[0]) return modelData[String(years[0])];
+    if (year >= years[years.length - 1]) return modelData[String(years[years.length - 1])];
+
+    // Find surrounding years and interpolate
+    for (var i = 0; i < years.length - 1; i++) {
+      if (year > years[i] && year < years[i + 1]) {
+        var lower = modelData[String(years[i])];
+        var upper = modelData[String(years[i + 1])];
+        var ratio = (year - years[i]) / (years[i + 1] - years[i]);
+        return {
+          min: Math.round(lower.min + (upper.min - lower.min) * ratio),
+          avg: Math.round(lower.avg + (upper.avg - lower.avg) * ratio),
+          max: Math.round(lower.max + (upper.max - lower.max) * ratio)
+        };
+      }
+    }
+    return null;
+  },
+
+  /** Enhanced getBaseValue that tries market prices first, falls back to formula */
+  getEnhancedValue: function(brand, model, year) {
+    var marketPrice = this.getMarketPrice(brand, model, year);
+    if (marketPrice) {
+      return {
+        source: 'market',
+        min: marketPrice.min,
+        avg: marketPrice.avg,
+        max: marketPrice.max
+      };
+    }
+    // Fallback to formula-based estimation
+    var formulaValue = this.getBaseValue(brand, year);
+    return {
+      source: 'formula',
+      min: Math.round(formulaValue * 0.85),
+      avg: formulaValue,
+      max: Math.round(formulaValue * 1.15)
+    };
   }
 };

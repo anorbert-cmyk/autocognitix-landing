@@ -415,6 +415,11 @@
   (function() {
     'use strict';
 
+    // Preload DTC database for richer descriptions
+    if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
+      ToolCommon.loadDTCDatabase();
+    }
+
     // ─── INIT FORM ───
     ToolCommon.setupBrandModelCascade('brand', 'model');
     ToolCommon.populateYearSelect('year', 1995, 2026);
@@ -772,6 +777,25 @@
           dtcList.appendChild(item);
         });
         dtcSection.style.display = 'block';
+
+        // Enhance DTC warnings with database info
+        if (typeof ToolCommon !== 'undefined' && ToolCommon._dtcDB) {
+          result.dtcWarnings.forEach(function(w) {
+            var dtcInfo = ToolCommon.getDTCInfo(w.code);
+            if (dtcInfo && dtcInfo.hu) {
+              var warningEls = dtcList.querySelectorAll('.dtc-warning-item');
+              warningEls.forEach(function(el) {
+                if (el.textContent.indexOf(w.code) >= 0 && !el.querySelector('.dtc-detail')) {
+                  var detail = document.createElement('div');
+                  detail.className = 'dtc-detail';
+                  detail.style.cssText = 'font-size:12px;color:var(--color-muted);margin-top:4px;';
+                  detail.textContent = dtcInfo.hu;
+                  el.appendChild(detail);
+                }
+              });
+            }
+          });
+        }
       } else {
         dtcSection.style.display = 'none';
       }

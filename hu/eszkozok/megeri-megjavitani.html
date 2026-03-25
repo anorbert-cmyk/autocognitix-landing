@@ -544,6 +544,11 @@
 
     // ─── Init form controls ───
     document.addEventListener('DOMContentLoaded', function() {
+      // Preload real market prices
+      if (typeof VehicleDB !== 'undefined' && VehicleDB.loadMarketPrices) {
+        VehicleDB.loadMarketPrices();
+      }
+
       ToolCommon.setupBrandModelCascade('brand', 'model');
       ToolCommon.populateYearSelect('year', 1995, 2026);
 
@@ -638,7 +643,7 @@
           return;
         }
       }
-      var baseValue = VehicleDB.getBaseValue(brand, year);
+      var model = document.getElementById('model').value;
 
       // Mileage adjustment
       var expectedKmPerYear = VehicleDB.getExpectedKm(fuel);
@@ -672,9 +677,24 @@
       var condData = VehicleDB.conditions.find(function(c) { return c.id === condition; });
       var conditionMult = condData ? condData.multiplier : 1.0;
 
-      // Market value
-      var marketValue = baseValue * mileageAdj * accidentAdj * serviceAdj * ownerAdj * conditionMult;
-      marketValue = Math.max(Math.round(marketValue), 100000);
+      // Market value — try real market prices first, fall back to formula
+      var enhanced = VehicleDB.getEnhancedValue(brand, model, year);
+      var marketValue, valueLow, valueHigh, valueSource;
+      if (enhanced.source === 'market') {
+        valueSource = 'market';
+        // Apply condition/accident/service/owner adjustments to market price
+        var adjFactor = mileageAdj * accidentAdj * serviceAdj * ownerAdj * conditionMult;
+        marketValue = Math.max(Math.round(enhanced.avg * adjFactor), 100000);
+        valueLow = Math.max(Math.round(enhanced.min * adjFactor), 100000);
+        valueHigh = Math.round(enhanced.max * adjFactor);
+      } else {
+        valueSource = 'formula';
+        var baseValue = enhanced.avg;
+        marketValue = baseValue * mileageAdj * accidentAdj * serviceAdj * ownerAdj * conditionMult;
+        marketValue = Math.max(Math.round(marketValue), 100000);
+        valueLow = Math.round(marketValue * 0.85);
+        valueHigh = Math.round(marketValue * 1.15);
+      }
 
       // ─── Repair cost ───
       var repairCost;
@@ -747,6 +767,9 @@
       renderResults({
         composite: composite,
         marketValue: marketValue,
+        valueLow: valueLow,
+        valueHigh: valueHigh,
+        valueSource: valueSource,
         repairCost: repairCost,
         repairEstimated: repairEstimated,
         costRatio: ka,
@@ -874,11 +897,14 @@
       badge.textContent = verdictText;
 
       // Result cards — market value range
-      var valueLow = Math.round(data.marketValue * 0.85);
-      var valueHigh = Math.round(data.marketValue * 1.15);
-      document.getElementById('resMarketValue').textContent = ToolCommon.formatHUF(valueLow) + ' — ' + ToolCommon.formatHUF(valueHigh);
+      document.getElementById('resMarketValue').textContent = ToolCommon.formatHUF(data.valueLow) + ' — ' + ToolCommon.formatHUF(data.valueHigh);
       document.getElementById('resMarketPointEstimate').textContent = 'Becsült középérték: ' + ToolCommon.formatHUF(data.marketValue);
-      document.getElementById('resMarketSub').textContent = 'Becsült piaci érték az adatok alapján';
+
+      // Data source indicator
+      var sourceLabel = data.valueSource === 'market'
+        ? '\uD83D\uDCCA Piaci adat (125 modell)'
+        : '\uD83D\uDCD0 Képlet alapú becslés';
+      document.getElementById('resMarketSub').textContent = sourceLabel;
 
       // Uncertainty indicator
       var commonBrands = ['Suzuki', 'Opel', 'Volkswagen', 'Skoda', 'Ford', 'Toyota', 'Renault', 'Peugeot', 'Fiat', 'Hyundai', 'Kia', 'Dacia'];

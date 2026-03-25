@@ -189,6 +189,38 @@ var ToolCommon = {
     return { valid: true, value: num };
   },
 
+  // --- DTC Database (loaded async from static JSON) ---
+
+  _dtcDB: null,
+
+  loadDTCDatabase: function() {
+    if (this._dtcDB) return Promise.resolve(this._dtcDB);
+    var self = this;
+    return new Promise(function(resolve) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/shared/data/dtc-database.json', true);
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          try {
+            var data = JSON.parse(xhr.responseText);
+            if (data._meta) { resolve(null); return; } // fallback stub
+            self._dtcDB = data;
+            resolve(data);
+          } catch(e) { resolve(null); }
+        } else { resolve(null); }
+      };
+      xhr.onerror = function() { resolve(null); };
+      xhr.timeout = 5000;
+      xhr.ontimeout = function() { resolve(null); };
+      xhr.send();
+    });
+  },
+
+  getDTCInfo: function(code) {
+    if (!this._dtcDB) return null;
+    return this._dtcDB[code.toUpperCase()] || null;
+  },
+
   // --- Utility Functions ---
 
   /** Escape HTML to prevent XSS */

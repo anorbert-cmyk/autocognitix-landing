@@ -429,6 +429,11 @@
     (function() {
       'use strict';
 
+      // Preload DTC database for richer descriptions
+      if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
+        ToolCommon.loadDTCDatabase();
+      }
+
       /* ─── DTC to Specialty Mapping ─── */
       var DTC_SPECIALTIES = {
         'P04':  { name: 'Kipufofo es katalizator szerviz',       terms: 'kipufofo szerviz katalizator javitas',                desc: 'Kipufogorendszer, katalizator, reszecskezuro (DPF) diagnosztika es javitas.' },
@@ -628,6 +633,26 @@
 
         // Show result section
         ToolCommon.showResult('resultSection');
+
+        // Enhance DTC cards with static database descriptions
+        if (typeof ToolCommon !== 'undefined' && ToolCommon._dtcDB && codes.length > 0) {
+          codes.forEach(function(code) {
+            var dtcInfo = ToolCommon.getDTCInfo(code);
+            if (dtcInfo && dtcInfo.hu) {
+              var cards = document.querySelectorAll('.specialty-card');
+              cards.forEach(function(card) {
+                if (card.textContent.indexOf(code) >= 0 && !card.querySelector('.dtc-db-detail[data-code="' + code + '"]')) {
+                  var detail = document.createElement('div');
+                  detail.className = 'dtc-db-detail';
+                  detail.setAttribute('data-code', code);
+                  detail.style.cssText = 'margin-top:8px;padding:8px;background:var(--color-gray-100);border-radius:4px;font-size:13px;';
+                  detail.innerHTML = '<strong>' + ToolCommon.escapeHTML(code) + ':</strong> ' + ToolCommon.escapeHTML(dtcInfo.hu);
+                  card.appendChild(detail);
+                }
+              });
+            }
+          });
+        }
 
         // Progressive Enhancement: enhance DTC cards with backend descriptions
         var matchedCodes = codes;
