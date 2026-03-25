@@ -1,15 +1,13 @@
-FROM python:3.11-alpine AS proxy-build
-WORKDIR /proxy
-COPY proxy/requirements.txt .
-RUN pip install --no-cache-dir --target=/proxy/deps -r requirements.txt
-
 FROM nginx:alpine
 
-# Install Python runtime only (no supervisor needed)
-RUN apk add --no-cache python3
+# Install Python3 + proxy deps (OPTIONAL — build continues even if pip fails)
+RUN apk add --no-cache python3 py3-pip && \
+    pip3 install --no-cache-dir --break-system-packages \
+      httpx==0.27.0 uvicorn==0.27.1 starlette==0.36.3 2>/dev/null || \
+    echo "WARNING: Proxy deps install failed — proxy will be disabled, nginx still works" && \
+    mkdir -p /opt/proxy
 
-# Copy proxy deps and code
-COPY --from=proxy-build /proxy/deps /opt/proxy/deps
+# Copy proxy code (will only be used if deps installed successfully)
 COPY proxy/main.py /opt/proxy/main.py
 
 # Remove default nginx config
@@ -28,11 +26,10 @@ COPY en/ /usr/share/nginx/html/en/
 COPY shared/ /usr/share/nginx/html/shared/
 COPY unsubscribe.html /usr/share/nginx/html/unsubscribe.html
 
-# Startup script: proxy in background, nginx in foreground
+# Startup script (starts proxy only if deps available, nginx always starts)
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Railway uses PORT env var
 ENV PORT=8080
 ENV BACKEND_URL=https://autocognitix-production.up.railway.app
 EXPOSE 8080
