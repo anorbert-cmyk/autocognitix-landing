@@ -68,7 +68,13 @@ def fetch_from_mnb() -> tuple[float, str, str]:
 
     # The SOAP response wraps the actual XML inside a <GetCurrentExchangeRatesResult> text node.
     # We need to extract that inner XML and parse it separately.
-    root = ET.fromstring(raw)
+    # XXE Safety: Python 3's xml.etree.ElementTree does NOT resolve external entities by default,
+    # so ET.fromstring() is safe against XXE attacks. If defusedxml is available, prefer it.
+    try:
+        import defusedxml.ElementTree as SafeET
+        root = SafeET.fromstring(raw)
+    except ImportError:
+        root = ET.fromstring(raw)  # Python 3 ET is safe against XXE by default
 
     # Find the result element (namespace-agnostic search)
     result_text = None
@@ -87,7 +93,11 @@ def fetch_from_mnb() -> tuple[float, str, str]:
     #     ...
     #   </Day>
     # </MNBCurrentExchangeRates>
-    inner = ET.fromstring(result_text)
+    try:
+        import defusedxml.ElementTree as SafeET
+        inner = SafeET.fromstring(result_text)
+    except ImportError:
+        inner = ET.fromstring(result_text)  # Python 3 ET is safe against XXE by default
 
     for day in inner.iter("Day"):
         day_date = day.attrib.get("date", str(date.today()))
@@ -116,7 +126,12 @@ def fetch_from_ecb() -> tuple[float, str, str]:
     with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
         raw = resp.read().decode("utf-8")
 
-    root = ET.fromstring(raw)
+    # XXE Safety: Python 3 ET is safe by default; prefer defusedxml if available
+    try:
+        import defusedxml.ElementTree as SafeET
+        root = SafeET.fromstring(raw)
+    except ImportError:
+        root = ET.fromstring(raw)  # Python 3 ET is safe against XXE by default
 
     # ECB namespaces
     ns = {

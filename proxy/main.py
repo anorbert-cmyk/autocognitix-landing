@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import time
 import hashlib
 from starlette.applications import Starlette
@@ -13,12 +14,33 @@ CACHE_TTL = int(os.getenv("CACHE_TTL", "3600"))  # 1 hour
 RATE_LIMIT_PER_MINUTE = int(os.getenv("PROXY_RATE_LIMIT", "30"))
 
 # Simple in-memory cache
+# Cache is shared across anonymous users (intentional — no user-specific data)
 _cache = {}
 _rate_limits = {}
 
+# Input validation schemas
+CALCULATOR_REQUIRED = {"vehicle_make", "vehicle_model", "vehicle_year", "mileage_km", "condition"}
+INSPECTION_REQUIRED = {"vehicle_make", "vehicle_model", "vehicle_year", "dtc_codes"}
+
+
+def _validate_body(body, required_fields):
+    """Validate that POST body contains all required fields."""
+    missing = required_fields - set(body.keys())
+    if missing:
+        return f"Missing required fields: {', '.join(sorted(missing))}"
+    return None
+
+
+def _get_client_ip(request):
+    """Extract client IP, respecting X-Forwarded-For behind reverse proxy."""
+    forwarded = request.headers.get("x-forwarded-for", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
 def _cache_key(path, body):
     """Generate cache key from request path + body hash"""
-    body_hash = hashlib.md5(json.dumps(body, sort_keys=True).encode()).hexdigest()
+    body_hash = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
     return f"{path}:{body_hash}"
 
 def _check_rate_limit(client_ip):
@@ -43,13 +65,13 @@ async def _get_csrf_token(client):
 
 async def _proxy_post(request, backend_path):
     """Proxy a POST request to the backend with CSRF handling"""
-    client_ip = request.client.host if request.client else "unknown"
+    client_ip = _get_client_ip(request)
     if not _check_rate_limit(client_ip):
         return JSONResponse({"error": "Rate limit exceeded"}, status_code=429)
 
     try:
         body = await request.json()
-    except:
+    except (json.JSONDecodeError, ValueError, TypeError):
         return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
 
     # Check cache
@@ -80,8 +102,9 @@ async def _proxy_post(request, backend_path):
         )
 
         if resp.status_code >= 400:
+            print(f"Backend error {resp.status_code}: {resp.text[:200]}")
             return JSONResponse(
-                {"error": f"Backend returned {resp.status_code}", "detail": resp.text},
+                {"error": f"Backend returned {resp.status_code}", "detail": "See server logs"},
                 status_code=resp.status_code
             )
 
@@ -100,7 +123,7 @@ async def _proxy_post(request, backend_path):
 
 async def _proxy_get(request, backend_path):
     """Proxy a GET request (no CSRF needed)"""
-    client_ip = request.client.host if request.client else "unknown"
+    client_ip = _get_client_ip(request)
     if not _check_rate_limit(client_ip):
         return JSONResponse({"error": "Rate limit exceeded"}, status_code=429)
 
@@ -123,9 +146,23 @@ async def _proxy_get(request, backend_path):
 
 # Route handlers
 async def calculator_evaluate(request):
+    try:
+        body = await request.json()
+    except (json.JSONDecodeError, ValueError, TypeError):
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+    error = _validate_body(body, CALCULATOR_REQUIRED)
+    if error:
+        return JSONResponse({"error": error}, status_code=400)
     return await _proxy_post(request, "/api/v1/calculator/evaluate")
 
 async def inspection_evaluate(request):
+    try:
+        body = await request.json()
+    except (json.JSONDecodeError, ValueError, TypeError):
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+    error = _validate_body(body, INSPECTION_REQUIRED)
+    if error:
+        return JSONResponse({"error": error}, status_code=400)
     return await _proxy_post(request, "/api/v1/inspection/evaluate")
 
 async def services_search(request):
@@ -135,7 +172,9 @@ async def dtc_search(request):
     return await _proxy_get(request, "/api/v1/dtc/search")
 
 async def dtc_detail(request):
-    code = request.path_params["code"]
+    code = request.path_params["code"].upper()
+    if not re.match(r'^[PBCU][0-9A-F]{4}$', code):
+        return JSONResponse({"error": "Invalid DTC code format"}, status_code=400)
     return await _proxy_get(request, f"/api/v1/dtc/{code}")
 
 async def health(request):
@@ -153,7 +192,12 @@ routes = [
 app = Starlette(routes=routes)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://autocognitix.hu",
+        "https://www.autocognitix.hu",
+        "https://autocognitix-landing-production.up.railway.app",
+        "http://localhost:8080",
+    ],
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
