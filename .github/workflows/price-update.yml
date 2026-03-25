@@ -6,14 +6,18 @@ on:
   workflow_dispatch:
     inputs:
       force_full_refresh:
-        description: 'Force refresh all brands'
+        description: 'Force refresh all brands (ignore rotation)'
         type: boolean
         default: false
+
+env:
+  # 5 brands per day rotation — cycles through all 25 brands in 5 days
+  BRANDS_PER_DAY: 5
 
 jobs:
   update-prices:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -21,31 +25,200 @@ jobs:
         with:
           python-version: '3.11'
 
+      # ------------------------------------------------------------------
+      # Step 1: Fetch MNB exchange rate (EUR/HUF)
+      # ------------------------------------------------------------------
       - name: Fetch MNB exchange rate
         run: python scripts/fetch-mnb-rate.py
 
-      - name: Update market prices with EUR/HUF adjustment
-        run: python scripts/fetch-mobile-de-prices.py
+      # ------------------------------------------------------------------
+      # Step 2: Determine today's brand rotation
+      # ------------------------------------------------------------------
+      - name: Determine brand rotation
+        id: rotation
+        run: |
+          python -c "
+          import json, sys
+          from datetime import date
 
+          # All brands from scraper config
+          brands = [
+              'Suzuki', 'Opel', 'Volkswagen', 'Toyota', 'Ford',
+              'Skoda', 'BMW', 'Mercedes-Benz', 'Audi', 'Renault',
+              'Peugeot', 'Citroen', 'Hyundai', 'Kia', 'Fiat',
+              'Dacia', 'Honda', 'Mazda', 'Nissan', 'Seat',
+              'Volvo', 'Mitsubishi', 'Jeep', 'Alfa Romeo', 'Mini',
+          ]
+
+          force_all = '${{ inputs.force_full_refresh }}' == 'true'
+          if force_all:
+              today_brands = brands
+          else:
+              # Rotate: day_of_year mod (total / per_day) gives the slot
+              day = date.today().timetuple().tm_yday
+              per_day = ${{ env.BRANDS_PER_DAY }}
+              total_slots = (len(brands) + per_day - 1) // per_day
+              slot = day % total_slots
+              start = slot * per_day
+              today_brands = brands[start:start + per_day]
+
+          print(f'Today slot brands ({len(today_brands)}): {today_brands}')
+
+          # Write to file for subsequent steps
+          with open('/tmp/today_brands.json', 'w') as f:
+              json.dump(today_brands, f)
+          "
+
+      # ------------------------------------------------------------------
+      # Step 3: Run hasznaltauto.hu parser (5 brands/day rotation)
+      # ------------------------------------------------------------------
+      - name: Run hasznaltauto.hu parser
+        run: |
+          python -c "
+          import json, sys, os, time
+
+          sys.path.insert(0, 'scripts/scrapers')
+          from hasznaltauto_parser import scrape_brand_model
+          from config import BRANDS
+
+          with open('/tmp/today_brands.json') as f:
+              today_brands = json.load(f)
+
+          all_results = {'_meta': {'source': 'hasznaltauto.hu', 'currency': 'HUF'}, 'brands': {}}
+          total_listings = 0
+
+          for brand_name in today_brands:
+              if brand_name not in BRANDS:
+                  print(f'[SKIP] {brand_name} not in hasznaltauto config')
+                  continue
+
+              brand_info = BRANDS[brand_name]
+              all_results['brands'][brand_name] = {}
+
+              for model_name in brand_info['models']:
+                  print(f'\n--- Scraping {brand_name} {model_name} ---')
+                  try:
+                      result = scrape_brand_model(brand_name, model_name, max_listings=50)
+                      by_year = result.get('by_year', {})
+
+                      model_data = {}
+                      for year, stats in by_year.items():
+                          if year == 'unknown_year':
+                              continue
+                          model_data[year] = {
+                              'min': stats.get('min', 0),
+                              'avg': stats.get('median', stats.get('avg', 0)),
+                              'max': stats.get('max', 0),
+                              'count': stats.get('count', 0),
+                              'prices': stats.get('prices', []),
+                          }
+
+                      if model_data:
+                          all_results['brands'][brand_name][model_name] = model_data
+                          total_listings += result.get('listings_scraped', 0)
+
+                      print(f'  -> {result.get(\"listings_scraped\", 0)} listings, {len(model_data)} year buckets')
+                  except Exception as e:
+                      print(f'  [ERROR] {brand_name} {model_name}: {e}')
+
+                  # Polite delay between models
+                  time.sleep(2)
+
+          print(f'\nTotal listings scraped: {total_listings}')
+
+          os.makedirs('shared/data', exist_ok=True)
+          with open('shared/data/hasznaltauto-prices.json', 'w', encoding='utf-8') as f:
+              json.dump(all_results, f, ensure_ascii=False, indent=2)
+          print('Saved to shared/data/hasznaltauto-prices.json')
+          "
+        continue-on-error: true
+
+      # ------------------------------------------------------------------
+      # Step 4: Run OOYYO parser (5 brands/day rotation)
+      # ------------------------------------------------------------------
+      - name: Run OOYYO parser
+        run: |
+          python -c "
+          import os
+          # OOYYO scraper placeholder — runs if the scraper script exists
+          scraper = 'scripts/scrapers/ooyyo_parser.py'
+          if os.path.exists(scraper):
+              print(f'Running {scraper}...')
+              os.system(f'python {scraper} --brands-file /tmp/today_brands.json --output shared/data/ooyyo-prices.json')
+          else:
+              print(f'[SKIP] {scraper} not yet implemented')
+          "
+        continue-on-error: true
+
+      # ------------------------------------------------------------------
+      # Step 5: Run aggregator — merge all sources
+      # ------------------------------------------------------------------
+      - name: Aggregate all price sources
+        run: python scripts/aggregate-prices.py
+
+      # ------------------------------------------------------------------
+      # Step 6: Validate output JSON
+      # ------------------------------------------------------------------
       - name: Validate output JSON
         run: |
           python -c "
-          import json
+          import json, sys
+
           with open('shared/data/hungarian-market-prices.json') as f:
-            data = json.load(f)
-          assert 'brands' in data, 'Missing brands key'
-          assert len(data['brands']) >= 25, f'Only {len(data[\"brands\"])} brands'
-          for brand, models in data['brands'].items():
-            for model, years in models.items():
-              for year, prices in years.items():
-                assert prices['min'] > 0 and prices['min'] <= prices['avg'] <= prices['max'], f'{brand} {model} {year} invalid'
-          print(f'Validation passed: {len(data[\"brands\"])} brands')
+              data = json.load(f)
+
+          errors = []
+
+          # Must have brands key
+          if 'brands' not in data:
+              errors.append('Missing brands key')
+
+          brands = data.get('brands', {})
+
+          # Must have at least 20 brands (some may be missing if rotation just started)
+          if len(brands) < 20:
+              errors.append(f'Only {len(brands)} brands (expected >= 20)')
+
+          # Validate price consistency: min <= avg <= max, all positive
+          invalid_count = 0
+          for brand, models in brands.items():
+              for model, years in models.items():
+                  for year, prices in years.items():
+                      if not isinstance(prices, dict):
+                          continue
+                      p_min = prices.get('min', 0)
+                      p_avg = prices.get('avg', 0)
+                      p_max = prices.get('max', 0)
+                      if not (p_min > 0 and p_min <= p_avg <= p_max):
+                          invalid_count += 1
+                          if invalid_count <= 5:
+                              errors.append(f'{brand} {model} {year}: min={p_min} avg={p_avg} max={p_max}')
+
+          if invalid_count > 0:
+              errors.append(f'Total invalid price entries: {invalid_count}')
+
+          if errors:
+              print('Validation FAILED:')
+              for e in errors:
+                  print(f'  - {e}')
+              sys.exit(1)
+
+          # Meta info
+          meta = data.get('_meta', {})
+          print(f'Validation passed:')
+          print(f'  Brands: {len(brands)}')
+          print(f'  Sources: {meta.get(\"sources\", \"unknown\")}')
+          print(f'  Total observations: {meta.get(\"total_observations\", \"?\")}')
+          print(f'  Published price points: {meta.get(\"published_price_points\", \"?\")}')
           "
 
+      # ------------------------------------------------------------------
+      # Step 7: Commit and push updated data
+      # ------------------------------------------------------------------
       - name: Commit and push updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add shared/data/
-          git diff --staged --quiet || git commit -m "chore: Daily price update (EUR/HUF + seasonal) [skip ci]"
+          git diff --staged --quiet || git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
           git push
