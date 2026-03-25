@@ -3,7 +3,7 @@ WORKDIR /proxy
 COPY proxy/requirements.txt .
 RUN pip install --no-cache-dir --target=/proxy/deps -r requirements.txt
 
-FROM nginx:1.27-alpine
+FROM nginx:alpine
 
 # Install Python runtime only (no supervisor needed)
 RUN apk add --no-cache python3
