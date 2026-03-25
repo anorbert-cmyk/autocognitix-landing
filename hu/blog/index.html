@@ -101,6 +101,7 @@
     }
     </script>
     
+    <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
     <style>
         :root {
             --color-base-light: #F7F5F2;
@@ -217,6 +218,16 @@
                 gap: var(--spacing-lg);
                 font-size: 0.9rem;
             }
+        }
+
+        /* Nav Dropdown */
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        .nav-dropdown-menu a:hover {
+            background: #F4F8FA !important;
+            color: var(--color-accent) !important;
         }
 
         /* Header */
@@ -665,7 +676,14 @@
             <ul class="nav-links">
                 <li><a href="https://autocognitix.hu/">Kezdőlap</a></li>
                 <li><a href="https://autocognitix.hu/blog/">Blog</a></li>
-                <li><a href="/hu/eszkozok/">Eszközök</a></li>
+                <li class="nav-dropdown" style="position:relative;display:inline-flex;align-items:center;">
+                  <a href="/hu/eszkozok/" style="display:inline-flex;align-items:center;gap:4px;">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+                  <div class="nav-dropdown-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:220px;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(0,0,0,0.1),0 4px 12px rgba(0,0,0,0.15);padding:8px 0;opacity:0;visibility:hidden;transition:opacity 0.15s ease,visibility 0.15s ease;z-index:100;">
+                    <a href="/hu/eszkozok/megeri-megjavitani.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Megéri megjavítani?</a>
+                    <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Vizsga Prediktor</a>
+                    <a href="/hu/eszkozok/szerviz-kereso.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Szervizkeresős</a>
+                  </div>
+                </li>
                 <li><a href="https://autocognitix.hu/app/">Alkalmazás</a></li>
                 <li><a href="https://autocognitix.hu/kapcsolat/">Kapcsolat</a></li>
             </ul>

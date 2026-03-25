@@ -19,6 +19,7 @@
   <meta name="twitter:title" content="Car Diagnostics Blog">
   <meta name="twitter:description" content="Learn car troubleshooting with expert DTC code guides">
   <meta name="twitter:image" content="https://www.autocognitix.com/images/blog-hero.jpg">
+  <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
   <style>
     * {
       margin: 0;
@@ -313,6 +314,14 @@
       color: #9ca3af;
       font-size: 0.9rem;
     }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .nav-dropdown-menu a:hover {
+      background: #f0f4ff !important;
+      color: #3b82f6 !important;
+    }
     @media (max-width: 768px) {
       .header-container {
         flex-direction: column;
@@ -339,7 +348,14 @@
         <a href="/en/">Home</a>
         <a href="/en/#features">Features</a>
         <a href="/en/#pricing">Pricing</a>
-        <a href="/en/tools/">Tools</a>
+        <div class="nav-dropdown" style="position:relative;display:inline-flex;align-items:center;">
+          <a href="/en/tools/" style="display:inline-flex;align-items:center;gap:4px;">Tools <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:220px;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(0,0,0,0.1),0 4px 12px rgba(0,0,0,0.15);padding:8px 0;opacity:0;visibility:hidden;transition:opacity 0.15s ease,visibility 0.15s ease;z-index:100;">
+            <a href="/en/tools/worth-repairing.html" style="display:block;padding:10px 24px;font-size:14px;color:#1f2937;text-decoration:none;">Worth Repairing?</a>
+            <a href="/en/tools/mot-predictor.html" style="display:block;padding:10px 24px;font-size:14px;color:#1f2937;text-decoration:none;">MOT Predictor</a>
+            <a href="/en/tools/workshop-finder.html" style="display:block;padding:10px 24px;font-size:14px;color:#1f2937;text-decoration:none;">Workshop Finder</a>
+          </div>
+        </div>
         <a href="/en/blog/">Blog</a>
         <a href="/en/#faq">FAQ</a>
         <button class="lang-switch" onclick="location.href='/hu/blog/'">HU</button>
