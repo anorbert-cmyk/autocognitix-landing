@@ -7,518 +7,112 @@
     <meta name="keywords" content="AI diagnosztika, mesterséges intelligencia autó, autó diagnosztika, OBD2, hibakód elemzés, gépi tanulás diagnosztika">
     <meta name="author" content="AutoCognitix">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    
+
     <meta property="og:type" content="article">
     <meta property="og:title" content="AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]">
     <meta property="og:description" content="AI diagnosztika rendszerek működésének teljes útmutatója: gépi tanulás, adatfeldolgozás, előrejelzés és a hagyományos diagnosztika helyett.">
     <meta property="og:url" content="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
     <meta property="og:image" content="https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg">
     <meta property="og:locale" content="hu_HU">
-    
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban?">
     <meta name="twitter:description" content="Ismerje meg az AI diagnosztika működésének alapjait, előnyeit és gyakorlati alkalmazásait.">
     <meta name="twitter:image" content="https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg">
-    
+
     <link rel="canonical" href="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
     <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
-    
+
     <title>AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]</title>
-    
-    <style>
-        :root {
-            --color-base-light: #F2F2F4;
-            --color-base-dark: #12110E;
-            --color-accent: #D97757;
-            --color-accent-light: #E88A6C;
-            --color-accent-dark: #C26141;
-            --color-neutral-100: #F9F9FA;
-            --color-neutral-200: #EDEDF0;
-            --color-neutral-300: #D4D4DA;
-            --color-neutral-400: #A8A8B3;
-            --color-neutral-500: #6E6E7A;
-            --color-neutral-600: #4A4A52;
-            --color-neutral-700: #313137;
-            --color-success: #4CAF50;
-            --color-warning: #FF9800;
-            --color-error: #F44336;
-            --color-info: #2196F3;
-            
-            --font-primary: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-            
-            --text-display: 80px;
-            --text-h1: 56px;
-            --text-h2: 40px;
-            --text-h3: 28px;
-            --text-h4: 24px;
-            --text-h5: 20px;
-            --text-body-lg: 18px;
-            --text-body: 16px;
-            --text-body-sm: 14px;
-            --text-label: 13px;
-            --text-caption: 12px;
-            
-            --line-display: 1.2;
-            --line-h1: 1.2;
-            --line-h2: 1.3;
-            --line-body: 1.6;
-            --line-tight: 1.4;
-            
-            --space-xs: 8px;
-            --space-sm: 12px;
-            --space-base: 16px;
-            --space-md: 24px;
-            --space-lg: 32px;
-            --space-xl: 48px;
-            --space-2xl: 64px;
-            --space-3xl: 80px;
-            --space-section: 120px;
-            
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-base: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
-            
-            --transition-fast: 150ms ease-in-out;
-            --transition-base: 250ms ease-in-out;
-            --transition-slow: 350ms ease-in-out;
-            
-            --radius-sm: 4px;
-            --radius-base: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: var(--font-primary);
-            font-size: var(--text-body);
-            line-height: var(--line-body);
-            color: var(--color-base-dark);
-            background-color: var(--color-base-light);
-            font-weight: 400;
-        }
-        
-        h1 {
-            font-size: var(--text-h1);
-            line-height: var(--line-h1);
-            font-weight: 700;
-            margin: var(--space-lg) 0 var(--space-base) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h2 {
-            font-size: var(--text-h2);
-            line-height: var(--line-h2);
-            font-weight: 700;
-            margin: var(--space-xl) 0 var(--space-md) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h3 {
-            font-size: var(--text-h3);
-            line-height: var(--line-tight);
-            font-weight: 600;
-            margin: var(--space-lg) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h4 {
-            font-size: var(--text-h4);
-            line-height: var(--line-tight);
-            font-weight: 600;
-            margin: var(--space-md) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h5 {
-            font-size: var(--text-h5);
-            font-weight: 600;
-            margin: var(--space-base) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        p {
-            margin: var(--space-base) 0;
-            line-height: var(--line-body);
-        }
-        
-        a {
-            color: var(--color-accent);
-            text-decoration: underline;
-            transition: color var(--transition-fast);
-        }
-        
-        a:hover {
-            color: var(--color-accent-dark);
-            text-decoration: underline;
-        }
-        
-        strong {
-            font-weight: 600;
-        }
-        
-        em {
-            font-style: italic;
-        }
-        
-        code {
-            font-family: var(--font-mono);
-            background-color: var(--color-neutral-100);
-            color: var(--color-accent-dark);
-            padding: 2px 6px;
-            border-radius: var(--radius-sm);
-            font-size: 0.9em;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-        
-        .section {
-            padding: var(--space-section) 0;
-        }
-        
-        nav {
-            background-color: var(--color-base-light);
-            border-bottom: 1px solid var(--color-neutral-200);
-            padding: var(--space-base) 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        nav .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        nav a {
-            color: var(--color-accent);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color var(--transition-fast);
-        }
-        
-        nav a:hover {
-            color: var(--color-accent-dark);
-        }
-        
-        .article-header {
-            background: linear-gradient(135deg, var(--color-base-light) 0%, var(--color-neutral-100) 100%);
-            padding: var(--space-3xl) 0;
-            margin-bottom: var(--space-2xl);
-        }
-        
-        .article-meta {
-            display: flex;
-            gap: var(--space-md);
-            margin: var(--space-md) 0;
-            font-size: var(--text-body-sm);
-            color: var(--color-neutral-500);
-            flex-wrap: wrap;
-        }
-        
-        .article-meta span {
-            display: flex;
-            align-items: center;
-            gap: var(--space-xs);
-        }
-        
-        .toc {
-            background-color: var(--color-neutral-100);
-            border-left: 4px solid var(--color-accent);
-            padding: var(--space-lg);
-            margin: var(--space-lg) 0;
-            border-radius: var(--radius-base);
-        }
-        
-        .toc h3 {
-            margin-top: 0;
-            font-size: var(--text-h4);
-        }
-        
-        .toc ol {
-            margin-left: var(--space-lg);
-        }
-        
-        .toc li {
-            margin: var(--space-sm) 0;
-        }
-        
-        .toc a {
-            text-decoration: none;
-            color: var(--color-accent);
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
-            color: var(--color-accent-dark);
-        }
-        
-        .definition-box {
-            background-color: var(--color-info);
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 150, 243, 0.1) 100%);
-            border-left: 4px solid var(--color-info);
-            padding: var(--space-lg);
-            margin: var(--space-lg) 0;
-            border-radius: var(--radius-base);
-        }
-        
-        .definition-box h4 {
-            color: var(--color-info);
-            margin-top: 0;
-        }
-        
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--space-lg) 0;
-            background-color: white;
-            border-radius: var(--radius-base);
-            overflow: hidden;
-            box-shadow: var(--shadow-base);
-        }
-        
-        .comparison-table thead {
-            background-color: var(--color-neutral-700);
-            color: white;
-        }
-        
-        .comparison-table th {
-            padding: var(--space-md);
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .comparison-table td {
-            padding: var(--space-md);
-            border-bottom: 1px solid var(--color-neutral-200);
-        }
-        
-        .comparison-table tbody tr:hover {
-            background-color: var(--color-neutral-100);
-        }
-        
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .process-step {
-            background-color: white;
-            border: 1px solid var(--color-neutral-200);
-            padding: var(--space-lg);
-            margin: var(--space-md) 0;
-            border-radius: var(--radius-base);
-            border-left: 4px solid var(--color-accent);
-        }
-        
-        .process-step h4 {
-            color: var(--color-accent);
-            margin-top: 0;
-        }
-        
-        .faq-section {
-            background-color: white;
-            border: 1px solid var(--color-neutral-200);
-            padding: var(--space-lg);
-            margin: var(--space-md) 0;
-            border-radius: var(--radius-base);
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            color: var(--color-base-dark);
-            cursor: pointer;
-            padding: var(--space-base);
-            margin: -var(--space-base);
-            padding-bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .faq-question::after {
-            content: '+';
-            font-size: 24px;
-            color: var(--color-accent);
-        }
-        
-        .faq-section.open .faq-question::after {
-            content: '−';
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-base);
-            margin-top: 0;
-        }
-        
-        .faq-section.open .faq-answer {
-            max-height: 1000px;
-            margin-top: var(--space-base);
-        }
-        
-        .image-placeholder {
-            background: linear-gradient(135deg, var(--color-neutral-100) 0%, var(--color-neutral-200) 100%);
-            width: 100%;
-            height: 300px;
-            border-radius: var(--radius-base);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-neutral-500);
-            margin: var(--space-lg) 0;
-            font-size: var(--text-body);
-        }
-        
-        .cta-section {
-            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
-            color: white;
-            padding: var(--space-2xl) var(--space-lg);
-            border-radius: var(--radius-lg);
-            text-align: center;
-            margin: var(--space-2xl) 0;
-        }
-        
-        .cta-section h2 {
-            color: white;
-            margin-top: 0;
-        }
-        
-        .cta-section p {
-            font-size: var(--text-body-lg);
-            margin-bottom: var(--space-lg);
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: white;
-            color: var(--color-accent);
-            padding: var(--space-md) var(--space-xl);
-            border-radius: var(--radius-base);
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            text-decoration: none;
-        }
-        
-        footer {
-            background-color: var(--color-neutral-700);
-            color: white;
-            padding: var(--space-xl) 0;
-            margin-top: var(--space-section);
-            text-align: center;
-        }
-        
-        footer p {
-            margin: var(--space-sm) 0;
-            font-size: var(--text-body-sm);
-        }
-        
-        .highlight-box {
-            background-color: var(--color-warning);
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05) 0%, rgba(255, 152, 0, 0.1) 100%);
-            border-left: 4px solid var(--color-warning);
-            padding: var(--space-lg);
-            margin: var(--space-lg) 0;
-            border-radius: var(--radius-base);
-        }
-        
-        .highlight-box strong {
-            color: var(--color-warning);
-        }
-        
-        .success-box {
-            background-color: var(--color-success);
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.1) 100%);
-            border-left: 4px solid var(--color-success);
-            padding: var(--space-lg);
-            margin: var(--space-lg) 0;
-            border-radius: var(--radius-base);
-        }
-        
-        ul, ol {
-            margin: var(--space-base) 0;
-            margin-left: var(--space-lg);
-        }
-        
-        li {
-            margin: var(--space-sm) 0;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: var(--text-h2);
-            }
-            
-            h2 {
-                font-size: var(--text-h3);
-            }
-            
-            h3 {
-                font-size: var(--text-h4);
-            }
-            
-            .container {
-                padding: 0 var(--space-base);
-            }
-            
-            .image-placeholder {
-                height: 200px;
-            }
-        }
-    </style>
+
+    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
 </head>
 <body>
-    <nav>
+    <!-- Navigation -->
+    <nav class="navbar">
         <div class="container">
-            <a href="/">AutoCognitix</a>
+            <a href="/" class="logo">AutoCognitix</a>
             <div>
                 <a href="/">Kezdőlap</a>
                 <a href="/hu/blog/">Blog</a>
                 <a href="/hu/eszkozok/">Eszközök</a>
+                <a href="/#faq">GYIK</a>
             </div>
         </div>
     </nav>
-    
-    <article>
-        <div class="article-header">
-            <div class="container">
-                <h1>AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]</h1>
-                <div class="article-meta">
-                    <span>📅 2026. március 21.</span>
-                    <span>📖 Olvasási idő: 8-10 perc</span>
-                    <span>✅ Szakterület által ellenőrizve</span>
+
+    <!-- HERO -->
+    <section class="blog-hero blog-animate">
+        <div class="container">
+            <div class="blog-hero-content">
+                <div class="blog-hero-label">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
+                    </svg>
+                    <span>AI Diagnosztika</span>
+                </div>
+                <h1 class="blog-hero-title">AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]</h1>
+                <p class="blog-hero-description"><strong>Rövid válasz:</strong> Az AI diagnosztika gépi tanulás segítségével elemzi az autó OBD2 szenzorainak adatait, és 85-95% pontossággal azonosítja a hibákat — gyorsabban és olcsóbban, mint a hagyományos szerviz diagnosztika.</p>
+            </div>
+            <div class="blog-hero-image">
+                <div class="blog-image-reveal"></div>
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:#1565C0;font-weight:600;font-family:var(--font-mono);min-height:300px;">AI autódiagnosztika illusztráció</div>
+            </div>
+            <div class="blog-hero-meta">
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Publikálva</span>
+                    <span class="blog-meta-value">2026. március 21.</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Olvasási idő</span>
+                    <span class="blog-meta-value">8-10 perc</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Kategória</span>
+                    <span class="blog-meta-value">AI Diagnosztika</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Szerző</span>
+                    <span class="blog-meta-value">AutoCognitix AI</span>
                 </div>
             </div>
         </div>
-        
+    </section>
+
+    <!-- STATS -->
+    <section class="blog-stats-section blog-animate">
         <div class="container">
-            <!-- Tartalomjegyzék -->
-            <div class="toc">
+            <div class="blog-stats">
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Pontosság</h4>
+                        <p>AI diagnosztikai rendszerek</p>
+                    </div>
+                    <div class="blog-stat-number">95%+</div>
+                </div>
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Elemzési idő</h4>
+                        <p>Teljes diagnosztika</p>
+                    </div>
+                    <div class="blog-stat-number">&lt;30 mp</div>
+                </div>
+                <div class="blog-stat-card blog-stat-end">
+                    <div class="blog-stat-top">
+                        <h4>DTC kódok</h4>
+                        <p>Ismert hibakódok száma</p>
+                    </div>
+                    <div class="blog-stat-number">11,000+</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABLE OF CONTENTS -->
+    <section class="blog-toc-section blog-animate">
+        <div class="container">
+            <div class="blog-toc">
                 <h3>Tartalomjegyzék</h3>
                 <ol>
                     <li><a href="#mi-az-ai-diagnosztika">Mi az AI diagnosztika?</a></li>
@@ -532,17 +126,22 @@
                     <li><a href="#konkluzio">Konklúzió</a></li>
                 </ol>
             </div>
-            
-            <!-- Mi az AI diagnosztika -->
-            <section id="mi-az-ai-diagnosztika">
-                <h2>Mi az AI diagnosztika?</h2>
-                <p><strong>Az AI diagnosztika</strong> a mesterséges intelligencia és gépi tanulás felhasználása az <strong>autó hibáinak azonosítására, diagnosztizálására és előrejelzésére</strong>. A hagyományos OBD2 diagnosztikai eszközök (on-board diagnostics) csak hibakódokat olvasnak ki, míg az AI-alapú rendszerek többsoros adatokat elemeznek és az alapvető okokat azonosítják. Az OBD2 rendszer az <a href="https://www.epa.gov/emission-standards-reference-guide" style="color: #0284c7; text-decoration: underline;">EPA (Environmental Protection Agency)</a> kibocsátási szabályozása szerint 1996 óta kötelező minden autóban.</p>
-                
-                <div class="definition-box">
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <article class="blog-content">
+        <div class="container">
+            <div class="blog-richtext">
+
+                <h2 id="mi-az-ai-diagnosztika">Mi az AI diagnosztika?</h2>
+                <p><strong>Az AI diagnosztika</strong> a mesterséges intelligencia és gépi tanulás felhasználása az <strong>autó hibáinak azonosítására, diagnosztizálására és előrejelzésére</strong>. A hagyományos OBD2 diagnosztikai eszközök (on-board diagnostics) csak hibakódokat olvasnak ki, míg az AI-alapú rendszerek többsoros adatokat elemeznek és az alapvető okokat azonosítják. Az OBD2 rendszer az <a href="https://www.epa.gov/emission-standards-reference-guide">EPA (Environmental Protection Agency)</a> kibocsátási szabályozása szerint 1996 óta kötelező minden autóban.</p>
+
+                <div class="blog-callout blog-callout-info">
                     <h4>AI Diagnosztika Definíciója</h4>
                     <p><strong>Az AI diagnosztika</strong> az autó szabványosított (OBD2) és telemetsz adatainak (motor hőmérséklet, sűrűség, gyorsulás) valós idejű elemzése gépi tanulási algoritmusok segítségével, amely pontosabban azonosítja az autó alkatrészeinek hibáit és javaslatot ad a javításra. Az AI modellek milliók autójából tanultak és folyamatosan fejlődnek az új adatok alapján.</p>
                 </div>
-                
+
                 <p>Az <strong>AI diagnosztika elemei</strong>:</p>
                 <ul>
                     <li><strong>Gépi tanulás:</strong> Az AI modellek előre tanított adathalmaz alapján tanultak</li>
@@ -550,16 +149,13 @@
                     <li><strong>Minta felismerése:</strong> A szokásos működési paraméterek és anomáliák között megkülönböztetés</li>
                     <li><strong>Előrejelzés:</strong> A lehetséges jövőbeli hibák előrejelzése még azelőtt, hogy azok kritikus problémákká válnának</li>
                 </ul>
-                
+
                 <p>Az <strong>AutoCognitix</strong> például <a href="/">AI diagnosztikai platform</a>, amely magyar nyelvű támogatást nyújt az autódiagnosztikában.</p>
-            </section>
-            
-            <!-- Hogyan működik az AI diagnosztika -->
-            <section id="hogyan-mukodik">
-                <h2>Hogyan működik az AI diagnosztika?</h2>
+
+                <h2 id="hogyan-mukodik">Hogyan működik az AI diagnosztika?</h2>
                 <p>Az <strong>AI diagnosztikai rendszer működésének</strong> alapvetően három fő lépése van:</p>
-                
-                <div class="process-step">
+
+                <div class="blog-callout">
                     <h4>1. lépés: Adatgyűjtés</h4>
                     <p>Az <strong>OBD2 eszköz</strong> (On-Board Diagnostics 2) az autó fedélzeti számítógépéhez csatlakozik, és valós idejű szenzorértékeket gyűjt:</p>
                     <ul>
@@ -572,8 +168,8 @@
                     </ul>
                     <p>Az AutoCognitix rendszere minden szenzorértéket rögzít és felhőre küldi a feldolgozáshoz.</p>
                 </div>
-                
-                <div class="process-step">
+
+                <div class="blog-callout">
                     <h4>2. lépés: Adatfeldolgozás és elemzés</h4>
                     <p>Az AI modell <strong>normalizálja</strong> az adatokat (azonos skálára hozza), és összehasonlítja az <strong>ismert mintákkal</strong>:</p>
                     <ul>
@@ -583,80 +179,76 @@
                         <li><strong>Kontextus analízis:</strong> Az autó előélete, típusa és működési körülményei</li>
                     </ul>
                 </div>
-                
-                <div class="process-step">
+
+                <div class="blog-callout">
                     <h4>3. lépés: Diagnózis és javaslat</h4>
                     <p>Az <strong>AI által javasolt diagnosztikai lépések</strong>:</p>
                     <ul>
                         <li>A valószínű okok, csökkenő megbízhatósági sorrendben</li>
-                        <li>Az ajánlott diagnosztikai eljárások (pl. multiméteres mérés, szzivárgáspróba)</li>
+                        <li>Az ajánlott diagnosztikai eljárások (pl. multiméteres mérés, szivárgáspróba)</li>
                         <li>A szükséges szerszámok listája</li>
                         <li>Az alkatrész csere költségbecslése</li>
                         <li>Haladási prioritás (azonnali csere, érdemes figyelni, rutinszolgáltatás)</li>
                     </ul>
                 </div>
-            </section>
-            
-            <!-- AI vs hagyományos diagnosztika -->
-            <section id="ai-vs-hagyomanyos">
-                <h2>AI diagnosztika vs. hagyományos diagnosztika</h2>
+
+                <h2 id="ai-vs-hagyomanyos">AI diagnosztika vs. hagyományos diagnosztika</h2>
                 <p>A <strong>hagyományos diagnosztika</strong> és az <strong>AI-alapú diagnosztika</strong> között jelentős különbségek vannak:</p>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Szempont</th>
-                            <th>Hagyományos Diagnosztika</th>
-                            <th>AI Diagnosztika</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Eszköz típusa</strong></td>
-                            <td>OBD2 szkenner (csak hibakód kiolvasás)</td>
-                            <td>AI-alapú rendszer (adatanalízis)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Diagnózis típusa</strong></td>
-                            <td>Hibakódok alapján (P0420, P0301)</td>
-                            <td>Mögöttes okok azonosítása</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Pontosság</strong></td>
-                            <td>60-75% (sok hamis pozitív)</td>
-                            <td>85-95% (gépi tanulás révén)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Időigényes</strong></td>
-                            <td>2-3 óra keresése a problémának</td>
-                            <td>Néhány perc azonnali elemzéssel</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Szüksége szakemberre</strong></td>
-                            <td>Igen, tapasztalt szerelő kell</td>
-                            <td>Nem, az AI végzi az elemzést</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Költség</strong></td>
-                            <td>200-300 EUR diagnosztika + szerelés</td>
-                            <td>Gyakran ingyenes vagy olcsó app</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Előrejelzés</strong></td>
-                            <td>Nem, csak az aktuális hibák</td>
-                            <td>Igen, a jövőbeli hibák előrejelzése</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            
-            <!-- Adatfeldolgozás folyamata -->
-            <section id="adatfeldolgozas">
-                <h2>Az adatfeldolgozás folyamata</h2>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Szempont</th>
+                                <th scope="col">Hagyományos Diagnosztika</th>
+                                <th scope="col">AI Diagnosztika</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Eszköz típusa</strong></td>
+                                <td>OBD2 szkenner (csak hibakód kiolvasás)</td>
+                                <td>AI-alapú rendszer (adatanalízis)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Diagnózis típusa</strong></td>
+                                <td>Hibakódok alapján (P0420, P0301)</td>
+                                <td>Mögöttes okok azonosítása</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pontosság</strong></td>
+                                <td>60-75% (sok hamis pozitív)</td>
+                                <td>85-95% (gépi tanulás révén)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Időigényes</strong></td>
+                                <td>2-3 óra keresése a problémának</td>
+                                <td>Néhány perc azonnali elemzéssel</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Szüksége szakemberre</strong></td>
+                                <td>Igen, tapasztalt szerelő kell</td>
+                                <td>Nem, az AI végzi az elemzést</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Költség</strong></td>
+                                <td>200-300 EUR diagnosztika + szerelés</td>
+                                <td>Gyakran ingyenes vagy olcsó app</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Előrejelzés</strong></td>
+                                <td>Nem, csak az aktuális hibák</td>
+                                <td>Igen, a jövőbeli hibák előrejelzése</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="adatfeldolgozas">Az adatfeldolgozás folyamata</h2>
                 <p><strong>Az AI diagnosztikai rendszer</strong> egy összetett adatfeldolgozási folyamaton megy keresztül:</p>
-                
+
                 <h3>1. Adatgyűjtés az OBD2 csatlakozóból</h3>
-                <p>Az autó fedélzeti diagnosztikai portja (OBD2) szabványosított csatlakozó az összes járműben 1996 óta az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features" style="color: #0284c7; text-decoration: underline;">NHTSA (National Highway Traffic Safety Administration)</a> biztonsági és emissziós szabályozása miatt. Az AI rendszer <strong>másodpercenként több tucat szenzor értéket</strong> olvas ki, például:</p>
+                <p>Az autó fedélzeti diagnosztikai portja (OBD2) szabványosított csatlakozó az összes járműben 1996 óta az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features">NHTSA (National Highway Traffic Safety Administration)</a> biztonsági és emissziós szabályozása miatt. Az AI rendszer <strong>másodpercenként több tucat szenzor értéket</strong> olvas ki, például:</p>
                 <ul>
                     <li>Motor terhelés (0-100%)</li>
                     <li>Benzin nyomás</li>
@@ -664,20 +256,20 @@
                     <li>Turbófeltöltő nyomás</li>
                     <li>Féknyomás</li>
                 </ul>
-                
+
                 <h3>2. Adatok normalizálása</h3>
                 <p>A különféle járművekből érkező adatok eltérő skálákat használhatnak. Az AI <strong>normalizálja az adatokat</strong>, hogy közös formulán dolgozhassanak:</p>
                 <p><strong>Normalizált érték = (aktuális érték - minimum) / (maximum - minimum)</strong></p>
                 <p>Ezzel minden érték 0 és 1 közé esik, az AI modell pedig konzisztens módon feldolgozhatja az adatokat.</p>
-                
+
                 <h3>3. Minta felismerése (Pattern Recognition)</h3>
-                <p>Az AI modell <strong>tanult mintákat</strong> ismer fel az adatokból az <a href="https://www.sae.org/standards/content/j2012/" style="color: #0284c7; text-decoration: underline;">SAE J2012 standard</a> által meghatározott OBD2 hibakódok alapján:</p>
+                <p>Az AI modell <strong>tanult mintákat</strong> ismer fel az adatokból az <a href="https://www.sae.org/standards/content/j2012/">SAE J2012 standard</a> által meghatározott OBD2 hibakódok alapján:</p>
                 <ul>
                     <li><strong>Katalitikus konverter hiba (P0420):</strong> Magas O2 érzékelő jelzés + alacsony katalizátor hatékonyság</li>
                     <li><strong>EGR szelep hiba:</strong> Motor knakkózás + magas nitrogén-oxidok (NOx)</li>
                     <li><strong>Szivárgás az EVAP rendszerben:</strong> A benzincsóva nyomás nem építkezik fel</li>
                 </ul>
-                
+
                 <h3>4. Valószínűségi becslés</h3>
                 <p>Az AI nem <strong>biztosan mond meg a diagnosztikát</strong>, hanem <strong>valószínűségeket adhat</strong>:</p>
                 <ul>
@@ -686,53 +278,52 @@
                     <li>Szenzorhiba: 6%</li>
                 </ul>
                 <p>Ez a megközelítés reálisabb, mint a "biztos" diagnosztika, mivel legtöbb autó hibájának több lehetséges oka van.</p>
-            </section>
-            
-            <!-- Pontosság és megbízhatóság -->
-            <section id="pontossag-megbizheto">
-                <h2>Pontosság és megbízhatóság</h2>
+
+                <h2 id="pontossag-megbizheto">Pontosság és megbízhatóság</h2>
                 <p><strong>Az AI diagnosztikai rendszerek pontossága</strong> az alábbi tényezőktől függ:</p>
-                
+
                 <h3>Pontossági mutatók</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Diagnosztikai Terület</th>
-                            <th>Pontosság %</th>
-                            <th>Megjegyzés</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Katalitikus konverter hiba</td>
-                            <td>92%</td>
-                            <td>Magas érzékelő jelzés alapján jó előrejelzés</td>
-                        </tr>
-                        <tr>
-                            <td>Gyújtási problémák</td>
-                            <td>88%</td>
-                            <td>Misfire detektálás jó megbízhatósággal</td>
-                        </tr>
-                        <tr>
-                            <td>Szivárgás (EVAP)</td>
-                            <td>85%</td>
-                            <td>Nyomásváltások alapján jó érzékelés</td>
-                        </tr>
-                        <tr>
-                            <td>Elakadt termosztát</td>
-                            <td>78%</td>
-                            <td>Motor hőmérséklet anomáliákból becsülve</td>
-                        </tr>
-                        <tr>
-                            <td>Akkumulátor/töltési problémák</td>
-                            <td>89%</td>
-                            <td>Teljesítmény és feszültség függvénye</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Diagnosztikai Terület</th>
+                                <th scope="col">Pontosság %</th>
+                                <th scope="col">Megjegyzés</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Katalitikus konverter hiba</td>
+                                <td>92%</td>
+                                <td>Magas érzékelő jelzés alapján jó előrejelzés</td>
+                            </tr>
+                            <tr>
+                                <td>Gyújtási problémák</td>
+                                <td>88%</td>
+                                <td>Misfire detektálás jó megbízhatósággal</td>
+                            </tr>
+                            <tr>
+                                <td>Szivárgás (EVAP)</td>
+                                <td>85%</td>
+                                <td>Nyomásváltások alapján jó érzékelés</td>
+                            </tr>
+                            <tr>
+                                <td>Elakadt termosztát</td>
+                                <td>78%</td>
+                                <td>Motor hőmérséklet anomáliákból becsülve</td>
+                            </tr>
+                            <tr>
+                                <td>Akkumulátor/töltési problémák</td>
+                                <td>89%</td>
+                                <td>Teljesítmény és feszültség függvénye</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <h3>Pontosságot befolyásoló tényezők</h3>
-                <div class="highlight-box">
+                <div class="blog-callout blog-callout-warning">
                     <strong>Az AI diagnosztikai pontosság függ:</strong>
                     <ul>
                         <li><strong>Jármű típus és típus:</strong> Az AI pontosabb a népszerű modellekben (több tanítási adat)</li>
@@ -742,152 +333,234 @@
                         <li><strong>AI modell folyamatos tanulása:</strong> Az új adatok javítják a jövőbeli előrejelzéseket</li>
                     </ul>
                 </div>
-            </section>
-            
-            <!-- AI diagnosztika előnyei -->
-            <section id="eloikusegei">
-                <h2>AI diagnosztika előnyei</h2>
+
+                <h2 id="eloikusegei">AI diagnosztika előnyei</h2>
                 <p><strong>Az AI diagnosztikai rendszerek</strong> számos előnyt kínálnak az autótulajdonosoknak:</p>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>1. Költség csökkentés</strong>
                     <p>Az AI diagnosztika <strong>60-70% költségcsökkentést</strong> eredményez a szokásos diagnosztikai eljárásokhoz képest. Nincs szükség drága szervizlátogatásra a diagnosztizáláshoz.</p>
                 </div>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>2. Gyorsaság és azonnali válasz</strong>
                     <p>Az AI az adatok feldolgozásával <strong>néhány perc alatt</strong> teljes diagnosztikát ad, míg a hagyományos szerviz 2-3 órát vesz igénybe.</p>
                 </div>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>3. Pontosság és megbízhatóság</strong>
                     <p>A gépi tanulési modellek <strong>85-95% pontossággal</strong> azonosítják a hibákat, így <strong>szükségtelen alkatrészcsere</strong> minimalizálható.</p>
                 </div>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>4. Proaktív karbantartás</strong>
                     <p>Az AI képes <strong>előre jelezni a jövőbeli hibákat</strong>, így az autó tulajdonosok előrejelzés alapján karbantarthatják az autót, nem pedig a meghibásodás után.</p>
                 </div>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>5. Magyar nyelvű támogatás</strong>
                     <p>A rendszerek mint az <a href="/">AutoCognitix</a> <strong>magyar nyelvű felületeket</strong> biztosítanak, amely könnyebbé teszi az autótulajdonosoknak a diagnosztika megértését.</p>
                 </div>
-                
-                <div class="success-box">
+
+                <div class="blog-callout blog-callout-info">
                     <strong>6. Szakértelemhez nincs szükség</strong>
                     <p>Az AI diagnosztika <strong>bárki által használható</strong>, nem szükséges szerelő vagy mérnök. A diagnosztikai alkalmazások intuitív felületeket nyújtanak.</p>
                 </div>
-            </section>
-            
-            <!-- Korlátok és kihívások -->
-            <section id="korlatozasok">
-                <h2>AI diagnosztika korlátai és kihívásai</h2>
+
+                <h2 id="korlatozasok">AI diagnosztika korlátai és kihívásai</h2>
                 <p><strong>Az AI diagnosztikai rendszerek</strong> hatékonyak, de vannak korlátaik:</p>
-                
+
                 <h3>1. OBD2 adatokra való függőség</h3>
                 <p>Az AI csak azokat a hibákat tudja diagnosztizálni, amelyeknek <strong>OBD2 jelei vannak</strong>. Az olyan hibák, mint a hangszigetelés, elektromos kontakt problémák vagy hidraulikus szivárgások, nem diagnosztizálhatók az OBD2 adatok alapján.</p>
-                
+
                 <h3>2. Hamis pozitívok és negatívok</h3>
                 <p>Az AI néha <strong>téves diagnosztikát adhat</strong>, különösen az olyan ritkább hibáknál, amelyekből kevés tanítási adat van. Ezért az AI diagnosztikáját <strong>mindig manuális ellenőrzéssel</strong> kell validálni.</p>
-                
+
                 <h3>3. Új vagy nem szabványos járművek</h3>
                 <p>Az AI modellek az <strong>ismert járműmodellek</strong> alapján tanultak. Az új vagy nem szabványos járművek diagnosztizálása gyakran pontatlanabb, amíg elegendő adat áll rendelkezésre.</p>
-                
+
                 <h3>4. Szenzor meghibásodások</h3>
                 <p>Ha a szenzor maga hibásodik meg (és ezt is hibakód jelzi), az AI nehezebben tudja megkülönböztetni az actual probléma és a szenzor hiba között.</p>
-                
+
                 <h3>5. Adatvédelmi aggályok</h3>
                 <p>Az <strong>OBD2 adatok felhőbe küldése</strong> adatvédelmi kockázatot jelent. Felelősségteljesen kell kezelni a járművek adatait és biztosítani a magánszféra védelmét.</p>
-            </section>
-            
-            <!-- CTA Section -->
-            <div class="cta-section">
-                <h2>Próbáld ki az AutoCognitix AI diagnosztikát</h2>
-                <p>Szeretnél megtudni, mi a baj az autóddal? Az AutoCognitix AI diagnosztikai platform <strong>magyar nyelvű támogatással</strong> azonnal elemzi az autó hibáit.</p>
-                <a href="/" class="cta-button">Kezdj diagnosztizálni most</a>
-            </div>
-            
-            <!-- GYIK Szekció -->
-            <section id="gyik">
-                <h2>Gyakran Ismételt Kérdések (GYIK)</h2>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Mennyire pontosak az AI diagnosztikai rendszerek?</div>
-                    <div class="faq-answer">
-                        <p>Az AI diagnosztikai rendszerek <strong>85-95% pontossággal</strong> működnek a legnépszerűbb autóhibákban. Az olyan faktorszékek, mint az autó típusa, az OBD2 szenzor minősége és az AI modell folyamatos tanulása befolyásolják a pontosságot. Az AutoCognitix rendszere magyar autók diagnosztizálására <strong>optimalizálva van</strong>, ami még pontosabb eredményeket ad.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Szükséges az AI diagnosztikát szerelővel ellenőriztetni?</div>
-                    <div class="faq-answer">
-                        <p>Igen, <strong>javasolt a manuális ellenőrzés</strong> az AI diagnosztika után. Az AI egy kiváló kiindulási pont és <strong>időt és költséget takarít meg</strong>, de az olyan hibák, mint a szenzor meghibásodás vagy összetett elektromos problémák, még mindig szükséges a szerelő szakértelmét.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Működik az AI diagnosztika régi autókon?</div>
-                    <div class="faq-answer">
-                        <p>Az AI diagnosztika <strong>1996-ban vagy később gyártott autókon működik</strong>, mivel az OBD2 szabvánnyal kezdődik. Az idősebb járművek kevésbé szabványosítottak, ezért az AI pontossága csökkenhet. A régi autók diagnosztizálásához <strong>hagyományos szerviz</strong> vagy tapasztalt szerelő segítségére lehet szükség.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Mennyibe kerül az AI diagnosztika?</div>
-                    <div class="faq-answer">
-                        <p>Az AI diagnosztikai alkalmazások <strong>gyakran ingyenesek vagy nagyon olcsók</strong> (5-20 EUR), míg a hagyományos szerviz diagnosztikája <strong>200-300 EUR-ba kerülhet</strong>. Az AutoCognitix <strong>ingyenes alapcsomagot</strong> kínál az első elemzéshez, majd prémium funkciókat fizetős előfizetéssel.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Az AI diagnosztika helyettesítheti a szervízt?</div>
-                    <div class="faq-answer">
-                        <p>Az AI diagnosztika <strong>nem helyettesíti a szervízt</strong>, hanem <strong>kiegészíti azt</strong>. Az AI költségcsökkentést és gyorsabb diagnosztikát biztosít, de a tényleges javítás még mindig szervíz vagy DIY szerelő szükséges. Az AI diagnosztika segít az autó tulajdonosoknak <strong>informáltan dönthessenek</strong> a javítási opciókat illetően.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-section">
-                    <div class="faq-question">Működik az AI diagnosztika elektromos járműveken?</div>
-                    <div class="faq-answer">
-                        <p>Az AI diagnosztika <strong>részben működik elektromos járműveken</strong>, mivel az OBD2 szabvány nem volt kifejlesztve elektromos járművekre. Az olyan rendszerek, mint az AutoCognitix, <strong>kiterjesztetett támogatást adnak az EV-khez</strong>, beleértve az akkumulátor állapot, terhelési ciklus és elektromos motoros diagnosztikát, de az olyan komponensek, mint az inverter vagy az elektromos nyomatékváltó, speciális diagnosztikát igényelhetnek.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Konklúzió -->
-            <section id="konkluzio">
-                <h2>Konklúzió</h2>
+
+                <h2 id="konkluzio">Konklúzió</h2>
                 <p><strong>Az AI diagnosztika</strong> az autódiagnosztika jövője. A mesterséges intelligencia és gépi tanulás lehetővé teszi, hogy az autótulajdonosok <strong>költségesen és gyorsan</strong> megtudják, mi a baj az autójukkal. Az <strong>85-95% pontosság</strong> és a <strong>nagyon alacsony költség</strong> azt jelenti, hogy az AI diagnosztika <strong>megfizethető és hatékony megoldás</strong> az autó hibáinak azonosítására.</p>
-                
+
                 <p>Az <a href="/">AutoCognitix</a> olyan AI diagnosztikai platformok közé tartozik, amely <strong>magyar nyelvű támogatást</strong> biztosít és a <strong>magyar autók diagnosztizálására optimalizálva</strong>. Felelősen használva az AI diagnosztikát <strong>pénzt takarít meg és az autó élettartamát meghosszabbítja</strong>.</p>
-                
+
                 <p><strong>Az AI diagnosztika előnyei:</strong></p>
                 <ul>
-                    <li>✅ Költség: 60-70% megtakarítás az szokásos diagnosztikai eljárásokhoz képest</li>
-                    <li>✅ Gyorsaság: Néhány perc alatt teljes diagnózis</li>
-                    <li>✅ Pontosság: 85-95% sikeres diagnózis az elterjedt hibáknál</li>
-                    <li>✅ Proaktív karbantartás: Előrejelzés jövőbeli hibákra</li>
-                    <li>✅ Magyar nyelvű támogatás: Könnyebb megértés és használat</li>
+                    <li>Költség: 60-70% megtakarítás az szokásos diagnosztikai eljárásokhoz képest</li>
+                    <li>Gyorsaság: Néhány perc alatt teljes diagnózis</li>
+                    <li>Pontosság: 85-95% sikeres diagnózis az elterjedt hibáknál</li>
+                    <li>Proaktív karbantartás: Előrejelzés jövőbeli hibákra</li>
+                    <li>Magyar nyelvű támogatás: Könnyebb megértés és használat</li>
                 </ul>
-                
+
                 <p><strong>Jogi nyilatkozat:</strong> Ez a cikk oktatási céllal készült. Az AI diagnosztikai eredmények nem helyettesítik a professzionális szervizt. Mindig konzultáljon képzett szerelővel a végső diagnosztika és javítás előtt. Az AutoCognitix és a szerző nem vállal felelősséget az AI diagnosztika alapján végzett helytelen javításokért.</p>
-            </section>
+
+            </div>
         </div>
     </article>
-    
-    <footer>
+
+    <!-- FAQ Section -->
+    <section class="blog-faq-section blog-animate" id="gyik">
+        <div class="container">
+            <h2>Gyakran Ismételt Kérdések az AI diagnosztikáról</h2>
+            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Mennyire pontosak az AI diagnosztikai rendszerek?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Az AI diagnosztikai rendszerek <strong>85-95% pontossággal</strong> működnek a legnépszerűbb autóhibákban. Az olyan faktorszékek, mint az autó típusa, az OBD2 szenzor minősége és az AI modell folyamatos tanulása befolyásolják a pontosságot. Az AutoCognitix rendszere magyar autók diagnosztizálására <strong>optimalizálva van</strong>, ami még pontosabb eredményeket ad.</p>
+                    </div>
+                </div>
+
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Szükséges az AI diagnosztikát szerelővel ellenőriztetni?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Igen, <strong>javasolt a manuális ellenőrzés</strong> az AI diagnosztika után. Az AI egy kiváló kiindulási pont és <strong>időt és költséget takarít meg</strong>, de az olyan hibák, mint a szenzor meghibásodás vagy összetett elektromos problémák, még mindig szükséges a szerelő szakértelmét.</p>
+                    </div>
+                </div>
+
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Működik az AI diagnosztika régi autókon?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Az AI diagnosztika <strong>1996-ban vagy később gyártott autókon működik</strong>, mivel az OBD2 szabvánnyal kezdődik. Az idősebb járművek kevésbé szabványosítottak, ezért az AI pontossága csökkenhet. A régi autók diagnosztizálásához <strong>hagyományos szerviz</strong> vagy tapasztalt szerelő segítségére lehet szükség.</p>
+                    </div>
+                </div>
+
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Mennyibe kerül az AI diagnosztika?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Az AI diagnosztikai alkalmazások <strong>gyakran ingyenesek vagy nagyon olcsók</strong> (5-20 EUR), míg a hagyományos szerviz diagnosztikája <strong>200-300 EUR-ba kerülhet</strong>. Az AutoCognitix <strong>ingyenes alapcsomagot</strong> kínál az első elemzéshez, majd prémium funkciókat fizetős előfizetéssel.</p>
+                    </div>
+                </div>
+
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Az AI diagnosztika helyettesítheti a szervízt?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Az AI diagnosztika <strong>nem helyettesíti a szervízt</strong>, hanem <strong>kiegészíti azt</strong>. Az AI költségcsökkentést és gyorsabb diagnosztikát biztosít, de a tényleges javítás még mindig szervíz vagy DIY szerelő szükséges. Az AI diagnosztika segít az autó tulajdonosoknak <strong>informáltan dönthessenek</strong> a javítási opciókat illetően.</p>
+                    </div>
+                </div>
+
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Működik az AI diagnosztika elektromos járműveken?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Az AI diagnosztika <strong>részben működik elektromos járműveken</strong>, mivel az OBD2 szabvány nem volt kifejlesztve elektromos járművekre. Az olyan rendszerek, mint az AutoCognitix, <strong>kiterjesztetett támogatást adnak az EV-khez</strong>, beleértve az akkumulátor állapot, terhelési ciklus és elektromos motoros diagnosztikát, de az olyan komponensek, mint az inverter vagy az elektromos nyomatékváltó, speciális diagnosztikát igényelhetnek.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="blog-cta-section blog-animate">
+        <div class="container">
+            <div class="blog-cta">
+                <h2>Próbáld ki az AutoCognitix AI diagnosztikát</h2>
+                <p>Szeretnél megtudni, mi a baj az autóddal? Az AutoCognitix AI diagnosztikai platform magyar nyelvű támogatással azonnal elemzi az autó hibáit.</p>
+                <a href="/hu/#pricing" class="btn btn-primary">Kezdj diagnosztizálni most</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Articles -->
+    <section class="blog-related-section blog-animate">
+        <div class="container">
+            <h2>Kapcsolódó cikkek</h2>
+            <div class="blog-related">
+                <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>Autódiagnosztika otthon: Kezdők útmutatója</h4>
+                    <p>DIY autódiagnosztika teljes útmutatója kezdőknek</p>
+                </a>
+                <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>DTC hibakód kereső: Teljes útmutató</h4>
+                    <p>Megtudhatod, mit jelentenek az OBD2 kódok</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
             <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
             <p>AutoCognitix egy <strong>AI-alapú autó-diagnosztikai platform</strong> magyar nyelvű támogatással, OBD2 diagnosztikai adatok elemzésével és hibajelzés dekódolásával.</p>
             <p><em>Jogi nyilatkozat: Az AI diagnosztikai információk oktatási célokra szolgálnak és nem helyettesítik a professzionális szervízt.</em></p>
         </div>
     </footer>
-    
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]",
+        "description": "AI diagnosztika rendszerek működésének teljes útmutatója: gépi tanulás, adatfeldolgozás, előrejelzés és a hagyományos diagnosztika helyett.",
+        "image": "https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg",
+        "datePublished": "2026-03-21T09:00:00Z",
+        "dateModified": "2026-03-21T09:00:00Z",
+        "author": {
+            "@type": "Organization",
+            "name": "AutoCognitix"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AutoCognitix"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Kezdőlap",
+                "item": "https://autocognitix.hu/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://autocognitix.hu/hu/blog"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "AI Diagnosztika: Hogyan Működik?",
+                "item": "https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Scroll Animation -->
     <script>
-        document.querySelectorAll('.faq-section').forEach(section => {
-            section.querySelector('.faq-question').addEventListener('click', () => {
-                section.classList.toggle('open');
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.blog-animate');
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('blog-animate-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animateElements.forEach(function(el) {
+                observer.observe(el);
             });
         });
     </script>

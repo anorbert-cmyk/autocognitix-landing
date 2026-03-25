@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,929 +7,467 @@
     <meta name="keywords" content="P0171 code, system too lean, MAF sensor failure, fuel injector issues, oxygen sensor, car repair costs, DTC diagnosis">
     <meta name="author" content="AutoCognitix">
     <meta name="date" content="2026-03-21">
-    <meta property="og:title" content="P0171 DTC Code: System Too Lean – Causes, Symptoms & Repair Costs">
-    <meta property="og:description" content="Complete guide to P0171 trouble code: 5 causes with repair costs, symptoms, diagnostic steps, and when to visit a mechanic.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <!-- Open Graph Tags -->
     <meta property="og:type" content="article">
+    <meta property="og:title" content="P0171 DTC Code: System Too Lean - Causes, Symptoms & Repair Costs">
+    <meta property="og:description" content="Complete guide to P0171 trouble code: 5 causes with repair costs, symptoms, diagnostic steps, and when to visit a mechanic.">
     <meta property="og:url" content="https://autocognitix.com/en/blog/p0171-dtc-code-causes-symptoms-cost.html">
     <meta property="og:image" content="https://autocognitix.com/images/p0171-hero.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="P0171 System Too Lean: Causes, Symptoms & Repair Costs">
     <meta name="twitter:description" content="Understand P0171 DTC code: MAF sensor, fuel injector, O2 sensor issues. Diagnosis and repair cost breakdown.">
+
+    <!-- Canonical & Alternates -->
     <link rel="canonical" href="https://autocognitix.com/en/blog/p0171-dtc-code-causes-symptoms-cost.html">
     <link rel="alternate" hreflang="hu" href="https://autocognitix.com/hu/blog/p0171-dtc-kod-leanrendszer-okai.html">
     <link rel="alternate" hreflang="en" href="https://autocognitix.com/en/blog/p0171-dtc-code-causes-symptoms-cost.html">
-    <title>P0171 DTC Code: System Too Lean – Causes, Symptoms & Repair Costs</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="alternate" hreflang="x-default" href="https://autocognitix.com/en/blog/p0171-dtc-code-causes-symptoms-cost.html">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            line-height: 1.7;
-            color: #2c3e50;
-            background: #f8f9fa;
-        }
+    <title>P0171 DTC Code: System Too Lean - Causes, Symptoms & Repair Costs</title>
 
-        header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
-            color: white;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            transition: opacity 0.3s;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-
-        .article-badge {
-            display: inline-block;
-            background: #e74c3c;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 30px;
-            margin-left: 30px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        h1 {
-            font-size: 2.2em;
-            line-height: 1.3;
-            margin: 20px 30px 10px;
-            color: #1e3a5f;
-            font-weight: 800;
-        }
-
-        .article-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 14px;
-            color: #7f8c8d;
-            margin: 15px 30px 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .toc-section {
-            background: #fff3e0;
-            border-left: 4px solid #e74c3c;
-            padding: 20px;
-            margin: 30px;
-            border-radius: 4px;
-        }
-
-        .toc-section h2 {
-            font-size: 16px;
-            color: #1e3a5f;
-            margin-bottom: 12px;
-        }
-
-        .toc-section ol {
-            list-style-position: inside;
-            margin-left: 10px;
-        }
-
-        .toc-section li {
-            margin: 8px 0;
-            color: #2c3e50;
-        }
-
-        .toc-section a {
-            color: #e74c3c;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .toc-section a:hover {
-            color: #c0392b;
-            text-decoration: underline;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin: 35px 30px 15px;
-            color: #1e3a5f;
-            font-weight: 700;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ecf0f1;
-        }
-
-        h3 {
-            font-size: 1.3em;
-            margin: 25px 30px 12px;
-            color: #2d5a8c;
-            font-weight: 600;
-        }
-
-        p {
-            margin: 15px 30px;
-            text-align: justify;
-            color: #34495e;
-        }
-
-        strong {
-            color: #1e3a5f;
-            font-weight: 600;
-        }
-
-        em {
-            color: #2d5a8c;
-            font-style: italic;
-        }
-
-        .highlight-box {
-            background: #fff3cd;
-            border-left: 4px solid #f39c12;
-            padding: 20px;
-            margin: 25px 30px;
-            border-radius: 4px;
-        }
-
-        .highlight-box h4 {
-            color: #f39c12;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .danger-box {
-            background: #fadbd8;
-            border-left: 4px solid #e74c3c;
-            padding: 20px;
-            margin: 25px 30px;
-            border-radius: 4px;
-        }
-
-        .danger-box h4 {
-            color: #c0392b;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .cost-table {
-            width: calc(100% - 60px);
-            margin: 25px 30px;
-            border-collapse: collapse;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .cost-table th {
-            background: #e74c3c;
-            color: white;
-            padding: 14px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .cost-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .cost-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .symptom-table {
-            width: calc(100% - 60px);
-            margin: 25px 30px;
-            border-collapse: collapse;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .symptom-table th {
-            background: #3498db;
-            color: white;
-            padding: 14px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .symptom-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .symptom-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .cause-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 25px 30px;
-        }
-
-        .cause-card {
-            background: #ecf0f7;
-            border-left: 4px solid #3498db;
-            padding: 18px;
-            border-radius: 4px;
-        }
-
-        .cause-card h4 {
-            color: #2d5a8c;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .cause-card p {
-            margin: 0;
-            font-size: 14px;
-            color: #34495e;
-        }
-
-        .faq-section {
-            margin: 35px 30px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 25px;
-        }
-
-        .faq-section h2 {
-            margin-top: 0;
-            margin-bottom: 25px;
-            border: none;
-            padding-bottom: 0;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            background: white;
-        }
-
-        .faq-question {
-            background: #f0f7ff;
-            padding: 15px 18px;
-            font-weight: 600;
-            color: #1e3a5f;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s;
-        }
-
-        .faq-question:hover {
-            background: #e8f4f8;
-        }
-
-        .faq-toggle {
-            font-size: 18px;
-            transition: transform 0.3s;
-        }
-
-        .faq-toggle.open {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-answer.open {
-            padding: 18px;
-            max-height: 500px;
-        }
-
-        .faq-answer p {
-            margin: 0;
-            color: #34495e;
-        }
-
-        .related-articles {
-            margin: 35px 30px;
-            padding: 25px;
-            background: #f0f7ff;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-        }
-
-        .related-articles h3 {
-            margin-top: 0;
-            color: #1e3a5f;
-        }
-
-        .related-articles ul {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .related-articles li {
-            margin: 10px 0;
-        }
-
-        .related-articles a {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .related-articles a:hover {
-            color: #2980b9;
-            text-decoration: underline;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            padding: 40px 30px;
-            margin: 40px 30px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .cta-section h3 {
-            color: white;
-            margin-top: 0;
-            font-size: 1.5em;
-        }
-
-        .cta-section p {
-            color: #ecf0f1;
-            margin: 15px 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #f39c12;
-            color: white;
-            padding: 14px 32px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-            margin-top: 15px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .cta-button:hover {
-            background: #e67e22;
-        }
-
-        footer {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 30px;
-            text-align: center;
-            font-size: 13px;
-            margin-top: 40px;
-        }
-
-        footer a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        footer a:hover {
-            color: #ecf0f1;
-        }
-
-        ul, ol {
-            margin: 15px 30px;
-            color: #34495e;
-        }
-
-        ul li, ol li {
-            margin: 8px 0;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.6em;
-                margin: 20px 15px 10px;
-            }
-
-            h2 {
-                font-size: 1.4em;
-                margin: 25px 15px 12px;
-            }
-
-            h3 {
-                font-size: 1.1em;
-                margin: 20px 15px 10px;
-            }
-
-            p, ul, ol {
-                margin: 12px 15px;
-            }
-
-            main {
-                margin: 20px auto;
-            }
-
-            .article-badge {
-                margin-left: 15px;
-            }
-
-            .article-meta {
-                margin: 15px;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .toc-section {
-                margin: 20px 15px;
-            }
-
-            .cause-grid {
-                grid-template-columns: 1fr;
-                margin: 20px 15px;
-            }
-
-            .faq-section {
-                margin: 25px 15px;
-                padding: 18px;
-            }
-
-            .related-articles {
-                margin: 25px 15px;
-            }
-
-            .cta-section {
-                margin: 30px 15px;
-                padding: 30px 15px;
-            }
-
-            .highlight-box, .danger-box {
-                margin: 20px 15px;
-            }
-
-            .cost-table, .symptom-table {
-                width: calc(100% - 30px);
-                margin: 20px 15px;
-                font-size: 13px;
-            }
-
-            .cost-table th,
-            .cost-table td,
-            .symptom-table th,
-            .symptom-table td {
-                padding: 10px;
-            }
-
-            nav {
-                gap: 10px;
-                font-size: 12px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">AutoCognitix</div>
-            <nav>
-                <a href="/en/index.html">Home</a>
-                <a href="/en/blog/index.html">Blog</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/en/" class="logo">AutoCognitix</a>
+            <div>
+                <a href="/en/">Home</a>
+                <a href="/en/blog/">Blog</a>
                 <a href="/en/tools/">Tools</a>
-                <a href="/en/">About</a>
-                <a href="/en/">Contact</a>
-            </nav>
+                <a href="/en/#faq">FAQ</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <span class="article-badge">DTC Codes</span>
-        <h1>P0171 DTC Code: System Too Lean – Causes, Symptoms & Repair Costs</h1>
-        
-        <div class="article-meta">
-            <div class="meta-item">📅 March 21, 2026</div>
-            <div class="meta-item">⏱️ 8 min read</div>
-            <div class="meta-item">✍️ By Diagnostics Team</div>
+    <!-- HERO -->
+    <section class="blog-hero blog-animate">
+        <div class="container">
+            <div class="blog-hero-content">
+                <div class="blog-hero-label">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
+                    </svg>
+                    <span>DTC Code Guide</span>
+                </div>
+                <h1 class="blog-hero-title">P0171 DTC Code: System Too Lean - Causes, Symptoms & Repair Costs</h1>
+                <p class="blog-hero-description"><strong>Quick answer:</strong> <code>P0171</code> stands for "System Too Lean (Bank 1)" -- meaning your engine is burning fuel with too much air. A healthy fuel-air mixture is 14.7 parts air to 1 part fuel. When that ratio shifts toward more air, your engine's oxygen sensors detect it, and the check engine light appears.</p>
+            </div>
+            <div class="blog-hero-image">
+                <div class="blog-image-reveal"></div>
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);min-height:300px;">P0171 system too lean illustration</div>
+            </div>
+            <div class="blog-hero-meta">
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Published</span>
+                    <span class="blog-meta-value">March 21, 2026</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Read time</span>
+                    <span class="blog-meta-value">8 min</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Category</span>
+                    <span class="blog-meta-value">Fuel System</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Author</span>
+                    <span class="blog-meta-value">AutoCognitix Team</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="toc-section">
-            <h2>Table of Contents</h2>
-            <ol>
-                <li><a href="#what-is">What Is P0171? Definition & Impact</a></li>
-                <li><a href="#five-causes">The 5 Most Common Causes of P0171</a></li>
-                <li><a href="#symptoms">Symptoms You'll Notice (Before the Check Engine Light)</a></li>
-                <li><a href="#diagnosis">How to Diagnose P0171: Step-by-Step</a></li>
-                <li><a href="#repair-costs">P0171 Repair Costs: Budget Breakdown</a></li>
-                <li><a href="#diy-vs-pro">DIY vs. Professional Repair: What's the Right Call?</a></li>
-                <li><a href="#prevention">Prevention: How to Avoid P0171 in the Future</a></li>
-                <li><a href="#faq">Frequently Asked Questions</a></li>
-            </ol>
+    <!-- STATS -->
+    <section class="blog-stats-section blog-animate">
+        <div class="container">
+            <div class="blog-stats">
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Top Cause</h4>
+                        <p>MAF sensor failure</p>
+                    </div>
+                    <div class="blog-stat-number">35%</div>
+                </div>
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Repair Cost</h4>
+                        <p>Depending on root cause</p>
+                    </div>
+                    <div class="blog-stat-number">$80-$800</div>
+                </div>
+                <div class="blog-stat-card blog-stat-end">
+                    <div class="blog-stat-top">
+                        <h4>MAF Cleaning Fix Rate</h4>
+                        <p>Cases resolved by cleaning</p>
+                    </div>
+                    <div class="blog-stat-number">40%</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <h2 id="what-is">What Is P0171? Definition & Impact on Your Engine</h2>
-
-        <p><strong>P0171 stands for "System Too Lean (Bank 1)"</strong>—meaning your engine is burning fuel with too much air. A healthy fuel-air mixture is <strong>14.7 parts air to 1 part fuel</strong>. When that ratio shifts toward more air (leaner), your engine's oxygen sensors detect it, and the check engine light appears.</p>
-
-        <p>Think of it this way: your engine is starving for fuel. It's like trying to run a marathon on half your normal calorie intake—technically possible, but inefficient and eventually harmful.</p>
-
-        <div class="danger-box">
-            <h4>⚠️ Why P0171 Matters</h4>
-            <p>Ignoring P0171 leads to higher engine temperatures, pre-ignition (engine knocking), reduced fuel economy, and potential <a href="/en/blog/p0420-dtc-code-complete-guide.html">catalytic converter damage</a>. In extreme cases, you're looking at $2,000+ repairs. Address it early.</p>
+    <!-- TABLE OF CONTENTS -->
+    <section class="blog-toc-section blog-animate">
+        <div class="container">
+            <div class="blog-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is">What Is P0171? Definition & Impact</a></li>
+                    <li><a href="#five-causes">The 5 Most Common Causes of P0171</a></li>
+                    <li><a href="#symptoms">Symptoms You'll Notice</a></li>
+                    <li><a href="#diagnosis">How to Diagnose P0171: Step-by-Step</a></li>
+                    <li><a href="#repair-costs">P0171 Repair Costs: Budget Breakdown</a></li>
+                    <li><a href="#diy-vs-pro">DIY vs. Professional Repair</a></li>
+                    <li><a href="#prevention">Prevention: How to Avoid P0171</a></li>
+                    <li><a href="#faq">Frequently Asked Questions</a></li>
+                </ol>
+            </div>
         </div>
+    </section>
 
-        <p>The phrase <em>"Bank 1"</em> refers to the side of the engine where cylinder #1 is located (different for each vehicle make/model). P0171 affects specifically that bank; if you see <strong>P0174 (System Too Rich Bank 2)</strong>, the opposite bank has the opposite problem.</p>
+    <!-- MAIN CONTENT -->
+    <article class="blog-content">
+        <div class="container">
+            <div class="blog-richtext">
 
-        <h2 id="five-causes">The 5 Most Common Causes of P0171 (With Probability %)</h2>
+                <h2 id="what-is">What Is P0171? Definition & Impact on Your Engine</h2>
 
-        <p>Research from 15,000+ repair cases shows these are the main culprits behind P0171. This data aligns with <a href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener noreferrer">NHTSA recall patterns</a> for fuel system and sensor failures:</p>
+                <p><strong>P0171 stands for "System Too Lean (Bank 1)"</strong> -- meaning your engine is burning fuel with too much air. A healthy fuel-air mixture is <strong>14.7 parts air to 1 part fuel</strong>. When that ratio shifts toward more air (leaner), your engine's oxygen sensors detect it, and the check engine light appears.</p>
 
-        <div class="cause-grid">
-            <div class="cause-card">
-                <h4>🌬️ MAF Sensor Failure (35%)</h4>
+                <p>Think of it this way: your engine is starving for fuel. It's like trying to run a marathon on half your normal calorie intake -- technically possible, but inefficient and eventually harmful.</p>
+
+                <div class="blog-callout blog-callout-warning">
+                    <strong>Why P0171 Matters:</strong> Ignoring P0171 leads to higher engine temperatures, pre-ignition (engine knocking), reduced fuel economy, and potential <a href="/en/blog/p0420-dtc-code-complete-guide.html">catalytic converter damage</a>. In extreme cases, you're looking at $2,000+ repairs. Address it early.
+                </div>
+
+                <p>The phrase <em>"Bank 1"</em> refers to the side of the engine where cylinder #1 is located (different for each vehicle make/model). P0171 affects specifically that bank; if you see <strong>P0174 (System Too Rich Bank 2)</strong>, the opposite bank has the opposite problem.</p>
+
+                <h2 id="five-causes">The 5 Most Common Causes of P0171 (With Probability %)</h2>
+
+                <p>Research from 15,000+ repair cases shows these are the main culprits behind P0171. This data aligns with <a href="https://www.nhtsa.gov/recalls" class="external-link">NHTSA recall patterns</a> for fuel system and sensor failures:</p>
+
+                <h3>1. MAF Sensor Failure (35%)</h3>
                 <p>The Mass Air Flow sensor measures incoming air. If it's dirty or faulty, the engine thinks there's more air than there actually is, making fuel injection insufficient.</p>
-            </div>
 
-            <div class="cause-card">
-                <h4>💉 Fuel Injector Issues (28%)</h4>
+                <h3>2. Fuel Injector Issues (28%)</h3>
                 <p>Clogged or leaking fuel injectors can't spray the precise amount of fuel. Carbon buildup (common in older vehicles) reduces fuel delivery by 15-40%.</p>
-            </div>
 
-            <div class="cause-card">
-                <h4>🔦 Oxygen Sensor Malfunction (22%)</h4>
+                <h3>3. Oxygen Sensor Malfunction (22%)</h3>
                 <p>Faulty O2 sensors send incorrect feedback about air-fuel ratio, causing the engine to over-correct and lean out the mixture. This is one of the most common <a href="/en/blog/dtc-trouble-code-lookup-guide.html">diagnostic trouble codes</a> triggered by failing oxygen sensors.</p>
-            </div>
 
-            <div class="cause-card">
-                <h4>💨 Vacuum Leaks (10%)</h4>
+                <h3>4. Vacuum Leaks (10%)</h3>
                 <p>Cracked vacuum hoses or leaking gaskets allow unmeasured air into the intake manifold, bypassing the MAF sensor. Engine compensates by reducing fuel.</p>
-            </div>
 
-            <div class="cause-card">
-                <h4>🔌 Fuel Pressure Regulator (3%)</h4>
+                <h3>5. Fuel Pressure Regulator (3%)</h3>
                 <p>A faulty regulator reduces fuel pressure below the engine's requirement (typically 44-62 PSI). Result: insufficient fuel delivery.</p>
-            </div>
 
-            <div class="cause-card">
-                <h4>🔧 Other Causes (2%)</h4>
-                <p>Failing fuel pump, intake gasket leaks, engine control unit (ECU) software issues, or low fuel pressure in the tank.</p>
+                <div class="blog-callout blog-callout-info">
+                    <strong>Why MAF Sensor Is #1:</strong> MAF sensors are exposed to engine intake air and collect carbon/dirt deposits over 80,000+ miles. Cleaning one costs $50-$100 in DIY labor; replacement is $150-$400. It's the most common P0171 cause because it's also the easiest to fix -- mechanics check it first.
+                </div>
+
+                <h2 id="symptoms">Symptoms You'll Notice (Before the Check Engine Light)</h2>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Symptom</th>
+                                <th>What You'll Experience</th>
+                                <th>Severity Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rough Idle</strong></td>
+                                <td>Engine shakes/vibrates at stoplights. RPMs may dip below 500 RPM (very rough).</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hesitation on Acceleration</strong></td>
+                                <td>Pause or "lag" (0.5-1.5 seconds) when pressing gas pedal before power kicks in.</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Poor Fuel Economy</strong></td>
+                                <td>5-15% drop in MPG. If you normally get 28 MPG, now it's 24 MPG or worse.</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Engine Knocking</strong></td>
+                                <td>Metallic pinging sound under acceleration. Indicates pre-ignition from high temps.</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Black Smoke from Exhaust</strong></td>
+                                <td>Visible dark smoke (opposite of P0174 -- indicates over-fueling). Rare with P0171.</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Check Engine Light</strong></td>
+                                <td>Illuminates (solid, not blinking). Scan code reveals P0171.</td>
+                                <td>High</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p><strong>Timeline:</strong> Most owners notice rough idle and poor acceleration <em>before</em> the check engine light appears. The light typically triggers after 2-3 failed fuel trim cycles (usually 10-50 miles of driving).</p>
+
+                <h2 id="diagnosis">How to Diagnose P0171: Step-by-Step Diagnostic Procedure</h2>
+
+                <h3>Step 1: Confirm the Code (Requires OBD-II Reader)</h3>
+                <p>Use an OBD-II code reader ($20-$100) to confirm P0171 is present. Verify no other codes are active (P0101, P0135, P0171, P0174) -- multiple codes change the diagnosis approach. Modern <a href="/en/blog/how-ai-car-diagnostics-works.html">AI-powered diagnostic systems</a> can correlate multiple codes to pinpoint the root cause more accurately than traditional readers.</p>
+
+                <h3>Step 2: Visual MAF Sensor Inspection</h3>
+                <p>Remove the MAF sensor (typically located between the air filter box and intake manifold). A weak <a href="/en/blog/5-signs-car-battery-dying.html">car battery</a> can cause sensor voltage fluctuations, so ensure your battery is in good condition before assuming a sensor failure. Look for:</p>
+                <ul>
+                    <li>Dirt/carbon deposits on the sensor wire (gray/black coating)</li>
+                    <li>Damage or discoloration on the platinum filament</li>
+                    <li>Oil residue (indicates air filter bypass or PCV system issue)</li>
+                </ul>
+                <p><strong>If dirty:</strong> Clean with MAF sensor cleaner spray ($8-$12). If damaged or cleaning doesn't resolve code, replace ($150-$400 including labor).</p>
+
+                <h3>Step 3: Fuel Pressure Test</h3>
+                <p>Attach a fuel pressure gauge to the fuel rail (your mechanic does this). Healthy range:</p>
+                <ul>
+                    <li><strong>Key-on engine off:</strong> 44-50 PSI</li>
+                    <li><strong>Engine running (idle):</strong> 40-45 PSI</li>
+                    <li><strong>Under acceleration:</strong> 45-60 PSI</li>
+                </ul>
+                <p>Below 40 PSI = fuel pump or regulator issue. This test costs $50-$100 at a shop.</p>
+
+                <h3>Step 4: Oxygen Sensor Check</h3>
+                <p>Most modern vehicles have 2-4 O2 sensors. Bank 1 sensor 1 (pre-catalytic converter) is primary for P0171 diagnosis. According to <a href="https://www.sae.org/standards/" class="external-link">SAE standards</a>, oxygen sensors must meet specific voltage thresholds for proper engine feedback. A scan tool can display live O2 voltage readings:</p>
+                <ul>
+                    <li><strong>Healthy:</strong> Voltage fluctuates between 0.1-0.9V, crosses 0.5V every 1-2 seconds</li>
+                    <li><strong>Faulty:</strong> Stays fixed at 0.1V (too lean signal) or 0.9V (too rich signal)</li>
+                </ul>
+                <p>Replacement cost: $100-$300 per sensor.</p>
+
+                <h3>Step 5: Vacuum Leak Check</h3>
+                <p>Start the engine and listen for hissing sounds around intake hoses, gaskets, and PCV lines. Use a smoke machine test ($40-$80 at a shop) to visualize leaks in the intake manifold area.</p>
+
+                <h2 id="repair-costs">P0171 Repair Costs: Complete Budget Breakdown</h2>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Repair Type</th>
+                                <th>DIY Cost</th>
+                                <th>Shop Cost (Labor Included)</th>
+                                <th>Difficulty Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>MAF Sensor Cleaning</strong></td>
+                                <td>$12-$25</td>
+                                <td>$80-$150</td>
+                                <td>Easy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MAF Sensor Replacement</strong></td>
+                                <td>$150-$300</td>
+                                <td>$250-$500</td>
+                                <td>Moderate</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Oxygen Sensor Replacement</strong></td>
+                                <td>$80-$200</td>
+                                <td>$200-$400</td>
+                                <td>Moderate</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fuel Injector Cleaning (All)</strong></td>
+                                <td>$0 (Chemical additive)</td>
+                                <td>$50-$150</td>
+                                <td>Easy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fuel Injector Replacement (Single)</strong></td>
+                                <td>$60-$150</td>
+                                <td>$150-$400</td>
+                                <td>Hard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vacuum Leak Repair (Hose)</strong></td>
+                                <td>$15-$50</td>
+                                <td>$100-$250</td>
+                                <td>Easy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Intake Manifold Gasket</strong></td>
+                                <td>$40-$100</td>
+                                <td>$300-$700</td>
+                                <td>Hard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fuel Pressure Regulator</strong></td>
+                                <td>$80-$200</td>
+                                <td>$200-$500</td>
+                                <td>Hard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fuel Pump Replacement</strong></td>
+                                <td>$300-$600</td>
+                                <td>$600-$1,200</td>
+                                <td>Very Hard</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p><strong>Total Average Cost:</strong> $150-$800 depending on root cause. Start with MAF sensor cleaning ($80-$150 at a shop) as it's cheap and resolves P0171 in 35-40% of cases.</p>
+
+                <h2 id="diy-vs-pro">DIY vs. Professional Repair: What's the Right Call?</h2>
+
+                <h3>Go DIY If You Have These Skills:</h3>
+                <ul>
+                    <li>Comfortable using OBD-II code readers and interpreting results</li>
+                    <li>Can remove/reinstall simple components (air filter, MAF sensor, vacuum hoses)</li>
+                    <li>Own basic tools (socket set, screwdrivers, pliers)</li>
+                    <li>Have access to YouTube repair guides for your specific vehicle</li>
+                    <li>The repair is "low-risk": cleaning MAF sensor, replacing vacuum hoses</li>
+                </ul>
+
+                <h3>Visit a Professional Mechanic If:</h3>
+                <ul>
+                    <li>You've never worked on cars and unsure where to start</li>
+                    <li>The repair involves fuel injector replacement or fuel pressure regulator (fuel system = safety risk)</li>
+                    <li>You don't have a scan tool with live data capability (needed for O2 sensor diagnosis)</li>
+                    <li>The intake manifold gasket is suspect (requires engine disassembly, precision torque specs)</li>
+                    <li>You're under warranty and want to preserve coverage</li>
+                </ul>
+
+                <div class="blog-callout blog-callout-info">
+                    <strong>Smart Hybrid Approach:</strong> <strong>Diagnostic work DIY, repairs professional.</strong> Use a $40-$60 scan tool to confirm P0171 and identify likely causes. <a href="/en/blog/car-diagnostics-at-home-beginners-guide.html">Learn how to use diagnostic tools at home</a> to research the fix online ($0 cost). If it's simple (MAF cleaning, hose replacement), do it yourself. If it requires fuel system work, take it to a certified technician -- not worth the safety risk for a 20% savings.
+                </div>
+
+                <h2 id="prevention">Prevention: How to Avoid P0171 in the Future</h2>
+
+                <h3>Maintenance Schedule to Prevent P0171</h3>
+                <ul>
+                    <li><strong>Every 15,000 miles:</strong> Inspect air filter for dirt/clogging. Clean or replace if needed. A clogged air filter can cause P0171 indirectly by restricting MAF sensor airflow.</li>
+                    <li><strong>Every 30,000 miles:</strong> Use fuel system cleaner additive (Chevron, Redline, or Gumout) to prevent fuel injector clogging. Cost: $8-$15 per bottle.</li>
+                    <li><strong>Every 50,000 miles:</strong> Have a technician inspect vacuum hoses for cracks or leaks. Replace any damaged hoses ($10-$50 each).</li>
+                    <li><strong>Every 80,000 miles:</strong> Consider professional MAF sensor cleaning even if no code appears. Preventive maintenance avoids surprise failure.</li>
+                    <li><strong>Every 100,000 miles:</strong> Replace oxygen sensors if they're factory original. Most start drifting in accuracy by this mileage.</li>
+                </ul>
+
+                <h3>Driving Habits That Protect Your Fuel System</h3>
+                <ul>
+                    <li>Never run below 1/4 tank regularly. Sediment and water accumulate at the tank bottom and damage the fuel pump.</li>
+                    <li>Use TOP TIER gasoline (Chevron, Shell, Mobil, Audi) which has better detergents than budget brands. This aligns with <a href="https://www.epa.gov/emission-standards" class="external-link">EPA emission standards</a> that require cleaner fuel formulations.</li>
+                    <li>Replace fuel filters per manufacturer spec (typically 15,000-40,000 miles). A dirty fuel filter restricts flow and mimics P0171 symptoms.</li>
+                </ul>
+
             </div>
         </div>
+    </article>
 
-        <div class="highlight-box">
-            <h4>💡 Why MAF Sensor Is #1</h4>
-            <p>MAF sensors are exposed to engine intake air and collect carbon/dirt deposits over 80,000+ miles. Cleaning one costs $50-$100 in DIY labor; replacement is $150-$400. It's the most common P0171 cause because it's also the easiest to fix—mechanics check it first.</p>
-        </div>
-
-        <h2 id="symptoms">Symptoms You'll Notice (Before the Check Engine Light)</h2>
-
-        <div class="symptom-table">
-            <tr>
-                <th>Symptom</th>
-                <th>What You'll Experience</th>
-                <th>Severity Level</th>
-            </tr>
-            <tr>
-                <td><strong>Rough Idle</strong></td>
-                <td>Engine shakes/vibrates at stoplights. RPMs may dip below 500 RPM (very rough).</td>
-                <td>🔴 High</td>
-            </tr>
-            <tr>
-                <td><strong>Hesitation on Acceleration</strong></td>
-                <td>Pause or "lag" (0.5-1.5 seconds) when pressing gas pedal before power kicks in.</td>
-                <td>🟠 Medium</td>
-            </tr>
-            <tr>
-                <td><strong>Poor Fuel Economy</strong></td>
-                <td>5-15% drop in MPG. If you normally get 28 MPG, now it's 24 MPG or worse.</td>
-                <td>🟠 Medium</td>
-            </tr>
-            <tr>
-                <td><strong>Engine Knocking</strong></td>
-                <td>Metallic pinging sound under acceleration. Indicates pre-ignition from high temps.</td>
-                <td>🔴 High</td>
-            </tr>
-            <tr>
-                <td><strong>Black Smoke from Exhaust</strong></td>
-                <td>Visible dark smoke (opposite of P0174—indicates over-fueling). Rare with P0171.</td>
-                <td>🟡 Low</td>
-            </tr>
-            <tr>
-                <td><strong>Check Engine Light</strong></td>
-                <td>Illuminates (solid, not blinking). Scan code reveals P0171.</td>
-                <td>🔴 High</td>
-            </tr>
-        </table>
-
-        <p><strong>Timeline:</strong> Most owners notice rough idle and poor acceleration <em>before</em> the check engine light appears. The light typically triggers after 2-3 failed fuel trim cycles (usually 10-50 miles of driving).</p>
-
-        <h2 id="diagnosis">How to Diagnose P0171: Step-by-Step Diagnostic Procedure</h2>
-
-        <h3>Step 1: Confirm the Code (Requires OBD-II Reader)</h3>
-
-        <p>Use an OBD-II code reader ($20-$100) to confirm P0171 is present. Verify no other codes are active (P0101, P0135, P0171, P0174)—multiple codes change the diagnosis approach. Modern <a href="/en/blog/how-ai-car-diagnostics-works.html">AI-powered diagnostic systems</a> can correlate multiple codes to pinpoint the root cause more accurately than traditional readers.</p>
-
-        <h3>Step 2: Visual MAF Sensor Inspection</h3>
-
-        <p>Remove the MAF sensor (typically located between the air filter box and intake manifold). A weak <a href="/en/blog/5-signs-car-battery-dying.html">car battery</a> can cause sensor voltage fluctuations, so ensure your battery is in good condition before assuming a sensor failure. Look for:</p>
-
-        <ul>
-            <li>✓ Dirt/carbon deposits on the sensor wire (gray/black coating)</li>
-            <li>✓ Damage or discoloration on the platinum filament</li>
-            <li>✓ Oil residue (indicates air filter bypass or PCV system issue)</li>
-        </ul>
-
-        <p><strong>If dirty:</strong> Clean with MAF sensor cleaner spray ($8-$12). If damaged or cleaning doesn't resolve code, replace ($150-$400 including labor).</p>
-
-        <h3>Step 3: Fuel Pressure Test</h3>
-
-        <p>Attach a fuel pressure gauge to the fuel rail (your mechanic does this). Healthy range:</p>
-
-        <ul>
-            <li><strong>Key-on engine off:</strong> 44-50 PSI</li>
-            <li><strong>Engine running (idle):</strong> 40-45 PSI</li>
-            <li><strong>Under acceleration:</strong> 45-60 PSI</li>
-        </ul>
-
-        <p>Below 40 PSI = fuel pump or regulator issue. This test costs $50-$100 at a shop.</p>
-
-        <h3>Step 4: Oxygen Sensor Check</h3>
-
-        <p>Most modern vehicles have 2-4 O2 sensors. Bank 1 sensor 1 (pre-catalytic converter) is primary for P0171 diagnosis. According to <a href="https://www.sae.org/standards/" target="_blank" rel="noopener noreferrer">SAE standards</a>, oxygen sensors must meet specific voltage thresholds for proper engine feedback. A scan tool can display live O2 voltage readings:</p>
-
-        <ul>
-            <li><strong>Healthy:</strong> Voltage fluctuates between 0.1-0.9V, crosses 0.5V every 1-2 seconds</li>
-            <li><strong>Faulty:</strong> Stays fixed at 0.1V (too lean signal) or 0.9V (too rich signal)</li>
-        </ul>
-
-        <p>Replacement cost: $100-$300 per sensor.</p>
-
-        <h3>Step 5: Vacuum Leak Check</h3>
-
-        <p>Start the engine and listen for hissing sounds around intake hoses, gaskets, and PCV lines. Use a smoke machine test ($40-$80 at a shop) to visualize leaks in the intake manifold area.</p>
-
-        <h2 id="repair-costs">P0171 Repair Costs: Complete Budget Breakdown</h2>
-
-        <div class="cost-table">
-            <tr>
-                <th>Repair Type</th>
-                <th>DIY Cost</th>
-                <th>Shop Cost (Labor Included)</th>
-                <th>Difficulty Level</th>
-            </tr>
-            <tr>
-                <td><strong>MAF Sensor Cleaning</strong></td>
-                <td>$12-$25</td>
-                <td>$80-$150</td>
-                <td>⭐ Easy</td>
-            </tr>
-            <tr>
-                <td><strong>MAF Sensor Replacement</strong></td>
-                <td>$150-$300</td>
-                <td>$250-$500</td>
-                <td>⭐⭐ Moderate</td>
-            </tr>
-            <tr>
-                <td><strong>Oxygen Sensor Replacement</strong></td>
-                <td>$80-$200</td>
-                <td>$200-$400</td>
-                <td>⭐⭐ Moderate</td>
-            </tr>
-            <tr>
-                <td><strong>Fuel Injector Cleaning (All)</strong></td>
-                <td>$0 (Chemical additive)</td>
-                <td>$50-$150</td>
-                <td>⭐ Easy</td>
-            </tr>
-            <tr>
-                <td><strong>Fuel Injector Replacement (Single)</strong></td>
-                <td>$60-$150</td>
-                <td>$150-$400</td>
-                <td>⭐⭐⭐ Hard</td>
-            </tr>
-            <tr>
-                <td><strong>Vacuum Leak Repair (Hose)</strong></td>
-                <td>$15-$50</td>
-                <td>$100-$250</td>
-                <td>⭐ Easy</td>
-            </tr>
-            <tr>
-                <td><strong>Intake Manifold Gasket</strong></td>
-                <td>$40-$100</td>
-                <td>$300-$700</td>
-                <td>⭐⭐⭐ Hard</td>
-            </tr>
-            <tr>
-                <td><strong>Fuel Pressure Regulator</strong></td>
-                <td>$80-$200</td>
-                <td>$200-$500</td>
-                <td>⭐⭐⭐ Hard</td>
-            </tr>
-            <tr>
-                <td><strong>Fuel Pump Replacement</strong></td>
-                <td>$300-$600</td>
-                <td>$600-$1,200</td>
-                <td>⭐⭐⭐⭐ Very Hard</td>
-            </tr>
-        </table>
-
-        <p><strong>Total Average Cost:</strong> $150-$800 depending on root cause. Start with MAF sensor cleaning ($80-$150 at a shop) as it's cheap and resolves P0171 in 35-40% of cases.</p>
-
-        <h2 id="diy-vs-pro">DIY vs. Professional Repair: What's the Right Call?</h2>
-
-        <h3>Go DIY If You Have These Skills:</h3>
-
-        <ul>
-            <li>✓ Comfortable using OBD-II code readers and interpreting results</li>
-            <li>✓ Can remove/reinstall simple components (air filter, MAF sensor, vacuum hoses)</li>
-            <li>✓ Own basic tools (socket set, screwdrivers, pliers)</li>
-            <li>✓ Have access to YouTube repair guides for your specific vehicle</li>
-            <li>✓ The repair is "low-risk": cleaning MAF sensor, replacing vacuum hoses</li>
-        </ul>
-
-        <h3>Visit a Professional Mechanic If:</h3>
-
-        <ul>
-            <li>✗ You've never worked on cars and unsure where to start</li>
-            <li>✗ The repair involves fuel injector replacement or fuel pressure regulator (fuel system = safety risk)</li>
-            <li>✗ You don't have a scan tool with live data capability (needed for O2 sensor diagnosis)</li>
-            <li>✗ The intake manifold gasket is suspect (requires engine disassembly, precision torque specs)</li>
-            <li>✗ You're under warranty and want to preserve coverage</li>
-        </ul>
-
-        <div class="highlight-box">
-            <h4>💡 Smart Hybrid Approach</h4>
-            <p><strong>Diagnostic work DIY, repairs professional.</strong> Use a $40-$60 scan tool to confirm P0171 and identify likely causes. <a href="/en/blog/car-diagnostics-at-home-beginners-guide.html">Learn how to use diagnostic tools at home</a> to research the fix online ($0 cost). If it's simple (MAF cleaning, hose replacement), do it yourself. If it requires fuel system work, take it to a certified technician—not worth the safety risk for a 20% savings.</p>
-        </div>
-
-        <h2 id="prevention">Prevention: How to Avoid P0171 in the Future</h2>
-
-        <h3>Maintenance Schedule to Prevent P0171</h3>
-
-        <ul>
-            <li><strong>Every 15,000 miles:</strong> Inspect air filter for dirt/clogging. Clean or replace if needed. A clogged air filter can cause P0171 indirectly by restricting MAF sensor airflow.</li>
-            <li><strong>Every 30,000 miles:</strong> Use fuel system cleaner additive (Chevron, Redline, or Gumout) to prevent fuel injector clogging. Cost: $8-$15 per bottle.</li>
-            <li><strong>Every 50,000 miles:</strong> Have a technician inspect vacuum hoses for cracks or leaks. Replace any damaged hoses ($10-$50 each).</li>
-            <li><strong>Every 80,000 miles:</strong> Consider professional MAF sensor cleaning even if no code appears. Preventive maintenance avoids surprise failure.</li>
-            <li><strong>Every 100,000 miles:</strong> Replace oxygen sensors if they're factory original. Most start drifting in accuracy by this mileage.</li>
-        </ul>
-
-        <h3>Driving Habits That Protect Your Fuel System</h3>
-
-        <ul>
-            <li>🚗 Never run below 1/4 tank regularly. Sediment and water accumulate at the tank bottom and damage the fuel pump.</li>
-            <li>🚗 Use TOP TIER gasoline (Chevron, Shell, Mobil, Audi) which has better detergents than budget brands. This aligns with <a href="https://www.epa.gov/emission-standards" target="_blank" rel="noopener noreferrer">EPA emission standards</a> that require cleaner fuel formulations.</li>
-            <li>🚗 Replace fuel filters per manufacturer spec (typically 15,000-40,000 miles). A dirty fuel filter restricts flow and mimics P0171 symptoms.</li>
-        </ul>
-
-        <h2 id="faq">Frequently Asked Questions About P0171</h2>
-
-        <div class="faq-section">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can I drive with P0171, or is it unsafe?</span>
-                    <span class="faq-toggle">▼</span>
+    <!-- FAQ Section -->
+    <section class="blog-faq-section blog-animate" id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions About P0171</h2>
+            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Can I drive with P0171, or is it unsafe?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">You can drive short distances (to a mechanic), but it's not safe for long trips. P0171 causes engine knocking from high combustion temperatures, potentially damaging the catalytic converter and engine internals. Continued driving increases repair costs from $200 (MAF sensor) to $2,000+ (catalytic converter + engine damage). Address within 100-200 miles.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>You can drive short distances (to a mechanic), but it's not safe for long trips. P0171 causes engine knocking from high combustion temperatures, potentially damaging the catalytic converter and engine internals. Continued driving increases repair costs from $200 (MAF sensor) to $2,000+ (catalytic converter + engine damage). Address within 100-200 miles.</p>
-                </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What's the difference between P0171 and P0174?</span>
-                    <span class="faq-toggle">▼</span>
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">What's the difference between P0171 and P0174?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">P0171 (system too lean, bank 1) means insufficient fuel. P0174 (system too rich, bank 2) means too much fuel. If you have BOTH codes, suspect a MAF sensor or intake leak affecting the entire engine (not just one bank). Single codes point to bank-specific issues (O2 sensor, fuel injector for that bank).</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>P0171 (system too lean, bank 1) means insufficient fuel. P0174 (system too rich, bank 2) means too much fuel. If you have BOTH codes, suspect a MAF sensor or intake leak affecting the entire engine (not just one bank). Single codes point to bank-specific issues (O2 sensor, fuel injector for that bank).</p>
-                </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Will a MAF sensor cleaning fix P0171 permanently?</span>
-                    <span class="faq-toggle">▼</span>
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Will a MAF sensor cleaning fix P0171 permanently?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Cleaning a MAF sensor fixes P0171 in 40% of cases, but the problem returns in 6-12 months if you don't address the ROOT CAUSE (clogged air filter, poor fuel quality, PCV system leak). If the MAF sensor is permanently damaged, cleaning won't help -- replacement is necessary ($200-$500 including labor).</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>Cleaning a MAF sensor fixes P0171 in 40% of cases, but the problem returns in 6-12 months if you don't address the ROOT CAUSE (clogged air filter, poor fuel quality, PCV system leak). If the MAF sensor is permanently damaged, cleaning won't help—replacement is necessary ($200-$500 including labor).</p>
-                </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How much does a full P0171 diagnostic cost?</span>
-                    <span class="faq-toggle">▼</span>
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">How much does a full P0171 diagnostic cost?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">A complete diagnostic (scan, fuel pressure test, O2 sensor check, vacuum leak test) costs $100-$150 at most shops. Some shops charge $1/hour of labor (~$60-$100). This cost is often waived if you authorize repairs with them. Always ask if the diagnostic fee is credited toward the repair cost.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>A complete diagnostic (scan, fuel pressure test, O2 sensor check, vacuum leak test) costs $100-$150 at most shops. Some shops charge $1/hour of labor (~$60-$100). This cost is often waived if you authorize repairs with them. Always ask if the diagnostic fee is credited toward the repair cost.</p>
-                </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can a dirty air filter cause P0171?</span>
-                    <span class="faq-toggle">▼</span>
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Can a dirty air filter cause P0171?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Indirectly, yes. A clogged air filter restricts airflow, causing the MAF sensor to get less air and potentially becoming dirty itself. This triggers P0171. Solution: replace the air filter ($15-$40 DIY, $40-$80 shop labor). Always replace the air filter during P0171 diagnosis to rule out this simple cause.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    <p>Indirectly, yes. A clogged air filter restricts airflow, causing the MAF sensor to get less air and potentially becoming dirty itself. This triggers P0171. Solution: replace the air filter ($15-$40 DIY, $40-$80 shop labor). Always replace the air filter during P0171 diagnosis to rule out this simple cause.</p>
-                </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What if I ignore P0171 and don't fix it?</span>
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Within 3-6 months: Check engine light remains, fuel economy drops 10-20%, rough idle worsens. Within 6-12 months: Engine knocking damages the catalytic converter ($500-$1,500 replacement), possibly the engine itself. Ignoring a $200 MAF sensor repair can cost $2,000+ in cascading damage. Fix early.</p>
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">What if I ignore P0171 and don't fix it?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Within 3-6 months: Check engine light remains, fuel economy drops 10-20%, rough idle worsens. Within 6-12 months: Engine knocking damages the catalytic converter ($500-$1,500 replacement), possibly the engine itself. Ignoring a $200 MAF sensor repair can cost $2,000+ in cascading damage. Fix early.</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="related-articles">
-            <h3>Related Articles You Might Find Helpful</h3>
-            <ul>
-                <li><a href="/en/blog/p0420-dtc-code-complete-guide.html">P0420 DTC Code: Complete Guide to Catalyst System Efficiency</a></li>
-                <li><a href="/en/blog/how-ai-car-diagnostics-works.html">How AI Car Diagnostics Works: The Technology Behind Smart Repair [2026]</a></li>
-                <li><a href="/en/blog/dtc-trouble-code-lookup-guide.html">DTC Code Lookup Guide: How to Find and Understand Trouble Codes</a></li>
-                <li><a href="/en/blog/5-signs-car-battery-dying.html">5 Warning Signs Your Car Battery Is Dying (And How to Test It)</a></li>
-                <li><a href="/en/blog/car-diagnostics-at-home-beginners-guide.html">Car Diagnostics at Home: Beginner's Guide to DIY Vehicle Diagnosis</a></li>
-            </ul>
+    <!-- CTA Section -->
+    <section class="blog-cta-section blog-animate">
+        <div class="container">
+            <div class="blog-cta">
+                <h2>Unsure If It's P0171 or Something Else?</h2>
+                <p>Use AutoCognitix's free AI diagnostic tool to identify your car's problem instantly. Describe your symptoms, get a ranked diagnosis with confidence scores, and know what to expect before visiting a mechanic.</p>
+                <a href="/en/#pricing" class="btn btn-primary">Get started free</a>
+            </div>
         </div>
+    </section>
 
-        <div class="cta-section">
-            <h3>Unsure If It's P0171 or Something Else?</h3>
-            <p>Use AutoCognitix's free AI diagnostic tool to identify your car's problem instantly. Describe your symptoms, get a ranked diagnosis with confidence scores, and know what to expect before visiting a mechanic.</p>
-            <button class="cta-button" onclick="window.location.href='https://autocognitix.com/en/diagnosis'">Start Free Diagnosis</button>
+    <!-- Related Articles -->
+    <section class="blog-related-section blog-animate">
+        <div class="container">
+            <h2>Related Articles</h2>
+            <div class="blog-related">
+                <a href="/en/blog/p0420-dtc-code-complete-guide.html" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>P0420 DTC Code: Catalyst System Efficiency</h4>
+                    <p>Complete guide to catalytic converter codes</p>
+                </a>
+                <a href="/en/blog/dtc-trouble-code-lookup-guide.html" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>DTC Code Lookup Guide</h4>
+                    <p>How to find and understand trouble codes</p>
+                </a>
+            </div>
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>&copy; 2026 AutoCognitix. All rights reserved. | <a href="/en/legal/privacy-policy.html">Privacy Policy</a> | <a href="/en/legal/terms-of-service.html">Terms of Service</a></p>
-        <p>AutoCognitix is an AI-powered vehicle diagnostic platform. Always consult a certified mechanic for safety-critical repairs.</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AutoCognitix. All rights reserved.</p>
+            <p>AutoCognitix is an AI-powered vehicle diagnostic platform. Always consult a certified mechanic for safety-critical repairs.</p>
+        </div>
     </footer>
 
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "P0171 DTC Code: System Too Lean – Causes, Symptoms & Repair Costs",
+        "headline": "P0171 DTC Code: System Too Lean - Causes, Symptoms & Repair Costs",
         "description": "P0171 DTC code explained: system too lean causes (MAF sensor, fuel injector, O2 sensor). Repair costs $80-$800. Symptoms, diagnosis steps, and fix options inside.",
         "image": "https://autocognitix.com/images/p0171-hero.jpg",
         "datePublished": "2026-03-21",
@@ -1006,13 +544,25 @@
     }
     </script>
 
+    <!-- Scroll Animation -->
     <script>
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                const answer = this.nextElementSibling;
-                const toggle = this.querySelector('.faq-toggle');
-                answer.classList.toggle('open');
-                toggle.classList.toggle('open');
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.blog-animate');
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('blog-animate-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animateElements.forEach(function(el) {
+                observer.observe(el);
             });
         });
     </script>

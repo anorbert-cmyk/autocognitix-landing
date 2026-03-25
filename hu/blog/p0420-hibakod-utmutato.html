@@ -7,7 +7,7 @@
     <meta name="keywords" content="P0420 hibakód, katalizátor hiba, check engine lámpa, autódiagnosztika, DTC kód, motor hiba">
     <meta name="author" content="AutoCognitix">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    
+
     <!-- Open Graph Tags -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="P0420 hibakód: Mit jelent, mi okozza és mennyibe kerül a javítás? [2026]">
@@ -15,569 +15,28 @@
     <meta property="og:url" content="https://autocognitix.hu/blog/p0420-hibakod-utmutato">
     <meta property="og:image" content="https://autocognitix.hu/images/blog/p0420-og-image.jpg">
     <meta property="og:locale" content="hu_HU">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="P0420 hibakód: Mit jelent és mennyibe kerül a javítás?">
     <meta name="twitter:description" content="P0420 katalizátor-hatékonyság hiba teljes útmutatója: okai, tünetek, diagnosztika, javítási költségek.">
     <meta name="twitter:image" content="https://autocognitix.hu/images/blog/p0420-og-image.jpg">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://autocognitix.hu/blog/p0420-hibakod-utmutato">
-    
+
     <!-- Language Alternatives -->
     <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/blog/p0420-hibakod-utmutato">
     <link rel="alternate" hreflang="x-default" href="https://autocognitix.com/blog/p0420-error-code-guide">
-    
+
     <title>P0420 hibakód: Mit jelent, mi okozza és mennyibe kerül a javítás? [2026]</title>
-    
-    <style>
-        /* ============================================
-           CSS CUSTOM PROPERTIES - v8 Brand Guide
-           ============================================ */
-        
-        :root {
-            /* Color Palette */
-            --color-base-light: #F2F2F4;
-            --color-base-dark: #12110E;
-            --color-accent: #D97757;
-            --color-accent-light: #E88A6C;
-            --color-accent-dark: #C26141;
-            --color-neutral-100: #F9F9FA;
-            --color-neutral-200: #EDEDF0;
-            --color-neutral-300: #D4D4DA;
-            --color-neutral-400: #A8A8B3;
-            --color-neutral-500: #6E6E7A;
-            --color-neutral-600: #4A4A52;
-            --color-neutral-700: #313137;
-            --color-success: #4CAF50;
-            --color-warning: #FF9800;
-            --color-error: #F44336;
-            --color-info: #2196F3;
-            
-            /* Typography */
-            --font-primary: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-            
-            --text-display: 80px;
-            --text-h1: 56px;
-            --text-h2: 40px;
-            --text-h3: 28px;
-            --text-h4: 24px;
-            --text-h5: 20px;
-            --text-body-lg: 18px;
-            --text-body: 16px;
-            --text-body-sm: 14px;
-            --text-label: 13px;
-            --text-caption: 12px;
-            
-            --line-display: 1.2;
-            --line-h1: 1.2;
-            --line-h2: 1.3;
-            --line-body: 1.6;
-            --line-tight: 1.4;
-            
-            /* Spacing */
-            --space-xs: 8px;
-            --space-sm: 12px;
-            --space-base: 16px;
-            --space-md: 24px;
-            --space-lg: 32px;
-            --space-xl: 48px;
-            --space-2xl: 64px;
-            --space-3xl: 80px;
-            --space-section: 120px;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-base: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
-            
-            /* Transitions */
-            --transition-fast: 150ms ease-in-out;
-            --transition-base: 250ms ease-in-out;
-            --transition-slow: 350ms ease-in-out;
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-base: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: var(--font-primary);
-            font-size: var(--text-body);
-            line-height: var(--line-body);
-            color: var(--color-base-dark);
-            background-color: var(--color-base-light);
-            font-weight: 400;
-        }
-        
-        /* ============================================
-           TYPOGRAPHY
-           ============================================ */
-        
-        h1 {
-            font-size: var(--text-h1);
-            line-height: var(--line-h1);
-            font-weight: 700;
-            margin: var(--space-lg) 0 var(--space-base) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h2 {
-            font-size: var(--text-h2);
-            line-height: var(--line-h2);
-            font-weight: 700;
-            margin: var(--space-xl) 0 var(--space-md) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h3 {
-            font-size: var(--text-h3);
-            line-height: var(--line-tight);
-            font-weight: 600;
-            margin: var(--space-lg) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h4 {
-            font-size: var(--text-h4);
-            line-height: var(--line-tight);
-            font-weight: 600;
-            margin: var(--space-md) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        h5 {
-            font-size: var(--text-h5);
-            font-weight: 600;
-            margin: var(--space-base) 0 var(--space-sm) 0;
-            color: var(--color-base-dark);
-        }
-        
-        p {
-            margin: var(--space-base) 0;
-            line-height: var(--line-body);
-        }
-        
-        a {
-            color: var(--color-accent);
-            text-decoration: underline;
-            transition: color var(--transition-fast);
-        }
-        
-        a:hover {
-            color: var(--color-accent-dark);
-            text-decoration: underline;
-        }
-        
-        strong {
-            font-weight: 600;
-        }
-        
-        em {
-            font-style: italic;
-        }
-        
-        code {
-            font-family: var(--font-mono);
-            background-color: var(--color-neutral-100);
-            color: var(--color-accent-dark);
-            padding: 2px 6px;
-            border-radius: var(--radius-sm);
-            font-size: 0.9em;
-        }
-        
-        pre {
-            background-color: var(--color-neutral-700);
-            color: var(--color-neutral-100);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            overflow-x: auto;
-            margin: var(--space-base) 0;
-            line-height: 1.5;
-        }
-        
-        pre code {
-            background: none;
-            color: inherit;
-            padding: 0;
-        }
-        
-        /* ============================================
-           LAYOUT
-           ============================================ */
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-        
-        .section {
-            padding: var(--space-section) 0;
-        }
-        
-        /* ============================================
-           NAVBAR
-           ============================================ */
-        
-        nav {
-            background-color: var(--color-base-light);
-            border-bottom: 1px solid var(--color-neutral-200);
-            padding: var(--space-base) 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: var(--text-h4);
-            font-weight: 700;
-            color: var(--color-base-dark);
-            text-decoration: none;
-        }
-        
-        nav a {
-            color: var(--color-base-dark);
-            text-decoration: none;
-            margin-left: var(--space-lg);
-            font-weight: 500;
-            transition: color var(--transition-fast);
-        }
-        
-        nav a:hover {
-            color: var(--color-accent);
-        }
-        
-        /* ============================================
-           HERO SECTION
-           ============================================ */
-        
-        .hero {
-            background: linear-gradient(135deg, var(--color-base-light) 0%, var(--color-neutral-100) 100%);
-            padding: var(--space-3xl) 0;
-        }
-        
-        .hero h1 {
-            margin-top: 0;
-        }
-        
-        .hero-meta {
-            display: flex;
-            gap: var(--space-lg);
-            margin: var(--space-lg) 0;
-            font-size: var(--text-body-sm);
-            color: var(--color-neutral-500);
-        }
-        
-        .hero-meta span {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-        
-        /* ============================================
-           TABLE OF CONTENTS
-           ============================================ */
-        
-        .toc {
-            background-color: var(--color-neutral-100);
-            border-left: 4px solid var(--color-accent);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            margin: var(--space-xl) 0;
-        }
-        
-        .toc h3 {
-            margin-top: 0;
-            margin-bottom: var(--space-md);
-            font-size: var(--text-h5);
-        }
-        
-        .toc ol {
-            list-style-position: inside;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .toc li {
-            margin: var(--space-sm) 0;
-            line-height: var(--line-tight);
-        }
-        
-        .toc a {
-            color: var(--color-accent);
-            text-decoration: none;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
-        }
-        
-        /* ============================================
-           CONTENT BOXES
-           ============================================ */
-        
-        .definition-box {
-            background-color: #FFF3F0;
-            border-left: 4px solid var(--color-accent);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            margin: var(--space-lg) 0;
-        }
-        
-        .definition-box strong {
-            color: var(--color-accent-dark);
-        }
-        
-        .info-box {
-            background-color: #E3F2FD;
-            border-left: 4px solid var(--color-info);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            margin: var(--space-lg) 0;
-        }
-        
-        .warning-box {
-            background-color: #FFF3E0;
-            border-left: 4px solid var(--color-warning);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            margin: var(--space-lg) 0;
-        }
-        
-        .success-box {
-            background-color: #E8F5E9;
-            border-left: 4px solid var(--color-success);
-            padding: var(--space-md);
-            border-radius: var(--radius-base);
-            margin: var(--space-lg) 0;
-        }
-        
-        /* ============================================
-           TABLES
-           ============================================ */
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--space-lg) 0;
-            box-shadow: var(--shadow-sm);
-            border-radius: var(--radius-base);
-            overflow: hidden;
-        }
-        
-        thead {
-            background-color: var(--color-base-dark);
-            color: var(--color-neutral-100);
-        }
-        
-        th {
-            padding: var(--space-base) var(--space-md);
-            text-align: left;
-            font-weight: 600;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        th:last-child {
-            border-right: none;
-        }
-        
-        td {
-            padding: var(--space-base) var(--space-md);
-            border-bottom: 1px solid var(--color-neutral-200);
-        }
-        
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tbody tr:hover {
-            background-color: var(--color-neutral-50);
-        }
-        
-        /* ============================================
-           LISTS
-           ============================================ */
-        
-        ul, ol {
-            margin: var(--space-base) 0;
-            padding-left: var(--space-lg);
-        }
-        
-        li {
-            margin: var(--space-sm) 0;
-            line-height: var(--line-body);
-        }
-        
-        /* ============================================
-           IMAGE PLACEHOLDERS
-           ============================================ */
-        
-        .image-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-accent-dark);
-            font-size: var(--text-body);
-            font-weight: 600;
-            margin: var(--space-xl) 0;
-            border: 2px dashed var(--color-accent);
-            font-family: var(--font-mono);
-        }
-        
-        /* ============================================
-           FAQ SECTION
-           ============================================ */
-        
-        .faq-item {
-            margin: var(--space-lg) 0;
-            border-bottom: 1px solid var(--color-neutral-200);
-            padding-bottom: var(--space-lg);
-        }
-        
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            font-size: var(--text-h5);
-            color: var(--color-base-dark);
-            margin-bottom: var(--space-base);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
-        }
-        
-        .faq-question:hover {
-            color: var(--color-accent);
-        }
-        
-        .faq-answer {
-            color: var(--color-neutral-600);
-            line-height: var(--line-body);
-        }
-        
-        /* ============================================
-           CTA BUTTON
-           ============================================ */
-        
-        .btn {
-            display: inline-block;
-            padding: var(--space-base) var(--space-xl);
-            background-color: var(--color-accent);
-            color: white;
-            text-decoration: none;
-            border-radius: var(--radius-base);
-            font-weight: 600;
-            transition: all var(--transition-fast);
-            border: 2px solid var(--color-accent);
-            cursor: pointer;
-            font-family: var(--font-primary);
-            font-size: var(--text-body);
-        }
-        
-        .btn:hover {
-            background-color: var(--color-accent-dark);
-            border-color: var(--color-accent-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--color-accent);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--color-accent);
-            color: white;
-        }
-        
-        /* ============================================
-           FOOTER
-           ============================================ */
-        
-        footer {
-            background-color: var(--color-base-dark);
-            color: var(--color-neutral-100);
-            padding: var(--space-xl) 0;
-            margin-top: var(--space-section);
-        }
-        
-        footer a {
-            color: var(--color-accent-light);
-        }
-        
-        footer a:hover {
-            color: var(--color-accent);
-        }
-        
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-        
-        @media (max-width: 768px) {
-            :root {
-                --text-h1: 40px;
-                --text-h2: 28px;
-                --text-h3: 22px;
-                --space-section: 64px;
-            }
-            
-            .container {
-                padding: 0 var(--space-md);
-            }
-            
-            nav .container {
-                flex-direction: column;
-                gap: var(--space-md);
-            }
-            
-            nav a {
-                margin-left: 0;
-            }
-            
-            .hero-meta {
-                flex-direction: column;
-                gap: var(--space-base);
-            }
-        }
-    </style>
+
+    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav class="navbar">
         <div class="container">
             <a href="/" class="logo">AutoCognitix</a>
             <div>
@@ -589,26 +48,77 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- HERO (Averint style) -->
+    <section class="blog-hero blog-animate">
         <div class="container">
-            <h1>P0420 hibakód: Mit jelent, mi okozza és mennyibe kerül a javítás? [2026]</h1>
-            <div class="hero-meta">
-                <span>📅 Közzétéve: 2026. március 21.</span>
-                <span>⏱️ Olvasási idő: 12-15 perc</span>
-                <span>✅ Szakértő által ellenőrizve</span>
+            <div class="blog-hero-content">
+                <div class="blog-hero-label">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
+                    </svg>
+                    <span>DTC Hibakód Útmutató</span>
+                </div>
+                <h1 class="blog-hero-title">P0420 hibakód: Mit jelent, mi okozza és mennyibe kerül a javítás? [2026]</h1>
+                <p class="blog-hero-description"><strong>Rövid válasz:</strong> A <code>P0420</code> hibakód azt jelenti, hogy a katalizátor rendszered nem működik olyan hatékonyan, mint kellene. Ez általában a katalizátor vagy az oxigénszenzor hibájából adódik, és javítása 400-3000 euró közötti költséggel járhat.</p>
             </div>
-            <p><strong>Rövid válasz:</strong> A <code>P0420</code> hibakód azt jelenti, hogy a katalizátor rendszered nem működik olyan hatékonyan, mint kellene. Ez általában a katalizátor vagy az oxigénszenzor hibájából adódik, és javítása 400-3000 euró közötti költséggel járhat.</p>
+            <div class="blog-hero-image">
+                <div class="blog-image-reveal"></div>
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);min-height:300px;">P0420 katalizátor hibakód illusztráció</div>
+            </div>
+            <div class="blog-hero-meta">
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Publikálva</span>
+                    <span class="blog-meta-value">2026. március 21.</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Olvasási idő</span>
+                    <span class="blog-meta-value">12-15 perc</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Kategória</span>
+                    <span class="blog-meta-value">Emissziós rendszer</span>
+                </div>
+                <div class="blog-hero-meta-item">
+                    <span class="blog-meta-label">Szerző</span>
+                    <span class="blog-meta-value">AutoCognitix AI</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main>
-        <article>
-            <section class="section">
-                <div class="container">
-                    <!-- Table of Contents -->
-            <div class="toc">
+    <!-- STATS -->
+    <section class="blog-stats-section blog-animate">
+        <div class="container">
+            <div class="blog-stats">
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Előfordulás</h4>
+                        <p>Az egyik leggyakoribb DTC kód</p>
+                    </div>
+                    <div class="blog-stat-number">Top 5</div>
+                </div>
+                <div class="blog-stat-card">
+                    <div class="blog-stat-top">
+                        <h4>Javítási költség</h4>
+                        <p>Alkatrész + munkadíj</p>
+                    </div>
+                    <div class="blog-stat-number">200-3000 EUR</div>
+                </div>
+                <div class="blog-stat-card blog-stat-end">
+                    <div class="blog-stat-top">
+                        <h4>Vizsga eredmény</h4>
+                        <p>Műszaki vizsgán</p>
+                    </div>
+                    <div class="blog-stat-number">Bukás</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABLE OF CONTENTS -->
+    <section class="blog-toc-section blog-animate">
+        <div class="container">
+            <div class="blog-toc">
                 <h3>Tartalomjegyzék</h3>
                 <ol>
                     <li><a href="#mi-az">Mi az a P0420 hibakód?</a></li>
@@ -622,399 +132,445 @@
                     <li><a href="#gyik">Gyakran ismételt kérdések</a></li>
                 </ol>
             </div>
+        </div>
+    </section>
 
-            <!-- Section 1 -->
-            <h2 id="mi-az">Mi az a P0420 hibakód?</h2>
-            
-            <div class="definition-box">
-                <strong>P0420 = Katalizátor-rendszer hatékonyságának alacsony szintje (Bank 1)</strong>
-                <p>Ez egy OBD-II hibakód, amely azt jelzi, hogy a katalizátor nem távolít el elegendő nitrogén-oxidot (NOx) az autó kipufogógázaiból. A <code>P0420</code> az <a href="https://www.sae.org/standards/content/j2012/" style="color: #0284c7; text-decoration: underline;">SAE J2012 szabvány</a> szerinti standardizált diagnosztikai kód.</p>
+    <!-- MAIN CONTENT -->
+    <article class="blog-content">
+        <div class="container">
+            <div class="blog-richtext">
+
+                <!-- Section 1 -->
+                <h2 id="mi-az">Mi az a P0420 hibakód?</h2>
+
+                <div class="blog-callout">
+                    <strong>P0420 = Katalizátor-rendszer hatékonyságának alacsony szintje (Bank 1)</strong>
+                    <p>Ez egy OBD-II hibakód, amely azt jelzi, hogy a katalizátor nem távolít el elegendő nitrogén-oxidot (NOx) az autó kipufogógázaiból. A <code>P0420</code> az <a href="https://www.sae.org/standards/content/j2012/">SAE J2012 szabvány</a> szerinti standardizált diagnosztikai kód.</p>
+                </div>
+
+                <p>A <code>P0420</code> hibakód az egyik leggyakoribb autódiagnosztikai probléma, amellyel az autócsalád és az autószerelők találkoznak. Ez a kód azt jelzi, hogy a <strong>katalizátor-rendszer nem működik megfelelően</strong>, és nem teljesíti az emissziós szabályozást az <a href="https://www.epa.gov/emission-standards-reference-guide">EPA (Környezetvédelmi Ügynökség) emissziós szabványai</a> szerint. Az autó motorját vezérlő számítógép (ECU) felismeri ezt az anomáliát, és aktiválja a "Check Engine" figyelmeztető lámpát az irányítópulton.</p>
+
+                <p>Az autó katalitikus konvertere az egyik legfontosabb alkatrész a modern járművekhez. Ennek az eszköznek az a szerepe, hogy átalakítsa a motor által termelt mérgező kipufogógázokat (szén-monoxid, nitrogén-oxidok és szénhidrogének) kevésbé káros anyaggá. Ha ez az alkatrész nem működik megfelelően, az autó nem teljesíti az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features">NHTSA (Nemzeti Közlekedésbiztonsági Hatóság) biztonsági és környezetvédelmi szabványait</a>, és az ECU hibaként jelzi ezt a P0420 hibakóddal.</p>
+
+                <p>A <strong>P0420 autóhibakód</strong> jól ismert a tulajdonosok között, mivel <strong>magas javítási költségek</strong> társulnak vele. A katalizátor drága alkatrész, és egy új katalizátor cseréje 1000-3000 euróba kerülhet, függően az autó márkájától és modelljétől.</p>
+
+                <!-- Section 2 -->
+                <h2 id="mit-jelent">Mit jelent pontosan a P0420?</h2>
+
+                <p>Dekodjuk fel a P0420 hibakódot, hogy megértsük, mit jelent valójában:</p>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Kód rész</th>
+                                <th scope="col">Jelentés</th>
+                                <th scope="col">Magyarázat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>P</strong></td>
+                                <td>PowerTrain (Hajtáslánc)</td>
+                                <td>A kód a motorra, váltóra vagy hajtóműre vonatkozik</td>
+                            </tr>
+                            <tr>
+                                <td><strong>0</strong></td>
+                                <td>Standard kód</td>
+                                <td>Ez egy OBD-II szabvány hibakód (nem gyártóspecifikus)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4</strong></td>
+                                <td>Kibocsátások rendszer</td>
+                                <td>A hiba az emissziós rendszerrel kapcsolatos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>20</strong></td>
+                                <td>Katalizátor-hatékonyság</td>
+                                <td>Pontosan a katalizátor működésének hatékonysága az a probléma</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Technikai szinten a <code>P0420</code> azt jelenti, hogy a motor előtti és után elhelyezkedő oxigénszenzor (O2 szenzor) adatai arra utalnak, hogy a katalizátor nem működik megfelelően. Ezek az érzékelők mérik az oxigén szintjét a kipufogógázban, és ha a katalizátor nem távolít el elegendő szennyezőt, az O2 szenzor eltérő értékeket detektál, amit az ECU hibakódként rögzít.</p>
+
+                <div class="blog-callout blog-callout-info">
+                    <strong>Tipp:</strong> A P0420 hibakód "<strong>Bank 1</strong>" jelöléssel fordul elő, amely azt jelenti, hogy ez a motor azon oldala (amely oldal az 1-es hengercsövet tartalmazza). Van még P0430 is, amely Bank 2-re utal, de mindkettő azonos problémát jelzi.
+                </div>
+
+                <!-- Section 3 -->
+                <h2 id="okai">Milyen okai lehetnek a P0420 hibakódnak?</h2>
+
+                <p>A P0420 hibakód nem csak egyetlen problémára utalhat. Mivel több alkatrész és rendszer működik együtt, a hibakód <strong>számos különböző okból</strong> jelenhet meg. Az alábbiakban felsoroljuk a leggyakoribb okokat a valószínűségi sorrend szerint:</p>
+
+                <h3>1. Sérült vagy meghibásodott katalizátor</h3>
+                <p>Ez a <strong>leggyakoribb oka a P0420 hibakódnak</strong> (körülbelül 70% az esetek közül). A katalizátor egy komplex eszköz, amely különleges keramikus betöltéssel rendelkezik. Az idő múlásával, a magas hőmérsékletek és a mérgező anyagok hatására ez a betöltés összeömlhet vagy korrózió okozhat.</p>
+
+                <h3>2. Hibás oxigénszenzor (O2 szenzor)</h3>
+                <p>Az oxigénszenzor a katalizátor előtt és után elhelyezkedő érzékelő. Ha az egyik szenzor meghibásodott, az ECU nem tudja helyesen detektálni a katalizátor hatékonyságát, és ezért hibakódot jelez. Ez az oka az esetek körülbelül 20%-ának.</p>
+
+                <h3>3. Szivárgás a kipufogórendszerben</h3>
+                <p>Ha a kipufogórendszer szivárog (például a kipufogó csöban vagy az összekötő csöben), extra levegő kerülhet be, amit az O2 szenzor érzékel. Ez hamis hibakódot okozhat.</p>
+
+                <div class="blog-hero-image" style="margin:var(--space-xl) 0;">
+                    <div style="width:100%;height:300px;background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);">Tipikus katalizátor szerkezete</div>
+                </div>
+
+                <h3>4. Motor működési problémák</h3>
+                <ul>
+                    <li><strong>Gyújtási hiba:</strong> Ha a gyújtógyertyák meghibásodnak, a motor nem égeti el megfelelően az üzemanyagot, és több szennyezőanyag kerül a katalitikus konverterbe, ami túlterhelhet.</li>
+                    <li><strong>Tüzelőanyag-injektori problémák:</strong> Ha az injektorok rosszul működnek, az motor dús vagy szegény keveréket hoz létre, amely megtámadja a katalizátort.</li>
+                    <li><strong>Szívószelep szennyezése:</strong> Az EGR (kipufogó-gáz-visszavezetés) rendszer szennyezödése növeli az emissziót.</li>
+                </ul>
+
+                <h3>5. Elektromos problémák</h3>
+                <p>Az O2 szenzor kábelezésének vagy csatlakozójának problémái is okozhatnak P0420 hibakódot. Rossz tünet lehet például a szenzor közvetlenül az ECU-hoz való rossz vezetékezése.</p>
+
+                <h3>6. Szennyezet az üzemanyagban</h3>
+                <p>Ha az autó szennyezett üzemanyagot használ, az részecskék lerakódnak a katalizátor belsejében, csökkentve annak hatékonyságát.</p>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Ok</th>
+                                <th scope="col">Valószínűség</th>
+                                <th scope="col">Javítási költség (EUR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sérült katalizátor</td>
+                                <td>70%</td>
+                                <td>1200-3000</td>
+                            </tr>
+                            <tr>
+                                <td>Hibás O2 szenzor</td>
+                                <td>20%</td>
+                                <td>200-500</td>
+                            </tr>
+                            <tr>
+                                <td>Kipufogó szivárgás</td>
+                                <td>5%</td>
+                                <td>100-400</td>
+                            </tr>
+                            <tr>
+                                <td>Motor problémák</td>
+                                <td>3%</td>
+                                <td>300-2000</td>
+                            </tr>
+                            <tr>
+                                <td>Elektromos hiba</td>
+                                <td>2%</td>
+                                <td>150-400</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Section 4 -->
+                <h2 id="tunetek">Milyen tünetek jelzik a P0420 problémát?</h2>
+
+                <p>A P0420 hibakóddal előforduló tünetek a hiba súlyosságától függenek. Néhány autó teljesen normálisan működik a hibakód jelenléte ellenére, míg mások észrevehető teljesítménycökkentéseket tapasztalnak.</p>
+
+                <h3>Elsődleges tünet: Check Engine lámpa</h3>
+                <p>Az első és legnyilvánvalóbb tünet az <strong>"Check Engine" vagy "Check Motor" figyelmeztető lámpa</strong> az irányítópulton. Ez a lámpa sárgán (nem vörös) világít, és azt jelzi, hogy a fedélzeti diagnosztikai rendszer hibát detektált. Ha ez a lámpa világít, javasolt egy diagnosztikai eszközzel elolvasni a hibakódokat.</p>
+
+                <h3>Teljesítménybeli tünetek</h3>
+                <ul>
+                    <li><strong>Csökkent teljesítmény:</strong> Az autó "limp mode"-ba (biztonságos módba) léphet, amely korlátozza a motor teljesítményét a további károsodás megelőzésére.</li>
+                    <li><strong>Nehéz indítás:</strong> Az autó nehezebben indítható el, vagy sokszor próbálkoznia kell az indítással.</li>
+                    <li><strong>Váltó problémák:</strong> Automatikus váltó esetén a váltó előfordulhat, hogy rángat vagy nem vált megfelelően.</li>
+                </ul>
+
+                <h3>Fogyasztás és emissions tünetek</h3>
+                <ul>
+                    <li><strong>Megnövekedett üzemanyag-fogyasztás:</strong> Az autó több üzemanyagot fogyaszt, mivel a motor nem működik optimálisan.</li>
+                    <li><strong>Rosszabb emissziós értékek:</strong> Az autó nem teljesíti az emissziós teszteket.</li>
+                    <li><strong>Sötét füst a kipufogóból:</strong> Ha a motor túl gazdag keverékkel működik, sötét (fekete vagy szürke) füst látható a kipufogóból.</li>
+                </ul>
+
+                <h3>Hang- és szagtünetek</h3>
+                <ul>
+                    <li><strong>Gurgitálás a kipufogóból:</strong> A katalizátor belsejének sérülése gurgitáló hangot okozhat.</li>
+                    <li><strong>Égett gumi szaga:</strong> A sérült katalizátor égett gumi szagot áraszthat ki.</li>
+                    <li><strong>Vibráció vagy rázás:</strong> Az autó vibrálhat vagy rázhat a vezetés közben, főleg a gyorsítás alatt.</li>
+                </ul>
+
+                <div class="blog-callout blog-callout-warning">
+                    <strong>Figyelmeztetés:</strong> Ha a katalizátor túlmelegedik, akár 815°C fölé is felmelegedhet. Ez súlyos motorproblémákat okozhat. Ha füstöt vagy erős égett szagot érzékelsz, azonnal állítsd meg az autót és engedd hűlni.
+                </div>
+
+                <!-- Section 5 -->
+                <h2 id="diagnosztika">Hogyan diagnosztizálható a P0420 hiba?</h2>
+
+                <p><em>Az alábbi diagnosztikai információ az AutoCognitix AI elemzés alapján készült. Professzionális szerelővel való konzultáció ajánlott a végleges diagnosztikához.</em></p>
+
+                <p>A P0420 hiba diagnosztizálása több lépésből áll. Az AutoCognitix diagnosztikai platformunk segítségével gyorsan és pontosan azonosítható a probléma.</p>
+
+                <h3>1. OBD-II szkenner használata</h3>
+                <p>Az első lépés egy OBD-II szkenner (diagnosztikai eszköz) használata, amely beolvas az ECU-ból a hibakódot. Ezt megteheted egy:</p>
+                <ul>
+                    <li>Autószerelőnél (professzionális diagnosztikai berendezéssel)</li>
+                    <li>Otthon egy OBD-II Bluetooth szkennerrel (kb. 30-50 euró)</li>
+                    <li>Az <strong>AutoCognitix AI diagnosztikai platformunk</strong> használatával, amely szövegesen vagy manuálisan megadható az hibakód</li>
+                </ul>
+
+                <h3>2. O2 szenzor vizsgálata</h3>
+                <p>A diagnosztikai folyamat során az O2 szenzor élettartamát és teljesítményét vizsgálni kell. Ha az szenzor körülbelül 80 000-100 000 km-nél van, valószínű, hogy az oka a P0420-nak.</p>
+
+                <h3>3. Katalizátor vizsgálata</h3>
+                <p>Ha az O2 szenzor jó állapotban van, a katalizátor vizsgálata szükséges. Ez magában foglalhat:</p>
+                <ul>
+                    <li><strong>Vizuális ellenőrzés:</strong> A katalizátor fizikailag megvizsgálható a külső és belső sérülések szempontjából.</li>
+                    <li><strong>Katalizátor terhelési teszt:</strong> Egy diagnosztikai eszköz méri a katalizátor hatékonyságát valós idejű adatok alapján.</li>
+                    <li><strong>Hőkamerás vizsgálat:</strong> A katalizátor hőmérsékletét mérni lehet egy hőkamerával. Normálisan 200-400°C között kell lennie.</li>
+                </ul>
+
+                <div class="blog-hero-image" style="margin:var(--space-xl) 0;">
+                    <div style="width:100%;height:300px;background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);">OBD-II szkenner beolvasása P0420 hibakódot</div>
+                </div>
+
+                <h3>4. Kipufogórendszer ellenőrzése</h3>
+                <p>A diagnosztika során a teljes kipufogórendszert meg kell vizsgálni a szivárvágatlan vagy sérült részek szempontjából.</p>
+
+                <h3>5. Motor teljesítmény vizsgálata</h3>
+                <p>Az AutoCognitix AI diagnosztikai rendszer megvizsgálja a motor teljesítmény paramétereit, mint a gyújtás időzítése, üzemanyag-injekció és légsűrűség, hogy azonosítsa az esetleges problémákat.</p>
+
+                <!-- Section 6 -->
+                <h2 id="javitas">Hogyan lehet javítani a P0420 hibakódot?</h2>
+
+                <p>A P0420 hiba javítása az alapvető oka függvénye. Az alábbiakban felsoroljuk a leggyakoribb megoldásokat:</p>
+
+                <h3>1. O2 szenzor cseréje (ha az a probléma)</h3>
+                <p>Ha az diagnosztika kimutatta, hogy az O2 szenzor a hibás, ennek az alkatrésznek a cseréje a megoldás. Ez a legolcsóbb javítás (200-500 euró), és általában 1-2 óra alatt elvégezhető.</p>
+
+                <p><strong>O2 szenzor cseréjének lépései:</strong></p>
+                <ol>
+                    <li>Az autó motor lehűlésének megvárása</li>
+                    <li>Az O2 szenzor csatlakozójának lecsatlakoztatása</li>
+                    <li>Az O2 szenzor eltávolítása egy speciális fogóval</li>
+                    <li>Az új szenzor becsavarása megfelelő nyírómomentre</li>
+                    <li>A csatlakozó visszacsatlakoztatása</li>
+                    <li>A hibakód törlése az OBD-II szkennerrel</li>
+                </ol>
+
+                <h3>2. Katalizátor cseréje</h3>
+                <p>Ha a katalizátor sérült vagy meghibásodott, ezt az alkatrészt ki kell cserélni. Ez a leggyakoribb és legdrágább megoldás (1200-3000 euró). A csere 2-4 órát vesz igénybe, függően az autó típusától.</p>
+
+                <p><strong>Katalizátor cseréjének lépései:</strong></p>
+                <ol>
+                    <li>Az autót felemeljük és a futómű alá támasztjuk</li>
+                    <li>A kipufogócső lecsatlakoztatása az összes csatlakozási ponton</li>
+                    <li>A katalizátor eltávolítása</li>
+                    <li>Az új katalizátor behelyezése és csatlakoztatása</li>
+                    <li>A rendszer szellőztetése és a hibakód törlése</li>
+                </ol>
+
+                <div class="blog-callout blog-callout-info">
+                    <strong>Tipp:</strong> Sok autószerelő egy <strong>OEM (eredeti) katalizátort</strong> javaslhat, de elég drága. A <strong>piaci katalizátor</strong> (aftermarket) megfelelő minőségű lehet az eredeti ár 30-50%-ában. Az AutoCognitix segítségével összehasonlíthatod az alkatrészek árait a közelben.
+                </div>
+
+                <h3>3. Kipufogó szivárgás javítása</h3>
+                <p>Ha a probléma a kipufogó szivárvágatlan, ezt ki kell javítani. Ez lehet egy egyszerű tömítés csere vagy a rossz kipufogó cső cseréje.</p>
+
+                <h3>4. Motor működési hibáinak javítása</h3>
+                <p>Ha a probléma a motor működésében van (gyújtási hiba, injektori probléma, EGR szennyezés), ezeket ki kell javítani. Az olyan problémák megoldása 300-2000 euróba kerülhet.</p>
+
+                <!-- Section 7 -->
+                <h2 id="koltsegek">Mennyibe kerül a P0420 javítása?</h2>
+
+                <p>A P0420 javítási költsége nagyban függhet az alapvető hibától és az autó márkájától. Az alábbiakban egy áttekintést adunk a tipikus költségekről:</p>
+
+                <div class="blog-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Javítás típusa</th>
+                                <th>Alkatrész költsége</th>
+                                <th>Munkadíj</th>
+                                <th>Összesen (EUR)</th>
+                                <th>Időigény</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>O2 szenzor cseréje</td>
+                                <td>100-300</td>
+                                <td>100-200</td>
+                                <td>200-500</td>
+                                <td>1-2 óra</td>
+                            </tr>
+                            <tr>
+                                <td>Katalizátor csere (OEM)</td>
+                                <td>1000-2500</td>
+                                <td>300-500</td>
+                                <td>1300-3000</td>
+                                <td>2-4 óra</td>
+                            </tr>
+                            <tr>
+                                <td>Katalizátor csere (piaci)</td>
+                                <td>600-1500</td>
+                                <td>300-500</td>
+                                <td>900-2000</td>
+                                <td>2-4 óra</td>
+                            </tr>
+                            <tr>
+                                <td>Kipufogó szivárgás javítása</td>
+                                <td>50-200</td>
+                                <td>100-200</td>
+                                <td>150-400</td>
+                                <td>1 óra</td>
+                            </tr>
+                            <tr>
+                                <td>Gyújtási hiba javítása</td>
+                                <td>150-400</td>
+                                <td>200-300</td>
+                                <td>350-700</td>
+                                <td>1-2 óra</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Költségmegtakarítás lehetőségei</h3>
+
+                <p><strong>1. DIY Diagnosztika:</strong> Ha megvásárolsz egy OBD-II Bluetooth szkennereket (kb. 30-50 euró), saját magad is diagnosztizálhatod a hibát az AutoCognitix segítségével. Ez megtakarít körülbelül 50-100 eurót egy szakértői diagnosztikai költségből.</p>
+
+                <p><strong>2. Piaci alkatrészek:</strong> Az OEM (eredeti) alkatrészek helyett egy minőségi piaci alkatrészt használva 30-50% megtakarítható.</p>
+
+                <p><strong>3. Magántársaság helyett független szerviz:</strong> Egy független szerviz általában olcsóbb munkadíjat számlázhat, mint a márkakereskedés.</p>
+
+                <div class="blog-callout blog-callout-info">
+                    <strong>Költség-összehasonlítás:</strong> Egy P0420 javítás átlagos költsége Magyarországon 600-2000 euró, függően az autó típusától és a szükséges javítás jellegétől. Az AutoCognitix segítségével összehasonlíthatod a helyi szerzők árait.
+                </div>
+
+                <!-- Section 8 -->
+                <h2 id="prevencio">Hogyan lehet megelőzni a katalizátor-hatékonyság problémákat?</h2>
+
+                <p>Az alábbi lépések segíthetnek megelőzni a P0420 hibakódot és más katalizátor-problémákat:</p>
+
+                <h3>1. Rendszeres karbantartás</h3>
+                <ul>
+                    <li><strong>Olajcsere:</strong> A jó minőségű motorolaj és rendszeres olajcsere (minden 10 000-15 000 km-ben) megelőzheti a katalizátor szennyezödését.</li>
+                    <li><strong>Levegőszűrő csere:</strong> A szennyezett levegőszűrő csökkenti a motor teljesítményét és növeli az emissziót.</li>
+                    <li><strong>Gyújtógyertyák cseréje:</strong> Az elhasznált gyújtógyertyák hiányos égést okoznak, amely megtámadja a katalizátort.</li>
+                </ul>
+
+                <h3>2. Megfelelő üzemanyag használata</h3>
+                <p>Mindig a gyártó által ajánlott oktánszámú üzemanyagot használj. Az alacsony minőségű üzemanyag szennyezetet tartalmaz, amely lerakódik a katalizátorban. Ha lehetséges, magas oktánszámú üzemanyagot tankolj.</p>
+
+                <h3>3. A motor terhelésének csökkentése</h3>
+                <ul>
+                    <li>Kerüld a hirtelen gyorsítást és a hosszú kétütemű vezetést</li>
+                    <li>Ne hordj felesleges súlyt az autóban</li>
+                    <li>Elkerüld a rövid utakra szánt többszöri indítást, ami megnöveli az üzemanyag-fogyasztást</li>
+                </ul>
+
+                <h3>4. Katalizátor tisztítás</h3>
+                <p>Ha a katalizátor csak enyhén szennyezett, egy <strong>katalizátor-tisztító adalék</strong> (ezeket a benzintankba öntöd) segíthet. Ez körülbelül 20-40 euróba kerül, és ha működik, megmentheti az autót egy drága katalizátorcseréről.</p>
+
+                <h3>5. EGR és PCV rendszer karbantartása</h3>
+                <p>Az EGR (kipufogó-gáz-visszavezetés) rendszer és a PCV (pozitív szellőztetés) rendszer tisztán tartása csökkenti az emissziót és megelőzheti a katalizátor túlterheltségét.</p>
+
+                <div class="blog-hero-image" style="margin:var(--space-xl) 0;">
+                    <div style="width:100%;height:300px;background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);">Katalizátor megelőzési tippek infografika</div>
+                </div>
+
             </div>
-            
-            <p>A <code>P0420</code> hibakód az egyik leggyakoribb autódiagnosztikai probléma, amellyel az autócsalád és az autószerelők találkoznak. Ez a kód azt jelzi, hogy a <strong>katalizátor-rendszer nem működik megfelelően</strong>, és nem teljesíti az emissziós szabályozást az <a href="https://www.epa.gov/emission-standards-reference-guide" style="color: #0284c7; text-decoration: underline;">EPA (Környezetvédelmi Ügynökség) emissziós szabványai</a> szerint. Az autó motorját vezérlő számítógép (ECU) felismeri ezt az anomáliát, és aktiválja a "Check Engine" figyelmeztető lámpát az irányítópulton.</p>
+        </div>
+    </article>
 
-            <p>Az autó katalitikus konvertere az egyik legfontosabb alkatrész a modern járművekhez. Ennek az eszköznek az a szerepe, hogy átalakítsa a motor által termelt mérgező kipufogógázokat (szén-monoxid, nitrogén-oxidok és szénhidrogének) kevésbé káros anyaggá. Ha ez az alkatrész nem működik megfelelően, az autó nem teljesíti az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features" style="color: #0284c7; text-decoration: underline;">NHTSA (Nemzeti Közlekedésbiztonsági Hatóság) biztonsági és környezetvédelmi szabványait</a>, és az ECU hibaként jelzi ezt a P0420 hibakóddal.</p>
-
-            <p>A <strong>P0420 autóhibakód</strong> jól ismert a tulajdonosok között, mivel <strong>magas javítási költségek</strong> társulnak vele. A katalizátor drága alkatrész, és egy új katalizátor cseréje 1000-3000 euróba kerülhet, függően az autó márkájától és modelljétől.</p>
-
-            <!-- Section 2 -->
-            <h2 id="mit-jelent">Mit jelent pontosan a P0420?</h2>
-            
-            <p>Dekodjuk fel a P0420 hibakódot, hogy megértsük, mit jelent valójában:</p>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col">Kód rész</th>
-                        <th scope="col">Jelentés</th>
-                        <th scope="col">Magyarázat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>P</strong></td>
-                        <td>PowerTrain (Hajtáslánc)</td>
-                        <td>A kód a motorra, váltóra vagy hajtóműre vonatkozik</td>
-                    </tr>
-                    <tr>
-                        <td><strong>0</strong></td>
-                        <td>Standard kód</td>
-                        <td>Ez egy OBD-II szabvány hibakód (nem gyártóspecifikus)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>4</strong></td>
-                        <td>Kibocsátások rendszer</td>
-                        <td>A hiba az emissziós rendszerrel kapcsolatos</td>
-                    </tr>
-                    <tr>
-                        <td><strong>20</strong></td>
-                        <td>Katalizátor-hatékonyság</td>
-                        <td>Pontosan a katalizátor működésének hatékonysága az a probléma</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>Technikai szinten a <code>P0420</code> azt jelenti, hogy a motor előtti és után elhelyezkedő oxigénszenzor (O2 szenzor) adatai arra utalnak, hogy a katalizátor nem működik megfelelően. Ezek az érzékelők mérik az oxigén szintjét a kipufogógázban, és ha a katalizátor nem távolít el elegendő szennyezőt, az O2 szenzor eltérő értékeket detektál, amit az ECU hibakódként rögzít.</p>
-
-            <div class="info-box">
-                <strong>Tipp:</strong> A P0420 hibakód "<strong>Bank 1</strong>" jelöléssel fordul elő, amely azt jelenti, hogy ez a motor azon oldala (amely oldal az 1-es hengercsövet tartalmazza). Van még P0430 is, amely Bank 2-re utal, de mindkettő azonos problémát jelzi.
-            </div>
-
-            <!-- Section 3 -->
-            <h2 id="okai">Milyen okai lehetnek a P0420 hibakódnak?</h2>
-            
-            <p>A P0420 hibakód nem csak egyetlen problémára utalhat. Mivel több alkatrész és rendszer működik együtt, a hibakód <strong>számos különböző okból</strong> jelenhet meg. Az alábbiakban felsoroljuk a leggyakoribb okokat a valószínűségi sorrend szerint:</p>
-
-            <h3>1. Sérült vagy meghibásodott katalizátor</h3>
-            <p>Ez a <strong>leggyakoribb oka a P0420 hibakódnak</strong> (körülbelül 70% az esetek közül). A katalizátor egy komplex eszköz, amely különleges keramikus betöltéssel rendelkezik. Az idő múlásával, a magas hőmérsékletek és a mérgező anyagok hatására ez a betöltés összeömlhet vagy korrózió okozhat.</p>
-            
-            <h3>2. Hibás oxigénszenzor (O2 szenzor)</h3>
-            <p>Az oxigénszenzor a katalizátor előtt és után elhelyezkedő érzékelő. Ha az egyik szenzor meghibásodott, az ECU nem tudja helyesen detektálni a katalizátor hatékonyságát, és ezért hibakódot jelez. Ez az oka az esetek körülbelül 20%-ának.</p>
-            
-            <h3>3. Szivárgás a kipufogórendszerben</h3>
-            <p>Ha a kipufogórendszer szivárog (például a kipufogó csöban vagy az összekötő csöben), extra levegő kerülhet be, amit az O2 szenzor érzékel. Ez hamis hibakódot okozhat.</p>
-
-            <div class="image-placeholder">Tipikus katalizátor szerkezete</div>
-
-            <h3>4. Motor működési problémák</h3>
-            <ul>
-                <li><strong>Gyújtási hiba:</strong> Ha a gyújtógyertyák meghibásodnak, a motor nem égeti el megfelelően az üzemanyagot, és több szennyezőanyag kerül a katalitikus konverterbe, ami túlterhelhet.</li>
-                <li><strong>Tüzelőanyag-injektori problémák:</strong> Ha az injektorok rosszul működnek, az motor dús vagy szegény keveréket hoz létre, amely megtámadja a katalizátort.</li>
-                <li><strong>Szívószelep szennyezése:</strong> Az EGR (kipufogó-gáz-visszavezetés) rendszer szennyezödése növeli az emissziót.</li>
-            </ul>
-
-            <h3>5. Elektromos problémák</h3>
-            <p>Az O2 szenzor kábelezésének vagy csatlakozójának problémái is okozhatnak P0420 hibakódot. Rossz tünet lehet például a szenzor közvetlenül az ECU-hoz való rossz vezetékezése.</p>
-
-            <h3>6. Szennyezet az üzemanyagban</h3>
-            <p>Ha az autó szennyezett üzemanyagot használ, az részecskék lerakódnak a katalizátor belsejében, csökkentve annak hatékonyságát.</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col">Ok</th>
-                        <th scope="col">Valószínűség</th>
-                        <th scope="col">Javítási költség (EUR)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sérült katalizátor</td>
-                        <td>70%</td>
-                        <td>1200-3000</td>
-                    </tr>
-                    <tr>
-                        <td>Hibás O2 szenzor</td>
-                        <td>20%</td>
-                        <td>200-500</td>
-                    </tr>
-                    <tr>
-                        <td>Kipufogó szivárgás</td>
-                        <td>5%</td>
-                        <td>100-400</td>
-                    </tr>
-                    <tr>
-                        <td>Motor problémák</td>
-                        <td>3%</td>
-                        <td>300-2000</td>
-                    </tr>
-                    <tr>
-                        <td>Elektromos hiba</td>
-                        <td>2%</td>
-                        <td>150-400</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Section 4 -->
-            <h2 id="tunetek">Milyen tünetek jelzik a P0420 problémát?</h2>
-            
-            <p>A P0420 hibakóddal előforduló tünetek a hiba súlyosságától függenek. Néhány autó teljesen normálisan működik a hibakód jelenléte ellenére, míg mások észrevehető teljesítménycökkentéseket tapasztalnak.</p>
-
-            <h3>Elsődleges tünet: Check Engine lámpa</h3>
-            <p>Az első és legnyilvánvalóbb tünet az <strong>"Check Engine" vagy "Check Motor" figyelmeztető lámpa</strong> az irányítópulton. Ez a lámpa sárgán (nem vörös) világít, és azt jelzi, hogy a fedélzeti diagnosztikai rendszer hibát detektált. Ha ez a lámpa világít, javasolt egy diagnosztikai eszközzel elolvasni a hibakódokat.</p>
-
-            <h3>Teljesítménybeli tünetek</h3>
-            <ul>
-                <li><strong>Csökkent teljesítmény:</strong> Az autó "limp mode"-ba (biztonságos módba) léphet, amely korlátozza a motor teljesítményét a további károsodás megelőzésére.</li>
-                <li><strong>Nehéz indítás:</strong> Az autó nehezebben indítható el, vagy sokszor próbálkoznia kell az indítással.</li>
-                <li><strong>Váltó problémák:</strong> Automatikus váltó esetén a váltó előfordulhat, hogy rángat vagy nem vált megfelelően.</li>
-            </ul>
-
-            <h3>Fogyasztás és emissions tünetek</h3>
-            <ul>
-                <li><strong>Megnövekedett üzemanyag-fogyasztás:</strong> Az autó több üzemanyagot fogyaszt, mivel a motor nem működik optimálisan.</li>
-                <li><strong>Rosszabb emissziós értékek:</strong> Az autó nem teljesíti az emissziós teszteket.</li>
-                <li><strong>Sötét füst a kipufogóból:</strong> Ha a motor túl gazdag keverékkel működik, sötét (fekete vagy szürke) füst látható a kipufogóból.</li>
-            </ul>
-
-            <h3>Hang- és szagtünetek</h3>
-            <ul>
-                <li><strong>Gurgitálás a kipufogóból:</strong> A katalizátor belsejének sérülése gurgitáló hangot okozhat.</li>
-                <li><strong>Égett gumi szaga:</strong> A sérült katalizátor égett gumi szagot áraszthat ki.</li>
-                <li><strong>Vibráció vagy rázás:</strong> Az autó vibrálhat vagy rázhat a vezetés közben, főleg a gyorsítás alatt.</li>
-            </ul>
-
-            <div class="warning-box">
-                <strong>⚠️ Figyelmeztetés:</strong> Ha a katalizátor túlmelegedik, akár 815°C fölé is felmelegedhet. Ez súlyos motorproblémákat okozhat. Ha füstöt vagy erős égett szagot érzékelsz, azonnal állítsd meg az autót és engedd hűlni.
-            </div>
-
-            <!-- Section 5 -->
-            <h2 id="diagnosztika">Hogyan diagnosztizálható a P0420 hiba?</h2>
-            
-            <p><em>Az alábbi diagnosztikai információ az AutoCognitix AI elemzés alapján készült. Professzionális szerelővel való konzultáció ajánlott a végleges diagnosztikához.</em></p>
-
-            <p>A P0420 hiba diagnosztizálása több lépésből áll. Az AutoCognitix diagnosztikai platformunk segítségével gyorsan és pontosan azonosítható a probléma.</p>
-
-            <h3>1. OBD-II szkenner használata</h3>
-            <p>Az első lépés egy OBD-II szkenner (diagnosztikai eszköz) használata, amely beolvas az ECU-ból a hibakódot. Ezt megteheted egy:</p>
-            <ul>
-                <li>Autószerelőnél (professzionális diagnosztikai berendezéssel)</li>
-                <li>Otthon egy OBD-II Bluetooth szkennerrel (kb. 30-50 euró)</li>
-                <li>Az <strong>AutoCognitix AI diagnosztikai platformunk</strong> használatával, amely szövegesen vagy manuálisan megadható az hibakód</li>
-            </ul>
-
-            <h3>2. O2 szenzor vizsgálata</h3>
-            <p>A diagnosztikai folyamat során az O2 szenzor élettartamát és teljesítményét vizsgálni kell. Ha az szenzor körülbelül 80 000-100 000 km-nél van, valószínű, hogy az oka a P0420-nak.</p>
-
-            <h3>3. Katalizátor vizsgálata</h3>
-            <p>Ha az O2 szenzor jó állapotban van, a katalizátor vizsgálata szükséges. Ez magában foglalhat:</p>
-            <ul>
-                <li><strong>Vizuális ellenőrzés:</strong> A katalizátor fizikailag megvizsgálható a külső és belső sérülések szempontjából.</li>
-                <li><strong>Katalizátor terhelési teszt:</strong> Egy diagnosztikai eszköz méri a katalizátor hatékonyságát valós idejű adatok alapján.</li>
-                <li><strong>Hőkamerás vizsgálat:</strong> A katalizátor hőmérsékletét mérni lehet egy hőkamerával. Normálisan 200-400°C között kell lennie.</li>
-            </ul>
-
-            <div class="image-placeholder">OBD-II szkenner beolvasása P0420 hibakódot</div>
-
-            <h3>4. Kipufogórendszer ellenőrzése</h3>
-            <p>A diagnosztika során a teljes kipufogórendszert meg kell vizsgálni a szivárvágatlan vagy sérült részek szempontjából.</p>
-
-            <h3>5. Motor teljesítmény vizsgálata</h3>
-            <p>Az AutoCognitix AI diagnosztikai rendszer megvizsgálja a motor teljesítmény paramétereit, mint a gyújtás időzítése, üzemanyag-injekció és légsűrűség, hogy azonosítsa az esetleges problémákat.</p>
-
-            <!-- Section 6 -->
-            <h2 id="javitas">Hogyan lehet javítani a P0420 hibakódot?</h2>
-            
-            <p>A P0420 hiba javítása az alapvető oka függvénye. Az alábbiakban felsoroljuk a leggyakoribb megoldásokat:</p>
-
-            <h3>1. O2 szenzor cseréje (ha az a probléma)</h3>
-            <p>Ha az diagnosztika kimutatta, hogy az O2 szenzor a hibás, ennek az alkatrésznek a cseréje a megoldás. Ez a legolcsóbb javítás (200-500 euró), és általában 1-2 óra alatt elvégezhető.</p>
-
-            <p><strong>O2 szenzor cseréjének lépései:</strong></p>
-            <ol>
-                <li>Az autó motor lehűlésének megvárása</li>
-                <li>Az O2 szenzor csatlakozójának lecsatlakoztatása</li>
-                <li>Az O2 szenzor eltávolítása egy speciális fogóval</li>
-                <li>Az új szenzor becsavarása megfelelő nyírómomentre</li>
-                <li>A csatlakozó visszacsatlakoztatása</li>
-                <li>A hibakód törlése az OBD-II szkennerrel</li>
-            </ol>
-
-            <h3>2. Katalizátor cseréje</h3>
-            <p>Ha a katalizátor sérült vagy meghibásodott, ezt az alkatrészt ki kell cserélni. Ez a leggyakoribb és legdrágább megoldás (1200-3000 euró). A csere 2-4 órát vesz igénybe, függően az autó típusától.</p>
-
-            <p><strong>Katalizátor cseréjének lépései:</strong></p>
-            <ol>
-                <li>Az autót felemeljük és a futómű alá támasztjuk</li>
-                <li>A kipufogócső lecsatlakoztatása az összes csatlakozási ponton</li>
-                <li>A katalizátor eltávolítása</li>
-                <li>Az új katalizátor behelyezése és csatlakoztatása</li>
-                <li>A rendszer szellőztetése és a hibakód törlése</li>
-            </ol>
-
-            <div class="success-box">
-                <strong>💡 Tipp:</strong> Sok autószerelő egy <strong>OEM (eredeti) katalizátort</strong> javaslhat, de elég drága. A <strong>piaci katalizátor</strong> (aftermarket) megfelelő minőségű lehet az eredeti ár 30-50%-ában. Az AutoCognitix segítségével összehasonlíthatod az alkatrészek árait a közelben.
-            </div>
-
-            <h3>3. Kipufogó szivárgás javítása</h3>
-            <p>Ha a probléma a kipufogó szivárvágatlan, ezt ki kell javítani. Ez lehet egy egyszerű tömítés csere vagy a rossz kipufogó cső cseréje.</p>
-
-            <h3>4. Motor működési hibáinak javítása</h3>
-            <p>Ha a probléma a motor működésében van (gyújtási hiba, injektori probléma, EGR szennyezés), ezeket ki kell javítani. Az olyan problémák megoldása 300-2000 euróba kerülhet.</p>
-
-            <!-- Section 7 -->
-            <h2 id="koltsegek">Mennyibe kerül a P0420 javítása?</h2>
-            
-            <p>A P0420 javítási költsége nagyban függhet az alapvető hibától és az autó márkájától. Az alábbiakban egy áttekintést adunk a tipikus költségekről:</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Javítás típusa</th>
-                        <th>Alkatrész költsége</th>
-                        <th>Munkadíj</th>
-                        <th>Összesen (EUR)</th>
-                        <th>Időigény</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>O2 szenzor cseréje</td>
-                        <td>100-300</td>
-                        <td>100-200</td>
-                        <td>200-500</td>
-                        <td>1-2 óra</td>
-                    </tr>
-                    <tr>
-                        <td>Katalizátor csere (OEM)</td>
-                        <td>1000-2500</td>
-                        <td>300-500</td>
-                        <td>1300-3000</td>
-                        <td>2-4 óra</td>
-                    </tr>
-                    <tr>
-                        <td>Katalizátor csere (piaci)</td>
-                        <td>600-1500</td>
-                        <td>300-500</td>
-                        <td>900-2000</td>
-                        <td>2-4 óra</td>
-                    </tr>
-                    <tr>
-                        <td>Kipufogó szivárgás javítása</td>
-                        <td>50-200</td>
-                        <td>100-200</td>
-                        <td>150-400</td>
-                        <td>1 óra</td>
-                    </tr>
-                    <tr>
-                        <td>Gyújtási hiba javítása</td>
-                        <td>150-400</td>
-                        <td>200-300</td>
-                        <td>350-700</td>
-                        <td>1-2 óra</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Költségmegtakarítás lehetőségei</h3>
-            
-            <p><strong>1. DIY Diagnosztika:</strong> Ha megvásárolsz egy OBD-II Bluetooth szkennereket (kb. 30-50 euró), saját magad is diagnosztizálhatod a hibát az AutoCognitix segítségével. Ez megtakarít körülbelül 50-100 eurót egy szakértői diagnosztikai költségből.</p>
-            
-            <p><strong>2. Piaci alkatrészek:</strong> Az OEM (eredeti) alkatrészek helyett egy minőségi piaci alkatrészt használva 30-50% megtakarítható.</p>
-            
-            <p><strong>3. Magántársaság helyett független szerviz:</strong> Egy független szerviz általában olcsóbb munkadíjat számlázhat, mint a márkakereskedés.</p>
-
-            <div class="info-box">
-                <strong>💰 Költség-összehasonlítás:</strong> Egy P0420 javítás átlagos költsége Magyarországon 600-2000 euró, függően az autó típusától és a szükséges javítás jellegétől. Az AutoCognitix segítségével összehasonlíthatod a helyi szerzők árait.
-            </div>
-
-            <!-- Section 8 -->
-            <h2 id="prevencio">Hogyan lehet megelőzni a katalizátor-hatékonyság problémákat?</h2>
-            
-            <p>Az alábbi lépések segíthetnek megelőzni a P0420 hibakódot és más katalizátor-problémákat:</p>
-
-            <h3>1. Rendszeres karbantartás</h3>
-            <ul>
-                <li><strong>Olajcsere:</strong> A jó minőségű motorolaj és rendszeres olajcsere (minden 10 000-15 000 km-ben) megelőzheti a katalizátor szennyezödését.</li>
-                <li><strong>Levegőszűrő csere:</strong> A szennyezett levegőszűrő csökkenti a motor teljesítményét és növeli az emissziót.</li>
-                <li><strong>Gyújtógyertyák cseréje:</strong> Az elhasznált gyújtógyertyák hiányos égést okoznak, amely megtámadja a katalizátort.</li>
-            </ul>
-
-            <h3>2. Megfelelő üzemanyag használata</h3>
-            <p>Mindig a gyártó által ajánlott oktánszámú üzemanyagot használj. Az alacsony minőségű üzemanyag szennyezetet tartalmaz, amely lerakódik a katalizátorban. Ha lehetséges, magas oktánszámú üzemanyagot tankolj.</p>
-
-            <h3>3. A motor terhelésének csökkentése</h3>
-            <ul>
-                <li>Kerüld a hirtelen gyorsítást és a hosszú kétütemű vezetést</li>
-                <li>Ne hordj felesleges súlyt az autóban</li>
-                <li>Elkerüld a rövid utakra szánt többszöri indítást, ami megnöveli az üzemanyag-fogyasztást</li>
-            </ul>
-
-            <h3>4. Katalizátor tisztítás</h3>
-            <p>Ha a katalizátor csak enyhén szennyezett, egy <strong>katalizátor-tisztító adalék</strong> (ezeket a benzintankba öntöd) segíthet. Ez körülbelül 20-40 euróba kerül, és ha működik, megmentheti az autót egy drága katalizátorcseréről.</p>
-
-            <h3>5. EGR és PCV rendszer karbantartása</h3>
-            <p>Az EGR (kipufogó-gáz-visszavezetés) rendszer és a PCV (pozitív szellőztetés) rendszer tisztán tartása csökkenti az emissziót és megelőzheti a katalizátor túlterheltségét.</p>
-
-            <div class="image-placeholder">Katalizátor megelőzési tippek infografika</div>
-
-            <!-- Section 9 -->
-            <h2 id="gyik">Gyakran ismételt kérdések a P0420 hibakódról</h2>
-            
-            <div itemscope itemtype="https://schema.org/FAQPage">
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Vezethetek továbbá egy P0420 hibakóddal az autóban?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+    <!-- FAQ Section -->
+    <section class="blog-faq-section blog-animate" id="gyik">
+        <div class="container">
+            <h2>Gyakran ismételt kérdések a P0420 hibakódról</h2>
+            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Vezethetek továbbá egy P0420 hibakóddal az autóban?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">Igen, általában vezethet az autóval egy P0420 hibakóddal, de ez nem javasolt. Az autó továbbra is működik, de nem teljesíti az emissziós szabályokat. Hosszú távon a katalizátor további károkat szenvedhet, ami drágábban kerülhet. Néhány ország emissziós tesztjét is megbukhatod.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Mi a különbség a P0420 és P0430 hibakódok között?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Mi a különbség a P0420 és P0430 hibakódok között?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">A P0420 a Bank 1 katalizátor-hatékonyságára utal (az 1-es henger oldalán), míg a P0430 a Bank 2-re utal (a 2-es henger oldalán). Mindkettő azonos problémát jelez, csak a motor különböző oldalán. Ha mindkettő megjelenik, nagyobb problémád lehet.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Megjavul-e magától a P0420 hiba?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Megjavul-e magától a P0420 hiba?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">Nem, a P0420 hiba nem javul meg magától. Ha a Check Engine lámpa világít, egy alapvető probléma van az autóban, amelyet meg kell javítani. Az AutoCognitix diagnosztikai platformunk segítségével azonosíthatod a problémát és megtalálhatod a legközelebbi szervízt.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Milyen régi katalizátorom már fel kell cserélni?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Milyen régi katalizátorom már fel kell cserélni?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">A katalizátor átlagosan 150 000-200 000 km-ig tart, de ez nagyban függhet az autó típusától és a kondíciójától. Az USA-ban a katalitikus konverter általában 100 000-150 000 km-re garancia alatt áll. Ha az autód ennél több kilométert megtett, valószínű, hogy a katalizátor beszélésre szoruló.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Mi az a katalizátor-tisztító adalék, és működik-e?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Mi az a katalizátor-tisztító adalék, és működik-e?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">A katalizátor-tisztító adalék egy kemikália, amely a benzintankba öntöd a katalizátor lerakódásainak feloldására. Ezek az adalékok körülbelül 20-40 euróba kerülnek. Néhány ember azt jelenti, hogy működnek, mások szerint nem. A leghatékonyabbak akkor működnek, ha a katalizátor csak enyhén szennyezett, és nem teljesen meghibásodott.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <h4 class="faq-question" itemprop="name">Hogyan diagnosztizálhatom a P0420-at az AutoCognitix segítségével?</h4>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <div class="blog-faq-question" itemprop="name">Hogyan diagnosztizálhatom a P0420-at az AutoCognitix segítségével?</div>
+                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">Az AutoCognitix AI diagnosztikai platformra belépsz, megadsz a hibakódot (P0420), az autó márkáját, és az AI algoritmus részletes diagnosztikai jelentést generál, amely felsorolja a lehetséges okokat, a megoldásokat és a becsléseket a javítási költségekről. Ezután összehasonlíthatod a szerzők árait.</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- CTA Section -->
-            <div style="background-color: var(--color-neutral-100); padding: var(--space-xl); border-radius: var(--radius-lg); margin: var(--space-xl) 0; text-align: center;">
-                <h3>Az AutoCognitix AI segítségével azonosítsd a P0420 hibádat</h3>
+    <!-- CTA Section -->
+    <section class="blog-cta-section blog-animate">
+        <div class="container">
+            <div class="blog-cta">
+                <h2>Az AutoCognitix AI segítségével azonosítsd a P0420 hibádat</h2>
                 <p>Ne költs drágán a vakon szerzőre. Az AutoCognitix MI diagnosztikai platform azonosítja a pontosan okot és megjavasolja a legjobb megoldásokat.</p>
-                <a href="/" class="btn">Diagnosztikai elemzés indítása</a>
+                <a href="/hu/#pricing" class="btn btn-primary">Diagnosztikai elemzés indítása</a>
             </div>
         </div>
-            </section>
-        </article>
-    </main>
+    </section>
+
+    <!-- Related Articles -->
+    <section class="blog-related-section blog-animate">
+        <div class="container">
+            <h2>Kapcsolódó cikkek</h2>
+            <div class="blog-related">
+                <a href="/hu/blog/p0300-hibakod-utmutato" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>P0300 hibakód: Gyújtási hiba útmutató</h4>
+                    <p>Véletlenszerű gyújtási hiba okai és megoldásai</p>
+                </a>
+                <a href="/hu/blog/p0171-hibakod-utmutato" class="blog-related-card">
+                    <div class="blog-related-image" style="background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);height:160px;border-radius:var(--radius-base);"></div>
+                    <h4>P0171 hibakód: Szegény keverék útmutató</h4>
+                    <p>Üzemanyag-rendszer szegény keverék hiba diagnosztikája</p>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
             <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
             <p>Az AutoCognitix egy AI-alapú autódiagnosztikai platform. Nem helyettesíti a szakértői tanácsot. Mindig konzultálj egy minősített autószerelővel a végső diagnosztika előtt.</p>
         </div>
     </footer>
 
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -1065,6 +621,29 @@
             }
         ]
     }
+    </script>
+
+    <!-- Scroll Animation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.blog-animate');
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('blog-animate-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animateElements.forEach(function(el) {
+                observer.observe(el);
+            });
+        });
     </script>
 </body>
 </html>
