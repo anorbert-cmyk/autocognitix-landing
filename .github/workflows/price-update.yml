@@ -1,0 +1,51 @@
+name: Update Market Prices
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # Daily at 4 AM UTC
+  workflow_dispatch:
+    inputs:
+      force_full_refresh:
+        description: 'Force refresh all brands'
+        type: boolean
+        default: false
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch MNB exchange rate
+        run: python scripts/fetch-mnb-rate.py
+
+      - name: Update market prices with EUR/HUF adjustment
+        run: python scripts/fetch-mobile-de-prices.py
+
+      - name: Validate output JSON
+        run: |
+          python -c "
+          import json
+          with open('shared/data/hungarian-market-prices.json') as f:
+            data = json.load(f)
+          assert 'brands' in data, 'Missing brands key'
+          assert len(data['brands']) >= 25, f'Only {len(data[\"brands\"])} brands'
+          for brand, models in data['brands'].items():
+            for model, years in models.items():
+              for year, prices in years.items():
+                assert prices['min'] > 0 and prices['min'] <= prices['avg'] <= prices['max'], f'{brand} {model} {year} invalid'
+          print(f'Validation passed: {len(data[\"brands\"])} brands')
+          "
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add shared/data/
+          git diff --staged --quiet || git commit -m "chore: Daily price update (EUR/HUF + seasonal) [skip ci]"
+          git push
