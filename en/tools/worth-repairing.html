@@ -534,6 +534,7 @@
   <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
   <script src="/shared/js/vehicle-data.js?v=1.0"></script>
   <script src="/shared/js/tool-common.js?v=1.0"></script>
+  <script src="/shared/js/api-client.js?v=1.0"></script>
   <script>
   (function() {
     'use strict';
@@ -757,6 +758,68 @@
         mileage: mileage,
         beMonths: beMonths
       });
+
+      // ─── Progressive Enhancement: fetch backend data ───
+      (function enhanceWithAPI() {
+        var apiIndicator = document.createElement('div');
+        apiIndicator.id = 'apiEnhancement';
+        apiIndicator.className = 'tool-disclaimer';
+        apiIndicator.style.marginTop = '12px';
+        apiIndicator.innerHTML = '<small>\u23F3 Loading real market data...</small>';
+        var resultEl = document.getElementById('result') || document.querySelector('.result-inner');
+        if (resultEl) resultEl.appendChild(apiIndicator);
+
+        if (typeof ApiClient === 'undefined') return;
+
+        var conditionMap = { kituno: 'excellent', jo: 'good', kozepes: 'fair', rossz: 'poor' };
+        var model = document.getElementById('model').value;
+
+        ApiClient.evaluateRepair({
+          brand: brand,
+          model: model,
+          year: year,
+          mileage: mileage,
+          condition: conditionMap[condition] || 'fair',
+          repairCost: repairCostInput ? parseInt(repairCostInput) : null,
+          fuel: fuel
+        }).then(function(apiResult) {
+          var indicator = document.getElementById('apiEnhancement');
+          if (indicator) {
+            indicator.innerHTML = '<small>\u2705 Updated with real market data</small>';
+            indicator.style.color = 'var(--color-success)';
+          }
+          // Update market value with backend data
+          if (apiResult.vehicle_value_min && apiResult.vehicle_value_max) {
+            var marketEl = document.getElementById('resMarketValue');
+            if (marketEl) {
+              marketEl.textContent = ToolCommon.formatHUF(apiResult.vehicle_value_min) + ' \u2014 ' + ToolCommon.formatHUF(apiResult.vehicle_value_max);
+            }
+            var pointEl = document.getElementById('resMarketPointEstimate');
+            if (pointEl) {
+              pointEl.textContent = 'Average market value: ' + ToolCommon.formatHUF(apiResult.vehicle_value_avg);
+            }
+          }
+          // Update recommendation text
+          if (apiResult.recommendation_text) {
+            var recEl = document.getElementById('recoText');
+            if (recEl) recEl.textContent = apiResult.recommendation_text;
+          }
+          // Update confidence
+          if (apiResult.confidence_score) {
+            var confEl = document.querySelector('.uncertainty-indicator strong');
+            if (confEl) {
+              var conf = apiResult.confidence_score;
+              confEl.textContent = conf >= 0.7 ? 'LOW' : conf >= 0.4 ? 'MEDIUM' : 'HIGH';
+            }
+          }
+        }).catch(function(err) {
+          var indicator = document.getElementById('apiEnhancement');
+          if (indicator) {
+            indicator.innerHTML = '<small>\u2139\uFE0F Local estimate (backend unavailable)</small>';
+            indicator.style.color = 'var(--color-muted)';
+          }
+        });
+      })();
     }
 
     // ─── Render results ───

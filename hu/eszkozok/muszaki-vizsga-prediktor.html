@@ -410,6 +410,7 @@
   <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
   <script src="/shared/js/vehicle-data.js?v=1.0"></script>
   <script src="/shared/js/tool-common.js?v=1.0"></script>
+  <script src="/shared/js/api-client.js?v=1.0"></script>
   <script>
   (function() {
     'use strict';
@@ -830,6 +831,58 @@
 
       // Show result
       ToolCommon.showResult('resultSection');
+
+      // Progressive Enhancement: fetch backend inspection data
+      (function enhanceInspection() {
+        if (typeof ApiClient === 'undefined') return;
+
+        // Clean up previous enhancement elements
+        var prevIndicator = document.getElementById('apiEnhancement');
+        if (prevIndicator) prevIndicator.remove();
+        var prevEnhanced = document.getElementById('apiEnhancedItems');
+        if (prevEnhanced) prevEnhanced.remove();
+
+        var brand = document.getElementById('brand').value;
+        var model = document.getElementById('model').value;
+        var dtcRaw = document.getElementById('dtcCodes').value.trim();
+        var dtcList = dtcRaw ? dtcRaw.split(',').map(function(c) { return c.trim().toUpperCase(); }).filter(Boolean) : [];
+
+        var apiIndicator = document.createElement('div');
+        apiIndicator.id = 'apiEnhancement';
+        apiIndicator.className = 'tool-disclaimer';
+        apiIndicator.style.marginTop = '12px';
+        apiIndicator.innerHTML = '<small>⏳ Részletes vizsgálati adatok betöltése...</small>';
+        document.getElementById('resultSection').querySelector('.container').appendChild(apiIndicator);
+
+        ApiClient.evaluateInspection({
+          brand: brand, model: model, year: year, mileage: km,
+          dtcCodes: dtcList.length > 0 ? dtcList : ['P0000'],
+          symptoms: ''
+        }).then(function(apiResult) {
+          document.getElementById('apiEnhancement').innerHTML = '<small>✅ Részletes backend adatok alapján frissítve</small>';
+          document.getElementById('apiEnhancement').style.color = 'var(--color-success)';
+
+          // Enhance with real failing items and cost estimates
+          if (apiResult.failing_items && apiResult.failing_items.length > 0) {
+            var enhancedDiv = document.createElement('div');
+            enhancedDiv.id = 'apiEnhancedItems';
+            enhancedDiv.style.marginTop = '16px';
+            enhancedDiv.innerHTML = '<h4 style="margin-bottom:8px;">Részletes vizsgálati elemzés (backend)</h4>';
+            apiResult.failing_items.forEach(function(item) {
+              var card = document.createElement('div');
+              card.className = 'wear-alert urgency-' + (item.severity === 'fail' ? 'high' : 'medium');
+              card.innerHTML = '<strong>' + ToolCommon.escapeHTML(item.category_hu || item.category) + '</strong><br>' +
+                ToolCommon.escapeHTML(item.issue) + '<br>' +
+                '<small>Becsült javítási költség: ' + ToolCommon.formatHUF(item.estimated_cost_min) + ' — ' + ToolCommon.formatHUF(item.estimated_cost_max) + '</small>';
+              enhancedDiv.appendChild(card);
+            });
+            document.getElementById('resultSection').querySelector('.container').appendChild(enhancedDiv);
+          }
+        }).catch(function() {
+          document.getElementById('apiEnhancement').innerHTML = '<small>ℹ️ Helyi becslés alapján</small>';
+          document.getElementById('apiEnhancement').style.color = 'var(--color-muted)';
+        });
+      })();
     }
 
     // ─── HELPERS ───

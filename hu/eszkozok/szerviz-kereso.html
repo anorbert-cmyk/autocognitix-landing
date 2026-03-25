@@ -424,6 +424,7 @@
 
   <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
   <script src="/shared/js/tool-common.js?v=1.0"></script>
+  <script src="/shared/js/api-client.js?v=1.0"></script>
   <script>
     (function() {
       'use strict';
@@ -627,6 +628,28 @@
 
         // Show result section
         ToolCommon.showResult('resultSection');
+
+        // Progressive Enhancement: enhance DTC cards with backend descriptions
+        var matchedCodes = codes;
+        if (typeof ApiClient !== 'undefined' && matchedCodes.length > 0) {
+          matchedCodes.forEach(function(code) {
+            ApiClient.searchDTC(code).then(function(dtcData) {
+              // Find the card for this code and add Hungarian description
+              var cards = document.querySelectorAll('.specialty-card');
+              cards.forEach(function(card) {
+                if (card.textContent.indexOf(code) >= 0 && dtcData.description_hu) {
+                  var detail = document.createElement('div');
+                  detail.style.cssText = 'margin-top:8px;padding:8px;background:var(--color-info-surface);border-radius:4px;font-size:13px;';
+                  detail.innerHTML = '<strong>' + ToolCommon.escapeHTML(code) + ':</strong> ' + ToolCommon.escapeHTML(dtcData.description_hu);
+                  if (dtcData.possible_causes) {
+                    detail.innerHTML += '<br><small>Lehetséges okok: ' + dtcData.possible_causes.map(ToolCommon.escapeHTML).join(', ') + '</small>';
+                  }
+                  card.appendChild(detail);
+                }
+              });
+            }).catch(function() { /* silent fail */ });
+          });
+        }
       }
 
       // Bind form
