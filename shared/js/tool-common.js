@@ -203,7 +203,7 @@ var ToolCommon = {
         if (xhr.status === 200) {
           try {
             var data = JSON.parse(xhr.responseText);
-            if (data._meta) { resolve(null); return; } // fallback stub
+            if (data._meta && data._meta.source === 'fallback') { resolve(null); return; } // fallback stub
             self._dtcDB = data;
             resolve(data);
           } catch(e) { resolve(null); }

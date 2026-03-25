@@ -1,1 +1,834 @@
-{"_meta": {"source": "fallback", "updated": "2026-03-25"}}
+{
+  "_meta": {
+    "source": "Industry estimates for Hungarian market",
+    "updated": "2026-03-25",
+    "currency": "HUF",
+    "includes_labor": true,
+    "labor_rate_huf_per_hour": 15000,
+    "note": "Cost ranges include parts and labor unless otherwise noted. Prices reflect 2026 Hungarian market averages."
+  },
+  "P0100": {
+    "issues": [
+      {
+        "title": "Légtömegmérő (MAF) áramköri hiba",
+        "title_en": "Mass Air Flow Circuit Malfunction",
+        "costMin": 25000,
+        "costMax": 90000,
+        "laborHours": 1.0,
+        "parts": ["Légtömegmérő szenzor", "Csatlakozó"],
+        "parts_en": ["MAF sensor", "Connector"],
+        "severity": "high",
+        "commonCause": "Szennyeződött vagy meghibásodott MAF szenzor",
+        "commonCause_en": "Contaminated or faulty MAF sensor"
+      }
+    ]
+  },
+  "P0101": {
+    "issues": [
+      {
+        "title": "Légtömegmérő (MAF) tartományon kívüli jel",
+        "title_en": "Mass Air Flow Circuit Range/Performance",
+        "costMin": 20000,
+        "costMax": 85000,
+        "laborHours": 1.0,
+        "parts": ["Légtömegmérő szenzor", "Légszűrő"],
+        "parts_en": ["MAF sensor", "Air filter"],
+        "severity": "medium",
+        "commonCause": "Eltömődött légszűrő, szennyezett MAF szenzor vagy légszívás",
+        "commonCause_en": "Clogged air filter, dirty MAF sensor or vacuum leak"
+      }
+    ]
+  },
+  "P0102": {
+    "issues": [
+      {
+        "title": "Légtömegmérő (MAF) alacsony jel",
+        "title_en": "Mass Air Flow Circuit Low Input",
+        "costMin": 20000,
+        "costMax": 80000,
+        "laborHours": 1.0,
+        "parts": ["Légtömegmérő szenzor", "Kábelköteg"],
+        "parts_en": ["MAF sensor", "Wiring harness"],
+        "severity": "medium",
+        "commonCause": "Meghibásodott MAF szenzor vagy vezetékezési probléma",
+        "commonCause_en": "Failed MAF sensor or wiring issue"
+      }
+    ]
+  },
+  "P0110": {
+    "issues": [
+      {
+        "title": "Szívott levegő hőmérséklet szenzor hiba",
+        "title_en": "Intake Air Temperature Sensor Circuit Malfunction",
+        "costMin": 10000,
+        "costMax": 35000,
+        "laborHours": 0.5,
+        "parts": ["IAT szenzor", "Csatlakozó"],
+        "parts_en": ["IAT sensor", "Connector"],
+        "severity": "low",
+        "commonCause": "Meghibásodott IAT szenzor vagy korrodált csatlakozó",
+        "commonCause_en": "Faulty IAT sensor or corroded connector"
+      }
+    ]
+  },
+  "P0120": {
+    "issues": [
+      {
+        "title": "Fojtószelep helyzet szenzor hiba",
+        "title_en": "Throttle Position Sensor Circuit Malfunction",
+        "costMin": 15000,
+        "costMax": 55000,
+        "laborHours": 1.0,
+        "parts": ["TPS szenzor", "Fojtószelepház"],
+        "parts_en": ["TPS sensor", "Throttle body"],
+        "severity": "high",
+        "commonCause": "Elhasználódott fojtószelep helyzet szenzor vagy szennyezett fojtószelepház",
+        "commonCause_en": "Worn throttle position sensor or dirty throttle body"
+      }
+    ]
+  },
+  "P0130": {
+    "issues": [
+      {
+        "title": "Lambda szonda áramköri hiba (1. bank, 1. szonda)",
+        "title_en": "O2 Sensor Circuit Malfunction (Bank 1, Sensor 1)",
+        "costMin": 20000,
+        "costMax": 65000,
+        "laborHours": 1.0,
+        "parts": ["Lambda szonda", "Csatlakozó"],
+        "parts_en": ["Oxygen sensor", "Connector"],
+        "severity": "medium",
+        "commonCause": "Elhasználódott lambda szonda vagy vezetékezési hiba",
+        "commonCause_en": "Worn oxygen sensor or wiring fault"
+      }
+    ]
+  },
+  "P0131": {
+    "issues": [
+      {
+        "title": "Lambda szonda alacsony feszültség (1. bank, 1. szonda)",
+        "title_en": "O2 Sensor Circuit Low Voltage (Bank 1, Sensor 1)",
+        "costMin": 20000,
+        "costMax": 60000,
+        "laborHours": 1.0,
+        "parts": ["Lambda szonda"],
+        "parts_en": ["Oxygen sensor"],
+        "severity": "medium",
+        "commonCause": "Meghibásodott lambda szonda vagy légszívás a kipufogórendszerben",
+        "commonCause_en": "Faulty oxygen sensor or exhaust leak"
+      }
+    ]
+  },
+  "P0133": {
+    "issues": [
+      {
+        "title": "Lambda szonda lassú válaszidő (1. bank, 1. szonda)",
+        "title_en": "O2 Sensor Slow Response (Bank 1, Sensor 1)",
+        "costMin": 20000,
+        "costMax": 60000,
+        "laborHours": 1.0,
+        "parts": ["Lambda szonda"],
+        "parts_en": ["Oxygen sensor"],
+        "severity": "medium",
+        "commonCause": "Öregedő lambda szonda, csökkent reakcióidővel",
+        "commonCause_en": "Aging oxygen sensor with degraded response time"
+      }
+    ]
+  },
+  "P0135": {
+    "issues": [
+      {
+        "title": "Lambda szonda fűtés áramköri hiba (1. bank, 1. szonda)",
+        "title_en": "O2 Sensor Heater Circuit Malfunction (Bank 1, Sensor 1)",
+        "costMin": 20000,
+        "costMax": 65000,
+        "laborHours": 1.0,
+        "parts": ["Lambda szonda", "Biztosíték"],
+        "parts_en": ["Oxygen sensor", "Fuse"],
+        "severity": "medium",
+        "commonCause": "Kiégett szondafűtés vagy biztosíték hiba",
+        "commonCause_en": "Burned out sensor heater or blown fuse"
+      }
+    ]
+  },
+  "P0170": {
+    "issues": [
+      {
+        "title": "Üzemanyag-keverék korrekció hiba (1. bank)",
+        "title_en": "Fuel Trim Malfunction (Bank 1)",
+        "costMin": 15000,
+        "costMax": 80000,
+        "laborHours": 1.5,
+        "parts": ["Lambda szonda", "Légtömegmérő", "Vákuumcső"],
+        "parts_en": ["Oxygen sensor", "MAF sensor", "Vacuum hose"],
+        "severity": "medium",
+        "commonCause": "Légszívás, hibás MAF szenzor vagy szennyezett befecskendezők",
+        "commonCause_en": "Vacuum leak, faulty MAF sensor or dirty injectors"
+      }
+    ]
+  },
+  "P0171": {
+    "issues": [
+      {
+        "title": "Rendszer túl szegény keverék (1. bank)",
+        "title_en": "System Too Lean (Bank 1)",
+        "costMin": 15000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Vákuumcsövek", "Légtömegmérő", "Üzemanyag szűrő"],
+        "parts_en": ["Vacuum hoses", "MAF sensor", "Fuel filter"],
+        "severity": "high",
+        "commonCause": "Légszívás a szívócsőnél, hibás MAF szenzor vagy alacsony üzemanyag-nyomás",
+        "commonCause_en": "Intake manifold vacuum leak, faulty MAF sensor or low fuel pressure"
+      }
+    ]
+  },
+  "P0172": {
+    "issues": [
+      {
+        "title": "Rendszer túl gazdag keverék (1. bank)",
+        "title_en": "System Too Rich (Bank 1)",
+        "costMin": 15000,
+        "costMax": 85000,
+        "laborHours": 1.5,
+        "parts": ["Befecskendező", "Üzemanyag-nyomás szabályzó", "Lambda szonda"],
+        "parts_en": ["Fuel injector", "Fuel pressure regulator", "Oxygen sensor"],
+        "severity": "high",
+        "commonCause": "Csöpögő befecskendezők, túl magas üzemanyag-nyomás vagy hibás lambda szonda",
+        "commonCause_en": "Leaking fuel injectors, high fuel pressure or faulty oxygen sensor"
+      }
+    ]
+  },
+  "P0200": {
+    "issues": [
+      {
+        "title": "Befecskendező áramköri hiba",
+        "title_en": "Injector Circuit Malfunction",
+        "costMin": 30000,
+        "costMax": 120000,
+        "laborHours": 2.0,
+        "parts": ["Befecskendező", "Kábelköteg"],
+        "parts_en": ["Fuel injector", "Wiring harness"],
+        "severity": "high",
+        "commonCause": "Meghibásodott befecskendező vagy szakadt vezeték",
+        "commonCause_en": "Failed fuel injector or broken wiring"
+      }
+    ]
+  },
+  "P0300": {
+    "issues": [
+      {
+        "title": "Véletlenszerű/többszörös gyújtáskimaradás",
+        "title_en": "Random/Multiple Cylinder Misfire Detected",
+        "costMin": 15000,
+        "costMax": 150000,
+        "laborHours": 2.0,
+        "parts": ["Gyújtógyertyák", "Gyújtótekercsek", "Befecskendezők"],
+        "parts_en": ["Spark plugs", "Ignition coils", "Fuel injectors"],
+        "severity": "high",
+        "commonCause": "Elhasználódott gyújtógyertyák, hibás gyújtótekercsek vagy alacsony kompresszió",
+        "commonCause_en": "Worn spark plugs, faulty ignition coils or low compression"
+      }
+    ]
+  },
+  "P0301": {
+    "issues": [
+      {
+        "title": "1. henger gyújtáskimaradás",
+        "title_en": "Cylinder 1 Misfire Detected",
+        "costMin": 10000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Gyújtógyertya", "Gyújtótekercs", "Befecskendező"],
+        "parts_en": ["Spark plug", "Ignition coil", "Fuel injector"],
+        "severity": "high",
+        "commonCause": "Hibás gyújtógyertya vagy gyújtótekercs az 1. hengerben",
+        "commonCause_en": "Faulty spark plug or ignition coil on cylinder 1"
+      }
+    ]
+  },
+  "P0302": {
+    "issues": [
+      {
+        "title": "2. henger gyújtáskimaradás",
+        "title_en": "Cylinder 2 Misfire Detected",
+        "costMin": 10000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Gyújtógyertya", "Gyújtótekercs", "Befecskendező"],
+        "parts_en": ["Spark plug", "Ignition coil", "Fuel injector"],
+        "severity": "high",
+        "commonCause": "Hibás gyújtógyertya vagy gyújtótekercs a 2. hengerben",
+        "commonCause_en": "Faulty spark plug or ignition coil on cylinder 2"
+      }
+    ]
+  },
+  "P0303": {
+    "issues": [
+      {
+        "title": "3. henger gyújtáskimaradás",
+        "title_en": "Cylinder 3 Misfire Detected",
+        "costMin": 10000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Gyújtógyertya", "Gyújtótekercs", "Befecskendező"],
+        "parts_en": ["Spark plug", "Ignition coil", "Fuel injector"],
+        "severity": "high",
+        "commonCause": "Hibás gyújtógyertya vagy gyújtótekercs a 3. hengerben",
+        "commonCause_en": "Faulty spark plug or ignition coil on cylinder 3"
+      }
+    ]
+  },
+  "P0304": {
+    "issues": [
+      {
+        "title": "4. henger gyújtáskimaradás",
+        "title_en": "Cylinder 4 Misfire Detected",
+        "costMin": 10000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Gyújtógyertya", "Gyújtótekercs", "Befecskendező"],
+        "parts_en": ["Spark plug", "Ignition coil", "Fuel injector"],
+        "severity": "high",
+        "commonCause": "Hibás gyújtógyertya vagy gyújtótekercs a 4. hengerben",
+        "commonCause_en": "Faulty spark plug or ignition coil on cylinder 4"
+      }
+    ]
+  },
+  "P0325": {
+    "issues": [
+      {
+        "title": "Kopogás szenzor áramköri hiba (1. bank)",
+        "title_en": "Knock Sensor 1 Circuit Malfunction (Bank 1)",
+        "costMin": 25000,
+        "costMax": 70000,
+        "laborHours": 1.5,
+        "parts": ["Kopogás szenzor", "Kábelköteg"],
+        "parts_en": ["Knock sensor", "Wiring harness"],
+        "severity": "medium",
+        "commonCause": "Meghibásodott kopogás szenzor vagy laza csatlakozás",
+        "commonCause_en": "Failed knock sensor or loose connection"
+      }
+    ]
+  },
+  "P0335": {
+    "issues": [
+      {
+        "title": "Főtengely helyzet szenzor áramköri hiba",
+        "title_en": "Crankshaft Position Sensor Circuit Malfunction",
+        "costMin": 20000,
+        "costMax": 60000,
+        "laborHours": 1.5,
+        "parts": ["Főtengely helyzet szenzor"],
+        "parts_en": ["Crankshaft position sensor"],
+        "severity": "critical",
+        "commonCause": "Meghibásodott főtengely szenzor - a motor leállhat vagy nem indul",
+        "commonCause_en": "Failed crankshaft sensor - engine may stall or not start"
+      }
+    ]
+  },
+  "P0340": {
+    "issues": [
+      {
+        "title": "Vezérműtengely helyzet szenzor áramköri hiba",
+        "title_en": "Camshaft Position Sensor Circuit Malfunction",
+        "costMin": 20000,
+        "costMax": 55000,
+        "laborHours": 1.0,
+        "parts": ["Vezérműtengely helyzet szenzor"],
+        "parts_en": ["Camshaft position sensor"],
+        "severity": "high",
+        "commonCause": "Meghibásodott vezérműtengely szenzor vagy vezérlés időzítési hiba",
+        "commonCause_en": "Failed camshaft sensor or timing issue"
+      }
+    ]
+  },
+  "P0351": {
+    "issues": [
+      {
+        "title": "Gyújtótekercs 'A' elsődleges/másodlagos áramköri hiba",
+        "title_en": "Ignition Coil A Primary/Secondary Circuit Malfunction",
+        "costMin": 12000,
+        "costMax": 45000,
+        "laborHours": 0.5,
+        "parts": ["Gyújtótekercs"],
+        "parts_en": ["Ignition coil"],
+        "severity": "high",
+        "commonCause": "Meghibásodott gyújtótekercs vagy rövidzárlat az áramkörben",
+        "commonCause_en": "Failed ignition coil or short circuit"
+      }
+    ]
+  },
+  "P0420": {
+    "issues": [
+      {
+        "title": "Katalizátor hatásfok csökkenés (1. bank)",
+        "title_en": "Catalyst System Efficiency Below Threshold (Bank 1)",
+        "costMin": 80000,
+        "costMax": 350000,
+        "laborHours": 2.0,
+        "parts": ["Katalizátor", "Lambda szonda"],
+        "parts_en": ["Catalytic converter", "Oxygen sensor"],
+        "severity": "high",
+        "commonCause": "Elhasználódott katalizátor vagy meghibásodott lambda szonda",
+        "commonCause_en": "Worn catalytic converter or faulty oxygen sensor"
+      }
+    ]
+  },
+  "P0430": {
+    "issues": [
+      {
+        "title": "Katalizátor hatásfok csökkenés (2. bank)",
+        "title_en": "Catalyst System Efficiency Below Threshold (Bank 2)",
+        "costMin": 80000,
+        "costMax": 350000,
+        "laborHours": 2.0,
+        "parts": ["Katalizátor", "Lambda szonda"],
+        "parts_en": ["Catalytic converter", "Oxygen sensor"],
+        "severity": "high",
+        "commonCause": "Elhasználódott katalizátor a 2. bankon vagy meghibásodott lambda szonda",
+        "commonCause_en": "Worn catalytic converter on bank 2 or faulty oxygen sensor"
+      }
+    ]
+  },
+  "P0440": {
+    "issues": [
+      {
+        "title": "Párolgás-visszavezető rendszer (EVAP) hiba",
+        "title_en": "Evaporative Emission Control System Malfunction",
+        "costMin": 15000,
+        "costMax": 80000,
+        "laborHours": 1.5,
+        "parts": ["EVAP szelep", "Szénszűrő", "Csövek"],
+        "parts_en": ["EVAP valve", "Charcoal canister", "Hoses"],
+        "severity": "medium",
+        "commonCause": "Hibás EVAP szelep, sérült szénszűrő vagy csőrepedés",
+        "commonCause_en": "Faulty EVAP valve, damaged charcoal canister or cracked hose"
+      }
+    ]
+  },
+  "P0441": {
+    "issues": [
+      {
+        "title": "EVAP öblítő rendszer helytelen áramlás",
+        "title_en": "EVAP Emission Control System Incorrect Purge Flow",
+        "costMin": 12000,
+        "costMax": 55000,
+        "laborHours": 1.0,
+        "parts": ["Öblítő szelep (purge valve)", "Vákuumcsövek"],
+        "parts_en": ["Purge valve", "Vacuum hoses"],
+        "severity": "low",
+        "commonCause": "Beragadt öblítő szelep vagy szivárgó vákuumcsövek",
+        "commonCause_en": "Stuck purge valve or leaking vacuum hoses"
+      }
+    ]
+  },
+  "P0442": {
+    "issues": [
+      {
+        "title": "EVAP rendszer kis szivárgás észlelve",
+        "title_en": "EVAP Emission Control System Leak Detected (Small Leak)",
+        "costMin": 8000,
+        "costMax": 45000,
+        "laborHours": 1.0,
+        "parts": ["Tanksapka", "EVAP csövek", "O-gyűrű"],
+        "parts_en": ["Gas cap", "EVAP hoses", "O-ring"],
+        "severity": "low",
+        "commonCause": "Laza vagy sérült tanksapka, apró csőszivárgás",
+        "commonCause_en": "Loose or damaged gas cap, small hose leak"
+      }
+    ]
+  },
+  "P0443": {
+    "issues": [
+      {
+        "title": "EVAP öblítő szelep áramköri hiba",
+        "title_en": "EVAP Emission Control System Purge Control Valve Circuit",
+        "costMin": 15000,
+        "costMax": 50000,
+        "laborHours": 1.0,
+        "parts": ["Öblítő szelep (purge valve)", "Csatlakozó"],
+        "parts_en": ["Purge control valve", "Connector"],
+        "severity": "low",
+        "commonCause": "Meghibásodott öblítő szelep vagy elektromos hiba",
+        "commonCause_en": "Failed purge control valve or electrical fault"
+      }
+    ]
+  },
+  "P0446": {
+    "issues": [
+      {
+        "title": "EVAP szellőző rendszer áramköri hiba",
+        "title_en": "EVAP Emission Control System Vent Control Circuit",
+        "costMin": 12000,
+        "costMax": 50000,
+        "laborHours": 1.0,
+        "parts": ["Szellőző szelep", "Szénszűrő"],
+        "parts_en": ["Vent valve", "Charcoal canister"],
+        "severity": "low",
+        "commonCause": "Eltömődött szénszűrő vagy hibás szellőző szelep",
+        "commonCause_en": "Clogged charcoal canister or faulty vent valve"
+      }
+    ]
+  },
+  "P0455": {
+    "issues": [
+      {
+        "title": "EVAP rendszer nagy szivárgás észlelve",
+        "title_en": "EVAP Emission Control System Leak Detected (Large Leak)",
+        "costMin": 8000,
+        "costMax": 60000,
+        "laborHours": 1.5,
+        "parts": ["Tanksapka", "EVAP csövek", "Szénszűrő"],
+        "parts_en": ["Gas cap", "EVAP hoses", "Charcoal canister"],
+        "severity": "medium",
+        "commonCause": "Hiányzó tanksapka, lecsatlakozott cső vagy repedt szénszűrő",
+        "commonCause_en": "Missing gas cap, disconnected hose or cracked charcoal canister"
+      }
+    ]
+  },
+  "P0500": {
+    "issues": [
+      {
+        "title": "Jármű sebesség szenzor hiba",
+        "title_en": "Vehicle Speed Sensor Malfunction",
+        "costMin": 15000,
+        "costMax": 45000,
+        "laborHours": 1.0,
+        "parts": ["Sebesség szenzor", "Csatlakozó"],
+        "parts_en": ["Vehicle speed sensor", "Connector"],
+        "severity": "high",
+        "commonCause": "Meghibásodott sebesség szenzor vagy sérült fogaskerék",
+        "commonCause_en": "Failed speed sensor or damaged reluctor ring"
+      }
+    ]
+  },
+  "P0505": {
+    "issues": [
+      {
+        "title": "Alapjárati levegő szabályzó (IAC) rendszer hiba",
+        "title_en": "Idle Air Control System Malfunction",
+        "costMin": 15000,
+        "costMax": 55000,
+        "laborHours": 1.0,
+        "parts": ["IAC szelep", "Fojtószelepház tömítés"],
+        "parts_en": ["IAC valve", "Throttle body gasket"],
+        "severity": "medium",
+        "commonCause": "Szennyezett IAC szelep vagy légszívás az alapjárati rendszerben",
+        "commonCause_en": "Dirty IAC valve or vacuum leak in the idle system"
+      }
+    ]
+  },
+  "P0700": {
+    "issues": [
+      {
+        "title": "Sebességváltó vezérlő rendszer hiba",
+        "title_en": "Transmission Control System Malfunction",
+        "costMin": 30000,
+        "costMax": 250000,
+        "laborHours": 2.0,
+        "parts": ["Váltóvezérlő egység (TCM)", "Szeleptest"],
+        "parts_en": ["Transmission control module (TCM)", "Valve body"],
+        "severity": "critical",
+        "commonCause": "Váltóvezérlő egység hiba vagy belső váltó meghibásodás - további hibakódok vizsgálata szükséges",
+        "commonCause_en": "TCM failure or internal transmission fault - check for additional codes"
+      }
+    ]
+  },
+  "P0715": {
+    "issues": [
+      {
+        "title": "Sebességváltó bemeneti fordulatszám szenzor hiba",
+        "title_en": "Input/Turbine Speed Sensor Circuit Malfunction",
+        "costMin": 20000,
+        "costMax": 65000,
+        "laborHours": 1.5,
+        "parts": ["Bemeneti fordulatszám szenzor"],
+        "parts_en": ["Input speed sensor"],
+        "severity": "high",
+        "commonCause": "Meghibásodott fordulatszám szenzor vagy szennyezett váltóolaj",
+        "commonCause_en": "Failed speed sensor or contaminated transmission fluid"
+      }
+    ]
+  },
+  "P0720": {
+    "issues": [
+      {
+        "title": "Sebességváltó kimeneti fordulatszám szenzor hiba",
+        "title_en": "Output Speed Sensor Circuit Malfunction",
+        "costMin": 20000,
+        "costMax": 65000,
+        "laborHours": 1.5,
+        "parts": ["Kimeneti fordulatszám szenzor"],
+        "parts_en": ["Output speed sensor"],
+        "severity": "high",
+        "commonCause": "Meghibásodott kimeneti szenzor - helytelen váltás és sebességmérő hiba",
+        "commonCause_en": "Failed output sensor - incorrect shifting and speedometer issues"
+      }
+    ]
+  },
+  "P2002": {
+    "issues": [
+      {
+        "title": "Részecskeszűrő (DPF) hatásfok küszöb alatt",
+        "title_en": "Diesel Particulate Filter Efficiency Below Threshold",
+        "costMin": 40000,
+        "costMax": 450000,
+        "laborHours": 3.0,
+        "parts": ["DPF szűrő", "Differenciálnyomás szenzor"],
+        "parts_en": ["DPF filter", "Differential pressure sensor"],
+        "severity": "critical",
+        "commonCause": "Eltömődött DPF szűrő - tisztítás vagy csere szükséges. Gyakori városi használatnál.",
+        "commonCause_en": "Clogged DPF filter - cleaning or replacement needed. Common with city driving."
+      },
+      {
+        "title": "DPF tisztítás (ha lehetséges)",
+        "title_en": "DPF cleaning (if viable)",
+        "costMin": 30000,
+        "costMax": 80000,
+        "laborHours": 2.0,
+        "parts": ["DPF tisztító folyadék"],
+        "parts_en": ["DPF cleaning solution"],
+        "severity": "critical",
+        "commonCause": "Koromlerakódás a DPF szűrőben rövid távú városi használat miatt",
+        "commonCause_en": "Soot buildup in DPF from short urban trips"
+      }
+    ]
+  },
+  "P2463": {
+    "issues": [
+      {
+        "title": "Részecskeszűrő (DPF) koromszint túl magas",
+        "title_en": "Diesel Particulate Filter Soot Accumulation",
+        "costMin": 30000,
+        "costMax": 450000,
+        "laborHours": 2.5,
+        "parts": ["DPF szűrő", "Hőmérséklet szenzor"],
+        "parts_en": ["DPF filter", "Temperature sensor"],
+        "severity": "critical",
+        "commonCause": "Sikertelen regeneráció, túl sok városi használat, hibás hőmérséklet szenzor",
+        "commonCause_en": "Failed regeneration, excessive city driving, faulty temperature sensor"
+      },
+      {
+        "title": "Kényszer regeneráció (diagnosztikai eszközzel)",
+        "title_en": "Forced regeneration (with diagnostic tool)",
+        "costMin": 15000,
+        "costMax": 35000,
+        "laborHours": 1.0,
+        "parts": [],
+        "parts_en": [],
+        "severity": "critical",
+        "commonCause": "Rövid távú utak miatt nem tudott regenerálni a DPF",
+        "commonCause_en": "DPF could not regenerate due to short trips"
+      }
+    ]
+  },
+  "C0035": {
+    "issues": [
+      {
+        "title": "ABS kerékfordulatszám szenzor hiba (bal első)",
+        "title_en": "Left Front ABS Wheel Speed Sensor Circuit Malfunction",
+        "costMin": 15000,
+        "costMax": 50000,
+        "laborHours": 1.0,
+        "parts": ["ABS szenzor", "Szenzor kábel"],
+        "parts_en": ["ABS wheel speed sensor", "Sensor cable"],
+        "severity": "high",
+        "commonCause": "Sérült ABS szenzor, szakadt kábel vagy szennyezett szenzorfej",
+        "commonCause_en": "Damaged ABS sensor, broken cable or contaminated sensor head"
+      }
+    ]
+  },
+  "U0100": {
+    "issues": [
+      {
+        "title": "Kommunikációs hiba az ECM/PCM-mel (CAN busz)",
+        "title_en": "Lost Communication with ECM/PCM (CAN Bus)",
+        "costMin": 20000,
+        "costMax": 200000,
+        "laborHours": 2.5,
+        "parts": ["CAN busz vezetékek", "ECM/PCM vezérlő egység"],
+        "parts_en": ["CAN bus wiring", "ECM/PCM control module"],
+        "severity": "critical",
+        "commonCause": "Sérült CAN busz vezeték, korrodált csatlakozó vagy meghibásodott vezérlő egység",
+        "commonCause_en": "Damaged CAN bus wiring, corroded connector or failed control module"
+      }
+    ]
+  },
+  "P0010": {
+    "issues": [
+      {
+        "title": "Vezérműtengely helyzet-állító 'A' áramköri hiba (1. bank)",
+        "title_en": "Camshaft Position Actuator Circuit (Bank 1)",
+        "costMin": 25000,
+        "costMax": 80000,
+        "laborHours": 1.5,
+        "parts": ["VVT szelep (olajvezérlő szelep)", "Olajszűrő"],
+        "parts_en": ["VVT solenoid (oil control valve)", "Oil filter"],
+        "severity": "medium",
+        "commonCause": "Szennyezett olajvezérlő szelep vagy régi motorolaj",
+        "commonCause_en": "Dirty oil control valve or old engine oil"
+      }
+    ]
+  },
+  "P0015": {
+    "issues": [
+      {
+        "title": "Vezérműtengely helyzet-állító 'B' időzítési hiba (1. bank)",
+        "title_en": "Camshaft Position B - Timing Over-Retarded (Bank 1)",
+        "costMin": 30000,
+        "costMax": 120000,
+        "laborHours": 2.0,
+        "parts": ["VVT szelep", "Vezérlánc feszítő"],
+        "parts_en": ["VVT solenoid", "Timing chain tensioner"],
+        "severity": "high",
+        "commonCause": "Megnyúlt vezérlánc, hibás feszítő vagy szennyezett VVT szelep",
+        "commonCause_en": "Stretched timing chain, faulty tensioner or dirty VVT solenoid"
+      }
+    ]
+  },
+  "P0128": {
+    "issues": [
+      {
+        "title": "Hűtőfolyadék termosztát - hőmérséklet küszöb alatt",
+        "title_en": "Coolant Thermostat - Temperature Below Regulating Temperature",
+        "costMin": 12000,
+        "costMax": 45000,
+        "laborHours": 1.5,
+        "parts": ["Termosztát", "Hűtőfolyadék"],
+        "parts_en": ["Thermostat", "Coolant"],
+        "severity": "medium",
+        "commonCause": "Beragadt nyitott termosztát - a motor nem éri el az üzemi hőmérsékletet",
+        "commonCause_en": "Stuck open thermostat - engine does not reach operating temperature"
+      }
+    ]
+  },
+  "P0401": {
+    "issues": [
+      {
+        "title": "EGR rendszer elégtelen áramlás",
+        "title_en": "Exhaust Gas Recirculation Flow Insufficient",
+        "costMin": 30000,
+        "costMax": 120000,
+        "laborHours": 2.0,
+        "parts": ["EGR szelep", "EGR cső", "EGR hűtő"],
+        "parts_en": ["EGR valve", "EGR pipe", "EGR cooler"],
+        "severity": "medium",
+        "commonCause": "Korommal eltömődött EGR szelep vagy csövek",
+        "commonCause_en": "Carbon-clogged EGR valve or passages"
+      }
+    ]
+  },
+  "P0402": {
+    "issues": [
+      {
+        "title": "EGR rendszer túlzott áramlás",
+        "title_en": "Exhaust Gas Recirculation Flow Excessive",
+        "costMin": 30000,
+        "costMax": 110000,
+        "laborHours": 1.5,
+        "parts": ["EGR szelep", "Differenciálnyomás szenzor"],
+        "parts_en": ["EGR valve", "Differential pressure sensor"],
+        "severity": "medium",
+        "commonCause": "Beragadt nyitott EGR szelep vagy hibás nyomásszenzor",
+        "commonCause_en": "EGR valve stuck open or faulty pressure sensor"
+      }
+    ]
+  },
+  "P0411": {
+    "issues": [
+      {
+        "title": "Másodlagos levegőbefúvó rendszer helytelen áramlás",
+        "title_en": "Secondary Air Injection System Incorrect Flow",
+        "costMin": 25000,
+        "costMax": 90000,
+        "laborHours": 1.5,
+        "parts": ["Másodlagos levegő szivattyú", "Visszacsapó szelep"],
+        "parts_en": ["Secondary air pump", "Check valve"],
+        "severity": "low",
+        "commonCause": "Meghibásodott levegő szivattyú vagy beragadt visszacsapó szelep",
+        "commonCause_en": "Failed air pump or stuck check valve"
+      }
+    ]
+  },
+  "P0456": {
+    "issues": [
+      {
+        "title": "EVAP rendszer nagyon kis szivárgás észlelve",
+        "title_en": "EVAP Emission Control System Leak Detected (Very Small Leak)",
+        "costMin": 5000,
+        "costMax": 40000,
+        "laborHours": 1.0,
+        "parts": ["Tanksapka tömítés", "EVAP csövek"],
+        "parts_en": ["Gas cap seal", "EVAP hoses"],
+        "severity": "low",
+        "commonCause": "Elöregedett tanksapka tömítés vagy apró csőrepedés",
+        "commonCause_en": "Aged gas cap seal or minor hose crack"
+      }
+    ]
+  },
+  "P0507": {
+    "issues": [
+      {
+        "title": "Alapjárati fordulatszám túl magas",
+        "title_en": "Idle Control System RPM Higher Than Expected",
+        "costMin": 10000,
+        "costMax": 50000,
+        "laborHours": 1.0,
+        "parts": ["IAC szelep", "Fojtószelepház", "Vákuumcső"],
+        "parts_en": ["IAC valve", "Throttle body", "Vacuum hose"],
+        "severity": "medium",
+        "commonCause": "Légszívás, szennyezett fojtószelepház vagy hibás IAC szelep",
+        "commonCause_en": "Vacuum leak, dirty throttle body or faulty IAC valve"
+      }
+    ]
+  },
+  "P0562": {
+    "issues": [
+      {
+        "title": "Rendszer feszültség alacsony",
+        "title_en": "System Voltage Low",
+        "costMin": 15000,
+        "costMax": 80000,
+        "laborHours": 1.0,
+        "parts": ["Akkumulátor", "Generátor"],
+        "parts_en": ["Battery", "Alternator"],
+        "severity": "high",
+        "commonCause": "Gyenge akkumulátor, hibás generátor vagy laza szíj",
+        "commonCause_en": "Weak battery, faulty alternator or loose belt"
+      }
+    ]
+  },
+  "P0600": {
+    "issues": [
+      {
+        "title": "Soros kommunikációs hiba (CAN)",
+        "title_en": "Serial Communication Link Malfunction",
+        "costMin": 20000,
+        "costMax": 150000,
+        "laborHours": 2.0,
+        "parts": ["CAN busz vezetékek", "Vezérlő egység"],
+        "parts_en": ["CAN bus wiring", "Control module"],
+        "severity": "critical",
+        "commonCause": "CAN busz vezetékezési hiba vagy meghibásodott vezérlő egység",
+        "commonCause_en": "CAN bus wiring fault or failed control module"
+      }
+    ]
+  },
+  "P2187": {
+    "issues": [
+      {
+        "title": "Rendszer túl szegény alapjáratban (1. bank)",
+        "title_en": "System Too Lean at Idle (Bank 1)",
+        "costMin": 15000,
+        "costMax": 75000,
+        "laborHours": 1.5,
+        "parts": ["Vákuumcsövek", "Szívócső tömítés", "PCV szelep"],
+        "parts_en": ["Vacuum hoses", "Intake manifold gasket", "PCV valve"],
+        "severity": "medium",
+        "commonCause": "Légszívás a szívócsőnél vagy PCV rendszerben, főleg alapjáratban jelentkezik",
+        "commonCause_en": "Vacuum leak at intake manifold or PCV system, manifests mainly at idle"
+      }
+    ]
+  }
+}
