@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="hu" dir="ltr">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="DTC hibakód kereső útmutató: Megtudhatod, mit jelentenek az OBD2 kódok (P, B, C, U kategóriák). Értelmezési segítség, diagnosztikai lépések és gyakorlati tanácsok gépkocsisoknak.">
     <meta name="keywords" content="DTC hibakód kereső, hibakód értelmezés, OBD2 kódok, P-kód, B-kód, C-kód, U-kód, autó hibakódok, diagnosztika">
     <meta name="author" content="AutoCognitix">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Hungarian">
+    <meta name="revisit-after" content="7 days">
     <link rel="canonical" href="https://www.autocognitix.com/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
     <link rel="alternate" hreflang="hu" href="https://www.autocognitix.com/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
     <link rel="alternate" hreflang="en" href="https://www.autocognitix.com/en/blog/dtc-trouble-code-lookup-guide.html">
-
+    
     <!-- Open Graph -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]">
@@ -21,134 +22,512 @@
     <meta property="og:site_name" content="AutoCognitix">
     <meta property="article:published_time" content="2026-03-21">
     <meta property="article:author" content="AutoCognitix Szerkesztőség">
-
+    
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez">
     <meta name="twitter:description" content="Tudj meg mindent az OBD2 hibakódokról és tanulj meg diagnosztizálni!">
     <meta name="twitter:image" content="https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg">
-
+    
     <title>DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]</title>
-
-    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
-    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #e74c3c;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            color: #1a252f;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+            flex-wrap: wrap;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border-left: 4px solid #e74c3c;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .toc h3 {
+            color: #1a252f;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .toc a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        main {
+            margin: 40px 0;
+        }
+        
+        h2 {
+            font-size: 2em;
+            color: #1a252f;
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e74c3c;
+            font-weight: 700;
+        }
+        
+        h3 {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.1em;
+            color: #34495e;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .definition-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .definition-box strong {
+            color: #2980b9;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .warning-box strong {
+            color: #856404;
+        }
+        
+        .info-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .info-box strong {
+            color: #155724;
+        }
+        
+        .stat-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 15px;
+        }
+        
+        th {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        
+        .code-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .faq-section {
+            margin: 40px 0;
+        }
+        
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin: 15px 0;
+            cursor: pointer;
+            border-left: 4px solid #e74c3c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #ecf0f1;
+        }
+        
+        .faq-question h4 {
+            margin: 0;
+            color: #1a252f;
+            font-size: 1.1em;
+        }
+        
+        .faq-toggle {
+            font-size: 20px;
+            color: #e74c3c;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-toggle.open {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            display: none;
+            background: white;
+            padding: 15px 20px;
+            border-left: 4px solid #3498db;
+            margin: -5px 0 15px 0;
+            line-height: 1.8;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .author-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .author-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .author-title {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .related-articles {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+        
+        .related-articles h3 {
+            margin-top: 0;
+            color: #1a252f;
+        }
+        
+        .related-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .related-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+        
+        .related-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-item a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .related-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .cta-box {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .cta-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #e74c3c;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="/" class="logo">AutoCognitix</a>
+    <nav>
+        <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;">
+            <a href="/" style="font-weight:600;text-decoration:none;color:#e74c3c;">AutoCognitix</a>
             <div>
-                <a href="/">Kezdőlap</a>
-                <a href="/hu/blog/">Blog</a>
-                <a href="/hu/eszkozok/">Eszközök</a>
-                <a href="/#faq">GYIK</a>
+                <a href="/" style="margin-right:16px;text-decoration:none;color:#333;">Kezdőlap</a>
+                <a href="/hu/blog/" style="margin-right:16px;text-decoration:none;color:#333;">Blog</a>
+                <a href="/hu/eszkozok/" style="text-decoration:none;color:#333;">Eszközök</a>
             </div>
         </div>
     </nav>
-
-    <!-- HERO -->
-    <section class="blog-hero blog-animate">
-        <div class="container">
-            <div class="blog-hero-content">
-                <div class="blog-hero-label">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
-                    </svg>
-                    <span>DTC Kódszótár</span>
-                </div>
-                <h1 class="blog-hero-title">DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]</h1>
-                <p class="blog-hero-description"><strong>Rövid válasz:</strong> A DTC (Diagnostic Trouble Code) kódok 5 karakteres üzenetek az autó fedélzeti számítógépétől. A P-kódok a hajtásláncot, B-kódok a karosszériát, C-kódok az alvázat, U-kódok a hálózatot érintik. Egy OBD2 szkennerrel bárki leolvashatja őket.</p>
+    <div class="container">
+        <header>
+            <span class="badge">Diagnosztika Útmutató</span>
+            <h1>DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez</h1>
+            <div class="article-meta">
+                <span>📅 2026. március 21.</span>
+                <span>⏱️ 8 perc olvasás</span>
+                <span>✍️ AutoCognitix Szerkesztőség</span>
             </div>
-            <div class="blog-hero-image">
-                <div class="blog-image-reveal"></div>
-                <div class="blog-hero-image-placeholder">OBD2 Hibakódok Teljes Értelmezési Útmutatója</div>
-            </div>
-            <div class="blog-hero-meta">
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Publikálva</span>
-                    <span class="blog-meta-value">2026. március 21.</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Olvasási idő</span>
-                    <span class="blog-meta-value">8 perc</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Kategória</span>
-                    <span class="blog-meta-value">Hibakód Értelmezés</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Szerző</span>
-                    <span class="blog-meta-value">AutoCognitix Szerkesztőség</span>
-                </div>
-            </div>
+        </header>
+        
+        <div class="hero-image">
+            OBD2 Hibakódok Teljes Értelmezési Útmutatója
         </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="blog-stats-section blog-animate">
-        <div class="container">
-            <div class="blog-stats">
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>Kódok száma</h4>
-                        <p>OBD-II szabványos és gyártó-specifikus</p>
-                    </div>
-                    <div class="blog-stat-number">11,000+</div>
-                </div>
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>Kategóriák</h4>
-                        <p>P, B, C, U kódcsoportok</p>
-                    </div>
-                    <div class="blog-stat-number">4</div>
-                </div>
-                <div class="blog-stat-card blog-stat-end">
-                    <div class="blog-stat-top">
-                        <h4>Szabvány</h4>
-                        <p>Nemzetközi diagnosztikai protokoll</p>
-                    </div>
-                    <div class="blog-stat-number">OBD-II</div>
-                </div>
-            </div>
+        
+        <div class="toc">
+            <h3>📑 Tartalomjegyzék</h3>
+            <ul>
+                <li><a href="#what-are-dtc">Mi az a DTC hibakód?</a></li>
+                <li><a href="#dtc-categories">DTC kategóriák: P, B, C, U kódok</a></li>
+                <li><a href="#how-to-read">Hogyan olvasunk DTC kódokat?</a></li>
+                <li><a href="#common-codes">Leggyakoribb OBD2 hibakódok</a></li>
+                <li><a href="#diagnostic-steps">DTC diagnosztikai lépések</a></li>
+                <li><a href="#scanner-types">OBD2 scannertípusok</a></li>
+                <li><a href="#severity-levels">Hibakódok súlyossági szintjei</a></li>
+                <li><a href="#preventing-codes">Hibakódok megelőzése</a></li>
+                <li><a href="#when-to-seek-help">Mikor keressünk szakiját?</a></li>
+                <li><a href="#faq">Gyakran Feladott Kérdések</a></li>
+            </ul>
         </div>
-    </section>
-
-    <!-- TABLE OF CONTENTS -->
-    <section class="blog-toc-section blog-animate">
-        <div class="container">
-            <div class="blog-toc">
-                <h3>Tartalomjegyzék</h3>
-                <ol>
-                    <li><a href="#what-are-dtc">Mi az a DTC hibakód?</a></li>
-                    <li><a href="#dtc-categories">DTC kategóriák: P, B, C, U kódok</a></li>
-                    <li><a href="#how-to-read">Hogyan olvasunk DTC kódokat?</a></li>
-                    <li><a href="#common-codes">Leggyakoribb OBD2 hibakódok</a></li>
-                    <li><a href="#diagnostic-steps">DTC diagnosztikai lépések</a></li>
-                    <li><a href="#scanner-types">OBD2 scannertípusok</a></li>
-                    <li><a href="#severity-levels">Hibakódok súlyossági szintjei</a></li>
-                    <li><a href="#preventing-codes">Hibakódok megelőzése</a></li>
-                    <li><a href="#when-to-seek-help">Mikor keressünk szakiját?</a></li>
-                    <li><a href="#faq">Gyakran Feladott Kérdések</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT -->
-    <article class="blog-content">
-        <div class="container">
-            <div class="blog-richtext">
-
-                <h2 id="what-are-dtc">Mi az a DTC hibakód?</h2>
-                <p>A DTC (Diagnostic Trouble Code) a motorjármű diagnosztikai rendszerének egy kódolt üzenete, amely azt jelzi, hogy valami nem működik megfelelően. Ha már találkoztál a "Check Engine" lámpa kigyulladásával az autó műszerfalán, akkor ezt a hibakódot okozta. Az összes DTC kód formátumát és jelentését az <a href="https://www.sae.org/standards/content/j2012/">SAE J2012 standard</a> szabályozza világszerte.</p>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Tudtad?</strong> Az DTC kódok az 1980-as évek óta léteznek, de az egységes OBD2 rendszer 1996 óta kötelező az összes benzin- és dízelautóban az Egyesült Államokban az <a href="https://www.epa.gov/emission-standards-reference-guide">EPA (Environmental Protection Agency)</a> kibocsátási szabályozása miatt. Az EU hasonló rendszert használ az EOBD szabvány alatt.
+        
+        <main>
+            <section id="what-are-dtc">
+                <h2>Mi az a DTC hibakód?</h2>
+                <p>A DTC (Diagnostic Trouble Code) a motorjármű diagnosztikai rendszerének egy kódolt üzenete, amely azt jelzi, hogy valami nem működik megfelelően. Ha már találkoztál a "Check Engine" lámpa kigyulladásával az autó műszerfalán, akkor ezt a hibakódot okozta. Az összes DTC kód formátumát és jelentését az <a href="https://www.sae.org/standards/content/j2012/" style="color: #0284c7; text-decoration: underline;">SAE J2012 standard</a> szabályozza világszerte.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Tudtad?</strong> Az DTC kódok az 1980-as évek óta léteznek, de az egységes OBD2 rendszer 1996 óta kötelező az összes benzin- és dízelautóban az Egyesült Államokban az <a href="https://www.epa.gov/emission-standards-reference-guide" style="color: #0284c7; text-decoration: underline;">EPA (Environmental Protection Agency)</a> kibocsátási szabályozása miatt. Az EU hasonló rendszert használ az EOBD szabvány alatt.
                 </div>
-
+                
                 <p>A DTC kódok legalább 5 karakterből állnak, és strukturáltan tartalmazzák a probléma típusát és helyét. Például a P0171 ("System Too Lean Bank 1") azt jelenti, hogy a motor levegő-benzin elegy túl szegényes az 1-es henger csoportban.</p>
-
+                
                 <h3>Miért fontos a DTC hibakódok megértése?</h3>
                 <p>Ha megérted, mit jelent egy DTC kód, akkor:</p>
                 <ul>
@@ -158,55 +537,51 @@
                     <li><strong>Szerviz-oktatás:</strong> Tudsz tárgyalásba lépni a szervizel, ha ismered a kódot</li>
                     <li><strong>Biztonsági tudatosság:</strong> Megállapíthatod, hogy veszélyes-e az autó vezetése</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>Figyelmeztetés:</strong> A DTC kódok diagnosztikai eszközök, nem végső diagnosztikák. Egy kód lehet a tünet, de nem mindig az igazi probléma oka. A P0171 kód például 8-10 különböző okból is kiváltódhat.
+                
+                <div class="warning-box">
+                    <strong>⚠️ Figyelmeztetés:</strong> A DTC kódok diagnosztikai eszközök, nem végső diagnosztikák. Egy kód lehet a tünet, de nem mindig az igazi probléma oka. A P0171 kód például 8-10 különböző okból is kiváltódhat.
                 </div>
-
-                <h2 id="dtc-categories">DTC kategóriák: P, B, C, U kódok</h2>
+            </section>
+            
+            <section id="dtc-categories">
+                <h2>DTC kategóriák: P, B, C, U kódok</h2>
                 <p>Minden DTC kód első karaktere kategóriát jelöl. Ez megmutatja, hogy az autó mely rendszere érintett. Nézzük meg az összes típust részletesen:</p>
-
+                
                 <h3>P-kódok (Powertrain - Hajtáslánc)</h3>
                 <p>A P-kódok az autó motorját, váltóját, és a kapcsolódó rendszereket érintik. Ezek a leggyakoribbak.</p>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Alkategória</th>
-                                <th scope="col">Rendszer</th>
-                                <th scope="col">Példa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>P0xxx</td>
-                                <td>Teljes motor/váltó</td>
-                                <td>P0171 (Lean condition)</td>
-                            </tr>
-                            <tr>
-                                <td>P1xxx</td>
-                                <td>Gyártó-specifikus</td>
-                                <td>P1299 (Ford specifikus)</td>
-                            </tr>
-                            <tr>
-                                <td>P2xxx</td>
-                                <td>Injektálás/levegőbevezetés</td>
-                                <td>P2015 (Intake valve control)</td>
-                            </tr>
-                            <tr>
-                                <td>P3xxx</td>
-                                <td>Hibrid/elektromos</td>
-                                <td>P3400 (Cylinder deactivation)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="blog-callout">
+                <table>
+                    <tr>
+                        <th>Alkategória</th>
+                        <th>Rendszer</th>
+                        <th>Példa</th>
+                    </tr>
+                    <tr>
+                        <td>P0xxx</td>
+                        <td>Teljes motor/váltó</td>
+                        <td>P0171 (Lean condition)</td>
+                    </tr>
+                    <tr>
+                        <td>P1xxx</td>
+                        <td>Gyártó-specifikus</td>
+                        <td>P1299 (Ford específikus)</td>
+                    </tr>
+                    <tr>
+                        <td>P2xxx</td>
+                        <td>Injektálás/levegőbevezetés</td>
+                        <td>P2015 (Intake valve control)</td>
+                    </tr>
+                    <tr>
+                        <td>P3xxx</td>
+                        <td>Hibrid/elektromos</td>
+                        <td>P3400 (Cylinder deactivation)</td>
+                    </tr>
+                </table>
+                
+                <div class="definition-box">
                     <strong>P-kódok funkciói:</strong> Az autó döntésképes motorvezérlő egysége (ECU) folyamatosan figyeli a motor működésének paramétereit. Ha eltérést észlel, rögzíti a P-kódot és meggyújtja a Check Engine lámpát.
                 </div>
-
-                <h3>B-kódok (Body - Karosszéria)</h3>
+                
+                <h3>B-kódok (Body - Karossz</h3>
                 <p>A B-kódok az autó karosszériai elektromosságára vonatkoznak: fűtés, légkondicionálás, ülésfűtés, ablaknyitás stb.</p>
                 <ul>
                     <li><strong>B0xxx:</strong> Hordozó rendszerek (seat belt, airbag)</li>
@@ -214,16 +589,16 @@
                     <li><strong>B2xxx:</strong> Ajtók és ablakok</li>
                     <li><strong>B3xxx:</strong> Tető és külső irányítás</li>
                 </ul>
-
+                
                 <h3>C-kódok (Chassis - Alváz)</h3>
-                <p>A C-kódok az autó erőátviteli rendszerét és az alvázat érintik. Ezek a fékrendszert, szuszpenzióvizsgálatot, ABS-t, ESP-t és más biztonsági rendszereket fedik le.</p>
+                <p>A C-kódok az autó erőátviteli rendszerét és az alvázt érintik. Ezek a fékrendszert, szuszpenzióvizsgálatot, ABS-t, ESP-t és más biztonsági rendszereket fedik le.</p>
                 <ul>
                     <li><strong>C0xxx:</strong> ABS és fékezési rendszer</li>
                     <li><strong>C1xxx:</strong> Stabilitásvezérlés</li>
                     <li><strong>C2xxx:</strong> Szuszpenzió</li>
                     <li><strong>C3xxx:</strong> Kerékfelfüggesztés</li>
                 </ul>
-
+                
                 <h3>U-kódok (Network - Hálózat)</h3>
                 <p>A U-kódok az autó belső kommunikációs hálózatára vonatkoznak (CAN-busz). Az összes autó elektronikus komponense ezen keresztül kommunikál egymással.</p>
                 <ul>
@@ -232,10 +607,27 @@
                     <li><strong>U2xxx:</strong> Adatátviteli problémák</li>
                     <li><strong>U3xxx:</strong> Hálózati topológia</li>
                 </ul>
-
-                <h2 id="how-to-read">Hogyan olvasunk DTC kódokat?</h2>
+                
+                <div class="stat-box">
+                    <div class="stat-item">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">P-kódok az összes hibakódból</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25%</div>
+                        <div class="stat-label">C-kódok (alváz/biztonság)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15%</div>
+                        <div class="stat-label">B és U kódok együtesen</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="how-to-read">
+                <h2>Hogyan olvasunk DTC kódokat?</h2>
                 <p>A DTC kódok szerkezete szándékosan szisztematikus. Ha ismered az olvasási módot, bármely kódot értelmezni tudod, még akkor is, ha nem tudsz róluk semmit.</p>
-
+                
                 <h3>A DTC kód szerkezete</h3>
                 <p>Vegyük például a <strong>P0171</strong> kódot:</p>
                 <ul>
@@ -245,109 +637,101 @@
                     <li><strong>7</strong> = Alrendszer azonosítása (mixture)</li>
                     <li><strong>1</strong> = Spesifikus hiba (lean condition)</li>
                 </ul>
-
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Pozíció</th>
-                                <th scope="col">Jelent</th>
-                                <th scope="col">Érték</th>
-                                <th scope="col">Magyarázat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1. kar</td>
-                                <td>Kategória</td>
-                                <td>P, B, C, U</td>
-                                <td>Hajtáslánc, karossz, alváz, hálózat</td>
-                            </tr>
-                            <tr>
-                                <td>2. kar</td>
-                                <td>Szabványosság</td>
-                                <td>0-1</td>
-                                <td>0 = SAE, 1 = gyártó-specifikus</td>
-                            </tr>
-                            <tr>
-                                <td>3. kar</td>
-                                <td>Alrendszer</td>
-                                <td>0-9</td>
-                                <td>Pl. tüzelőanyag, üzemanyag, gyújtás</td>
-                            </tr>
-                            <tr>
-                                <td>4-5. kar</td>
-                                <td>Spesifikus hiba</td>
-                                <td>00-99</td>
-                                <td>A pontos probléma azonosítása</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                
+                <table>
+                    <tr>
+                        <th>Pozíció</th>
+                        <th>Jelent</th>
+                        <th>Érték</th>
+                        <th>Magyarázat</th>
+                    </tr>
+                    <tr>
+                        <td>1. kar</td>
+                        <td>Kategória</td>
+                        <td>P, B, C, U</td>
+                        <td>Hajtáslánc, karossz, alváz, hálózat</td>
+                    </tr>
+                    <tr>
+                        <td>2. kar</td>
+                        <td>Szabványosság</td>
+                        <td>0-1</td>
+                        <td>0 = SAE, 1 = gyártó-specifikus</td>
+                    </tr>
+                    <tr>
+                        <td>3. kar</td>
+                        <td>Alrendszer</td>
+                        <td>0-9</td>
+                        <td>Pl. tüzelőanyag, üzemanyag, gyújtás</td>
+                    </tr>
+                    <tr>
+                        <td>4-5. kar</td>
+                        <td>Spesifikus hiba</td>
+                        <td>00-99</td>
+                        <td>A pontos probléma azonosítása</td>
+                    </tr>
+                </table>
+                
                 <h3>Gyakorlati olvasási példák</h3>
-                <div class="blog-callout">
-                    <p><strong>P0300</strong> = Powertrain + Random/Multiple Cylinder Misfire Detected = Motor véletlenszerű csapolás vagy több hengertől csapolás</p>
+                <div class="definition-box">
+                    <strong>P0300</strong> = Powertrain + Random/Multiple Cylinder Misfire Detected = Motor véletlenszerű csapolás vagy több hengertől csapolás
                 </div>
-                <div class="blog-callout">
-                    <p><strong>C0040</strong> = Chassis + ABS Sensor Circuit Malfunction = ABS szenzor áramköri hiba</p>
+                
+                <div class="definition-box">
+                    <strong>C0040</strong> = Chassis + ABS Sensor Circuit Malfunction = ABS szenzor áramköri hiba
                 </div>
-                <div class="blog-callout">
-                    <p><strong>B1003</strong> = Body + Air Conditioning Control Module Failure = Klímaberendezés vezérlő modul hiba</p>
+                
+                <div class="definition-box">
+                    <strong>B1003</strong> = Body + Air Conditioning Control Module Failure = Klímaberendezés vezérlő modul hiba
                 </div>
-
+                
                 <h3>A Hexadecimális vs. Decimális jelölés</h3>
                 <p>A legtöbb OBD2 scanner a kódokat decimális formában jeleníti meg (például P0171), de néhány régebbi eszköz hexadecimálisban is mutathatja (például 10,7F). Ne aggódj, a mai új scannereik mind decimális formátumot használnak, ami sokkal értelmezhetőbb.</p>
-
-                <h2 id="common-codes">Leggyakoribb OBD2 hibakódok magyarországi autokon</h2>
+            </section>
+            
+            <section id="common-codes">
+                <h2>Leggyakoribb OBD2 hibakódok magyarországi autokon</h2>
                 <p>Az AutoCognitix adatbázisa alapján ezek a leggyakrabban előforduló hibakódok az első generációs diagnosztikai vizsgálatok során:</p>
-
+                
                 <h3>Top 5 leggyakoribb P-kód</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Kód</th>
-                                <th scope="col">Megnevezés</th>
-                                <th scope="col">Gyakoriság</th>
-                                <th scope="col">Típikus Költség</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>P0171</strong></td>
-                                <td>System Too Lean Bank 1</td>
-                                <td>12,4%</td>
-                                <td>18,000-75,000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0440</strong></td>
-                                <td>EVAP System Malfunction</td>
-                                <td>9,8%</td>
-                                <td>15,000-55,000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0101</strong></td>
-                                <td>Mass Airflow (MAF) Sensor Range</td>
-                                <td>8,6%</td>
-                                <td>20,000-50,000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0300</strong></td>
-                                <td>Random Misfire Detected</td>
-                                <td>7,3%</td>
-                                <td>25,000-150,000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0128</strong></td>
-                                <td>Coolant Temperature Below Thermostat</td>
-                                <td>6,9%</td>
-                                <td>30,000-120,000 Ft</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                <table>
+                    <tr>
+                        <th>Kód</th>
+                        <th>Megnevezés</th>
+                        <th>Gyakoriság</th>
+                        <th>Típikus Költség</th>
+                    </tr>
+                    <tr>
+                        <td><strong>P0171</strong></td>
+                        <td>System Too Lean Bank 1</td>
+                        <td>12,4%</td>
+                        <td>18,000-75,000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0440</strong></td>
+                        <td>EVAP System Malfunction</td>
+                        <td>9,8%</td>
+                        <td>15,000-55,000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0101</strong></td>
+                        <td>Mass Airflow (MAF) Sensor Range</td>
+                        <td>8,6%</td>
+                        <td>20,000-50,000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0300</strong></td>
+                        <td>Random Misfire Detected</td>
+                        <td>7,3%</td>
+                        <td>25,000-150,000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0128</strong></td>
+                        <td>Coolant Temperature Below Thermostat</td>
+                        <td>6,9%</td>
+                        <td>30,000-120,000 Ft</td>
+                    </tr>
+                </table>
+                
                 <h3>Leggyakoribb C-kódok (biztonsági rendszerek)</h3>
                 <p>A fékrendszer és stabilitásvezérlés hibakódjai az autók korával szinkronban nőnek. A leggyakoribb C-kódok:</p>
                 <ul>
@@ -355,27 +739,38 @@
                     <li><strong>C0040</strong> - ABS Sensor Circuit Malfunction (ABS szenzor általános hiba)</li>
                     <li><strong>C1209</strong> - Brake Pressure Sensor (fékalás-nyomás szenzor)</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Trend:</strong> Az 5-10 éves autóknál a P0171, P0440 és P0101 kódok leginkább az oxigén-szenzor öregedése vagy az üzemanyag-injektorok szennyeződésének az eredménye. A legújabb modelleknél (2020+) inkább P2009 és P2006 kódok (levegőbevezetés vezérlés) jelennek meg.
+                
+                <div class="info-box">
+                    <strong>📊 Trend:</strong> Az 5-10 éves autóknál a P0171, P0440 és P0101 kódok leginkább az oxigén-szenzor öregedése vagy az üzemanyag-injektorok szennyeződésének az eredménye. A legújabb modelleknél (2020+) inkább P2009 és P2006 kódok (levegőbevezetés vezérlés) jelennek meg.
                 </div>
-
-                <h2 id="diagnostic-steps">DTC diagnosztikai lépések</h2>
+            </section>
+            
+            <section id="diagnostic-steps">
+                <h2>DTC diagnosztikai lépések</h2>
                 <p>Ha hibakódot találtál az OBD2 scannereddel, ne pánikolj. Kövess egy szisztematikus megközelítést a probléma azonosítására:</p>
-
+                
                 <h3>1. lépés: Kód rögzítése és dokumentálása</h3>
                 <p>Írd le a pontosan megjelenő kódot (pl. P0171), a fordítást és hogy mikor jelent meg. Ha több kódod van, rangsorolj őket a valószínű seriousness alapján (P-kódok általában elsődlegesek).</p>
-
+                
                 <h3>2. lépés: Check Engine lámpa státusza</h3>
                 <ul>
                     <li><strong>Szilárd vörös lámpa:</strong> Komoly probléma, azonnal szervizelés szükséges</li>
                     <li><strong>Villogó lámpa:</strong> VESZÉLYES! Ne vezess, azonnal szervizelés vagy szállítás szükséges</li>
                     <li><strong>Sárga/narancssárga lámpa:</strong> Megelőző problémafelfedezés, 1-2 héten belül szervizelés ajánlott</li>
                 </ul>
-
+                
                 <h3>3. lépés: Tünetek felmérése</h3>
-                <p>Fordítsd meg a kódot a tünetekre. Például P0171 kód = System Too Lean, lehetséges tünetek: nehéz indítás, fokozódott üzemanyag-fogyasztás, gyenge teljesítmény, szagos kipufogógáz.</p>
-
+                <p>Fordítsd meg a kódot a tünetekre:</p>
+                <div class="code-box">
+                P0171 kód → System Too Lean
+↓
+Lehetséges tünetek:
+- Nehéz indítás
+- Fokozódott üzemanyag-fogyasztás
+- Gyenge teljesítmény
+- Szagos kipufogógáz
+                </div>
+                
                 <h3>4. lépés: Alapvető vizuális ellenőrzés</h3>
                 <ul>
                     <li>Vizsgáld meg a VAK szenzorok és csatlakozások épségét</li>
@@ -383,146 +778,140 @@
                     <li>Keressen minden látható vákuum-szivárgást</li>
                     <li>Nézz meg a motor olaja és hűtőfolyadéka állapotát</li>
                 </ul>
-
+                
                 <h3>5. lépés: Egy másik szkenneléssel újraellenőrizés</h3>
                 <p>Néhány hibakód önmagában megjavul (pl. laza üzemanyag-sapka). Tisztítsd meg a motor lyuk fedele csatlakozóját, majd egyszer végezz újabb szkenneléssel.</p>
-
+                
                 <h3>6. lépés: Online keresés vagy szaktanácsadás</h3>
-                <p>Ha bizonytalan vagy, használd az AutoCognitix DTC kereső adatbázisát, vagy keress szertakértői szájából tanácsot. Ne vágj semmilyen alkatrészt anélkül, hogy legalább 70%-ig biztos ne legyél az oknak.</p>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>Figyelmeztetés:</strong> Ne javítsd meg a problémát "vakmerően". A P0171 lehet MAF szenzor (20k Ft), de lehet nagyjavítás (200k+ Ft). Végezz alapos diagnosztikai lépéseket!
+                <p>Ha bizonytalan vagy, használd az AutoCognitix DTC kereső adatbázisát, vagy keress sztertakértői szájából tanácsot. Ne vágj semmilyen alkatrészt anélkül, hogy legalább 70%-ig biztos ne legyél az oknak.</p>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Figyelmeztetés:</strong> Ne javítsd meg a problémát "vakmerően". A P0171 lehet MAF szenzor (20k Ft), de lehet nagyjavítás (200k+ Ft). Végezz alapos diagnosztikai lépéseket!
                 </div>
-
-                <h2 id="scanner-types">OBD2 scannertípusok és kiválasztásuk</h2>
+            </section>
+            
+            <section id="scanner-types">
+                <h2>OBD2 scannertípusok és kiválasztásuk</h2>
                 <p>A DTC kódok leolvasásához szükséged van egy OBD2 scannererre. A piacon sok fajta érhető el, különböző árban és funkcionalitásban.</p>
-
+                
                 <h3>Scanner típusok</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Típus</th>
-                                <th scope="col">Ár</th>
-                                <th scope="col">Funkciók</th>
-                                <th scope="col">Ideális Felhasználó</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Alapvető diagnosztikai</strong></td>
-                                <td>5,000-15,000 Ft</td>
-                                <td>Kód olvasás, törlés</td>
-                                <td>Kezdő gépkocsisok</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Fejlett diagnosztikai</strong></td>
-                                <td>15,000-50,000 Ft</td>
-                                <td>Élő adatok, hibakód interpretáció</td>
-                                <td>Autódik, otthoni szerelők</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Professzionális</strong></td>
-                                <td>50,000-500,000 Ft</td>
-                                <td>Teljes diagnosztika, vezérlés adaptáció</td>
-                                <td>Szervízműhelyek</td>
-                            </tr>
-                            <tr>
-                                <td><strong>OBD2 Bluetooth adapter</strong></td>
-                                <td>3,000-10,000 Ft</td>
-                                <td>Smartphonea csatlakoztatható</td>
-                                <td>Kezdők, költségvetés-tudatosak</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                <table>
+                    <tr>
+                        <th>Típus</th>
+                        <th>Ár</th>
+                        <th>Funkciók</th>
+                        <th>Ideális Felhasználó</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Alapvető diagnosztikai</strong></td>
+                        <td>5,000-15,000 Ft</td>
+                        <td>Kód olvasás, törlés</td>
+                        <td>Kezdő gépkocsisok</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fejlett diagnosztikai</strong></td>
+                        <td>15,000-50,000 Ft</td>
+                        <td>Élő adatok, hibakód interpretáció</td>
+                        <td>Autodik, otthoni szerelők</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Professzionális</strong></td>
+                        <td>50,000-500,000 Ft</td>
+                        <td>Teljes diagnosztika, vezérlés adaptáció</td>
+                        <td>Szervízműhelyek</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OBD2 Bluetooth adapter</strong></td>
+                        <td>3,000-10,000 Ft</td>
+                        <td>Smartphonea csatlakoztatható</td>
+                        <td>Kezdők, költségvetés-tudatosak</td>
+                    </tr>
+                </table>
+                
                 <h3>Legjobb OBD2 scannerek kezdőknek 2026-ban</h3>
-                <div class="blog-callout">
-                    <strong>Ajánlások:</strong>
-                    <p><strong>OBDII.COM CAN-OBD2:</strong> ~10,000 Ft, nagyon praktikus</p>
-                    <p><strong>Autel AL319:</strong> ~18,000 Ft, erős teljesítmény</p>
-                    <p><strong>BlueDriver Bluetooth:</strong> ~8,000 Ft, mobiltelefon integrációs</p>
+                <div class="definition-box">
+                    <strong>Szankció ajánlások:</strong>
+                    <br>• <strong>OBDII.COM CAN-OBD2:</strong> ~10,000 Ft, nagyon praktikus
+                    <br>• <strong>Autel AL319:</strong> ~18,000 Ft, erős teljesítmény
+                    <br>• <strong>BlueDriver Bluetooth:</strong> ~8,000 Ft, mobiltelefon integrációs
                 </div>
-
-                <h2 id="severity-levels">Hibakódok súlyossági szintjei</h2>
+            </section>
+            
+            <section id="severity-levels">
+                <h2>Hibakódok súlyossági szintjei</h2>
                 <p>Nem minden hibakód egyformán veszélyes. Néhány azonnali szervizést igényel, mások pedig elővigyázatosan kezelhetőek.</p>
-
+                
                 <h3>Kritikus hibakódok (Nem vezetés ajánlott)</h3>
                 <ul>
-                    <li><strong>P0016</strong> - Crankshaft/Camshaft Position Out of Sync = Motor nagyon sérülékeny</li>
+                    <li><strong>P0016</strong> - Crankshaft/Camshaft Position Out of Sync = Motor nagyon séülékeny</li>
                     <li><strong>P0128</strong> - Coolant Temp Below Thermostat = Motor túlmelegedhetnek</li>
                     <li><strong>P0500</strong> - Vehicle Speed Sensor Malfunction = Sebességmérő hiba</li>
                     <li><strong>C0060</strong> - ABS Pump Motor Malfunction = Fékezés bizonytalan</li>
                 </ul>
-
+                
                 <h3>Komoly hibakódok (Szervizelés szükséges, de vezethet)</h3>
                 <ul>
                     <li><strong>P0171</strong> - System Too Lean = Rossz fogyasztás, csökkent teljesítmény</li>
                     <li><strong>P0440</strong> - EVAP System Malfunction = Páraizációs rendszer hiba</li>
                     <li><strong>P0101</strong> - MAF Sensor Range = Rossz levegő-mérés</li>
                 </ul>
-
+                
                 <h3>Enyhe hibakódok (Megelőző karbantartás)</h3>
                 <ul>
                     <li><strong>P0133</strong> - O2 Sensor Circuit Slow Response = Oxigén szenzor lassú</li>
                     <li><strong>P0420</strong> - Catalyst System Efficiency Below Threshold = Katalizátor hátránya</li>
                     <li><strong>B1015</strong> - Battery Backup Power Low = Biztonsági elem alacsony</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>Figyelmeztetés:</strong> Ha a Check Engine lámpa <strong>villog</strong> (nem csak világít), az motorfűrészet vagy komoly katalizátor-sérülést jelezhet. <strong>Nem javasolt vezetés.</strong>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Figyelmeztetés:</strong> Ha a Check Engine lámpa <strong>villog</strong> (nem csak világít), az motorfűrészet vagy komoly katalizátor-sérülést jelezhet. <strong>Nem javasolt vezetés.</strong>
                 </div>
-
-                <h2 id="preventing-codes">Hibakódok megelőzése: Megelőző karbantartás</h2>
+            </section>
+            
+            <section id="preventing-codes">
+                <h2>Hibakódok megelőzése: Megelőző karbantartás</h2>
                 <p>A legjobb módja a hibakódok kezelésének az, ha nem jönnek létre. Néhány egyszerű karbantartási tipp:</p>
-
+                
                 <h3>Rendszeres karbantartási feladatok</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Feladat</th>
-                                <th scope="col">Időköz</th>
-                                <th scope="col">Tipikus Költség</th>
-                                <th scope="col">Megelőzi a Kódokat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Olajcsere</td>
-                                <td>Minden 10,000 km</td>
-                                <td>8,000-15,000 Ft</td>
-                                <td>P0300, P0128</td>
-                            </tr>
-                            <tr>
-                                <td>Légszűrő cseréje</td>
-                                <td>15,000-30,000 km</td>
-                                <td>3,000-8,000 Ft</td>
-                                <td>P0101, P0171</td>
-                            </tr>
-                            <tr>
-                                <td>Üzemanyag-szűrő csere</td>
-                                <td>30,000-50,000 km</td>
-                                <td>4,000-12,000 Ft</td>
-                                <td>P0087, P0088</td>
-                            </tr>
-                            <tr>
-                                <td>Gyertya csere</td>
-                                <td>20,000-40,000 km</td>
-                                <td>5,000-20,000 Ft</td>
-                                <td>P0300, P0304</td>
-                            </tr>
-                            <tr>
-                                <td>Hűtőfolyadék csere</td>
-                                <td>60,000-80,000 km</td>
-                                <td>6,000-18,000 Ft</td>
-                                <td>P0128, P0135</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                <table>
+                    <tr>
+                        <th>Feladat</th>
+                        <th>Időköz</th>
+                        <th>Tipikus Költség</th>
+                        <th>Megelőzi a Kódokat</th>
+                    </tr>
+                    <tr>
+                        <td>Olajcsere</td>
+                        <td>Minden 10,000 km</td>
+                        <td>8,000-15,000 Ft</td>
+                        <td>P0300, P0128</td>
+                    </tr>
+                    <tr>
+                        <td>Légszűrő cseréje</td>
+                        <td>15,000-30,000 km</td>
+                        <td>3,000-8,000 Ft</td>
+                        <td>P0101, P0171</td>
+                    </tr>
+                    <tr>
+                        <td>Üzemanyag-szűrő csere</td>
+                        <td>30,000-50,000 km</td>
+                        <td>4,000-12,000 Ft</td>
+                        <td>P0087, P0088</td>
+                    </tr>
+                    <tr>
+                        <td>Gyertya csere</td>
+                        <td>20,000-40,000 km</td>
+                        <td>5,000-20,000 Ft</td>
+                        <td>P0300, P0304</td>
+                    </tr>
+                    <tr>
+                        <td>Hűtőfolyadék csere</td>
+                        <td>60,000-80,000 km</td>
+                        <td>6,000-18,000 Ft</td>
+                        <td>P0128, P0135</td>
+                    </tr>
+                </table>
+                
                 <h3>Napi szokások a hibakódok megelőzésére</h3>
                 <ul>
                     <li><strong>Ellenőrizd az üzemanyag sapkáját:</strong> Laza sapka gyakran okozza a P0440 kódot</li>
@@ -531,14 +920,16 @@
                     <li><strong>Vizsgáld meg az emissziót:</strong> Fekete vagy szokatlan szín kipufogógáz = probléma</li>
                     <li><strong>Használj jó minőségű üzemanyagot:</strong> Olcsó benzin szennyt hagyhat az injektorokon</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Tipp:</strong> Az AutoCognitix szoftver segítségével nyomon követheted az autó karbantartási előzményeit és beállíthat emlékeztetőket a szükséges szervizelésekhez, megelőzve a hibakódok felbukkanását.
+                
+                <div class="info-box">
+                    <strong>💡 Tipp:</strong> Az AutoCognitix szoftver segítségével nyomon követheted az autó karbantartási előzményeit és beállíthat emlékeztetőket a szükséges szervizelésekhez, megelőzve a hibakódok felbukkanását.
                 </div>
-
-                <h2 id="when-to-seek-help">Mikor keressünk szakiját?</h2>
-                <p>Noha sok hibakódot le lehet olvasni otthon, vannak esetek, amikor szükséges szakértő segítségét kérni. Az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features">NHTSA (National Highway Traffic Safety Administration)</a> részletes biztonsági útmutatókat biztosít azoknak az autótulajdonosoknak, akik biztonsági kódokat vizsgálnak:</p>
-
+            </section>
+            
+            <section id="when-to-seek-help">
+                <h2>Mikor keressünk szakiját?</h2>
+                <p>Noha sok hibakódot le lehet olvasni otthon, vannak esetek, amikor szükséges szakértő segítségét kérni. Az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features" style="color: #0284c7; text-decoration: underline;">NHTSA (National Highway Traffic Safety Administration)</a> részletes biztonsági útmutatókat biztosít azoknak az autótulajdonosoknak, akik biztonsági kódokat vizsgálnak:</p>
+                
                 <h3>Szervizhez fordulj, ha:</h3>
                 <ul>
                     <li>A Check Engine lámpa villog (motorséülés veszély)</li>
@@ -549,227 +940,208 @@
                     <li>Nem tudsz azonosítani egy P-kódot az online dokumentumokból</li>
                     <li>Az autó vezetése során veszélyes tünetek lépnek fel (sikló, rezgés, gázpedál nem működik)</li>
                 </ul>
-
+                
                 <h3>Milyen kérdéseket tegyen fel szervíz</h3>
-                <div class="blog-callout">
-                    <strong>Helyes kérdések:</strong>
-                    <p>"Mi az e hibakód egyes értelmezése?" / "Milyen diagnosztikai lépéseket hajtottak végre?" / "Mi a fő és a mellékes ok?" / "Mi a legolcsóbb megoldás ezt rá?" / "Lehet másik szervízműhely is ilyet csinálni, olcsóbban?"</p>
+                <div class="definition-box">
+                    <strong>✅ Helyes kérdések:</strong>
+                    <br>• "Mi az e hibakód egyes értelmezése?"
+                    <br>• "Milyen diagnosztikai lépéseket hajtottak végre?"
+                    <br>• "Mi a fő és a mellékes ok?"
+                    <br>• "Mi a legolcsóbb megoldás ezt rá?"
+                    <br>• "Lehet másik szervízműhely is ilyet csinálni, olcsóbban?"
                 </div>
-
+            </section>
+            
+            <section id="faq">
+                <h2>Gyakran Feladott Kérdések (FAQ)</h2>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mi a különbség a P0171 és P0174 kód között?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi. Ha csak az egyik jelenik meg, valószínűleg az egyik O2 szenzor vagy levegő-üzemanyag rendszer egy oldala van hibás. Ha mind a kettő jelen van, az már a közös ok (pl. MAF szenzor) jellegét sugallja.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Lehet-e autót vezetni P0171 kóddal?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet. Azonban nem veszélyes vezetés az autó lezuhanna. Az igazi veszély az, hogy a katalizátor túlmélegedhet, ha tartósan szegény keverékkel vezetel. Ajánlott: 1-2 napon belül diagnosztizálj!</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mire használható egy OBD2 Bluetooth adapter?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Az OBD2 Bluetooth adapterek költségvetés-barát megoldások (2,000-10,000 Ft), amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal. Egy megfelelő alkalmazás (pl. Torque, OBD Fusion) segítségével képes leolvasni a hibakódokat, élő adatokat figyelni és sok egyéb funkcióra használható. Ideális kezdőknek és otthon szerelőknek.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mit jelez a villogó Check Engine lámpa?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést. Ez általában akkor történik, amikor egy vagy több henger nem működik megfelelően (misfire), ami üzemanyag-csapolódáshoz és katalizátor-túlmelegedéshez vezethet. Ha a lámpa villog: <strong>azonnal álljál meg az autót, és ne vezess tovább!</strong> A motort komoly károsodás érte.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Hogyan nyomhatom le a Check Engine lámpát?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Ha csak a kódot törlöd és a probléma továbbra is létezik, a lámpa újra kigyúl. Az összes OBD2 scanner rendelkezik egy "Clear Codes" vagy "Erase Fault Codes" funkcióval, de csak akkor használd ezt, ha biztosan javítottad a problémát!</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mi az a "Pending" hibakód?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Egy "Pending" (függőben lévő) hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában. Az autónak szükséges több mérési ciklus (általában 10-30 indítási ciklus) a megerősítéshez. Ha a probléma fennmarad, az "Active" kóddá válik. Ha a probléma eltűnik, a "Pending" kód nem kerül rögzítésre. Ez a szabály minimalizálja a téves pozitív diagnosztikákat.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div class="author-box">
+            <div class="author-name">AutoCognitix Szerkesztőség</div>
+            <div class="author-title">AI-alapú autódiagnosztika szakértők</div>
+            <p style="margin-top: 10px; opacity: 0.9; font-size: 14px;">Napi szinten kutatunk az OBD2 technológiáról, hibakódokról és autódiagnosztikáról, hogy a legpontosabb és leghasznosabb információkat adhassuk az olvasóinknak.</p>
+        </div>
+        
+        <div class="related-articles">
+            <h3>📚 Kapcsolódó Cikkek</h3>
+            <div class="related-list">
+                <div class="related-item">
+                    <a href="/hu/blog/p0171-hibakod-okok-tunetek-javitas.html">P0171 Hibakód: Okok, Tünetek, Teljes Diagnosztikai Útmutató</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Részletes útmutató az egyik leggyakoribb hibakódról</p>
+                </div>
+                <div class="related-item">
+                    <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek.html">Autódiagnosztika Otthon: Kezdők Útmutatója a DIY Hibafelismeréshez</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Hogyan diagnosztiozálj magad minimális eszközökkel</p>
+                </div>
+                <div class="related-item">
+                    <a href="/">AutoCognitix Főoldal - Ingyenes Diagnosztika</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Kezdj el diagnosztizálni most az AutoCognitix platformon</p>
+                </div>
             </div>
         </div>
-    </article>
-
-    <!-- FAQ Section -->
-    <section class="blog-faq-section blog-animate" id="faq">
-        <div class="container">
-            <h2>Gyakran Feladott Kérdések a DTC hibakódokról</h2>
-            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mi a különbség a P0171 és P0174 kód között?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi. Ha csak az egyik jelenik meg, valószínűleg az egyik O2 szenzor vagy levegő-üzemanyag rendszer egy oldala van hibás. Ha mind a kettő jelen van, az már a közös ok (pl. MAF szenzor) jellegét sugallja.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Lehet-e autót vezetni P0171 kóddal?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet. Azonban nem veszélyes vezetés az autó lezuhanna. Az igazi veszély az, hogy a katalizátor túlmélegedhet, ha tartósan szegény keverékkel vezetel. Ajánlott: 1-2 napon belül diagnosztizálj!</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mire használható egy OBD2 Bluetooth adapter?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Az OBD2 Bluetooth adapterek költségvetés-barát megoldások (2,000-10,000 Ft), amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal. Egy megfelelő alkalmazás (pl. Torque, OBD Fusion) segítségével képes leolvasni a hibakódokat, élő adatokat figyelni és sok egyéb funkcióra használható. Ideális kezdőknek és otthon szerelőknek.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mit jelez a villogó Check Engine lámpa?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést. Ez általában akkor történik, amikor egy vagy több henger nem működik megfelelően (misfire), ami üzemanyag-csapolódáshoz és katalizátor-túlmelegedéshez vezethet. Ha a lámpa villog: azonnal álljál meg az autót, és ne vezess tovább! A motort komoly károsodás érte.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Hogyan nyomhatom le a Check Engine lámpát?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Ha csak a kódot törlöd és a probléma továbbra is létezik, a lámpa újra kigyúl. Az összes OBD2 scanner rendelkezik egy "Clear Codes" vagy "Erase Fault Codes" funkcióval, de csak akkor használd ezt, ha biztosan javítottad a problémát!</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mi az a "Pending" hibakód?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Egy "Pending" (függőben lévő) hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában. Az autónak szükséges több mérési ciklus (általában 10-30 indítási ciklus) a megerősítéshez. Ha a probléma fennmarad, az "Active" kóddá válik. Ha a probléma eltűnik, a "Pending" kód nem kerül rögzítésre. Ez a szabály minimalizálja a téves pozitív diagnosztikákat.</p>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="cta-box">
+            <h3>🚗 Kezdd el a Diagnosztizálást Azonnal!</h3>
+            <p>Ne légy belegött a hibakódokba. Az AutoCognitix ingyenes diagnosztikai platform segítségével azonnal megtudhatod, mit jelentenek a kódod.</p>
+            <a href="https://www.autocognitix.hu" class="cta-button">Nyiss meg az AutoCognitix-et</a>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="blog-cta-section blog-animate">
-        <div class="container">
-            <div class="blog-cta">
-                <h2>Kezdd el a Diagnosztizálást Azonnal!</h2>
-                <p>Ne légy belegött a hibakódokba. Az AutoCognitix ingyenes diagnosztikai platform segítségével azonnal megtudhatod, mit jelentenek a kódod.</p>
-                <a href="/hu/#pricing" class="btn btn-primary">Nyiss meg az AutoCognitix-et</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Articles -->
-    <section class="blog-related-section blog-animate">
-        <div class="container">
-            <h2>Kapcsolódó cikkek</h2>
-            <div class="blog-related">
-                <a href="/hu/blog/p0171-hibakod-okok-tunetek-javitas" class="blog-related-card">
-                    <div class="blog-related-image blog-related-image-warm"></div>
-                    <h4>P0171 Hibakód: Okok, Tünetek, Javítás</h4>
-                    <p>Részletes útmutató az egyik leggyakoribb hibakódról</p>
-                </a>
-                <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek" class="blog-related-card">
-                    <div class="blog-related-image blog-related-image-green"></div>
-                    <h4>Autódiagnosztika Otthon: Kezdők Útmutatója</h4>
-                    <p>Hogyan diagnosztizálj magad minimális eszközökkel</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
-            <p>Az oldalon szereplő információ csak oktatási célokra szolgál. Mindig keress szakiját komoly autójavítási problémák esetén.</p>
-        </div>
-    </footer>
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Article",
-        "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
-        "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
-        "image": "https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg",
-        "author": {
-            "@type": "Organization",
-            "name": "AutoCognitix"
-        },
-        "datePublished": "2026-03-21",
-        "dateModified": "2026-03-21"
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Mi a különbség a P0171 és P0174 kód között?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Lehet-e autót vezetni P0171 kóddal?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mire használható egy OBD2 Bluetooth adapter?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mit jelez a villogó Check Engine lámpa?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Hogyan nyomhatom le a Check Engine lámpát?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Az összes OBD2 scanner rendelkezik egy 'Clear Codes' funkcióval."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mi az a 'Pending' hibakód?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában."
-                }
-            }
-        ]
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Kezdőlap",
-                "item": "https://autocognitix.hu/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://autocognitix.hu/hu/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "DTC hibakód kereső útmutató",
-                "item": "https://autocognitix.hu/hu/blog/dtc-hibakod-kereso-teljes-utmutato"
-            }
-        ]
-    }
-    </script>
-
-    <!-- Scroll Animation -->
+        
+        <footer>
+            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva. | <a href="/hu/" style="color: #e74c3c; text-decoration: none;">Főoldal</a> | <a href="/hu/legal/adatvedelmi-szabalyzat.html" style="color: #e74c3c; text-decoration: none;">Adatvédelmi Szabályzat</a></p>
+            <p style="margin-top: 10px; font-size: 12px;">Az oldalon szereplő információ csak oktatási célokra szolgál. Mindig keress szakiját komoly autójavítási problémák esetén.</p>
+        </footer>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.blog-animate');
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('blog-animate-visible');
-                        observer.unobserve(entry.target);
+        function toggleFAQ(element) {
+            const toggle = element.querySelector('.faq-toggle');
+            const answer = element.nextElementSibling;
+            
+            toggle.classList.toggle('open');
+            answer.classList.toggle('show');
+        }
+        
+        // JSON-LD Schema.org Article
+        const articleSchema = {
+            "@context": "https://schema.org/",
+            "@type": "Article",
+            "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
+            "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
+            "image": "https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg",
+            "author": {
+                "@type": "Organization",
+                "name": "AutoCognitix"
+            },
+            "datePublished": "2026-03-21",
+            "dateModified": "2026-03-21",
+            "mainEntity": {
+                "@type": "Thing",
+                "name": "DTC hibakód"
+            }
+        };
+        
+        // JSON-LD FAQPage Schema
+        const faqSchema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Mi a különbség a P0171 és P0174 kód között?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
                     }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            animateElements.forEach(function(el) {
-                observer.observe(el);
-            });
-        });
+                },
+                {
+                    "@type": "Question",
+                    "name": "Lehet-e autót vezetni P0171 kóddal?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mire használható egy OBD2 Bluetooth adapter?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mit jelez a villogó Check Engine lámpa?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Hogyan nyomhatom le a Check Engine lámpát?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Az összes OBD2 scanner rendelkezik egy 'Clear Codes' funkcióval."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mi az a 'Pending' hibakód?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában."
+                    }
+                }
+            ]
+        };
+        
+        // Add Schema.org markup to page
+        const schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.textContent = JSON.stringify([articleSchema, faqSchema]);
+        document.head.appendChild(schemaScript);
     </script>
 </body>
 </html>

@@ -1,555 +1,978 @@
 <!DOCTYPE html>
-<html lang="hu" dir="ltr">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="P0171 hibakód magyarázata: mi okozza a sovány keveréket? Tudj meg a légmennyiségmérőről, vakuumszivárásról és a javítás költségéről. Lépésről lépésre útmutató.">
-    <meta name="keywords" content="P0171 hibakód, sovány keverék, MAF szenzor, fuel trim, check engine lámpa, autódiagnosztika">
-    <meta name="author" content="AutoCognitix">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató [2026]</title>
+  <meta name="description" content="P0171 hibakód magyarázata: mi okozza a sovány keveréket? Tudj meg a légmennyiségmérőről, vakuumszivárásról és a javítás költségéről. Lépésről lépésre útmutató.">
+  <meta name="keywords" content="P0171 hibakód, sovány keverék, MAF szenzor, fuel trim, check engine lámpa, autódiagnosztika">
+  <meta name="author" content="AutoCognitix">
+  <meta name="publish_date" content="2026-03-21">
+  <meta name="revised_date" content="2026-03-21">
+  <link rel="canonical" href="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas.html">
+  <meta property="og:title" content="P0171 hibakód: Sovány keverék — teljes útmutató 2026">
+  <meta property="og:description" content="P0171 hibakód okainak teljes elemzése: MAF szenzor, vákuumszivárgás, és gyakorlati javítási lépések.">
+  <meta property="og:url" content="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas.html">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="P0171 hibakód: Sovány keverék útmutató">
+  <meta name="twitter:description" content="Teljes útmutató a P0171 hibakódhoz, okok, tünetek és javítási lehetőségek.">
+  <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas.html">
+  <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/p0171-dtc-code-causes-symptoms-cost.html">
 
-    <!-- Open Graph Tags -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató [2026]">
-    <meta property="og:description" content="P0171 hibakód okainak teljes elemzése: MAF szenzor, vákuumszivárgás, és gyakorlati javítási lépések.">
-    <meta property="og:url" content="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas">
-    <meta property="og:image" content="https://autocognitix.hu/images/blog/p0171-og-image.jpg">
-    <meta property="og:locale" content="hu_HU">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="P0171 hibakód: Sovány keverék útmutató">
-    <meta name="twitter:description" content="Teljes útmutató a P0171 hibakódhoz, okok, tünetek és javítási lehetőségek.">
-    <meta name="twitter:image" content="https://autocognitix.hu/images/blog/p0171-og-image.jpg">
+    html {
+      scroll-behavior: smooth;
+    }
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
 
-    <!-- Language Alternatives -->
-    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas">
-    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/p0171-dtc-code-causes-symptoms-cost">
-    <link rel="alternate" hreflang="x-default" href="https://autocognitix.com/blog/p0171-dtc-code-causes-symptoms-cost">
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      background: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-    <title>P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató [2026]</title>
+    .navbar-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff6b35;
+      text-decoration: none;
+    }
 
-    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
-    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
+    .nav-breadcrumbs {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .nav-breadcrumbs a {
+      color: #ff6b35;
+      text-decoration: none;
+    }
+
+    .nav-breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-lang {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lang-btn {
+      padding: 0.5rem 0.75rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .lang-btn.active {
+      background: #ff6b35;
+      color: white;
+      border-color: #ff6b35;
+    }
+
+    article {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .article-header {
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1.5rem;
+    }
+
+    .article-badge {
+      display: inline-block;
+      background: #fff3e0;
+      color: #ff6b35;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .article-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .article-meta-icon {
+      color: #ff6b35;
+      font-weight: bold;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #ff6b35 0%, #ff8c54 100%);
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .toc {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .toc h2 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: item;
+      padding-left: 1rem;
+    }
+
+    .toc li {
+      counter-increment: item;
+      margin-bottom: 0.5rem;
+    }
+
+    .toc li:before {
+      content: counters(item, ".") ". ";
+      font-weight: 600;
+      color: #ff6b35;
+    }
+
+    .toc a {
+      color: #ff6b35;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .article-content {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .article-content p {
+      margin-bottom: 1.25rem;
+      text-align: justify;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      color: #1a1a1a;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #ff6b35;
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      color: #333;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .definition-box {
+      background: #fff3e0;
+      border-left: 4px solid #ff6b35;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .definition-box h4 {
+      color: #ff6b35;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .definition-box p {
+      margin: 0;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .warning-box {
+      background: #ffebee;
+      border-left: 4px solid #c62828;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .warning-box strong {
+      color: #c62828;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      color: #d32f2f;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    table th {
+      background: #ff6b35;
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    table td {
+      padding: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    table tr:hover {
+      background: #f9f9f9;
+    }
+
+    ul, ol {
+      margin: 1.25rem 0 1.25rem 2rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .step-list {
+      list-style: none;
+      margin-left: 0;
+      counter-reset: step;
+    }
+
+    .step-list li {
+      counter-increment: step;
+      padding-left: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .step-list li:before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #ff6b35;
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .stat-box {
+      background: #f0f7ff;
+      border-left: 4px solid #1976d2;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .stat-box strong {
+      color: #1976d2;
+      font-size: 1.1rem;
+    }
+
+    .article-faq {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .faq-title {
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #ff6b35;
+      padding-bottom: 0.75rem;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-question {
+      background: #fff;
+      padding: 1rem;
+      border-left: 4px solid #ff6b35;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .faq-answer {
+      padding: 1rem;
+      background: #fff;
+      color: #333;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .article-author-box {
+      background: #f0f7ff;
+      border: 1px solid #1976d2;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ff6b35, #ff8c54);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .author-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: #1a1a1a;
+    }
+
+    .author-info p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .article-related {
+      margin: 3rem 0 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid #f0f0f0;
+    }
+
+    .related-title {
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #ff6b35;
+      padding-bottom: 0.75rem;
+    }
+
+    .related-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .related-card {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: #333;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .related-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .related-card h4 {
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .related-card p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .article-cta {
+      background: linear-gradient(135deg, #ff6b35, #ff8c54);
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .article-cta h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: white;
+      color: #ff6b35;
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #ff6b35;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: #ff6b35;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-section li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .article-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .article-author-box {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      article {
+        padding: 1rem;
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="/" class="logo">AutoCognitix</a>
-            <div>
-                <a href="/">Kezdőlap</a>
-                <a href="/hu/blog/">Blog</a>
-                <a href="/hu/eszkozok/">Eszközök</a>
-                <a href="/#faq">GYIK</a>
-            </div>
-        </div>
+  <nav class="navbar">
+    <a href="/" class="navbar-logo">AutoCognitix</a>
+    <div class="nav-breadcrumbs">
+      <a href="/hu/">Kezdőlap</a> / <a href="/hu/blog/">Blog</a> / P0171 hibakód
+    </div>
+    <a href="/hu/eszkozok/" class="nav-link" style="margin-left:auto;margin-right:12px;font-size:14px;font-weight:500;">Eszközök</a>
+    <div class="nav-lang">
+      <a href="#" class="lang-btn active">HU</a>
+      <a href="/en/blog/p0171-dtc-code-causes-symptoms-cost.html" class="lang-btn">EN</a>
+    </div>
+  </nav>
+
+  <article>
+    <header class="article-header">
+      <span class="article-badge">Diagnosztika</span>
+      <h1>P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató</h1>
+      <div class="article-meta">
+        <span><span class="article-meta-icon">📅</span> 2026. március 21.</span>
+        <span><span class="article-meta-icon">⏱</span> 12 perc olvasási idő</span>
+        <span><span class="article-meta-icon">👤</span> AutoCognitix Diagnosztika Csapat</span>
+      </div>
+    </header>
+
+    <div class="hero-image">
+      P0171 hibakód vizuális útmutató — System Too Lean Bank 1
+    </div>
+
+    <nav class="toc">
+      <h2>Tartalomjegyzék</h2>
+      <ol>
+        <li><a href="#mi-az-p0171">Mi az a P0171 hibakód?</a></li>
+        <li><a href="#levego-uzemanyag-keverek">A levegő-üzemanyag keverék alapjai</a></li>
+        <li><a href="#8-gyakori-oka">A P0171 8 leggyakoribb oka</a></li>
+        <li><a href="#tunetek">Tünetek — hogyan veszi észre a sofőr?</a></li>
+        <li><a href="#diagnosztika-lepesek">Diagnosztika lépéseiA P0171 hibakód diagnosztikája</a></li>
+        <li><a href="#javitas-koltsegek">Javítási költségek táblázat</a></li>
+        <li><a href="#diy-javitas">DIY javítás: MAF tisztítás lépésről lépésre</a></li>
+        <li><a href="#mikor-ne-csinalj">Mikor NE csináld magad?</a></li>
+        <li><a href="#autocognitix-segitseg">Hogyan segít az AutoCognitix?</a></li>
+        <li><a href="#faq">Gyakran Feltett Kérdések</a></li>
+      </ol>
     </nav>
 
-    <!-- HERO (Averint style) -->
-    <section class="blog-hero blog-animate">
-        <div class="container">
-            <div class="blog-hero-content">
-                <div class="blog-hero-label">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
-                    </svg>
-                    <span>DTC Hibakód Útmutató</span>
-                </div>
-                <h1 class="blog-hero-title">P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató [2026]</h1>
-                <p class="blog-hero-description"><strong>Rövid válasz:</strong> A <code>P0171</code> hibakód azt jelenti, hogy az autó motorvezérlő egysége (ECU) túl sovány üzemanyag-levegő keveréket érzékelt — azaz <strong>több levegő van a keverékben, mint szükséges</strong>. A leggyakoribb okok a piszkos MAF szenzor és a vákuumszivárgás, a javítás költsége 15 000 — 150 000 Ft között mozog.</p>
-            </div>
-            <div class="blog-hero-image">
-                <div class="blog-image-reveal"></div>
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);min-height:300px;">P0171 sovány keverék hibakód illusztráció</div>
-            </div>
-            <div class="blog-hero-meta">
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Publikálva</span>
-                    <span class="blog-meta-value">2026. március 21.</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Olvasási idő</span>
-                    <span class="blog-meta-value">12 perc</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Kategória</span>
-                    <span class="blog-meta-value">Üzemanyag-rendszer</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Szerző</span>
-                    <span class="blog-meta-value">AutoCognitix AI</span>
-                </div>
-            </div>
-        </div>
+    <div class="article-content">
+
+      <h2 id="mi-az-p0171">Mi az a P0171 hibakód?</h2>
+
+      <p>A <code>P0171</code> hibakód azt jelenti, hogy az autó motorvezérlő egysége (ECU) azt érzékelte, hogy az üzemanyag-levegő keverék túl sovány — azaz <strong>több levegő van a keverékben, mint szükséges</strong>. Ez az egyik leggyakoribb diagnosztikai hiba, amit a DIY autósok és szerelők találnak. A P0171 hivatalos megnevezése: <strong>"System Too Lean Bank 1"</strong> az <a href="https://www.sae.org/standards/content/j2012/" style="color: #0284c7; text-decoration: underline;">SAE J2012 szabvány</a> szerint, amely a motor egyik bankját (általában a 1. vagy 3. henger felé) érinti.</p>
+
+      <div class="definition-box">
+        <h4>Sovány keverék (Lean Mixture) — Mit jelent?</h4>
+        <p>A <strong>sovány keverék</strong> azt jelenti, hogy az üzemanyag-levegő arány kimarad az ideális 14,7:1 arányból. Túl sok levegő vagy túl kevés üzemanyag van — így a motor szegényen működik, kevesebb energiát termel, és több szennyezőanyagot kibocsát.</p>
+      </div>
+
+      <p>Ha megjelenik a P0171 hibakód és felvillan a check engine lámpa az <a href="https://www.nhtsa.gov/recalls" style="color: #0284c7; text-decoration: underline;">NHTSA biztonsági adatbázisa</a> szerint, az autónak diagnosztikára van szüksége. Az eset nem sürgős, de az autó fogyasztása megnő, és a vezetési teljesítmény romlik. Az AutoCognitix AI diagnosztikai rendszer néhány perc alatt azonosítja a lehetséges okokat — tudj meg többet alább.</p>
+
+      <h2 id="levego-uzemanyag-keverek">A levegő-üzemanyag keverék alapjai</h2>
+
+      <p>Az autó motorja energiát termel az üzemanyag és levegő égéséből. Az <strong>ideális arány 14,7 rész levegő az 1 rész üzemanyaghoz</strong> — ezt hívják sztöchiometrikus aránynak. Ez az arány a leghatékonyabb égést biztosítja, minimális kibocsátással az <a href="https://www.epa.gov/emission-standards-reference-guide" style="color: #0284c7; text-decoration: underline;">EPA szabványai</a> szerint és maximális teljesítménnyel.</p>
+
+      <p>Az <strong>oxigénszenzor (lambda szonda)</strong> a kipufogógázban méri az égés utáni gázokat, és visszajelzést ad az ECU-nak. Az ECU szóta az üzemanyag-befecskendezés mennyiségét. Ez a visszacsatolási hurok másodpercenként több milliárd alkalommal működik — de ha valami hiba van a levegő-mérésben vagy az üzemanyag-rendszerben, az arány felborulhat.</p>
+
+      <div class="stat-box">
+        <strong>Érdekes tény:</strong> A P0171 hibakód gyakoribb a hideg időben. Amikor az autó hideg, az ECU több üzemanyagot adagol (cold start enrichment), de ha a légmennyiségmérő (MAF szenzor) piszkos, az ECU nem tudja, mennyi levegő kerül be valójában, így a keverék túl sovány lesz.
+      </div>
+
+      <h2 id="8-gyakori-oka">A P0171 8 leggyakoribb oka</h2>
+
+      <h3>1. Piszkos vagy hibás légmennyiségmérő (MAF szenzor)</h3>
+
+      <p>A <strong>MAF szenzor (Mass Air Flow sensor)</strong> méri, hogy mennyi levegő áramlik a motorba. Ha a szenzor korom vagy olajszennyezettséggel fedett, hamis méréseket küld az ECU-nak — így az más méréseket számít, és a keverék túl sovány lesz. Ez az egyik leggyakoribb P0171-es ok.</p>
+
+      <p>A MAF szenzor tisztításához elegendő egy speciális tisztítófolyadék (MAF cleaner) és egy pár perc — lehet, hogy ez egyedül megoldja a problémát.</p>
+
+      <h3>2. Vákuumszivárgás</h3>
+
+      <p>A szívócsatorna (intake manifold) vagy a csatlakozó csövek között vákuumszivárgás lehet. Ez azt jelenti, hogy a motorba mérhető levegőn kívül további levegő szökik be, amit az ECU nem vesz figyelembe. Az ECU úgy gondolja, hogy normál a keverék, pedig valójában túl sovány.</p>
+
+      <p><strong>Jellegzetes hang:</strong> Ha hallasz sípolást vagy sziszegést az motor mellől, nagy esély van a vákuumszivárásra. Az első diagnosztikai lépés az összes csövet és tömítést vizuálisan átvizsgálni.</p>
+
+      <h3>3. Hibás üzemanyag-befecskendező</h3>
+
+      <p>Az üzemanyag-befecskendezők elektrovezetett szelepek, amelyek az ECU parancsára nyílnak meg. Ha egy befecskendező meghibásodik (nem nyílik teljesen vagy beragad), akkor a henger kevesebb üzemanyagot kap — így az arány sovány lesz.</p>
+
+      <p>A P0171 általában csak egy bankot érint (pl. 1-3 henger), így a hibás befecskendező általában arra az oldatra esik.</p>
+
+      <h3>4. Gyenge üzemanyag-szivattyú</h3>
+
+      <p>Az <strong>üzemanyag-szivattyú</strong> az üzemanyagtartályban működik, és nyomás alatt szállítja az üzemanyagot a befecskendezőkhez. Ha az öregedés vagy a magas futásóra miatt az szivattyú lassabban pumpál, az üzemanyag-nyomás csökken, és kevesebb üzemanyag érkezik a motorba.</p>
+
+      <p>A gyenge szivattyú gyakran más jeleket is mutat: az autó indítása nehéz, a teljesítmény csökken, vagy halló egy surrógást az üzemanyagtartály mellől.</p>
+
+      <h3>5. Eltömődött üzemanyagszűrő</h3>
+
+      <p>Az <strong>üzemanyagszűrő</strong> megelőzi, hogy szennyeződések ne kerüljenek a befecskendezőkbe. Ha az szűrő teljesen eltömődik, az üzemanyag-áramlás lecsökken, és a motor kevesebb üzemanyagot kap. A P0171 már előfordulhat, de később már a motor nem indul meg egyáltalán.</p>
+
+      <p>Az üzemanyagszűrőt a gyártó ajánlása szerint cserélni kell — általában 20 000–40 000 km között.</p>
+
+      <h3>6. Kipufogógáz-visszavezetés (EGR) szelep hiba</h3>
+
+      <p>Az <strong>EGR szelep</strong> a kipufogógáz egy részét visszavezeti a szívócsatornába (kibocsátás csökkentése érdekében). Ha az szelep elakad vagy nem zár le teljesen, a kiégett gázok zavarják az oxigénszenzort, és az ECU rossz döntéseket hoz az üzemanyag-adagolásról.</p>
+
+      <h3>7. Tömítés szivárgás (szívócsonk vagy turbo csatlakozás)</h3>
+
+      <p>A szívócsonk tömítése vagy a turbocsatorna csatlakozásai nem tömíthetnek teljesen, így további levegő szökik be mérhető helyeken kívül. Ez a P0171 hibához vezet.</p>
+
+      <h3>8. Hibás oxigénszenzor (lambda szonda)</h3>
+
+      <p>Az <strong>O2 szenzor</strong> vagy <strong>lambda szonda</strong> méri az égéskor keletkezettoxigént a kipufogózban. Ha az szenzor elöregedik vagy letagad, hamis jelzéseket küld az ECU-nak, amely rossz üzemanyag-adagolást végez. Bár ritkábban okozza a P0171-et, mint más okok, a szenzor cseréje gyakran megoldja a problémát.</p>
+
+      <h2 id="tunetek">Tünetek — hogyan veszi észre a sofőr?</h2>
+
+      <p>A P0171 hibakód előtt vagy mellett más tünetek is jelenhetnek meg. Íme az 5 leggyakoribb jel, hogy az autó sovány keverékkel működik:</p>
+
+      <ul>
+        <li><strong>Check engine lámpa:</strong> A legfőbb jel — a műszerfalon felvillan a motorszimbólum</li>
+        <li><strong>Rossz üzemanyag-fogyasztás (megnövekedett):</strong> Az autó több benzint fogyaszt a szokásosnál</li>
+        <li><strong>Gyengébb teljesítmény:</strong> Az autó lassabban gyorsul, kevésbé reaktív az autópályán</li>
+        <li><strong>Rózsaszín füst vagy szag a kipufogóból:</strong> A sovány keverék egyenletes égés helyett gyújtja meg az üzemanyagot</li>
+        <li><strong>Rázás vagy ingadozás az üresjáratban:</strong> Az ECU megpróbálja korrigálni az arányokat, de nem sikerül</li>
+      </ul>
+
+      <h2 id="diagnosztika-lepesek">A P0171 hibakód diagnosztikája</h2>
+
+      <p>A P0171 diagnosztikájának vannak egyszerű lépéseiés bonyolultabb szakmai vizsgálatok. Íme a sorrend:</p>
+
+      <ol class="step-list">
+        <li><strong>OBD2 szkenner megakupcsolása:</strong> Olvass ki a hibakódot egy OBD2 readerrel (auto szalonban ingyenes, vagy vásárolhatsz egyet online)</li>
+        <li><strong>Valós idejű adatok megtekintése:</strong> Az OBD2 szkenner megmutatja a MAF szenzor értékeket, O2 szenzor jelet és üzemanyag-nyomást</li>
+        <li><strong>Vizuális ellenőrzés:</strong> Nézd meg az összes vákuumcsövet, és keress repedéseket vagy szivárgást</li>
+        <li><strong>MAF szenzor megtekintése:</strong> Vedd ki a szívócsatorna után a szűrő előtt, és vizsgáld meg a szenzort — ha piszkos, tisztítsd meg</li>
+        <li><strong>Üzemanyag-nyomás mérése:</strong> Egy nyomásméréssel ellenőrizheted az üzemanyag-szivattyú és szűrő állapotát</li>
+        <li><strong>Hibakód visszaírása és újra indítás:</strong> Ha változtatást végeztél, töröld az E-memóriát az OBD2 szkennerrel, és indítsd újra az autót, hogy nézd meg, a hiba újra megjelenik-e</li>
+      </ol>
+
+      <p><strong>Pró tipp:</strong> Jegyzetelj fel minden mérési értéket, amelyet az OBD2 szkennerrel látsz. Ha megismételted a diagnosztikát másnap, összehasonlíthatod az értékeket, és meglátod, hogy konzisztens-e a hiba.</p>
+
+      <h2 id="javitas-koltsegek">Javítási költségek táblázat</h2>
+
+      <p>Az alábbi táblázat az átlagos költségeket mutatja Magyarországon (2026):</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Probléma</th>
+            <th>Alkatrész ára</th>
+            <th>Munka ≈</th>
+            <th>Összesen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MAF szenzor csere</td>
+            <td>15 000–35 000 Ft</td>
+            <td>3 000–6 000 Ft</td>
+            <td>18 000–41 000 Ft</td>
+          </tr>
+          <tr>
+            <td>Vákuumcsöves csere</td>
+            <td>2 000–8 000 Ft</td>
+            <td>2 000–4 000 Ft</td>
+            <td>4 000–12 000 Ft</td>
+          </tr>
+          <tr>
+            <td>Üzemanyag-befecskendező csere</td>
+            <td>20 000–50 000 Ft</td>
+            <td>8 000–12 000 Ft</td>
+            <td>28 000–62 000 Ft</td>
+          </tr>
+          <tr>
+            <td>Üzemanyag-szivattyú csere</td>
+            <td>30 000–80 000 Ft</td>
+            <td>15 000–25 000 Ft</td>
+            <td>45 000–105 000 Ft</td>
+          </tr>
+          <tr>
+            <td>Üzemanyagszűrő csere</td>
+            <td>3 000–8 000 Ft</td>
+            <td>2 000–4 000 Ft</td>
+            <td>5 000–12 000 Ft</td>
+          </tr>
+          <tr>
+            <td>O2 szenzor csere</td>
+            <td>10 000–25 000 Ft</td>
+            <td>3 000–5 000 Ft</td>
+            <td>13 000–30 000 Ft</td>
+          </tr>
+          <tr>
+            <td>Szívócsönk tömítés csere</td>
+            <td>5 000–15 000 Ft</td>
+            <td>6 000–10 000 Ft</td>
+            <td>11 000–25 000 Ft</td>
+          </tr>
+          <tr>
+            <td>EGR szelep tisztítása</td>
+            <td>—</td>
+            <td>10 000–15 000 Ft</td>
+            <td>10 000–15 000 Ft</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Fontos megjegyzés:</strong> Ezek az átlagos árak. Az igazi költség az autó márkájától, modelljétől és évjáratától függően eltérhet. Például egy prémium márka (BMW, Mercedes) alkatrészei 50% drágábbak lehetnek.</p>
+
+      <h2 id="diy-javitas">DIY javítás: MAF szenzor tisztítása lépésről lépésre</h2>
+
+      <p>A MAF szenzor tisztítása az egyik legolcsóbb és legegyszerűbb P0171 javítás. Íme a lépések:</p>
+
+      <ol class="step-list">
+        <li><strong>Szükséges eszközök és anyagok:</strong> OBD2 szkenner, csavarozó szett, MAF cleaner folyadék (electrolube vagy LIQUI MOLY), tiszta ruhák, csekeműanyag labda vagy ecset</li>
+        <li><strong>Motor leállítása és lehűlésének várása:</strong> A szenzor mellett nyomás alatt van a rendszer — legalább 30 percet vár</li>
+        <li><strong>Szívócsatorna csatlakozójának megkeresése:</strong> Az air filter ház után és a motorblokkra menő csővé között — általában egy nagyon könnyű szerkezet</li>
+        <li><strong>Csatlakozó eltávolítása:</strong> Finoman húzd ki a huzalt a szenzorokból (ha van), majd távolítsd el az összes csavart (általában 2-3)</li>
+        <li><strong>Szenzor kivétele:</strong> Óvatosan húzd ki a szenszort a vezetékből — kerüld meg a hegyét érinteni</li>
+        <li><strong>Szenzor megtekintése:</strong> Ha korom vagy olaj fedezi, szükséges a tisztítás</li>
+        <li><strong>Szenzor tisztítása:</strong> Spray MAF cleanert az érzékeny fogantyúra (a drótfonanra), ne dörzsöld meg — hagyd szárazra szárni</li>
+        <li><strong>Szenzor visszahelyezése:</strong> Óvatosan helyezd vissza az eredeti helyére, majd csavarozz vissza</li>
+        <li><strong>Hibakód törlése:</strong> Az OBD2 szkennerrel töröld az E-memóriát ("clear codes")</li>
+        <li><strong>Újra indítás és tesztelés:</strong> Indítsd újra az autót, és végez egy rövid tesztutat — nézd meg, hogy a hiba visszatér-e</li>
+      </ol>
+
+      <div class="definition-box">
+        <h4>MAF Cleaner — Miért nem használ sima vízet?</h4>
+        <p>A MAF szenzor egy nagyon érzékeny műszer — a drót nyomásmérőjét a legkisebb érintéssel is tönkre lehet tenni. A speciális MAF cleaner oldószer gyorsan párolog, és nem hagy maradékot. Sima vízről pedig a szenzor rég feldörzsölödne.</p>
+      </div>
+
+      <h2 id="mikor-ne-csinalj">Mikor NE csináld magad — biztonsági figyelmeztetés</h2>
+
+      <div class="warning-box">
+        <strong>SOHA ne csináld magad, ha:</strong>
+        <ul>
+          <li>Az üzemanyag-rendszer szerlódésén dolgozol (üzemanyag-szivattyú, csatlakozások) — nagyfokú <strong>tűzveszély</strong></li>
+          <li>Az EGR szelepet szeretnéd cserélni — ez a motorfej alatt van, és a hálózat vagy hűtőfolyadék kijuthat</li>
+          <li>Az O2 szenzort szeretnéd cserélni a kipufogóról — az nagy meleget és erős csavarokat igényel</li>
+          <li>Szívócsönk tömítés cserét szeretnéd — ez motorfej szétszedést igényelhet</li>
+          <li>Nem érzed magad magabiztosnak az elektromos csatlakozók vagy a motorösszeépítés tekintetében</li>
+        </ul>
+      </div>
+
+      <p>Az utolsó pont fontos: ha bizonytalan vagy, kérd meg egy megbízható szerviz segítségét. Az autó motora összetett mechatronikai rendszer, és egy rossz lépés drágább hibákat okozhat.</p>
+
+      <h2 id="autocognitix-segitseg">Hogyan segít az AutoCognitix?</h2>
+
+      <p>Az <strong>AutoCognitix AI diagnosztikai rendszer</strong> könnyebbé teszi a P0171 hibakód értelmezését. Egyszerűen:</p>
+
+      <ol>
+        <li>Add meg a P0171 hibakódot, az autó márkáját és modelljét</li>
+        <li>Az AI elemzi az összes lehetséges okot és a valószínűségi sorrendet</li>
+        <li>Kapsz lépésről lépésre útmutatót az otthoni diagnosztikához</li>
+        <li>Megtudod, mely javításokat csinálhatod magad, és mikor kell szervizhez menni</li>
+        <li>Becslést kapsz az alkatrészek és munka árairól</li>
+      </ol>
+
+      <p>A rendszer nem helyettesíti a szakember tanácsát, de jelentős időt és pénzt megtakaríthat a felesleges szervizlátogatásoktól.</p>
+
+      <h2 id="faq">Gyakran Feltett Kérdések</h2>
+    </div>
+
+    <section class="article-faq">
+      <div class="faq-title">Gyakran Feltett Kérdések a P0171 hibakódról</div>
+
+      <div class="faq-item">
+        <div class="faq-question">1. Veszélyes-e a P0171 hibakód a motorra?</div>
+        <div class="faq-answer">A P0171 önmagában nem okoz azonnali motorkárosodást, de hosszú távon problémákat okozhat. Egy sovány keverék magasabb hőmérsékleten égett, ami az égéskamarát és a szelepeket túlhevítheti. Javasolt, hogy 1-2 héten belül diagnosztizáld és javítsd meg a hibát.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">2. Miért jelenik meg a P0171 hideg időben?</div>
+        <div class="faq-answer">Hideg indításnál az ECU több üzemanyagot adagol (cold enrichment). Ha a MAF szenzor piszkos, az ECU nem tudja, mennyi levegő jön be, így a keverék túl sovány lesz. Meleg indításnál a szenzor jobban működik, így a hiba elmúlhat — de nem szűnik meg.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">3. Lehet-e biztonsággal vezetni a P0171 hibakóddal?</div>
+        <div class="faq-answer">Igen, de óvatosan. Az autó vezethetővé marad, de a teljesítménye csökken, és az üzemanyag-fogyasztása nő. Hosszú utakra (pl. országhatáron túli utazás) nem javasolt, amíg nem javítod meg.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">4. Egyből cseréljek alkatrészeket, vagy diagnosztizáljak előbb?</div>
+        <div class="faq-answer">Mindig diagnosztizálj előbb! A P0171 több ok miatt jelenik meg, és ha nem a valódi problémát cseréled, a hiba újra megjelenik. Az AutoCognitix-szal először megláthatod a valós oka.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">5. A P0171 után megjelenik a P0174 hibakód is — mit jelent?</div>
+        <div class="faq-answer">A P0174 "System Too Lean Bank 2" — a motor másik bankja (2. vagy 4. henger). Ez azt jelenti, hogy a probléma mindkét oldalra kiterjed — nagy eséllyel egy globális hiba, mint a gyenge üzemanyag-szivattyú vagy az EGR szelep, nem pedig egy helyi MAF szenzor hiba.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">6. Milyen OBD2 szkennerrel tudom kiolvasni a P0171-et?</div>
+        <div class="faq-answer">Bármelyik OBD2 szkennerrel, amely támogatja a hibakód olvasást. Az alapszintű szkennerek 3 000–5 000 Ft-ba kerülnek, de javasolt egy olyan típus, amely valós idejű adatokat is mutat (live data) — így meglátod a MAF szenzor és O2 szenzor értékeit is.</div>
+      </div>
     </section>
 
-    <!-- STATS -->
-    <section class="blog-stats-section blog-animate">
-        <div class="container">
-            <div class="blog-stats">
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>Javítási költség</h4>
-                        <p>Alkatrész + munkadíj</p>
-                    </div>
-                    <div class="blog-stat-number">15-150K Ft</div>
-                </div>
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>Előfordulás</h4>
-                        <p>Az egyik leggyakoribb DTC kód</p>
-                    </div>
-                    <div class="blog-stat-number">Gyakori</div>
-                </div>
-                <div class="blog-stat-card blog-stat-end">
-                    <div class="blog-stat-top">
-                        <h4>Vizsga eredmény</h4>
-                        <p>Műszaki vizsgán</p>
-                    </div>
-                    <div class="blog-stat-number">Kockázatos</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TABLE OF CONTENTS -->
-    <section class="blog-toc-section blog-animate">
-        <div class="container">
-            <div class="blog-toc">
-                <h3>Tartalomjegyzék</h3>
-                <ol>
-                    <li><a href="#mi-az-p0171">Mi az a P0171 hibakód?</a></li>
-                    <li><a href="#levego-uzemanyag-keverek">A levegő-üzemanyag keverék alapjai</a></li>
-                    <li><a href="#8-gyakori-oka">A P0171 8 leggyakoribb oka</a></li>
-                    <li><a href="#tunetek">Tünetek — hogyan veszi észre a sofőr?</a></li>
-                    <li><a href="#diagnosztika-lepesek">A P0171 hibakód diagnosztikája</a></li>
-                    <li><a href="#javitas-koltsegek">Javítási költségek táblázat</a></li>
-                    <li><a href="#diy-javitas">DIY javítás: MAF tisztítás lépésről lépésre</a></li>
-                    <li><a href="#mikor-ne-csinalj">Mikor NE csináld magad?</a></li>
-                    <li><a href="#autocognitix-segitseg">Hogyan segít az AutoCognitix?</a></li>
-                    <li><a href="#faq">Gyakran Feltett Kérdések</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT -->
-    <article class="blog-content">
-        <div class="container">
-            <div class="blog-richtext">
-
-                <!-- Section 1 -->
-                <h2 id="mi-az-p0171">Mi az a P0171 hibakód?</h2>
-
-                <div class="blog-callout">
-                    <strong>P0171 = System Too Lean Bank 1 (Sovány keverék az 1-es bankon)</strong>
-                    <p>Ez egy OBD-II hibakód, amely azt jelzi, hogy az üzemanyag-levegő keverék túl sovány — azaz több levegő van a keverékben, mint szükséges. A <code>P0171</code> az <a href="https://www.sae.org/standards/content/j2012/">SAE J2012 szabvány</a> szerinti standardizált diagnosztikai kód, amely a motor egyik bankját (általában a 1. vagy 3. henger felé) érinti.</p>
-                </div>
-
-                <p>A <code>P0171</code> hibakód az egyik leggyakoribb diagnosztikai hiba, amit a DIY autósok és szerelők találnak. A P0171 hivatalos megnevezése: <strong>"System Too Lean Bank 1"</strong>. Ha megjelenik ez a hibakód és felvillan a check engine lámpa, az autónak diagnosztikára van szüksége.</p>
-
-                <p>Az eset nem sürgős, de az autó fogyasztása megnő, és a vezetési teljesítmény romlik. Az <strong>AutoCognitix AI diagnosztikai rendszer</strong> néhány perc alatt azonosítja a lehetséges okokat.</p>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Sovány keverék (Lean Mixture) — Mit jelent?</strong>
-                    <p>A <strong>sovány keverék</strong> azt jelenti, hogy az üzemanyag-levegő arány kimarad az ideális 14,7:1 arányból. Túl sok levegő vagy túl kevés üzemanyag van — így a motor szegényen működik, kevesebb energiát termel, és több szennyezőanyagot kibocsát.</p>
-                </div>
-
-                <!-- Section 2 -->
-                <h2 id="levego-uzemanyag-keverek">A levegő-üzemanyag keverék alapjai</h2>
-
-                <p>Az autó motorja energiát termel az üzemanyag és levegő égéséből. Az <strong>ideális arány 14,7 rész levegő az 1 rész üzemanyaghoz</strong> — ezt hívják sztöchiometrikus aránynak. Ez az arány a leghatékonyabb égést biztosítja, minimális kibocsátással az <a href="https://www.epa.gov/emission-standards-reference-guide">EPA szabványai</a> szerint és maximális teljesítménnyel.</p>
-
-                <p>Az <strong>oxigénszenzor (lambda szonda)</strong> a kipufogógázban méri az égés utáni gázokat, és visszajelzést ad az ECU-nak. Az ECU ezzel szabályozza az üzemanyag-befecskendezés mennyiségét. Ez a visszacsatolási hurok másodpercenként többször működik — de ha valami hiba van a levegő-mérésben vagy az üzemanyag-rendszerben, az arány felborulhat.</p>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Érdekes tény:</strong> A P0171 hibakód gyakoribb a hideg időben. Amikor az autó hideg, az ECU több üzemanyagot adagol (cold start enrichment), de ha a légmennyiségmérő (MAF szenzor) piszkos, az ECU nem tudja, mennyi levegő kerül be valójában, így a keverék túl sovány lesz.
-                </div>
-
-                <!-- Section 3 -->
-                <h2 id="8-gyakori-oka">A P0171 8 leggyakoribb oka</h2>
-
-                <h3>1. Piszkos vagy hibás légmennyiségmérő (MAF szenzor)</h3>
-
-                <p>A <strong>MAF szenzor (Mass Air Flow sensor)</strong> méri, hogy mennyi levegő áramlik a motorba. Ha a szenzor korom vagy olajszennyezettséggel fedett, hamis méréseket küld az ECU-nak — így az más méréseket számít, és a keverék túl sovány lesz. Ez az egyik leggyakoribb P0171-es ok.</p>
-
-                <p>A MAF szenzor tisztításához elegendő egy speciális tisztítófolyadék (MAF cleaner) és egy pár perc — lehet, hogy ez egyedül megoldja a problémát.</p>
-
-                <h3>2. Vákuumszivárgás</h3>
-
-                <p>A szívócsatorna (intake manifold) vagy a csatlakozó csövek között vákuumszivárgás lehet. Ez azt jelenti, hogy a motorba mérhető levegőn kívül további levegő szökik be, amit az ECU nem vesz figyelembe. Az ECU úgy gondolja, hogy normál a keverék, pedig valójában túl sovány.</p>
-
-                <p><strong>Jellegzetes hang:</strong> Ha hallasz sípolást vagy sziszegést az motor mellől, nagy esély van a vákuumszivárgásra. Az első diagnosztikai lépés az összes csövet és tömítést vizuálisan átvizsgálni.</p>
-
-                <h3>3. Hibás üzemanyag-befecskendező</h3>
-
-                <p>Az üzemanyag-befecskendezők elektrovezetett szelepek, amelyek az ECU parancsára nyílnak meg. Ha egy befecskendező meghibásodik (nem nyílik teljesen vagy beragad), akkor a henger kevesebb üzemanyagot kap — így az arány sovány lesz.</p>
-
-                <p>A P0171 általában csak egy bankot érint (pl. 1-3 henger), így a hibás befecskendező általában arra az oldalra esik.</p>
-
-                <h3>4. Gyenge üzemanyag-szivattyú</h3>
-
-                <p>Az <strong>üzemanyag-szivattyú</strong> az üzemanyagtartályban működik, és nyomás alatt szállítja az üzemanyagot a befecskendezőkhez. Ha az öregedés vagy a magas futásóra miatt a szivattyú lassabban pumpál, az üzemanyag-nyomás csökken, és kevesebb üzemanyag érkezik a motorba.</p>
-
-                <p>A gyenge szivattyú gyakran más jeleket is mutat: az autó indítása nehéz, a teljesítmény csökken, vagy halló egy surrógást az üzemanyagtartály mellől.</p>
-
-                <h3>5. Eltömődött üzemanyagszűrő</h3>
-
-                <p>Az <strong>üzemanyagszűrő</strong> megelőzi, hogy szennyeződések ne kerüljenek a befecskendezőkbe. Ha a szűrő teljesen eltömődik, az üzemanyag-áramlás lecsökken, és a motor kevesebb üzemanyagot kap. A P0171 már előfordulhat, de később már a motor nem indul meg egyáltalán.</p>
-
-                <p>Az üzemanyagszűrőt a gyártó ajánlása szerint cserélni kell — általában 20 000 — 40 000 km között.</p>
-
-                <h3>6. Kipufogógáz-visszavezetés (EGR) szelep hiba</h3>
-
-                <p>Az <strong>EGR szelep</strong> a kipufogógáz egy részét visszavezeti a szívócsatornába (kibocsátás csökkentése érdekében). Ha a szelep elakad vagy nem zár le teljesen, a kiégett gázok zavarják az oxigénszenzort, és az ECU rossz döntéseket hoz az üzemanyag-adagolásról.</p>
-
-                <h3>7. Tömítés szivárgás (szívócsonk vagy turbo csatlakozás)</h3>
-
-                <p>A szívócsonk tömítése vagy a turbocsatorna csatlakozásai nem tömíthetnek teljesen, így további levegő szökik be mérhető helyeken kívül. Ez a P0171 hibához vezet.</p>
-
-                <h3>8. Hibás oxigénszenzor (lambda szonda)</h3>
-
-                <p>Az <strong>O2 szenzor</strong> vagy <strong>lambda szonda</strong> méri az égéskor keletkezett oxigént a kipufogóban. Ha a szenzor elöregedik vagy letagad, hamis jelzéseket küld az ECU-nak, amely rossz üzemanyag-adagolást végez. Bár ritkábban okozza a P0171-et, mint más okok, a szenzor cseréje gyakran megoldja a problémát.</p>
-
-                <div class="blog-hero-image" style="margin:var(--space-xl) 0;">
-                    <div style="width:100%;height:300px;background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);">P0171 okok áttekintése — MAF szenzor, vákuumszivárgás, injektorok</div>
-                </div>
-
-                <!-- Section 4 -->
-                <h2 id="tunetek">Tünetek — hogyan veszi észre a sofőr?</h2>
-
-                <p>A P0171 hibakód előtt vagy mellett más tünetek is megjelenhetnek. Íme az 5 leggyakoribb jel, hogy az autó sovány keverékkel működik:</p>
-
-                <ul>
-                    <li><strong>Check engine lámpa:</strong> A legfőbb jel — a műszerfalon felvillan a motorszimbólum</li>
-                    <li><strong>Rossz üzemanyag-fogyasztás (megnövekedett):</strong> Az autó több benzint fogyaszt a szokásosnál</li>
-                    <li><strong>Gyengébb teljesítmény:</strong> Az autó lassabban gyorsul, kevésbé reaktív az autópályán</li>
-                    <li><strong>Rózsaszín füst vagy szag a kipufogóból:</strong> A sovány keverék egyenletes égés helyett gyújtja meg az üzemanyagot</li>
-                    <li><strong>Rázás vagy ingadozás az üresjáratban:</strong> Az ECU megpróbálja korrigálni az arányokat, de nem sikerül</li>
-                </ul>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>Figyelmeztetés:</strong> Ha a sovány keverék hosszabb ideig fennáll, az égéskamra és a szelepek túlhevülhetnek a magasabb égési hőmérséklet miatt. Ez motorbelső károsodáshoz vezethet. Javasolt 1-2 héten belül diagnosztizálni és javítani.
-                </div>
-
-                <!-- Section 5 -->
-                <h2 id="diagnosztika-lepesek">A P0171 hibakód diagnosztikája</h2>
-
-                <p><em>Az alábbi diagnosztikai információ az AutoCognitix AI elemzés alapján készült. Professzionális szerelővel való konzultáció ajánlott a végleges diagnosztikához.</em></p>
-
-                <p>A P0171 diagnosztikájának vannak egyszerű lépései és bonyolultabb szakmai vizsgálatok. Íme a sorrend:</p>
-
-                <ol>
-                    <li><strong>OBD2 szkenner megakupcsolása:</strong> Olvass ki a hibakódot egy OBD2 readerrel (autó szalonban ingyenes, vagy vásárolhatsz egyet online)</li>
-                    <li><strong>Valós idejű adatok megtekintése:</strong> Az OBD2 szkenner megmutatja a MAF szenzor értékeket, O2 szenzor jelet és üzemanyag-nyomást</li>
-                    <li><strong>Vizuális ellenőrzés:</strong> Nézd meg az összes vákuumcsövet, és keress repedéseket vagy szivárgást</li>
-                    <li><strong>MAF szenzor megtekintése:</strong> Vedd ki a szívócsatorna után a szűrő előtt, és vizsgáld meg a szenzort — ha piszkos, tisztítsd meg</li>
-                    <li><strong>Üzemanyag-nyomás mérése:</strong> Egy nyomásméréssel ellenőrizheted az üzemanyag-szivattyú és szűrő állapotát</li>
-                    <li><strong>Hibakód visszaírása és újra indítás:</strong> Ha változtatást végeztél, töröld az E-memóriát az OBD2 szkennerrel, és indítsd újra az autót, hogy nézd meg, a hiba újra megjelenik-e</li>
-                </ol>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Pró tipp:</strong> Jegyzetelj fel minden mérési értéket, amelyet az OBD2 szkennerrel látsz. Ha megismételted a diagnosztikát másnap, összehasonlíthatod az értékeket, és meglátod, hogy konzisztens-e a hiba.
-                </div>
-
-                <div class="blog-hero-image" style="margin:var(--space-xl) 0;">
-                    <div style="width:100%;height:300px;background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:var(--color-accent-dark);font-weight:600;font-family:var(--font-mono);">OBD2 szkenner P0171 hibakód kiolvasása</div>
-                </div>
-
-                <!-- Section 6 -->
-                <h2 id="javitas-koltsegek">Javítási költségek táblázat</h2>
-
-                <p>Az alábbi táblázat az átlagos költségeket mutatja Magyarországon (2026):</p>
-
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Probléma</th>
-                                <th scope="col">Alkatrész ára</th>
-                                <th scope="col">Munka</th>
-                                <th scope="col">Összesen</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>MAF szenzor csere</td>
-                                <td>15 000–35 000 Ft</td>
-                                <td>3 000–6 000 Ft</td>
-                                <td>18 000–41 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>Vákuumcsöves csere</td>
-                                <td>2 000–8 000 Ft</td>
-                                <td>2 000–4 000 Ft</td>
-                                <td>4 000–12 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>Üzemanyag-befecskendező csere</td>
-                                <td>20 000–50 000 Ft</td>
-                                <td>8 000–12 000 Ft</td>
-                                <td>28 000–62 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>Üzemanyag-szivattyú csere</td>
-                                <td>30 000–80 000 Ft</td>
-                                <td>15 000–25 000 Ft</td>
-                                <td>45 000–105 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>Üzemanyagszűrő csere</td>
-                                <td>3 000–8 000 Ft</td>
-                                <td>2 000–4 000 Ft</td>
-                                <td>5 000–12 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>O2 szenzor csere</td>
-                                <td>10 000–25 000 Ft</td>
-                                <td>3 000–5 000 Ft</td>
-                                <td>13 000–30 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>Szívócsonk tömítés csere</td>
-                                <td>5 000–15 000 Ft</td>
-                                <td>6 000–10 000 Ft</td>
-                                <td>11 000–25 000 Ft</td>
-                            </tr>
-                            <tr>
-                                <td>EGR szelep tisztítása</td>
-                                <td>—</td>
-                                <td>10 000–15 000 Ft</td>
-                                <td>10 000–15 000 Ft</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <p><strong>Fontos megjegyzés:</strong> Ezek az átlagos árak. Az igazi költség az autó márkájától, modelljétől és évjáratától függően eltérhet. Például egy prémium márka (BMW, Mercedes) alkatrészei 50% drágábbak lehetnek.</p>
-
-                <!-- Section 7 -->
-                <h2 id="diy-javitas">DIY javítás: MAF szenzor tisztítása lépésről lépésre</h2>
-
-                <p>A MAF szenzor tisztítása az egyik legolcsóbb és legegyszerűbb P0171 javítás. Íme a lépések:</p>
-
-                <ol>
-                    <li><strong>Szükséges eszközök és anyagok:</strong> OBD2 szkenner, csavarozó szett, MAF cleaner folyadék (electrolube vagy LIQUI MOLY), tiszta ruhák</li>
-                    <li><strong>Motor leállítása és lehűlésének várása:</strong> A szenzor mellett nyomás alatt van a rendszer — legalább 30 percet várj</li>
-                    <li><strong>Szívócsatorna csatlakozójának megkeresése:</strong> Az air filter ház után és a motorblokkra menő cső között — általában egy nagyon könnyű szerkezet</li>
-                    <li><strong>Csatlakozó eltávolítása:</strong> Finoman húzd ki a huzalt a szenzorból (ha van), majd távolítsd el az összes csavart (általában 2-3)</li>
-                    <li><strong>Szenzor kivétele:</strong> Óvatosan húzd ki a szenzort a vezetékből — kerüld a hegyét érinteni</li>
-                    <li><strong>Szenzor megtekintése:</strong> Ha korom vagy olaj fedezi, szükséges a tisztítás</li>
-                    <li><strong>Szenzor tisztítása:</strong> Spray MAF cleanert az érzékeny fogantyúra (a drótfonatra), ne dörzsöld meg — hagyd szárazra szárni</li>
-                    <li><strong>Szenzor visszahelyezése:</strong> Óvatosan helyezd vissza az eredeti helyére, majd csavarozz vissza</li>
-                    <li><strong>Hibakód törlése:</strong> Az OBD2 szkennerrel töröld az E-memóriát ("clear codes")</li>
-                    <li><strong>Újra indítás és tesztelés:</strong> Indítsd újra az autót, és végezz egy rövid tesztutat — nézd meg, hogy a hiba visszatér-e</li>
-                </ol>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>MAF Cleaner — Miért nem használ sima vizet?</strong>
-                    <p>A MAF szenzor egy nagyon érzékeny műszer — a drót nyomásmérőjét a legkisebb érintéssel is tönkre lehet tenni. A speciális MAF cleaner oldószer gyorsan párolog, és nem hagy maradékot. Sima vízről pedig a szenzor rég feldörzsölődne.</p>
-                </div>
-
-                <!-- Section 8 -->
-                <h2 id="mikor-ne-csinalj">Mikor NE csináld magad — biztonsági figyelmeztetés</h2>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>SOHA ne csináld magad, ha:</strong>
-                    <ul>
-                        <li>Az üzemanyag-rendszer szerelésén dolgozol (üzemanyag-szivattyú, csatlakozások) — nagyfokú <strong>tűzveszély</strong></li>
-                        <li>Az EGR szelepet szeretnéd cserélni — ez a motorfej alatt van, és a hálózat vagy hűtőfolyadék kijuthat</li>
-                        <li>Az O2 szenzort szeretnéd cserélni a kipufogóról — az nagy meleget és erős csavarokat igényel</li>
-                        <li>Szívócsonk tömítés cserét szeretnéd — ez motorfej szétszedést igényelhet</li>
-                        <li>Nem érzed magad magabiztosnak az elektromos csatlakozók vagy a motorösszeépítés tekintetében</li>
-                    </ul>
-                </div>
-
-                <p>Az utolsó pont fontos: ha bizonytalan vagy, kérd meg egy megbízható szerviz segítségét. Az autó motora összetett mechatronikai rendszer, és egy rossz lépés drágább hibákat okozhat.</p>
-
-                <!-- Section 9 -->
-                <h2 id="autocognitix-segitseg">Hogyan segít az AutoCognitix?</h2>
-
-                <p>Az <strong>AutoCognitix AI diagnosztikai rendszer</strong> könnyebbé teszi a P0171 hibakód értelmezését. Egyszerűen:</p>
-
-                <ol>
-                    <li>Add meg a P0171 hibakódot, az autó márkáját és modelljét</li>
-                    <li>Az AI elemzi az összes lehetséges okot és a valószínűségi sorrendet</li>
-                    <li>Kapsz lépésről lépésre útmutatót az otthoni diagnosztikához</li>
-                    <li>Megtudod, mely javításokat csinálhatod magad, és mikor kell szervizhez menni</li>
-                    <li>Becslést kapsz az alkatrészek és munka árairól</li>
-                </ol>
-
-                <p>A rendszer nem helyettesíti a szakember tanácsát, de jelentős időt és pénzt megtakaríthat a felesleges szervizlátogatásoktól.</p>
-
-            </div>
-        </div>
-    </article>
-
-    <!-- FAQ Section -->
-    <section class="blog-faq-section blog-animate" id="faq">
-        <div class="container">
-            <h2>Gyakran Feltett Kérdések a P0171 hibakódról</h2>
-            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Veszélyes-e a P0171 hibakód a motorra?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A P0171 önmagában nem okoz azonnali motorkárosodást, de hosszú távon problémákat okozhat. Egy sovány keverék magasabb hőmérsékleten ég, ami az égéskamrát és a szelepeket túlhevítheti. Javasolt, hogy 1-2 héten belül diagnosztizáld és javítsd meg a hibát.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Miért jelenik meg a P0171 hideg időben?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Hideg indításnál az ECU több üzemanyagot adagol (cold enrichment). Ha a MAF szenzor piszkos, az ECU nem tudja, mennyi levegő jön be, így a keverék túl sovány lesz. Meleg indításnál a szenzor jobban működik, így a hiba elmúlhat — de nem szűnik meg.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Lehet-e biztonsággal vezetni a P0171 hibakóddal?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Igen, de óvatosan. Az autó vezethetővé marad, de a teljesítménye csökken, és az üzemanyag-fogyasztása nő. Hosszú utakra (pl. országhatáron túli utazás) nem javasolt, amíg nem javítod meg.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Egyből cseréljek alkatrészeket, vagy diagnosztizáljak előbb?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Mindig diagnosztizálj előbb! A P0171 több ok miatt jelenik meg, és ha nem a valódi problémát cseréled, a hiba újra megjelenik. Az AutoCognitix-szal először megláthatod a valós okát.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">A P0171 után megjelenik a P0174 hibakód is — mit jelent?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A P0174 "System Too Lean Bank 2" — a motor másik bankja (2. vagy 4. henger). Ez azt jelenti, hogy a probléma mindkét oldalra kiterjed — nagy eséllyel egy globális hiba, mint a gyenge üzemanyag-szivattyú vagy az EGR szelep, nem pedig egy helyi MAF szenzor hiba.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Milyen OBD2 szkennerrel tudom kiolvasni a P0171-et?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Bármelyik OBD2 szkennerrel, amely támogatja a hibakód olvasást. Az alapszintű szkennerek 3 000–5 000 Ft-ba kerülnek, de javasolt egy olyan típus, amely valós idejű adatokat is mutat (live data) — így meglátod a MAF szenzor és O2 szenzor értékeit is.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="blog-cta-section blog-animate">
-        <div class="container">
-            <div class="blog-cta">
-                <h2>Szeretnél azonnal diagnosztizálni?</h2>
-                <p>Az AutoCognitix AI rendszer néhány perc alatt azonosítja a P0171 valódi okát. Ne költs feleslegesen — tudd meg előre, mi a baj.</p>
-                <a href="/hu/#pricing" class="btn btn-primary">Diagnosztikai elemzés indítása</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Articles -->
-    <section class="blog-related-section blog-animate">
-        <div class="container">
-            <h2>Kapcsolódó cikkek</h2>
-            <div class="blog-related">
-                <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="blog-related-card">
-                    <div class="blog-related-image" style="background:linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);height:160px;border-radius:var(--radius-base);"></div>
-                    <h4>DTC Hibakód Kereső: Teljes Útmutató</h4>
-                    <p>Megtanulj minden DTC hibakódot értelmezni — P, B, C és U kódok magyarázata lépésről lépésre.</p>
-                </a>
-                <a href="/hu/blog/p0420-hibakod-utmutato" class="blog-related-card">
-                    <div class="blog-related-image" style="background:linear-gradient(135deg, #F5E6E0 0%, #FDE8E0 100%);height:160px;border-radius:var(--radius-base);"></div>
-                    <h4>P0420 hibakód: Katalizátor-hatékonyság útmutató</h4>
-                    <p>Katalizátor-hatékonyság hiba okai, tünetek és javítási költségek.</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
-            <p>Az AutoCognitix egy AI-alapú autódiagnosztikai platform. Nem helyettesíti a szakértői tanácsot. Mindig konzultálj egy minősített autószerelővel a végső diagnosztika előtt.</p>
-        </div>
-    </footer>
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató [2026]",
-        "description": "P0171 hibakód magyarázata: mi okozza a sovány keveréket? Tudj meg a légmennyiségmérőről, vakuumszivárásról és a javítás költségéről.",
-        "image": "https://autocognitix.hu/images/blog/p0171-og-image.jpg",
-        "datePublished": "2026-03-21T10:00:00Z",
-        "dateModified": "2026-03-25T09:00:00Z",
-        "author": {
-            "@type": "Organization",
-            "name": "AutoCognitix",
-            "logo": "https://autocognitix.hu/logo.png"
+    <div class="article-author-box">
+      <div class="author-avatar">AC</div>
+      <div class="author-info">
+        <h3>AutoCognitix Diagnosztika Csapat</h3>
+        <p>Hiszünk abban, hogy az autódiagnosztika nem titok. Az AutoCognitix AI segít tízezer sofőrnek évente, hogy megértsék az autójuk hibáit — Magyarországon és Európában.</p>
+      </div>
+    </div>
+
+    <div class="article-related">
+      <h3 class="related-title">Kapcsolódó cikkek</h3>
+      <div class="related-cards">
+        <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="related-card">
+          <h4>DTC Hibakód Kereső: Teljes Útmutató</h4>
+          <p>Megtanulj minden DTC hibakódot értelmezni — P, B, C és U kódok magyarázata lépésről lépésre.</p>
+        </a>
+        <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek.html" class="related-card">
+          <h4>Autódiagnosztika Otthon: Kezdők Útmutatója</h4>
+          <p>Nincsen OBD2-d? Tanulj meg az alapokból — az 5 érzékszerveddel diagnosztizálj első lépésekként.</p>
+        </a>
+        <a href="/hu/" class="related-card">
+          <h4>AutoCognitix Főoldal</h4>
+          <p>Próbáld ki az ingyenes AI diagnosztikai rendszert — add meg az autó márkanevét és a tüneteket.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="article-cta">
+      <h3>Szeretnél azonnal diagnosztizálni?</h3>
+      <p>Az AutoCognitix AI rendszer 2 perc alatt azonosítja a P0171 valódi okát — ingyen!</p>
+      <a href="/" class="cta-button">Próbáld ki most</a>
+    </div>
+  </article>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>AutoCognitix</h4>
+        <ul>
+          <li><a href="/">Kezdőlap</a></li>
+          <li><a href="/hu/blog/">Blog</a></li>
+          <li><a href="/hu/">Magyar</a></li>
+          <li><a href="/en/">English</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Segítség</h4>
+        <ul>
+          <li><a href="/hu/legal/adatvedelmi-szabalyzat.html">Adatvédelmi Szabályzat</a></li>
+          <li><a href="/hu/legal/felhasznalasi-feltetelek.html">Felhasználási Feltételek</a></li>
+          <li><a href="/hu/legal/ai-felelossegi-nyilatkozat.html">Biztonsági Figyelmeztetések</a></li>
+          <li><a href="/hu/legal/felhasznalasi-feltetelek.html">Szerzői Jogok</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Kapcsolat</h4>
+        <ul>
+          <li><a href="mailto:hello@autocognitix.hu">hello@autocognitix.hu</a></li>
+          <li><a href="https://www.facebook.com/autocognitix" target="_blank">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@autocognitix" target="_blank">YouTube</a></li>
+          <li><a href="https://twitter.com/autocognitix" target="_blank">Twitter/X</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 AutoCognitix. Minden jog fenntartva. | <a href="https://www.nhtsa.gov" target="_blank">NHTSA</a> | <a href="https://www.sae.org" target="_blank">SAE International</a></p>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "P0171 hibakód: Sovány keverék — okok, tünetek és javítási útmutató",
+    "description": "P0171 hibakód magyarázata: mi okozza a sovány keveréket? Tudj meg a légmennyiségmérőről, vakuumszivárásról és a javítás költségéről.",
+    "datePublished": "2026-03-21T10:00:00Z",
+    "dateModified": "2026-03-21T10:00:00Z",
+    "author": {
+      "@type": "Organization",
+      "name": "AutoCognitix",
+      "logo": "https://autocognitix.hu/logo.png"
+    },
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Veszélyes-e a P0171 hibakód a motorra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A P0171 önmagában nem okoz azonnali motorkárosodást, de hosszú távon problémákat okozhat."
+          }
         },
-        "publisher": {
-            "@type": "Organization",
-            "name": "AutoCognitix",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://autocognitix.hu/logo.png"
-            }
+        {
+          "@type": "Question",
+          "name": "Miért jelenik meg a P0171 hideg időben?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hideg indításnál az ECU több üzemanyagot adagol. Ha a MAF szenzor piszkos, az ECU nem tudja, mennyi levegő jön be."
+          }
         }
-    }
-    </script>
+      ]
+    },
+    "articleBody": "A P0171 hibakód azt jelenti, hogy az autó motorvezérlő egysége azt érzékelte, hogy az üzemanyag-levegő keverék túl sovány..."
+  }
+  </script>
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Kezdőlap",
-                "item": "https://autocognitix.hu/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://autocognitix.hu/hu/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "P0171 hibakód útmutató",
-                "item": "https://autocognitix.hu/hu/blog/p0171-hibakod-okok-tunetek-javitas"
-            }
-        ]
-    }
-    </script>
-
-    <!-- Scroll Animation -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.blog-animate');
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('blog-animate-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            animateElements.forEach(function(el) {
-                observer.observe(el);
-            });
-        });
-    </script>
+  <script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        question.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="hu" dir="ltr">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Autódiagnosztika otthon: Teljes DIY útmutató kezdőknek. Megtudhatod, hogyan diagnosztizálj autóhibákat otthon minimális eszközökkel és költséggel.">
     <meta name="keywords" content="autódiagnosztika otthon, DIY autójavítás, autó hiba felismerés, OBD2 scanner, otthon szerelés, kezdő szervizeléss, autó hiba diagnosztika">
     <meta name="author" content="AutoCognitix">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Hungarian">
+    <meta name="revisit-after" content="7 days">
     <link rel="canonical" href="https://www.autocognitix.com/hu/blog/autodiagnosztika-otthon-kezdoknek.html">
     <link rel="alternate" hreflang="hu" href="https://www.autocognitix.com/hu/blog/autodiagnosztika-otthon-kezdoknek.html">
     <link rel="alternate" hreflang="en" href="https://www.autocognitix.com/en/blog/car-diagnostics-at-home-beginners-guide.html">
-
+    
     <!-- Open Graph -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]">
@@ -21,128 +22,546 @@
     <meta property="og:site_name" content="AutoCognitix">
     <meta property="article:published_time" content="2026-03-21">
     <meta property="article:author" content="AutoCognitix Szerkesztőség">
-
+    
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez">
     <meta name="twitter:description" content="DIY autódiagnosztika teljes útmutatója kezdőknek. Minimális eszközökkel és másfél óra alatt felismerheted az autó hibáit!">
     <meta name="twitter:image" content="https://www.autocognitix.hu/images/blog/home-diagnostics.jpg">
-
+    
     <title>Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]</title>
-
-    <link rel="stylesheet" href="/shared/styles.css?v=1.0">
-    <link rel="stylesheet" href="/shared/blog-post.css?v=1.0">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #27ae60;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        h1 {
+            font-size: 2.8em;
+            color: #1a252f;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+            flex-wrap: wrap;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border-radius: 8px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border-left: 4px solid #27ae60;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .toc h3 {
+            color: #1a252f;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .toc a {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        main {
+            margin: 40px 0;
+        }
+        
+        h2 {
+            font-size: 2em;
+            color: #1a252f;
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #27ae60;
+            font-weight: 700;
+        }
+        
+        h3 {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.1em;
+            color: #34495e;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .definition-box {
+            background: #e8f8f5;
+            border-left: 4px solid #27ae60;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .definition-box strong {
+            color: #1e8449;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .warning-box strong {
+            color: #856404;
+        }
+        
+        .info-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .info-box strong {
+            color: #155724;
+        }
+        
+        .stat-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 15px;
+        }
+        
+        th {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        
+        .code-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .faq-section {
+            margin: 40px 0;
+        }
+        
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin: 15px 0;
+            cursor: pointer;
+            border-left: 4px solid #27ae60;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #ecf0f1;
+        }
+        
+        .faq-question h4 {
+            margin: 0;
+            color: #1a252f;
+            font-size: 1.1em;
+        }
+        
+        .faq-toggle {
+            font-size: 20px;
+            color: #27ae60;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-toggle.open {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            display: none;
+            background: white;
+            padding: 15px 20px;
+            border-left: 4px solid #27ae60;
+            margin: -5px 0 15px 0;
+            line-height: 1.8;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .checklist {
+            background: #f0f7f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .checklist h4 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+        
+        .checklist ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .checklist li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        
+        .author-box {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .author-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .author-title {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .related-articles {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+        
+        .related-articles h3 {
+            margin-top: 0;
+            color: #1a252f;
+        }
+        
+        .related-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .related-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #27ae60;
+            transition: transform 0.3s ease;
+        }
+        
+        .related-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-item a {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .related-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .cta-box {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .cta-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #27ae60;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="/" class="logo">AutoCognitix</a>
+    <nav>
+        <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;">
+            <a href="/" style="font-weight:600;text-decoration:none;color:#27ae60;">AutoCognitix</a>
             <div>
-                <a href="/">Kezdőlap</a>
-                <a href="/hu/blog/">Blog</a>
-                <a href="/hu/eszkozok/">Eszközök</a>
-                <a href="/#faq">GYIK</a>
+                <a href="/" style="margin-right:16px;text-decoration:none;color:#333;">Kezdőlap</a>
+                <a href="/hu/blog/" style="margin-right:16px;text-decoration:none;color:#333;">Blog</a>
+                <a href="/hu/eszkozok/" style="text-decoration:none;color:#333;">Eszközök</a>
             </div>
         </div>
     </nav>
-
-    <!-- HERO -->
-    <section class="blog-hero blog-animate">
-        <div class="container">
-            <div class="blog-hero-content">
-                <div class="blog-hero-label">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor"/>
-                    </svg>
-                    <span>Kezdőknek</span>
-                </div>
-                <h1 class="blog-hero-title">Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]</h1>
-                <p class="blog-hero-description"><strong>Rövid válasz:</strong> Az otthoni autódiagnosztika egy OBD2 Bluetooth szkennerrel (5,000-10,000 Ft) és az AutoCognitix platformmal 60-70% diagnosztikai költséget takarít meg, és a legtöbb hibakódot 30-60 perc alatt azonosíthatod.</p>
+    <div class="container">
+        <header>
+            <span class="badge">DIY Autószolgáltatás</span>
+            <h1>Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez</h1>
+            <div class="article-meta">
+                <span>📅 2026. március 21.</span>
+                <span>⏱️ 10 perc olvasás</span>
+                <span>✍️ AutoCognitix Szerkesztőség</span>
             </div>
-            <div class="blog-hero-image">
-                <div class="blog-image-reveal"></div>
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;color:#2E7D32;font-weight:600;font-family:var(--font-mono);min-height:300px;">Diagnosztizálj Autót Otthon - Lépésről Lépésre Útmutató</div>
-            </div>
-            <div class="blog-hero-meta">
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Publikálva</span>
-                    <span class="blog-meta-value">2026. március 21.</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Olvasási idő</span>
-                    <span class="blog-meta-value">10 perc</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Kategória</span>
-                    <span class="blog-meta-value">DIY Diagnosztika</span>
-                </div>
-                <div class="blog-hero-meta-item">
-                    <span class="blog-meta-label">Szerző</span>
-                    <span class="blog-meta-value">AutoCognitix Szerkesztőség</span>
-                </div>
-            </div>
+        </header>
+        
+        <div class="hero-image">
+            Diagnosztizálj Autót Otthon - Lépésről Lépésre Útmutató
         </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="blog-stats-section blog-animate">
-        <div class="container">
-            <div class="blog-stats">
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>OBD2 szkenner</h4>
-                        <p>Kezdő eszköz ára</p>
-                    </div>
-                    <div class="blog-stat-number">5-15K Ft</div>
-                </div>
-                <div class="blog-stat-card">
-                    <div class="blog-stat-top">
-                        <h4>Diagnosztika idő</h4>
-                        <p>Első hibakód leolvasás</p>
-                    </div>
-                    <div class="blog-stat-number">10 perc</div>
-                </div>
-                <div class="blog-stat-card blog-stat-end">
-                    <div class="blog-stat-top">
-                        <h4>Szükséges tudás</h4>
-                        <p>Belépési szint</p>
-                    </div>
-                    <div class="blog-stat-number">Alapszint</div>
-                </div>
-            </div>
+        
+        <div class="toc">
+            <h3>📑 Tartalomjegyzék</h3>
+            <ul>
+                <li><a href="#why-home-diagnostics">Miért válasszuk az otthoni diagnosztikát?</a></li>
+                <li><a href="#before-you-start">Mielőtt kezdenél: biztonsági szabályok</a></li>
+                <li><a href="#tools-needed">Szükséges eszközök</a></li>
+                <li><a href="#obd2-scanner-guide">OBD2 Scanner vásárlási útmutató</a></li>
+                <li><a href="#diagnostic-process">Lépésről-lépésre diagnosztikai folyamat</a></li>
+                <li><a href="#common-issues">Gyakori otthon diagnosztizálható problémák</a></li>
+                <li><a href="#safety-warnings">Biztonsági figyelmeztetések</a></li>
+                <li><a href="#diy-limitations">A DIY diagnosztika korlátai</a></li>
+                <li><a href="#cost-savings">Költségmegtakarítás lehetőségei</a></li>
+                <li><a href="#faq">Gyakran Feladott Kérdések</a></li>
+            </ul>
         </div>
-    </section>
-
-    <!-- TABLE OF CONTENTS -->
-    <section class="blog-toc-section blog-animate">
-        <div class="container">
-            <div class="blog-toc">
-                <h3>Tartalomjegyzék</h3>
-                <ol>
-                    <li><a href="#why-home-diagnostics">Miért válasszuk az otthoni diagnosztikát?</a></li>
-                    <li><a href="#before-you-start">Mielőtt kezdenél: biztonsági szabályok</a></li>
-                    <li><a href="#tools-needed">Szükséges eszközök</a></li>
-                    <li><a href="#obd2-scanner-guide">OBD2 Scanner vásárlási útmutató</a></li>
-                    <li><a href="#diagnostic-process">Lépésről-lépésre diagnosztikai folyamat</a></li>
-                    <li><a href="#common-issues">Gyakori otthon diagnosztizálható problémák</a></li>
-                    <li><a href="#safety-warnings">Biztonsági figyelmeztetések</a></li>
-                    <li><a href="#diy-limitations">A DIY diagnosztika korlátai</a></li>
-                    <li><a href="#cost-savings">Költségmegtakarítás lehetőségei</a></li>
-                    <li><a href="#faq">Gyakran Feladott Kérdések</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT -->
-    <article class="blog-content">
-        <div class="container">
-            <div class="blog-richtext">
-
-                <h2 id="why-home-diagnostics">Miért válasszuk az otthoni diagnosztikát?</h2>
+        
+        <main>
+            <section id="why-home-diagnostics">
+                <h2>Miért válasszuk az otthoni diagnosztikát?</h2>
                 <p>Az autó diagnosztikát nem kell drágára venni. Tíz évvel ezelőtt, amikor az OBD2 scannererek még rarítások voltak (több mint 50,000 Ft), a szervízműhelyek oligopóliumban voltak. Ma azonban egy alapvető OBD2 scanner már 5,000-10,000 Ft-ért megvehető, és ugyanaz az információt adja, mint az 500,000 Ft-os szervíz diagnosztika rig.</p>
-
+                
+                <h3>Az otthoni diagnosztika előnyei</h3>
+                <div class="stat-box">
+                    <div class="stat-item">
+                        <div class="stat-number">60-70%</div>
+                        <div class="stat-label">Költségmegtakarítás</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1-2</div>
+                        <div class="stat-label">Óra Szükséges</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">90%+</div>
+                        <div class="stat-label">Az autók Diagnosztizálható</div>
+                    </div>
+                </div>
+                
                 <h3>Otthoni diagnosztika előnyei</h3>
                 <ul>
                     <li><strong>Költségmegtakarítás:</strong> 60-70% diagnosztikai költségeket takaríthatsz meg azáltal, hogy otthon végzed el</li>
@@ -152,20 +571,26 @@
                     <li><strong>Döntéshozatal:</strong> Tudod, hogy komoly a probléma vagy csak egy enyhe figyelmeztetés</li>
                     <li><strong>Megelőző karbantartás:</strong> Pendek kódok segítségével megelőzheted a nagyobb problémákat</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Tudtad?</strong> Az AutoCognitix felhasználók átlagosan 15,000-25,000 Ft megtakarítanak az első diagnosztikai alapon egy szervízbe fordulás helyett. A szoftveres platformunkat ingyenesen használhatod az összes hibakódhoz.
+                
+                <div class="info-box">
+                    <strong>💡 Tudtad?</strong> Az AutoCognitix felhasználók átlagosan 15,000-25,000 Ft megtakarítanak az első diagnosztikai alapon egy szervízbe fordulás helyett. A szoftveres platformunkat ingyenesen használhatod az összes hibakódhoz.
                 </div>
-
-                <h2 id="before-you-start">Mielőtt kezdenél: Biztonsági szabályok</h2>
-                <p>Mielőtt megérintenél valamit az autóban, biztonság az első! Az autó elektromos és mechanikai veszélyeket rejt magában, amely súlyos sérüléseket okozhat. Az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features">NHTSA (National Highway Traffic Safety Administration)</a> részletes biztonsági útmutatókat nyújt az otthoni autóműveletekhez.</p>
-
+            </section>
+            
+            <section id="before-you-start">
+                <h2>Mielőtt kezdenél: Biztonsági szabályok</h2>
+                <p>Mielőtt megérintenél valamit az autóban, biztonság az első! Az autó elektromos és mechanikai veszélyeket rejt magában, amely súlyos sérüléseket okozhat. Az <a href="https://www.nhtsa.gov/vehicle-owners/vehicle-safety-features" style="color: #0284c7; text-decoration: underline;">NHTSA (National Highway Traffic Safety Administration)</a> részletes biztonsági útmutatókat nyújt az otthoni autóműveletekhez.</p>
+                
                 <h3>Alapvető biztonsági szabályok</h3>
-                <div class="blog-callout blog-callout-warning">
-                    <strong>KRITIKUS - Soha ne tedd meg ezeket:</strong>
-                    <p>Az autót SOHA ne indítsd meg, ha szellőztetés nincs (karbon-monoxid). Ne nyisd meg a hűtőrendszert forró motornál (forró gőz lehetséges). Ne használj benzint vagy elektromos szerszámokat nyílt lánggal vagy szikrák közelében. Az elektromos alkatrészeket soha ne érintsd meg nedves kezekkel. Az OBD2 portot soha ne kösd rá a motor nélkül csatlakoztatott akkumulátorral.</p>
+                <div class="warning-box">
+                    <strong>⚠️ KRITIKUS - Soha ne tedd meg ezeket:</strong>
+                    <br>• Az autót SOHA ne indítsd meg, ha szellőztetés nincs (karbon-monoxid)</li>
+                    <br>• Ne nyisd meg a hűtőrendszert forró motornál (forró gőz lehetséges)</li>
+                    <br>• Ne használj benzint vagy elektromos szerszámokat nyílt lánggal vagy szikrák közelében</li>
+                    <br>• Az elektromos alkatrészeket soha ne érintsd meg nedves kezekkel</li>
+                    <br>• Az OBD2 portot soha ne kösd rá a motor nélkül csatlakoztatott akkumulátorral</li>
                 </div>
-
+                
                 <h3>Szükséges biztonsági felszerelés</h3>
                 <ul>
                     <li><strong>Biztonsági szemüveg:</strong> Az olaj és szennyeződés védelme</li>
@@ -175,7 +600,7 @@
                     <li><strong>Szellőztetés:</strong> Nyitott garázs vagy kapu</li>
                     <li><strong>Tűzoltó készülék:</strong> Baleset esetére (opcionális, de ajánlott)</li>
                 </ul>
-
+                
                 <h3>Motor kikapcsolása és biztonság</h3>
                 <ul>
                     <li>Mindig <strong>kapcsold ki a motort</strong> mielőtt bármilyen alkatrészt vizsgálnál</li>
@@ -183,66 +608,62 @@
                     <li>Az <strong>akkumulátor negatív kábeljét</strong> kösd le, ha nagyobb munka vár (nem szükséges egyszerű szkennelésnél)</li>
                     <li><strong>Soha ne</strong> nyitd meg az olajozásutat vagy tartályokat forró motornál</li>
                 </ul>
-
-                <div class="blog-callout">
-                    <strong>Vészhelyzet-szám:</strong> Ha sérülést szenvedsz, azonnal hívd a 104-es (mentő) számot. Az autó elektromosságtól vagy vegyi anyagtól szerzett sérülések komolyan vehetőek.
+                
+                <div class="definition-box">
+                    <strong>🚨 Vészhelyzet-szám:</strong> Ha sérülést szenvedsz, azonnal hívd a 104-es (mentő) számot. Az autó elektromosságtól vagy vegyi anyagtól szerzett sérülések komolyan vehetőek.
                 </div>
-
-                <h2 id="tools-needed">Szükséges eszközök az otthoni diagnosztikához</h2>
+            </section>
+            
+            <section id="tools-needed">
+                <h2>Szükséges eszközök az otthoni diagnosztikához</h2>
                 <p>A jó hír az, hogy az otthoni diagnózishoz minimális eszköz szükséges. Az alábbiakban találsz egy teljes listát kezdőktől haladóig.</p>
-
+                
                 <h3>Alapvető szerszámkészlet (kezdőknek)</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Eszköz</th>
-                                <th scope="col">Ár Magyarország</th>
-                                <th scope="col">Funkció</th>
-                                <th scope="col">Szükségességi szint</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>OBD2 Bluetooth Scanner</strong></td>
-                                <td>5,000-10,000 Ft</td>
-                                <td>Hibakódok leolvasása okostelefonon</td>
-                                <td>KRITIKUS</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Csavarhúzó készlet</strong></td>
-                                <td>3,000-8,000 Ft</td>
-                                <td>Közös alkatrészek vizsgálata</td>
-                                <td>KRITIKUS</td>
-                            </tr>
-                            <tr>
-                                <td><strong>LED munkalámpa</strong></td>
-                                <td>2,000-5,000 Ft</td>
-                                <td>Motor tér világítása</td>
-                                <td>KRITIKUS</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Szakállas/nyílt villáskulcs szett</strong></td>
-                                <td>4,000-10,000 Ft</td>
-                                <td>Csavarok és csatlakozók oldása</td>
-                                <td>Ajánlott</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Biztonsági szemüveg</strong></td>
-                                <td>1,000-3,000 Ft</td>
-                                <td>Szemvédelem</td>
-                                <td>Ajánlott</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gumikesztyű</strong></td>
-                                <td>500-2,000 Ft</td>
-                                <td>Kézvédelem</td>
-                                <td>Ajánlott</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                <table>
+                    <tr>
+                        <th>Eszköz</th>
+                        <th>Ár Magyarország</th>
+                        <th>Funkció</th>
+                        <th>Szükségességi szint</th>
+                    </tr>
+                    <tr>
+                        <td><strong>OBD2 Bluetooth Scanner</strong></td>
+                        <td>5,000-10,000 Ft</td>
+                        <td>Hibakódok leolvasása okostelefonon</td>
+                        <td>🌟🌟🌟 KRITIKUS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Csavarhúzó készlet</strong></td>
+                        <td>3,000-8,000 Ft</td>
+                        <td>Közös alkatrészek vizsgálata</td>
+                        <td>🌟🌟🌟 KRITIKUS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LED munkalámpa</strong></td>
+                        <td>2,000-5,000 Ft</td>
+                        <td>Motor tér világítása</td>
+                        <td>🌟🌟🌟 KRITIKUS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Szakállas/nyílt villáskulcs szett</strong></td>
+                        <td>4,000-10,000 Ft</td>
+                        <td>Csavarok és csatlakozók oldása</td>
+                        <td>🌟🌟 Ajánlott</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Biztonsági szemüveg</strong></td>
+                        <td>1,000-3,000 Ft</td>
+                        <td>Szemvédelem</td>
+                        <td>🌟🌟 Ajánlott</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gumikesztyű</strong></td>
+                        <td>500-2,000 Ft</td>
+                        <td>Kézvédelem</td>
+                        <td>🌟🌟 Ajánlott</td>
+                    </tr>
+                </table>
+                
                 <h3>Közepes szintű szerszámok (haladó DIY)</h3>
                 <ul>
                     <li><strong>Digitális multimeter</strong> (8,000-15,000 Ft) - Elektromos problémák diagnosztikája</li>
@@ -251,74 +672,70 @@
                     <li><strong>Füstöt detektor</strong> (3,000-7,000 Ft) - Vákuum szivárgás felismerése</li>
                     <li><strong>Termométer infravörös</strong> (2,000-5,000 Ft) - Komponens hőmérséklet mérés</li>
                 </ul>
-
+                
                 <h3>Professzionális szintű eszközök (szervizt menedzsment)</h3>
                 <ul>
                     <li><strong>Fejlett OBD2 Scanner</strong> (50,000-150,000 Ft) - Élő adatok, szószereplő módosítás</li>
                     <li><strong>Indítási szándék diagnosztikai eszköz</strong> (30,000-80,000 Ft) - Gyújtás rendszer tanulmányozás</li>
                     <li><strong>Vákuum és nyomásmagas eszköz</strong> (20,000-50,000 Ft) - Speciális diagnosztika</li>
                 </ul>
-
-                <div class="blog-callout blog-callout-info">
-                    <strong>Budget tipp:</strong> Kezdőkhöz csak az "KRITIKUS" szintű eszközökre van szüksége (OBD2 Scanner + csavarhúzó + LED lámpa), ami összesen 10,000-23,000 Ft. Ez már elegendő 90% az otthoni diagnózishoz!
+                
+                <div class="info-box">
+                    <strong>💰 Budget tipp:</strong> Kezdőkhöz csak az "KRITIKUS" szintű eszközökre van szüksége (OBD2 Scanner + bástyáselector + LED lámpa), ami összesen 10,000-23,000 Ft. Ez már elegendő 90% az otthoni diagnózishoz!
                 </div>
-
-                <h2 id="obd2-scanner-guide">OBD2 Scanner vásárlási útmutató</h2>
-                <p>Az OBD2 scanner az egyetlen létfontosságú eszköz otthoni diagnosztikához. Itt megtudhatod, mit keress és hogyan válassz a tömeg közül. Az <a href="https://www.epa.gov/emission-standards-reference-guide">EPA (Environmental Protection Agency)</a> által meghatározott kibocsátási szabályok miatt az OBD2 rendszer 1996 óta kötelező minden új autóban.</p>
-
+            </section>
+            
+            <section id="obd2-scanner-guide">
+                <h2>OBD2 Scanner vásárlási útmutató</h2>
+                <p>Az OBD2 scanner az egyetlen létfontosságú eszköz otthoni diagnosztikához. Itt megtudhatod, mit keress és hogyan válassz a tömeg közül. Az <a href="https://www.epa.gov/emission-standards-reference-guide" style="color: #0284c7; text-decoration: underline;">EPA (Environmental Protection Agency)</a> által meghatározott kibocsátási szabályok miatt az OBD2 rendszer 1996 óta kötelező minden új autóban.</p>
+                
                 <h3>OBD2 Scanner típusok 2026-ban</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Típus</th>
-                                <th scope="col">Ár Magyarország</th>
-                                <th scope="col">Technológia</th>
-                                <th scope="col">Kompatibilitás</th>
-                                <th scope="col">Ajánlás</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Bluetooth Adapter</td>
-                                <td>3,000-8,000 Ft</td>
-                                <td>Okostelefon app</td>
-                                <td>1996+ autók</td>
-                                <td>LEGJOBB KEZDŐKNEK</td>
-                            </tr>
-                            <tr>
-                                <td>Hordozható Reader</td>
-                                <td>8,000-15,000 Ft</td>
-                                <td>Beépített kijelző</td>
-                                <td>1996+ autók</td>
-                                <td>Jó (függetlenül)</td>
-                            </tr>
-                            <tr>
-                                <td>Fejlett Diagnosztikai</td>
-                                <td>25,000-75,000 Ft</td>
-                                <td>Élő adatok, tesztek</td>
-                                <td>1996+ autók</td>
-                                <td>Csak többre van szüksége</td>
-                            </tr>
-                            <tr>
-                                <td>WiFi csatlakozás</td>
-                                <td>5,000-12,000 Ft</td>
-                                <td>Tablet/laptop app</td>
-                                <td>2012+ autók</td>
-                                <td>Modern autókhoz</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                <table>
+                    <tr>
+                        <th>Típus</th>
+                        <th>Ár Magyarország</th>
+                        <th>Technológia</th>
+                        <th>Kompatibilitás</th>
+                        <th>Ajánlottvégy</th>
+                    </tr>
+                    <tr>
+                        <td>Bluetooth Adapter</td>
+                        <td>3,000-8,000 Ft</td>
+                        <td>Okostelefon app</td>
+                        <td>1996+ autók</td>
+                        <td>⭐⭐⭐⭐⭐ LEGJOBB KEZDŐKNEK</td>
+                    </tr>
+                    <tr>
+                        <td>Hordozható Readerer</td>
+                        <td>8,000-15,000 Ft</td>
+                        <td>Beépített kijelző</td>
+                        <td>1996+ autók</td>
+                        <td>⭐⭐⭐⭐ Jó (függetlenül)</td>
+                    </tr>
+                    <tr>
+                        <td>Fejlett Diagnosztikai</td>
+                        <td>25,000-75,000 Ft</td>
+                        <td>Élő adatok, tesztek</td>
+                        <td>1996+ autók</td>
+                        <td>⭐⭐⭐ Csak többre van szüksége</td>
+                    </tr>
+                    <tr>
+                        <td>WiFi csatlakozás</td>
+                        <td>5,000-12,000 Ft</td>
+                        <td>Tablet/laptop app</td>
+                        <td>2012+ autók</td>
+                        <td>⭐⭐⭐⭐ Modern autókhoz</td>
+                    </tr>
+                </table>
+                
                 <h3>Top OBD2 scannererek magyarországi vásárláshoz</h3>
-                <div class="blog-callout">
-                    <strong>Ajánlott modellek:</strong>
-                    <p><strong>Legjobb érték:</strong> ELM327 Bluetooth (3,500-6,000 Ft) - Klasszikus, megbízható, egyszerű</p>
-                    <p><strong>Legjobb teljesítmény:</strong> OBDII.COM OBD2 Scanner (12,000-18,000 Ft) - Fejlett funkciók, magyar támogatás</p>
-                    <p><strong>Legjobb készülék:</strong> Bluetooth+LCD (8,000-12,000 Ft) - Kettős megjelenítés lehetőség</p>
+                <div class="definition-box">
+                    <strong>Ajánlott modelleket:</strong>
+                    <br><strong>🏆 Legjobb érték:</strong> ELM327 Bluetooth (3,500-6,000 Ft) - Klasszikus, megbízható, egyszerű
+                    <br><strong>🥈 Legjobb teljesítmény:</strong> OBDII.COM OBD2 Scanner (12,000-18,000 Ft) - Fejlett funkciók, magyar támogatás
+                    <br><strong>🥉 Legjobb készülék:</strong> Bluetooth+LCD hátrányok (8,000-12,000 Ft) - Kettős megjelenítés lehetőség
                 </div>
-
+                
                 <h3>Fontos funkcionalitások kereséshez</h3>
                 <ul>
                     <li><strong>I/M Readiness:</strong> Biztosítja, hogy az összes szenzor működik-e</li>
@@ -327,10 +744,12 @@
                     <li><strong>Clear Codes funkció:</strong> A Check Engine lámpa letörlésével később</li>
                     <li><strong>Élő adatok (csak fejlett):</strong> Valós idejű szenzor adatok megtekintése</li>
                 </ul>
-
-                <h2 id="diagnostic-process">Lépésről-lépésre Diagnosztikai Folyamat</h2>
+            </section>
+            
+            <section id="diagnostic-process">
+                <h2>Lépésről-lépésre Diagnosztikai Folyamat</h2>
                 <p>Az alábbiakban találsz egy részletes útmutatót az otthoni diagnosztika minden lépéséhez. Kövess minden lépést alaposan ahhoz, hogy pontos diagnosztikát kapj.</p>
-
+                
                 <h3>Lépés 1: Az autó előkészítése</h3>
                 <ul>
                     <li>Indítsd az autót és hagyd futni 1-2 percig</li>
@@ -338,7 +757,7 @@
                     <li>Nyisd meg a motortéritet és keress az OBD2 csatlakozót (általában a kormányzat alatt, a sebességváltó alatt vagy az alábbi tárcsában)</li>
                     <li>Tisztítsd meg az OBD2 csatlakozó kiáramlásait egy száraz párnával</li>
                 </ul>
-
+                
                 <h3>Lépés 2: OBD2 Scanner Csatlakoztatása</h3>
                 <ul>
                     <li>Ha Bluetooth: párosítsd az adapterét az okostelefonoddal (kezdeti párosítás)</li>
@@ -346,7 +765,7 @@
                     <li>Indítsd el az OBD2 alkalmazást az okostelefonodon (ha Bluetooth)</li>
                     <li>Az alkalmazás felül kapcsolódnia kellene az adapterhez</li>
                 </ul>
-
+                
                 <h3>Lépés 3: Hibakódok Leolvasása</h3>
                 <ul>
                     <li>Az alkalmazásban vagy az eszközön kattints az "Read Codes" vagy "Scan Codes" gombra</li>
@@ -354,14 +773,14 @@
                     <li>Jegyezz fel PONTOSAN az összes kódot (pl. P0171, P0440, stb.)</li>
                     <li>Ha nincs kód, de a Check Engine lámpa világít, akkor "Pending codes"-t keress</li>
                 </ul>
-
+                
                 <h3>Lépés 4: I/M Readiness Ellenőrzése</h3>
                 <ul>
                     <li>Az alkalmazásban keress az "I/M Readiness" vagy "System Status" menüpontot</li>
                     <li>Ellenőrizd, hogy az összes szenzor "Ready" vagy "Complete" státuszban van-e</li>
                     <li>Ha bármelyik "Not Ready" vagy "Incomplete", az azt jelenti, hogy a szenzor nem működik megfelelően</li>
                 </ul>
-
+                
                 <h3>Lépés 5: Élő Adatok Megtekintése (Csak Fejlett Scannereknél)</h3>
                 <ul>
                     <li>Az alkalmazásban válaszd az "Live Data" vagy "Real-Time Data" lehetőséget</li>
@@ -369,86 +788,96 @@
                     <li>Megtekintheted az élő szenzor adatokat: RPM, benzin nyomás, motor hőmérséklet, O2 szenzor, stb.</li>
                     <li>Összehasonlítsd az értékeket a normál tartománnyal (keress online a te autó modelljének paramétereit)</li>
                 </ul>
-
-                <h2 id="common-issues">Gyakori Otthon Diagnosztizálható Problémák</h2>
-                <p>Az alábbiak olyan problémák, amelyeket te magad diagnosztizálhatsz otthon egy OBD2 scanner és alapvető eszközök segítségével. Az <a href="https://www.sae.org/standards/content/j2012/">SAE J2012 standard</a> szabályozza az összes OBD2 hibakód formátumát és jelentését világszerte.</p>
-
-                <h3>Top 10 Otthon Diagnosztizálható Hibakódok</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Hibakód</th>
-                                <th scope="col">Megnevezés</th>
-                                <th scope="col">Otthon Diagnosztizálható</th>
-                                <th scope="col">DIY Javítás</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>P0171</strong></td>
-                                <td>System Too Lean</td>
-                                <td>Igen</td>
-                                <td>MAF szenzor, üzemanyag nyomás</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0101</strong></td>
-                                <td>MAF Sensor Range</td>
-                                <td>Igen</td>
-                                <td>MAF szenzor tisztítás</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0440</strong></td>
-                                <td>EVAP System Malfunction</td>
-                                <td>Igen</td>
-                                <td>Laza sapka</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0128</strong></td>
-                                <td>Coolant Thermostat</td>
-                                <td>Igen</td>
-                                <td>Szakító szükséges általában</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0132</strong></td>
-                                <td>O2 Sensor Circuit</td>
-                                <td>Igen</td>
-                                <td>Szenzor csatlakozó</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0300</strong></td>
-                                <td>Random Misfire</td>
-                                <td>Igen</td>
-                                <td>Gyertya, drótok</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0420</strong></td>
-                                <td>Catalyst Efficiency</td>
-                                <td>Igen</td>
-                                <td>Szakító szükséges</td>
-                            </tr>
-                            <tr>
-                                <td><strong>P0135</strong></td>
-                                <td>O2 Sensor Heater</td>
-                                <td>Igen</td>
-                                <td>Szenzor csatlakozó</td>
-                            </tr>
-                            <tr>
-                                <td><strong>C0035</strong></td>
-                                <td>ABS Rear Wheel Sensor</td>
-                                <td>Igen</td>
-                                <td>Szenzor csatlakozó, rögzítés</td>
-                            </tr>
-                            <tr>
-                                <td><strong>B1015</strong></td>
-                                <td>Battery Backup Power Low</td>
-                                <td>Igen</td>
-                                <td>Biztosíték csere</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                
+                <div class="checklist">
+                    <h4>Diagnosztikai Ellenőrzőlista</h4>
+                    <ul>
+                        <li>Biztonság felszerelés felvehetett (szemüveg, kesztyű)</li>
+                        <li>Motor kikapcsolt és lehűlt</li>
+                        <li>OBD2 csatlakozó megtisztítva</li>
+                        <li>OBD2 adapter csatlakoztatva</li>
+                        <li>Alkalmazás csatlakozva az adapterhez</li>
+                        <li>Hibakódok leolvasva és feljegyzve</li>
+                        <li>I/M Readiness ellenőrizve</li>
+                        <li>Élő adatok megtekintve (ha rendelkezésre áll)</li>
+                    </ul>
                 </div>
-
+            </section>
+            
+            <section id="common-issues">
+                <h2>Gyakori Otthon Diagnosztizálható Problémák</h2>
+                <p>Az alábbiak olyan problémák, amelyeket te magad diagnosztizálhatsz otthon egy OBD2 scanner és alapvető eszközök segítségével. Az <a href="https://www.sae.org/standards/content/j2012/" style="color: #0284c7; text-decoration: underline;">SAE J2012 standard</a> szabályozza az összes OBD2 hibakód formátumát és jelentését világszerte.</p>
+                
+                <h3>Top 10 Otthon Diagnosztizálható Hibakódok</h3>
+                <table>
+                    <tr>
+                        <th>Hibakód</th>
+                        <th>Megnevezés</th>
+                        <th>Otthon Diagnosztizálható</th>
+                        <th>DIY Javítás</th>
+                    </tr>
+                    <tr>
+                        <td><strong>P0171</strong></td>
+                        <td>System Too Lean</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐⭐ (MAF szenzor, üzemanyag nyomás)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0101</strong></td>
+                        <td>MAF Sensor Range</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐⭐ (MAF szenzor tisztítás)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0440</strong></td>
+                        <td>EVAP System Malfunction</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐ (Laza sapka)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0128</strong></td>
+                        <td>Coolant Thermostat</td>
+                        <td>✅ Igen</td>
+                        <td>⭐ (Szakító szükséges általában)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0132</strong></td>
+                        <td>O2 Sensor Circuit</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐ (Szenzor csatlakozó)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0300</strong></td>
+                        <td>Random Misfire</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐⭐ (Gyertya, drótok)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0420</strong></td>
+                        <td>Catalyst Efficiency</td>
+                        <td>✅ Igen</td>
+                        <td>⭐ (Szakító szükséges)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P0135</strong></td>
+                        <td>O2 Sensor Heater</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐ (Szenzor csatlakozó)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C0035</strong></td>
+                        <td>ABS Rear Wheel Sensor</td>
+                        <td>✅ Igen</td>
+                        <td>⭐⭐ (Szenzor csatlakozó, rögzítés)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B1015</strong></td>
+                        <td>Battery Backup Power Low</td>
+                        <td>✅ Igen</td>
+                        <td>⭐ (Biztosíték csere)</td>
+                    </tr>
+                </table>
+                
                 <h3>Diagnosztizálható Alkatrészek Vizuális Ellenőrzése</h3>
                 <ul>
                     <li><strong>Szenzor Csatlakozók:</strong> Laza vagy rozsdás csatlakozók gyakran okoznak hibakódokat</li>
@@ -458,62 +887,64 @@
                     <li><strong>Vákuum Csövek:</strong> Hálózat vagy nyomottszen = P0171 lean kódok</li>
                     <li><strong>Akkumulátor Csatlakozók:</strong> Rozsdás csatlakozók = B-kódok, U-kódok</li>
                 </ul>
-
-                <h2 id="safety-warnings">Biztonsági Figyelmeztetések és Korlátozások</h2>
+            </section>
+            
+            <section id="safety-warnings">
+                <h2>Biztonsági Figyelmeztetések és Korlátozások</h2>
                 <p>Ahogy az otthoni diagnosztika sok előnyt kínál, vannak azonban korlátai és veszélyei is. Tudja meg, mikor kell szakértőhöz fordulni.</p>
-
+                
                 <h3>Mikor NE próbáljál otthon diagnosztizálni</h3>
                 <ul>
-                    <li><strong>Villogó Check Engine lámpa:</strong> Ez motorfűrészetet jelz. Szakértő szükséges</li>
+                    <li><strong>Villogó Check Engine lámpa:</strong> Ez motorfűrészetet jelz. Szakườ szükséges</li>
                     <li><strong>U-kódok (hálózati kommunikáció):</strong> Az elektromos rendszerek rendkívül összetette és veszélyes</li>
                     <li><strong>C-kódok biztonsági rendszereknél:</strong> Az ABS, légzsákok és fékrendszer szakember végeztem kell</li>
-                    <li><strong>Többszörös hibakódok:</strong> Ha 5+ kódod van, valami nagyobb baj van. Szakértő szükséges</li>
+                    <li><strong>Többszörös hibakódok:</strong> Ha 5+ kódod van, valami nagyobb baj van. Szakított szükséges</li>
                     <li><strong>Elektromos vagy magasnyomásvezetékek:</strong> Nincs csere otthon - túl veszélyes</li>
                 </ul>
-
+                
                 <h3>Gyakori Hibák az Otthoni Diagnosztikában</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Hiba</th>
-                                <th scope="col">Miért Probléma</th>
-                                <th scope="col">Megoldás</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>A kód törlése a probléma megoldása nélkül</td>
-                                <td>A lámpa újra megjelenik, valami még nem javított</td>
-                                <td>SOHA ne töröld a kódot, míg a probléma nem megoldódott</td>
-                            </tr>
-                            <tr>
-                                <td>Az első sugg alkatrészet azonnal megvásárolni</td>
-                                <td>Pazarlás: szenzor? vagy valami más az igazi ok</td>
-                                <td>Diagnosztizálj alaposan előbb. Keress több lehetőséget</td>
-                            </tr>
-                            <tr>
-                                <td>Magas feszültségű komponensek érintése</td>
-                                <td>Elektromos sérülés, halál is lehetséges</td>
-                                <td>Mindig kapcsold ki a motort, hagyd lehűlni</td>
-                            </tr>
-                            <tr>
-                                <td>Forró hűtőrendszert nyitni</td>
-                                <td>Súlyos égési sérülések (200°C+ gőz)</td>
-                                <td>Mindig hagyd a motort lehűlni 30-45 percet</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <table>
+                    <tr>
+                        <th>Hiba</th>
+                        <th>Miért Probléma</th>
+                        <th>Megoldás</th>
+                    </tr>
+                    <tr>
+                        <td>A kód törlése a probléma megoldása nélkül</td>
+                        <td>A lámpa újra megjelenik, valami még nem javított</td>
+                        <td>SOHA ne töröld a kódot, míg a probléma nem megoldódott</td>
+                    </tr>
+                    <tr>
+                        <td>Az első sugg alkatrészet azonnal megvásárolni</td>
+                        <td>Pazarlás: szenzor? vagy valami más az igazi ok</td>
+                        <td>Diagnosztizálj alaposan előbb. Keress több lehetőséget</td>
+                    </tr>
+                    <tr>
+                        <td>Magas feszültségű komponensek érintése</td>
+                        <td>Elektromos sérülés, halál is lehetséges</td>
+                        <td>Mindig kapcsold ki a motort, hagyd lehűlni</td>
+                    </tr>
+                    <tr>
+                        <td>Forró hűtőrendszert nyitni</td>
+                        <td>Súlyos égési sérülések (200°C+ gőz)</td>
+                        <td>Mindig hagyd a motort lehűlni 30-45 percet</td>
+                    </tr>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Abszolút Veszélyes Akciók:</strong>
+                    <br>❌ Gumikesztyű nélkül dolgozni az elektromos részeken
+                    <br>❌ Forrásítás vagy hegesztés az akkumulátor közelében (robbanásveszély)
+                    <br>❌ Az autó indítása nyílt lánggal vagy szikrák közelében
+                    <br>❌ Kinyitása benzin- vagy dízelrendszer jól képzett nélkül
+                    <br>❌ Magasnyomásrendszert (fék, hidraulika) otthon közvetlenül javítani
                 </div>
-
-                <div class="blog-callout blog-callout-warning">
-                    <strong>Abszolút Veszélyes Akciók:</strong>
-                    <p>Gumikesztyű nélkül dolgozni az elektromos részeken. Forrásítás vagy hegesztés az akkumulátor közelében (robbanásveszély). Az autó indítása nyílt lánggal vagy szikrák közelében. Kinyitása benzin- vagy dízelrendszer jól képzett nélkül. Magasnyomásrendszert (fék, hidraulika) otthon közvetlenül javítani.</p>
-                </div>
-
-                <h2 id="diy-limitations">A DIY Diagnosztika Korlátai</h2>
+            </section>
+            
+            <section id="diy-limitations">
+                <h2>A DIY Diagnosztika Korlátai</h2>
                 <p>Fontos, hogy ismerd meg a DIY diagnosztika valódi korlátait. Az OBD2 scanner csak a kódot adja - az igazi oka sokkal mélyebben lehet.</p>
-
+                
                 <h3>Mik azok a DTC Kódok Nem Mondanak Meg</h3>
                 <ul>
                     <li><strong>Szenzor = Ok:</strong> A P0135 (O2 szenzor hiba) kódja valójában rossz vezetékekbe vagy szenzor csatlakozóba járulhat. Nem biztos a szenzor szökik-e</li>
@@ -522,51 +953,67 @@
                     <li><strong>Szoftver Frissítések szükséges Lehetnek:</strong> Néhány probléma csak az autó szoftverjének frissítésével megoldható (amit otthon nem tudsz csinálni)</li>
                     <li><strong>Mechanikai Problémák:</strong> A visítés, klikkeld vagy csiszoló zajok mechanikai sérülésre utalhatnak, amit a szenzor nem észlel</li>
                 </ul>
-
+                
                 <h3>Mikor Javasolt Szervízműhelyhez Fordulni</h3>
-                <div class="blog-callout">
+                <div class="definition-box">
                     <strong>Javasolt Esetek:</strong>
-                    <p>Diagnosztikai lépések után bizonytalan diagnózis. Drága alkatrészcsere szükséges (több mint 100,000 Ft). Villogó Check Engine lámpa. Elektromos rendszer problémák (U, B, C kódok). Az autó vezetése során veszélyes tünetek. Garanciális szolgáltatás (lehet elveszíteni).</p>
+                    <br>• Diagnosztikai lépések után bizonytalan diagnózis
+                    <br>• Drága alkatrészcsere szükséges (több mint 100,000 Ft)
+                    <br>• Villogó Check Engine lámpa
+                    <br>• Elektromos rendszer problémák (U, B, C kódok)
+                    <br>• Az autó vezetése során veszélyes tünetek
+                    <br>• Garanciális szolgáltatás (lehet elveszíteni)
                 </div>
-
-                <h2 id="cost-savings">Költségmegtakarítás az Otthoni Diagnosztikával</h2>
+            </section>
+            
+            <section id="cost-savings">
+                <h2>Költségmegtakarítás az Otthoni Diagnosztikával</h2>
                 <p>Az otthoni diagnosztika valódi pénzt takarít meg. Nézz meg egy valós példát:</p>
-
+                
                 <h3>Költség Összehasonlítás: P0171 Hibakód</h3>
-                <div class="blog-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Szcenárió</th>
-                                <th scope="col">Lépések</th>
-                                <th scope="col">Költség</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Szervízműhely (hagyományos)</strong></td>
-                                <td>Diagnosztika (1.5 óra) + MAF szenzor megbontása + Javítás (30 perc)</td>
-                                <td><strong>33,000 Ft</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Szervízműhely (tanácsadás után)</strong></td>
-                                <td>Diagnosztika (0.5 óra) + MAF szenzor tisztítás + Javítás (15 perc)</td>
-                                <td><strong>4,000 Ft</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Otthon DIY (OBD2 Scanner megvan)</strong></td>
-                                <td>Kód leolvasása (5 perc) + MAF szenzor találat (2 óra) + Tisztítás (30 perc)</td>
-                                <td><strong>0 Ft</strong> (csak idő)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Otthon DIY (kell scanner)</strong></td>
-                                <td>OBD2 Scanner (5,000 Ft) + Kód leolvasása (5 perc) + MAF tisztítás (2.5 óra)</td>
-                                <td><strong>5,000 Ft</strong> (felhasználható másra is)</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <table>
+                    <tr>
+                        <th>Szcenárió</th>
+                        <th>Lépések</th>
+                        <th>Költség</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Szervízműhely (hagyományos)</strong></td>
+                        <td>Diagnosztika (1.5 óra) → MAF szenzor megbontása → Javítás (30 perc)</td>
+                        <td>8,000 Ft (díj) + 25,000 Ft (alkatrész) = <strong>33,000 Ft</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Szervízműhely (tanácsadás után)</strong></td>
+                        <td>Diagnosztika (0.5 óra) → MAF szenzor tisztítás → Javítás (15 perc)</td>
+                        <td>4,000 Ft (díj) + 0 Ft (tisztítás) = <strong>4,000 Ft</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Otthon DIY (OBD2 Scanner megvan)</strong></td>
+                        <td>Kód leolvasása (5 perc) → MAF szenzor találat (2 óra) → Tisztítás (30 perc)</td>
+                        <td>0 Ft (már van scanner) = <strong>0 Ft** (csak idő)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Otthon DIY (kell scanner)</strong></td>
+                        <td>OBD2 Scanner (5,000 Ft) + Kód leolvasása (5 perc) + MAF tisztítás (2.5 óra)</td>
+                        <td>5,000 Ft (scanner) = <strong>5,000 Ft** (felhasználható másra is)</td>
+                    </tr>
+                </table>
+                
+                <div class="stat-box">
+                    <div class="stat-item">
+                        <div class="stat-number">28,000 Ft</div>
+                        <div class="stat-label">Megtakarítás az Első Diagnosztikában</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1-2</div>
+                        <div class="stat-label">Évfolyam Fedezi a Scanner Költséget</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">60-70%</div>
+                        <div class="stat-label">Átlagos Költségmegtakarítás</div>
+                    </div>
                 </div>
-
+                
                 <h3>Hosszú Termín Költségmegtakarítás Lehetőségei</h3>
                 <ul>
                     <li><strong>Megelőző karbantartás:</strong> Otthon függesszed meg problémákat korai (100,000+ Ft megtakarítás)</li>
@@ -574,221 +1021,198 @@
                     <li><strong>Alkatrész Vásárlás:</strong> Online olcsóbb alkatrészeket vásárolhatsz el, mint szervízműhely</li>
                     <li><strong>Szószereplő Javítás:</strong> DIY egyszerű javításoktól (ablakok, szenzor csatlakozók)</li>
                 </ul>
-
+            </section>
+            
+            <section id="faq">
+                <h2>Gyakran Feladott Kérdések (FAQ)</h2>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Melyik az a legjobb OBD2 Scanner kezdőknek?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A legjobb kezdők számára az ELM327 Bluetooth adapter (3,500-6,000 Ft) egy olyan alkalmazásva, mint a Torque vagy OBD Fusion. Megbízható, olcsó, és az összes szükséges funkcióval rendelkezik. Ha nem vagy tech-szavú, vegyen egy egyszerű hordozható readerre (8,000-10,000 Ft) beépített kijelzővel.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Biztonságos-e otthon diagnosztizálni, ha nem vagyok mechanikus?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Igen, ha követsz biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos - csak egy kábelt csatlakoztatás az autóhoz. Vizuális ellenőrzések (szenzor csatlakozók, szűrők) szintén biztonságos. Kerüld az elektromos rendszerek, forró hűtőrendszer vagy magasnyomásvezetékek dotásit.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Lehet-e a hibakódot otthon megoldani?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sok kód igen (P0171, P0101, P0440, stb.), de nem mind. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás. Összetettebb: O2 szenzor csere, üzemanyag injektálás, teherelmagyajtás. Ha van elektromos vagy nagyobb mechanikai munka, csináld szervízt.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mennyi ideig tart az otthoni diagnosztika?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Élő adatok elemzése: 30-60 perc. Teljes diagnózis (szenzor csatlakozók, szűrők, vezetékek): 1-2 óra. A tényleges javítás: 30 perc - több óra, attól függően a probléma súlyosságáról.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Mi van, ha többszörös kódok vannak?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Több kód akkor jelent meg, amikor egy alapvető probléma több szenzort is érint. Például egy laza akkumulátorcsatlakozó több U-kódot okozhat. Kezdj az alapkódokkal (P0xxx) és dolgozz lefelé. Ha 5+ kódod van, valami nagyobb probléma van - szervízt keress.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Lehet-e egy kódot falsan diagnosztizálni?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Igen, különösen az intermittent hibákat. A kód csak akkor jeleníkszik meg, ha a szenzor probléma észlel. Ha az autót vezetel és a probléma nem ismétlődik, az OBD2 talán nem fogja meg. Ez az, ahol a szervíz diagnosztikai felszerelésbe hasznos lehet.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div class="author-box">
+            <div class="author-name">AutoCognitix Szerkesztőség</div>
+            <div class="author-title">DIY Autódiagnosztika Szakértők</div>
+            <p style="margin-top: 10px; opacity: 0.9; font-size: 14px;">Tudsz arról, hogy a legtöbb autós probléma otthon diagnosztizálható. Az AutoCognitix célja az, hogy az otthon diagnosztikát biztonságosabbá és könnyebbé tegyük az összes gépkocsisnak.</p>
+        </div>
+        
+        <div class="related-articles">
+            <h3>📚 Kapcsolódó Cikkek</h3>
+            <div class="related-list">
+                <div class="related-item">
+                    <a href="/hu/blog/p0171-hibakod-okok-tunetek-javitas.html">P0171 Hibakód: Okok, Tünetek, Teljes Diagnosztikai Útmutató</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Az egyik leggyakoribb hibakód részletes útmutatója</p>
+                </div>
+                <div class="related-item">
+                    <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">DTC Hibakód Kereső: Teljes Útmutató</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Megtudhatod, mit jelentenek az OBD2 kódok</p>
+                </div>
+                <div class="related-item">
+                    <a href="/">AutoCognitix Főoldal - Ingyenes Diagnosztika</a>
+                    <p style="margin-top: 8px; font-size: 14px; color: #7f8c8d;">Kezdj el diagnosztizálni most az AutoCognitix platformon</p>
+                </div>
             </div>
         </div>
-    </article>
-
-    <!-- FAQ Section -->
-    <section class="blog-faq-section blog-animate" id="faq">
-        <div class="container">
-            <h2>Gyakran Feladott Kérdések az otthoni diagnosztikáról</h2>
-            <div class="blog-faq" itemscope itemtype="https://schema.org/FAQPage">
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Melyik az a legjobb OBD2 Scanner kezdőknek?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">A legjobb kezdők számára az ELM327 Bluetooth adapter (3,500-6,000 Ft) egy olyan alkalmazásva, mint a Torque vagy OBD Fusion. Megbízható, olcsó, és az összes szükséges funkcióval rendelkezik. Ha nem vagy tech-szavú, vegyen egy egyszerű hordozható readerre (8,000-10,000 Ft) beépített kijelzővel.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Biztonságos-e otthon diagnosztizálni, ha nem vagyok mechanikus?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Igen, ha követsz biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos - csak egy kábelt csatlakoztatás az autóhoz. Vizuális ellenőrzések (szenzor csatlakozók, szűrők) szintén biztonságos. Kerüld az elektromos rendszerek, forró hűtőrendszer vagy magasnyomásvezetékek dotásit.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Lehet-e a hibakódot otthon megoldani?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Sok kód igen (P0171, P0101, P0440, stb.), de nem mind. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás. Összetettebb: O2 szenzor csere, üzemanyag injektálás, teherelmagyajtás. Ha van elektromos vagy nagyobb mechanikai munka, csináld szervízt.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mennyi ideig tart az otthoni diagnosztika?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Élő adatok elemzése: 30-60 perc. Teljes diagnózis (szenzor csatlakozók, szűrők, vezetékek): 1-2 óra. A tényleges javítás: 30 perc - több óra, attól függően a probléma súlyosságáról.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Mi van, ha többszörös kódok vannak?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Több kód akkor jelent meg, amikor egy alapvető probléma több szenzort is érint. Például egy laza akkumulátorcsatlakozó több U-kódot okozhat. Kezdj az alapkódokkal (P0xxx) és dolgozz lefelé. Ha 5+ kódod van, valami nagyobb probléma van - szervízt keress.</p>
-                    </div>
-                </div>
-
-                <div class="blog-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="blog-faq-question" itemprop="name">Lehet-e egy kódot falsan diagnosztizálni?</div>
-                    <div class="blog-faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text">Igen, különösen az intermittent hibákat. A kód csak akkor jeleníkszik meg, ha a szenzor probléma észlel. Ha az autót vezetel és a probléma nem ismétlődik, az OBD2 talán nem fogja meg. Ez az, ahol a szervíz diagnosztikai felszerelésbe hasznos lehet.</p>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="cta-box">
+            <h3>🚀 Kezdd el a Diagnosztikát Ma!</h3>
+            <p>Most, hogy tudod, hogyan kell diagnosztizálni, használd az AutoCognitix ingyenes platformot az összes hibakódhoz és javítási útmutatóhoz.</p>
+            <a href="https://www.autocognitix.hu" class="cta-button">Nyiss meg az AutoCognitix-et Ingyenesen</a>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="blog-cta-section blog-animate">
-        <div class="container">
-            <div class="blog-cta">
-                <h2>Kezdd el a Diagnosztikát Ma!</h2>
-                <p>Most, hogy tudod, hogyan kell diagnosztizálni, használd az AutoCognitix ingyenes platformot az összes hibakódhoz és javítási útmutatóhoz.</p>
-                <a href="/hu/#pricing" class="btn btn-primary">Nyiss meg az AutoCognitix-et Ingyenesen</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Articles -->
-    <section class="blog-related-section blog-animate">
-        <div class="container">
-            <h2>Kapcsolódó cikkek</h2>
-            <div class="blog-related">
-                <a href="/hu/blog/p0171-hibakod-okok-tunetek-javitas" class="blog-related-card">
-                    <div class="blog-related-image" style="background:linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);height:160px;border-radius:var(--radius-base);"></div>
-                    <h4>P0171 Hibakód: Okok, Tünetek, Javítás</h4>
-                    <p>Az egyik leggyakoribb hibakód részletes útmutatója</p>
-                </a>
-                <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato" class="blog-related-card">
-                    <div class="blog-related-image" style="background:linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%);height:160px;border-radius:var(--radius-base);"></div>
-                    <h4>DTC Hibakód Kereső: Teljes Útmutató</h4>
-                    <p>Megtudhatod, mit jelentenek az OBD2 kódok</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
-            <p>Az oldalon szereplő információ oktatási célokra szolgál. Egyetlen alkatrészt sem javasol szerzője nem lehet felelős a DIY javítások következményeiért. Mindig kövesd a biztonsági szabályokat és keress szakiját, ha bizonytalan vagy.</p>
-        </div>
-    </footer>
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Article",
-        "headline": "Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]",
-        "description": "Teljes DIY útmutató autóhibák otthoni diagnosztikájához. Megtudhatod, hogyan diagnosztizálj magad minimális eszközökkel.",
-        "image": "https://www.autocognitix.hu/images/blog/home-diagnostics.jpg",
-        "author": {
-            "@type": "Organization",
-            "name": "AutoCognitix"
-        },
-        "datePublished": "2026-03-21",
-        "dateModified": "2026-03-21"
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Melyik az a legjobb OBD2 Scanner kezdőknek?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A legjobb kezdők számára az ELM327 Bluetooth adapter egy olyan alkalmazásva, mint a Torque vagy OBD Fusion."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Biztonságos-e otthon diagnosztizálni, ha nem vagyok mechanikus?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Igen, ha követsz biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Lehet-e a hibakódot otthon megoldani?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Sok kód igen, de nem mind. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mennyi ideig tart az otthoni diagnosztika?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Teljes diagnózis: 1-2 óra."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mi van, ha többszörös kódok vannak?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Több kód akkor jelent meg, amikor egy alapvető probléma több szenzort is érint."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Lehet-e egy kódot falsan diagnosztizálni?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Igen, különösen az intermittent hibákat. A kód csak akkor jeleníkszik meg, ha a szenzor probléma észlel."
-                }
-            }
-        ]
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Kezdőlap",
-                "item": "https://autocognitix.hu/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://autocognitix.hu/hu/blog"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Autódiagnosztika otthon: Kezdők útmutatója",
-                "item": "https://autocognitix.hu/hu/blog/autodiagnosztika-otthon-kezdoknek"
-            }
-        ]
-    }
-    </script>
-
-    <!-- Scroll Animation -->
+        
+        <footer>
+            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva. | <a href="/hu/" style="color: #27ae60; text-decoration: none;">Főoldal</a> | <a href="/hu/legal/adatvedelmi-szabalyzat.html" style="color: #27ae60; text-decoration: none;">Adatvédelmi Szabályzat</a></p>
+            <p style="margin-top: 10px; font-size: 12px;">Az oldalon szereplő információ oktatási célokra szolgál. Egyetlen alkatrészt sem javasol szerzője nem lehet felelős a DIY javítások következményeiért. Mindig kövesd a biztonsági szabályokat és keress szakiját, ha bizonytalan vagy.</p>
+        </footer>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.blog-animate');
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('blog-animate-visible');
-                        observer.unobserve(entry.target);
+        function toggleFAQ(element) {
+            const toggle = element.querySelector('.faq-toggle');
+            const answer = element.nextElementSibling;
+            
+            toggle.classList.toggle('open');
+            answer.classList.toggle('show');
+        }
+        
+        // JSON-LD Schema.org Article
+        const articleSchema = {
+            "@context": "https://schema.org/",
+            "@type": "Article",
+            "headline": "Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]",
+            "description": "Teljes DIY útmutató autóhibák otthoni diagnosztikájához. Megtudhatod, hogyan diagnosztizálj magad minimális eszközökkel.",
+            "image": "https://www.autocognitix.hu/images/blog/home-diagnostics.jpg",
+            "author": {
+                "@type": "Organization",
+                "name": "AutoCognitix"
+            },
+            "datePublished": "2026-03-21",
+            "dateModified": "2026-03-21",
+            "mainEntity": {
+                "@type": "Thing",
+                "name": "Otthoni autódiagnosztika"
+            }
+        };
+        
+        // JSON-LD FAQPage Schema
+        const faqSchema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Melyik az a legjobb OBD2 Scanner kezdőknek?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A legjobb kezdők számára az ELM327 Bluetooth adapter egy olyan alkalmazásva, mint a Torque vagy OBD Fusion."
                     }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            animateElements.forEach(function(el) {
-                observer.observe(el);
-            });
-        });
+                },
+                {
+                    "@type": "Question",
+                    "name": "Biztonságos-e otthon diagnosztizálni, ha nem vagyok mechanikus?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Igen, ha követsz biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Lehet-e a hibakódot otthon megoldani?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sok kód igen, de nem mind. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mennyi ideig tart az otthoni diagnosztika?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Teljes diagnózis: 1-2 óra."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mi van, ha többszörös kódok vannak?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Több kód akkor jelent meg, amikor egy alapvető probléma több szenzort is érint."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Lehet-e egy kódot falsan diagnosztizálni?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Igen, különösen az intermittent hibákat. A kód csak akkor jeleníkszik meg, ha a szenzor probléma észlel."
+                    }
+                }
+            ]
+        };
+        
+        // Add Schema.org markup to page
+        const schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.textContent = JSON.stringify([articleSchema, faqSchema]);
+        document.head.appendChild(schemaScript);
     </script>
 </body>
 </html>
