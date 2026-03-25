@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="hu" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Megeri megjavitani az autod? Szamold ki a javitasi koltseg es a piaci ertek aranyt, es dontsd el, hogy javitas vagy csere eri meg jobban. Ingyenes online kalkulátor.">
+  <meta name="keywords" content="megéri megjavítani, autó javítás költség, autó piaci érték, javítás vagy csere, autó kalkulátor, autójavítás kalkulátor, autó értékbecslés">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="AutoCognitix">
+  <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
+
+  <!-- Geo Tags -->
+  <meta name="geo.placename" content="Magyarország">
+  <meta name="geo.region" content="HU">
+
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
+  <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Megeri megjavitani az autod? — AutoCognitix Kalkulátor">
+  <meta property="og:description" content="Szamold ki, hogy megeri-e megjavitani az autod, vagy erdemesebb cserelni. AI-alapu dontes-tamogatas valós piaci adatokkal.">
+  <meta property="og:url" content="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
+  <meta property="og:site_name" content="AutoCognitix">
+  <meta property="og:locale" content="hu_HU">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Megeri megjavitani az autod? — AutoCognitix Kalkulátor">
+  <meta name="twitter:description" content="Szamold ki, hogy megeri-e megjavitani az autod. Ingyenes, adatalapú kalkulátor a magyar piacra.">
+
+  <title>Megeri megjavitani az autod? — Javitás vs. Csere Kalkulátor | AutoCognitix</title>
+
+  <!-- Schema.org: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Megeri megjavitani? Kalkulátor",
+    "description": "Szamold ki, hogy megeri-e megjavitani az autod, vagy erdemesebb cserelni. A kalkulátor figyelembe veszi a piaci erteket, a javitási koltseg aranyt, az eletkor es futásteljesitmenyt.",
+    "url": "https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "hu",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "HUF"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AutoCognitix",
+      "url": "https://autocognitix.hu"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+
+  <style>
+    /* Page-specific styles */
+    .tool-hero .accent {
+      color: var(--color-accent);
+    }
+
+    .result-summary {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .result-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .recommendation-box {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
+      margin: var(--space-xl) 0;
+    }
+
+    .recommendation-box h3 {
+      font-size: var(--text-h5);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .recommendation-box p {
+      font-size: var(--text-body);
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .breakdown-wrap {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
+      margin: var(--space-xl) 0;
+      overflow-x: auto;
+    }
+
+    .breakdown-wrap h3 {
+      font-size: var(--text-h6);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+    }
+
+    .factor-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .factor-bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--color-gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .factor-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 1s ease-out;
+      background: var(--color-accent);
+    }
+
+    .factor-bar-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .uncertainty-indicator {
+      display: inline-block;
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-top: 8px;
+    }
+
+    .uncertainty-indicator.verdict-good {
+      background: rgba(34, 197, 94, 0.12);
+      color: #16a34a;
+    }
+
+    .uncertainty-indicator.verdict-warning {
+      background: rgba(234, 179, 8, 0.12);
+      color: #b45309;
+    }
+
+    .uncertainty-indicator.verdict-bad {
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+    }
+
+    .form-section-title {
+      grid-column: 1 / -1;
+      font-size: var(--text-h6);
+      font-weight: 600;
+      margin-top: var(--space-md);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--color-gray-200);
+      color: var(--color-base-dark);
+    }
+
+    .form-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .btn-calculate {
+      background: var(--color-accent);
+      color: var(--color-white);
+      font-size: var(--text-body-sm);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 18px 48px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-family: var(--font-primary);
+    }
+
+    .btn-calculate:hover {
+      background: #c4603e;
+      box-shadow: 0 0 24px rgba(217, 119, 87, 0.35);
+    }
+
+    .btn-calculate:active {
+      transform: scale(0.98);
+    }
+
+    .lang-option {
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .lang-option.active {
+      background: var(--color-base-dark);
+      color: var(--color-white);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-menu-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-base-dark);
+    }
+
+    @media (max-width: 991px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--color-white);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-lg);
+        gap: var(--space-xs);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .lang-switcher {
+        margin-left: auto;
+        padding-left: 12px;
+        border-left: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/hu/" class="nav-logo">
+        <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        AutoCognitix
+      </a>
+      <button class="mobile-menu-btn" aria-label="Menu megnyitasa" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <div class="nav-links">
+        <a href="/hu/#features" class="nav-link">Funkciók</a>
+        <a href="/hu/#pricing" class="nav-link">Csomagok</a>
+        <div class="nav-dropdown">
+          <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger active">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="/hu/eszkozok/megeri-megjavitani.html">Megeri megjavitani?</a>
+            <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a>
+            <a href="/hu/eszkozok/szerviz-kereso.html">Szervizkereso</a>
+          </div>
+        </div>
+        <a href="/hu/blog/" class="nav-link">Blog</a>
+        <a href="/hu/#faq" class="nav-link">GYIK</a>
+      </div>
+      <div class="lang-switcher"><a href="/hu/" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/" class="lang-option">EN</a></div>
+      <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="tool-hero">
+    <div class="container">
+      <h1>Megeri megjavitani <span class="accent">az autódat?</span></h1>
+      <p>Add meg az autód adatait es a javitási költseget — kiszámoljuk, hogy megeri-e a javitás, vagy jobb döntés egy másik autó. Adatalapú elemzés a magyar piaci árak alapján.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FORM ═══════════════ -->
+  <section class="tool-form-section">
+    <div class="container">
+      <form class="tool-form" id="repairForm" novalidate>
+        <div class="form-grid">
+
+          <!-- Jármű adatok -->
+          <div class="form-section-title">Jármű adatok</div>
+
+          <div class="form-group">
+            <label class="form-label" for="brand">Márka</label>
+            <select class="form-select" id="brand" required>
+              <option value="" disabled selected>Válassz márkát...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="model">Modell</label>
+            <select class="form-select" id="model" disabled required>
+              <option value="">Előbb válassz márkát</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="year">Évjárat</label>
+            <select class="form-select" id="year" required>
+              <option value="" disabled selected>Évjárat...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="mileage">Futásteljesítmény (km)</label>
+            <input class="form-input" type="number" id="mileage" min="0" max="999999" placeholder="pl. 185000" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Üzemanyag</label>
+            <div class="form-radio-group" id="fuelGroup">
+              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin" required>Benzin</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel">Dízel</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg">LPG</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid">Hibrid</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos">Elektromos</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Állapot</label>
+            <div class="form-radio-group" id="conditionGroup">
+              <label class="form-radio-label"><input type="radio" name="condition" value="kituno" required>Kitűnő</label>
+              <label class="form-radio-label"><input type="radio" name="condition" value="jo">Jó</label>
+              <label class="form-radio-label"><input type="radio" name="condition" value="kozepes">Közepes</label>
+              <label class="form-radio-label"><input type="radio" name="condition" value="rossz">Rossz</label>
+            </div>
+          </div>
+
+          <!-- Előzmények -->
+          <div class="form-section-title">Előzmények</div>
+
+          <div class="form-group">
+            <label class="form-label" for="accident">Balesetes?</label>
+            <select class="form-select" id="accident" required>
+              <option value="" disabled selected>Válassz...</option>
+              <option value="nem">Nem volt baleset</option>
+              <option value="kozmetikai">Kozmetikai (karcolás, kis horzsolta)</option>
+              <option value="kozepes">Közepes (elem csere, nem szerkezeti)</option>
+              <option value="sulyos">Súlyos (légzsák, nagy javitás)</option>
+              <option value="szerkezeti">Szerkezeti (vázsérülés)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Szervizkönyv</label>
+            <div class="form-radio-group" id="serviceGroup">
+              <label class="form-radio-label"><input type="radio" name="service" value="igen" required>Igen</label>
+              <label class="form-radio-label"><input type="radio" name="service" value="nem">Nem</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="owners">Tulajdonosok száma</label>
+            <select class="form-select" id="owners" required>
+              <option value="" disabled selected>Válassz...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+          <!-- Javítás -->
+          <div class="form-section-title">Javítási költség</div>
+
+          <div class="form-group full-width">
+            <label class="form-label" for="repairCost">Becsült javitási költség (Ft)</label>
+            <input class="form-input" type="number" id="repairCost" min="0" max="99999999" placeholder="pl. 450000">
+            <span class="form-hint">Ha nem tudod, becsüljük mi az autó kora alapján.</span>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="btn-calculate">Kiszámolom</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RESULT ═══════════════ -->
+  <section class="tool-result" id="resultSection">
+    <div class="container">
+      <div class="result-inner">
+
+        <!-- Score Circle + Verdict -->
+        <div class="result-summary" id="resultSummary">
+          <div class="score-circle-wrap">
+            <div class="score-circle" id="scoreCircle">
+              <span class="score-number" id="scoreNumber">0</span>
+              <span class="score-label">pont</span>
+            </div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar">
+              <div class="score-bar-fill" id="scoreBarFill"></div>
+            </div>
+          </div>
+          <div id="verdictBadge" class="verdict-badge"></div>
+        </div>
+
+        <!-- Result Cards -->
+        <div class="result-cards">
+          <div class="result-card">
+            <div class="result-card-title">Becsült piaci érték</div>
+            <div class="result-card-value" id="resMarketValue">-</div>
+            <div class="result-card-sub" id="resMarketPointEstimate"></div>
+            <div class="result-card-sub" id="resMarketSub"></div>
+            <div id="uncertaintyIndicator"></div>
+          </div>
+          <div class="result-card">
+            <div class="result-card-title">Javitási költség</div>
+            <div class="result-card-value" id="resRepairCost">-</div>
+            <div class="result-card-sub" id="resRepairSub"></div>
+          </div>
+          <div class="result-card">
+            <div class="result-card-title">Költségarány</div>
+            <div class="result-card-value" id="resCostRatio">-</div>
+            <div class="result-card-sub">javitás / piaci érték</div>
+          </div>
+        </div>
+
+        <!-- Breakdown -->
+        <div class="breakdown-wrap">
+          <h3>Döntesi tenyezők</h3>
+          <table class="breakdown-table">
+            <thead>
+              <tr>
+                <th>Tényező</th>
+                <th>Súly</th>
+                <th>Pont</th>
+              </tr>
+            </thead>
+            <tbody id="breakdownBody">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Recommendation -->
+        <div class="recommendation-box" id="recommendationBox">
+          <h3 id="recoTitle"></h3>
+          <p id="recoText"></p>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="tool-disclaimer">
+          <strong>Fontos:</strong> Ez egy statisztikai becslés, nem helyettesíti a szakértő véleményét. A tényleges piaci ár ±15-20%-kal eltérhet. A kalkulátor tájékoztató jellegű becslést ad a magyar használtautó-piaci adatok alapján. A döntéshez javasoljuk szakszerviz véleményének kikérését. Az AutoCognitix nem vállal felelősséget a kalkulátor alapján hozott döntésekért.
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-heading">Termék</div>
+          <a href="/hu/#features" class="footer-link">Funkciók</a>
+          <a href="/hu/#pricing" class="footer-link">Csomagok</a>
+          <a href="#" class="footer-link">API Dokumentáció</a>
+          <a href="#" class="footer-link">Changelog</a>
+        </div>
+        <div>
+          <div class="footer-heading">Tudástár</div>
+          <a href="/hu/blog/" class="footer-link">Blog</a>
+          <a href="/hu/eszkozok/" class="footer-link">Eszközök</a>
+          <a href="/hu/eszkozok/megeri-megjavitani.html" class="footer-link">Megeri megjavitani?</a>
+          <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="footer-link">Vizsga Prediktor</a>
+          <a href="/hu/eszkozok/szerviz-kereso.html" class="footer-link">Szervizkereso</a>
+          <a href="/hu/#faq" class="footer-link">GYIK</a>
+        </div>
+        <div>
+          <div class="footer-heading">Jogi</div>
+          <a href="/hu/legal/adatvedelmi-szabalyzat.html" class="footer-link">Adatvédelmi szabályzat</a>
+          <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a>
+          <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a>
+          <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@autocognitix.hu
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Budapest, Magyarország
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span>
+        <span>Készítette: Norbi & AI</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+  <script src="/shared/js/vehicle-data.js?v=1.0"></script>
+  <script src="/shared/js/tool-common.js?v=1.0"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // ─── Init form controls ───
+    document.addEventListener('DOMContentLoaded', function() {
+      ToolCommon.setupBrandModelCascade('brand', 'model');
+      ToolCommon.populateYearSelect('year', 1995, 2026);
+
+      // Radio button visual selection
+      document.querySelectorAll('.form-radio-label').forEach(function(label) {
+        var input = label.querySelector('input');
+        if (input) {
+          input.addEventListener('change', function() {
+            var group = label.closest('.form-radio-group');
+            if (group) {
+              group.querySelectorAll('.form-radio-label').forEach(function(l) {
+                l.classList.remove('selected');
+              });
+            }
+            label.classList.add('selected');
+          });
+        }
+      });
+
+      // Form submit
+      document.getElementById('repairForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleSubmit();
+      });
+    });
+
+    // ─── Get checked radio value ───
+    function getRadioValue(name) {
+      var checked = document.querySelector('input[name="' + name + '"]:checked');
+      return checked ? checked.value : '';
+    }
+
+    // ─── Handle form submission ───
+    function handleSubmit() {
+      // Validate required fields
+      var requiredFields = [
+        { id: 'brand' },
+        { id: 'model' },
+        { id: 'year' },
+        { id: 'mileage' },
+        { id: 'accident' },
+        { id: 'owners' }
+      ];
+
+      var valid = ToolCommon.validateRequired(requiredFields);
+
+      // Validate radio groups
+      var fuel = getRadioValue('fuel');
+      var condition = getRadioValue('condition');
+      var service = getRadioValue('service');
+
+      if (!fuel) {
+        document.getElementById('fuelGroup').closest('.form-group').classList.add('error');
+        valid = false;
+      } else {
+        document.getElementById('fuelGroup').closest('.form-group').classList.remove('error');
+      }
+
+      if (!condition) {
+        document.getElementById('conditionGroup').closest('.form-group').classList.add('error');
+        valid = false;
+      } else {
+        document.getElementById('conditionGroup').closest('.form-group').classList.remove('error');
+      }
+
+      if (!service) {
+        document.getElementById('serviceGroup').closest('.form-group').classList.add('error');
+        valid = false;
+      } else {
+        document.getElementById('serviceGroup').closest('.form-group').classList.remove('error');
+      }
+
+      if (!valid) return;
+
+      // Gather values
+      var brand = document.getElementById('brand').value;
+      var year = parseInt(document.getElementById('year').value, 10);
+      var mileage = parseInt(document.getElementById('mileage').value, 10);
+      if (mileage < 0) {
+        alert('A kilométeróra állás nem lehet negatív.');
+        return;
+      }
+      var accident = document.getElementById('accident').value;
+      var owners = parseInt(document.getElementById('owners').value, 10);
+      var repairCostInput = document.getElementById('repairCost').value;
+      var hasServiceBook = service === 'igen';
+
+      // ─── Calculate market value ───
+      var age = Math.max(2026 - year, 0);
+      if (mileage === 0 && age > 2) {
+        if (!confirm('0 km egy ' + age + ' éves autón szokatlan. Biztosan helyes az adat?')) {
+          return;
+        }
+      }
+      var baseValue = VehicleDB.getBaseValue(brand, year);
+
+      // Mileage adjustment
+      var expectedKmPerYear = VehicleDB.getExpectedKm(fuel);
+      var expectedKm = expectedKmPerYear * age;
+      var mileageAdj = 1 + (-0.002 * (mileage - expectedKm) / 1000);
+      mileageAdj = Math.max(0.75, Math.min(1.25, mileageAdj));
+
+      // Accident adjustment
+      var accidentData = VehicleDB.accidentSeverity.find(function(a) { return a.id === accident; });
+      var damageMultiplier = accidentData ? accidentData.damageMultiplier : 0;
+      var mileageMultiplierForAccident;
+      if (mileage < 30000) mileageMultiplierForAccident = 1.0;
+      else if (mileage < 60000) mileageMultiplierForAccident = 0.8;
+      else if (mileage < 100000) mileageMultiplierForAccident = 0.6;
+      else if (mileage < 160000) mileageMultiplierForAccident = 0.4;
+      else mileageMultiplierForAccident = 0.2;
+      var accidentAdj = 1 - (0.10 * damageMultiplier * mileageMultiplierForAccident);
+
+      // Service history
+      var serviceAdj = hasServiceBook ? 1.10 : 0.95;
+
+      // Owner adjustment
+      var ownerAdj;
+      if (owners <= 1) ownerAdj = 1.0;
+      else if (owners === 2) ownerAdj = 0.97;
+      else if (owners === 3) ownerAdj = 0.93;
+      else if (owners === 4) ownerAdj = 0.90;
+      else ownerAdj = 0.87;
+
+      // Condition multiplier
+      var condData = VehicleDB.conditions.find(function(c) { return c.id === condition; });
+      var conditionMult = condData ? condData.multiplier : 1.0;
+
+      // Market value
+      var marketValue = baseValue * mileageAdj * accidentAdj * serviceAdj * ownerAdj * conditionMult;
+      marketValue = Math.max(Math.round(marketValue), 100000);
+
+      // ─── Repair cost ───
+      var repairCost;
+      var repairEstimated = false;
+      if (repairCostInput && parseInt(repairCostInput, 10) > 0) {
+        repairCost = parseInt(repairCostInput, 10);
+      } else {
+        repairEstimated = true;
+        if (age <= 5) repairCost = 150000 * Math.max(age, 1);
+        else if (age <= 10) repairCost = 250000 * Math.max(age - 4, 1);
+        else if (age <= 15) repairCost = 400000 * Math.max(age - 8, 1);
+        else repairCost = 550000 * Math.max(age - 12, 1);
+        // Cap estimated repair cost at 80% of market value for sanity
+        repairCost = Math.min(repairCost, marketValue * 0.8);
+        repairCost = Math.round(repairCost);
+      }
+
+      // ─── Annual maintenance estimate ───
+      var annualMaint;
+      if (age <= 5) annualMaint = 150000;
+      else if (age <= 10) annualMaint = 250000;
+      else if (age <= 15) annualMaint = 400000;
+      else annualMaint = 550000;
+
+      // ─── 4-Factor Decision Score ───
+
+      // Factor 1 (40%): Cost ratio
+      var ka = repairCost / marketValue;
+      var f1;
+      if (ka < 0.30) f1 = 1.0;
+      else if (ka < 0.50) f1 = 0.65;
+      else if (ka < 0.75) f1 = 0.35;
+      else f1 = 0;
+
+      // Factor 2 (20%): Age + mileage
+      var f2;
+      if (age < 5 && mileage < 80000) f2 = 1.0;
+      else if (age < 10 && mileage < 150000) f2 = 0.65;
+      else if (age < 15 && mileage < 250000) f2 = 0.35;
+      else f2 = 0.10;
+
+      // Factor 3 (20%): Annual cost comparison
+      var repairAnnual = (repairCost + 2 * annualMaint) / 2;
+      var replacementAnnual = 800000;
+      var f3;
+      if (repairAnnual < replacementAnnual * 0.60) f3 = 1.0;
+      else if (repairAnnual < replacementAnnual) f3 = 0.60;
+      else f3 = 0.20;
+
+      // Factor 4 (20%): Break-even months
+      var monthlyReplacement = replacementAnnual / 12;
+      var monthlyCurrent = annualMaint / 12;
+      var beMonths;
+      if (monthlyReplacement - monthlyCurrent > 0) {
+        beMonths = repairCost / (monthlyReplacement - monthlyCurrent);
+      } else {
+        beMonths = 999;
+      }
+      var f4;
+      if (beMonths < 6) f4 = 1.0;
+      else if (beMonths < 12) f4 = 0.70;
+      else if (beMonths < 18) f4 = 0.40;
+      else f4 = 0.10;
+
+      // Composite score
+      var composite = 0.40 * f1 + 0.20 * f2 + 0.20 * f3 + 0.20 * f4;
+      composite = Math.max(0, Math.min(1, composite));
+
+      // ─── Render results ───
+      renderResults({
+        composite: composite,
+        marketValue: marketValue,
+        repairCost: repairCost,
+        repairEstimated: repairEstimated,
+        costRatio: ka,
+        factors: [
+          { name: 'Költségarány (javitás / érték)', weight: '40%', score: f1 },
+          { name: 'Életkor + futásteljesítmény', weight: '20%', score: f2 },
+          { name: 'Éves költség összehasonlitás', weight: '20%', score: f3 },
+          { name: 'Megtérülési idő (break-even)', weight: '20%', score: f4 }
+        ],
+        brand: brand,
+        age: age,
+        mileage: mileage,
+        beMonths: beMonths
+      });
+    }
+
+    // ─── Render results ───
+    function renderResults(data) {
+      var score = data.composite;
+      var pct = Math.round(score * 100);
+
+      // Determine verdict
+      var verdictClass, verdictText;
+      if (score >= 0.65) {
+        verdictClass = 'verdict-good';
+        verdictText = 'JAVÍTÁS';
+      } else if (score >= 0.40) {
+        verdictClass = 'verdict-warning';
+        verdictText = 'HATÁRESET';
+      } else {
+        verdictClass = 'verdict-bad';
+        verdictText = 'CSERE';
+      }
+
+      // Apply verdict class to summary
+      var summary = document.getElementById('resultSummary');
+      summary.className = 'result-summary ' + verdictClass;
+
+      // Score circle
+      var scoreCircle = document.getElementById('scoreCircle');
+      scoreCircle.className = 'score-circle';
+
+      // Animate score number
+      ToolCommon.animateNumber(
+        document.getElementById('scoreNumber'),
+        pct,
+        1200,
+        function(v) { return Math.round(v); }
+      );
+
+      // Score bar
+      var barFill = document.getElementById('scoreBarFill');
+      barFill.style.width = '0%';
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          barFill.style.width = pct + '%';
+        });
+      });
+
+      // Verdict badge
+      var badge = document.getElementById('verdictBadge');
+      badge.className = 'verdict-badge ' + verdictClass;
+      badge.textContent = verdictText;
+
+      // Result cards — market value range
+      var valueLow = Math.round(data.marketValue * 0.85);
+      var valueHigh = Math.round(data.marketValue * 1.15);
+      document.getElementById('resMarketValue').textContent = ToolCommon.formatHUF(valueLow) + ' — ' + ToolCommon.formatHUF(valueHigh);
+      document.getElementById('resMarketPointEstimate').textContent = 'Becsült középérték: ' + ToolCommon.formatHUF(data.marketValue);
+      document.getElementById('resMarketSub').textContent = 'Becsült piaci érték az adatok alapján';
+
+      // Uncertainty indicator
+      var commonBrands = ['Suzuki', 'Opel', 'Volkswagen', 'Skoda', 'Ford', 'Toyota', 'Renault', 'Peugeot', 'Fiat', 'Hyundai', 'Kia', 'Dacia'];
+      var isCommon = commonBrands.indexOf(data.brand) >= 0;
+      var uncertainty = 'KÖZEPES';
+      var uncertaintyClass = 'warning';
+      if (isCommon && data.age <= 15 && data.mileage < 300000) {
+        uncertainty = 'ALACSONY';
+        uncertaintyClass = 'good';
+      } else if (!isCommon || data.age > 20 || data.mileage > 400000) {
+        uncertainty = 'MAGAS';
+        uncertaintyClass = 'bad';
+      }
+
+      var uncertaintyContainer = document.getElementById('uncertaintyIndicator');
+      uncertaintyContainer.innerHTML = '';
+
+      var uncertaintyBadge = document.createElement('div');
+      uncertaintyBadge.className = 'uncertainty-indicator verdict-' + uncertaintyClass;
+      uncertaintyBadge.innerHTML = 'Becslés bizonytalansága: <strong>' + uncertainty + '</strong>';
+      uncertaintyContainer.appendChild(uncertaintyBadge);
+
+      if (uncertainty === 'MAGAS') {
+        var ctaBox = document.createElement('div');
+        ctaBox.className = 'recommendation-box';
+        ctaBox.style.cssText = 'margin-top:12px;border-left:3px solid var(--color-accent);padding:12px 16px;';
+        ctaBox.innerHTML = 'Ritka jármű, kevés összehasonlítási alap — <strong>kérj szakértői értékbecslést!</strong>';
+        uncertaintyContainer.appendChild(ctaBox);
+      }
+
+      document.getElementById('resRepairCost').textContent = ToolCommon.formatHUF(data.repairCost);
+      document.getElementById('resRepairSub').textContent = data.repairEstimated
+        ? 'Becsült érték (nem adtál meg költséget)'
+        : 'Az általad megadott összeg';
+
+      document.getElementById('resCostRatio').textContent = (data.costRatio * 100).toFixed(1) + '%';
+
+      // Breakdown table
+      var tbody = document.getElementById('breakdownBody');
+      tbody.innerHTML = '';
+      data.factors.forEach(function(f) {
+        var tr = document.createElement('tr');
+        var scorePct = Math.round(f.score * 100);
+
+        tr.innerHTML =
+          '<td>' + f.name + '</td>' +
+          '<td>' + f.weight + '</td>' +
+          '<td>' +
+            '<div class="factor-bar">' +
+              '<div class="factor-bar-track"><div class="factor-bar-fill" style="width:' + scorePct + '%"></div></div>' +
+              '<span class="factor-bar-value">' + scorePct + '</span>' +
+            '</div>' +
+          '</td>';
+        tbody.appendChild(tr);
+      });
+
+      // Recommendation
+      var recoTitle = document.getElementById('recoTitle');
+      var recoText = document.getElementById('recoText');
+
+      if (score >= 0.65) {
+        recoTitle.textContent = 'Javaslatunk: Javitasd meg';
+        recoText.textContent = 'A javitási költség kedvező arányban áll az autó piaci értékével. ' +
+          'A jelenlegi autód megtartása pénzügyileg ésszerű döntés. ' +
+          (data.beMonths < 999
+            ? 'A javitás kb. ' + Math.round(data.beMonths) + ' hónap alatt térül meg egy autócserehez képest.'
+            : '') +
+          ' Keresd fel a megbízható szervizedet az árajánlatért.';
+      } else if (score >= 0.40) {
+        recoTitle.textContent = 'Határeset — Gondold át alaposan';
+        recoText.textContent = 'A számok alapján nem egyértelmű a döntés. ' +
+          'A javitási költség és a piaci érték aránya (' + (data.costRatio * 100).toFixed(0) + '%) a szürke zónában van. ' +
+          'Javasoljuk, hogy kérj árajánlatot egy szervizben, és hasonlitsd össze a hasonló használt autók áraival. ' +
+          'Ha az autó megbízható volt eddig és van szervizkönyve, a javitás még megérheti.';
+      } else {
+        recoTitle.textContent = 'Javaslatunk: Fontold meg a cserét';
+        recoText.textContent = 'A javitási költség aránytalanul magas az autó piaci értékéhez képest (' + (data.costRatio * 100).toFixed(0) + '%). ' +
+          (data.age >= 15 ? 'Az autó kora (' + data.age + ' év) és ' : '') +
+          (data.mileage >= 250000 ? 'a magas futásteljesítmény (' + (data.mileage / 1000).toFixed(0) + ' e km) ' : '') +
+          'alapján valószínűleg jobb döntés egy másik autóba fektetni. ' +
+          'Természetesen érzelmi vagy egyéb szempontok is számíthatnak — de pénzügyileg a csere a logikus lépés.';
+      }
+
+      // Show result
+      ToolCommon.showResult('resultSection');
+    }
+
+  })();
+  </script>
+
+</body>
+</html>

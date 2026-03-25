@@ -88,6 +88,28 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Hungarian Tool Pages -->
+  <url>
+    <loc>https://autocognitix.hu/hu/eszkozok/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/hu/eszkozok/szerviz-kereso.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Hungarian Legal Pages -->
   <url>
     <loc>https://autocognitix.hu/hu/legal/adatvedelmi-szabalyzat.html</loc>

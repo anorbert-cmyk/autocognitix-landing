@@ -369,6 +369,16 @@
     .nav-link.active { background: rgba(0,0,0,0.05); font-weight: 600; }
     .nav-cta { margin-left: 16px; }
 
+    /* Nav Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { display: inline-flex; align-items: center; gap: 4px; }
+    .nav-dropdown-trigger svg { transition: transform 0.15s ease; }
+    .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+    .nav-dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); min-width: 220px; background: var(--color-white); border-radius: 12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transition: opacity 0.15s ease, visibility 0.15s ease; z-index: 100; }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+    .nav-dropdown-menu a { display: block; padding: 10px 24px; font-size: 14px; color: var(--color-base-dark); transition: background 0.15s ease; }
+    .nav-dropdown-menu a:hover { background: #F4F8FA; color: var(--color-accent); }
+
     /* ═══════════════════════════════════════════
        LANGUAGE SWITCHER
        ═══════════════════════════════════════════ */
@@ -1557,6 +1567,14 @@
       <div class="nav-links">
         <a href="#features" class="nav-link active">Funkciók</a>
         <a href="#pricing" class="nav-link">Csomagok</a>
+        <div class="nav-dropdown">
+          <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="/hu/eszkozok/megeri-megjavitani.html">Megéri megjavítani?</a>
+            <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a>
+            <a href="/hu/eszkozok/szerviz-kereso.html">Szervizkeresős</a>
+          </div>
+        </div>
         <a href="#blog" class="nav-link">Blog</a>
         <a href="#faq" class="nav-link">GYIK</a>
         <a href="#contact" class="nav-link">Kapcsolat</a>
@@ -2136,11 +2154,11 @@
           <a href="#" class="footer-link">Changelog</a>
         </div>
         <div>
-          <div class="footer-heading">Tudástar</div>
+          <div class="footer-heading">Eszközök</div>
+          <a href="/hu/eszkozok/megeri-megjavitani.html" class="footer-link">Megéri megjavítani?</a>
+          <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="footer-link">Vizsga Prediktor</a>
+          <a href="/hu/eszkozok/szerviz-kereso.html" class="footer-link">Szervizkeresős</a>
           <a href="/hu/blog/" class="footer-link">Blog</a>
-          <a href="#" class="footer-link">DTC kódszótár</a>
-          <a href="#" class="footer-link">DIY Utmutatok</a>
-          <a href="#faq" class="footer-link">GYIK</a>
         </div>
         <div>
           <div class="footer-heading">Jogi</div>

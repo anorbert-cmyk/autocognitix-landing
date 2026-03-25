@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="hu" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Műszaki vizsga prediktor: tudd meg előre, átmegy-e az autód a vizsgán. Add meg a márkát, km-órát és hibakódokat — AI-alapú előrejelzés kopásról, emissziós kockázatról és bukási esélyről.">
+  <meta name="keywords" content="műszaki vizsga, vizsga előrejelzés, autó vizsga, MOT teszt, emisszió vizsgálat, DTC hibakód, OBD2, műszaki vizsgáztatás, autó állapotfelmérés, kopás előrejelzés">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="AutoCognitix">
+  <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html">
+
+  <!-- Geo Tags -->
+  <meta name="geo.placename" content="Magyarország">
+  <meta name="geo.region" content="HU">
+
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html">
+  <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Műszaki Vizsga Prediktor — AutoCognitix">
+  <meta property="og:description" content="Tudd meg előre, átmegy-e az autód a műszaki vizsgán. AI-alapú előrejelzés hibakódok, kopás és emisszió alapján.">
+  <meta property="og:url" content="https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html">
+  <meta property="og:site_name" content="AutoCognitix">
+  <meta property="og:locale" content="hu_HU">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Műszaki Vizsga Prediktor — AutoCognitix">
+  <meta name="twitter:description" content="Tudd meg előre, átmegy-e az autód a műszaki vizsgán. Hibakód + kopás alapú előrejelzés.">
+
+  <title>Műszaki Vizsga Prediktor — AutoCognitix | Átmegy-e az autód a vizsgán?</title>
+
+  <!-- Schema.org: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Műszaki Vizsga Prediktor",
+    "description": "AI-alapú műszaki vizsga előrejelző eszköz — hibakódok, kopás és emisszió alapján megbecsüli az átmenési esélyt.",
+    "url": "https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "hu",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "HUF"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AutoCognitix",
+      "url": "https://autocognitix.hu"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+
+  <style>
+    /* ═══════════════════════════════════════════
+       PAGE-SPECIFIC: Műszaki Vizsga Prediktor
+       ═══════════════════════════════════════════ */
+
+    /* Score display */
+    .score-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+    .score-number-large {
+      font-family: var(--font-mono);
+      font-size: 72px;
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+    }
+    .score-number-large.score-good { color: #16a34a; }
+    .score-number-large.score-warning { color: #d97706; }
+    .score-number-large.score-bad { color: #dc2626; }
+
+    /* DTC warnings */
+    .dtc-warnings {
+      max-width: 720px;
+      margin: var(--space-xl) auto;
+    }
+    .dtc-warnings h3 {
+      font-size: var(--text-h5);
+      margin-bottom: var(--space-md);
+    }
+    .dtc-warning-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: rgba(239, 68, 68, 0.06);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      border-left: 4px solid var(--color-error);
+    }
+    .dtc-warning-item .dtc-code {
+      flex-shrink: 0;
+    }
+    .dtc-warning-item .dtc-desc {
+      font-size: var(--text-body-sm);
+      color: var(--color-base-dark);
+    }
+
+    /* Wear parts section */
+    .wear-section {
+      max-width: 720px;
+      margin: var(--space-xl) auto;
+    }
+    .wear-section h3 {
+      font-size: var(--text-h5);
+      margin-bottom: var(--space-md);
+    }
+    .wear-alert-urgency {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .wear-alert.urgency-high .wear-alert-urgency { color: var(--color-error); }
+    .wear-alert.urgency-medium .wear-alert-urgency { color: var(--color-warning); }
+    .wear-alert.urgency-low .wear-alert-urgency { color: var(--color-success); }
+
+    .wear-alert-content {
+      flex: 1;
+    }
+
+    /* Tips section */
+    .tips-section {
+      max-width: 720px;
+      margin: var(--space-xl) auto;
+    }
+    .tips-section h3 {
+      font-size: var(--text-h5);
+      margin-bottom: var(--space-md);
+    }
+    .tip-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+      font-size: var(--text-body-sm);
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    /* Edge case notice */
+    .edge-notice {
+      max-width: 720px;
+      margin: var(--space-lg) auto;
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: var(--text-body);
+      font-weight: 500;
+    }
+    .edge-notice.notice-info {
+      background: rgba(245, 158, 11, 0.1);
+      border: 2px solid rgba(245, 158, 11, 0.3);
+      color: #92400e;
+    }
+    .edge-notice.notice-electric {
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      color: #1e40af;
+    }
+
+    /* Diesel extra warning */
+    .diesel-warning {
+      max-width: 720px;
+      margin: var(--space-md) auto;
+      padding: var(--space-md);
+      background: rgba(245, 158, 11, 0.08);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-warning);
+      font-size: var(--text-body-sm);
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/hu/" class="nav-logo">
+        <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        AutoCognitix
+      </a>
+      <div class="nav-links">
+        <a href="/hu/#features" class="nav-link">Funkciók</a>
+        <a href="/hu/#pricing" class="nav-link">Csomagok</a>
+        <div class="nav-dropdown">
+          <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger active">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="/hu/eszkozok/megeri-megjavitani.html">Megéri megjavítani?</a>
+            <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a>
+            <a href="/hu/eszkozok/szerviz-kereso.html">Szervizkeresős</a>
+          </div>
+        </div>
+        <a href="/hu/blog/" class="nav-link">Blog</a>
+        <a href="/hu/#faq" class="nav-link">GYIK</a>
+      </div>
+      <div class="lang-switcher"><a href="/hu/" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/" class="lang-option">EN</a></div>
+      <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="tool-hero">
+    <div class="container">
+      <span class="text-overline text-accent">Ingyenes eszköz</span>
+      <h1>Műszaki Vizsga <span class="text-accent">Prediktor</span></h1>
+      <p>Add meg az autód adatait és az aktív hibakódokat — megbecsüljük, mekkora eséllyel megy át a műszaki vizsgán. Kopásanalízis, emissziós kockázat és teendőlista egy helyen.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FORM ═══════════════ -->
+  <section class="tool-form-section">
+    <div class="container">
+      <form class="tool-form" id="vizsgaForm" novalidate>
+        <div class="form-grid">
+
+          <!-- Márka -->
+          <div class="form-group">
+            <label class="form-label" for="brand">Márka</label>
+            <select class="form-select" id="brand" required>
+              <option value="" disabled selected>Válassz márkát...</option>
+            </select>
+          </div>
+
+          <!-- Modell -->
+          <div class="form-group">
+            <label class="form-label" for="model">Modell</label>
+            <select class="form-select" id="model" disabled required>
+              <option value="">Előbb válassz márkát</option>
+            </select>
+          </div>
+
+          <!-- Évjárat -->
+          <div class="form-group">
+            <label class="form-label" for="year">Évjárat</label>
+            <select class="form-select" id="year" required>
+              <option value="" disabled selected>Évjárat...</option>
+            </select>
+          </div>
+
+          <!-- Futásteljesítmény -->
+          <div class="form-group">
+            <label class="form-label" for="mileage">Futásteljesítmény (km)</label>
+            <input class="form-input" type="number" id="mileage" min="0" max="999999" step="1000" placeholder="pl. 185000" required>
+          </div>
+
+          <!-- Üzemanyag -->
+          <div class="form-group full-width">
+            <label class="form-label">Üzemanyag</label>
+            <div class="form-radio-group" id="fuelGroup">
+              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin"> Benzin</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel"> Dízel</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg"> LPG</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid"> Hibrid</label>
+              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos"> Elektromos</label>
+            </div>
+          </div>
+
+          <!-- DTC hibakódok -->
+          <div class="form-group full-width">
+            <label class="form-label" for="dtcCodes">DTC hibakódok (opcionális)</label>
+            <input class="form-input" type="text" id="dtcCodes" placeholder="pl. P0420, P0171, C0035">
+            <span class="form-hint">Vesszővel elválasztva. Ha nem tudod, hagyd üresen.</span>
+          </div>
+
+          <!-- MIL lámpa -->
+          <div class="form-group full-width">
+            <label class="form-label">MIL (motorfigyelmeztető) lámpa világít?</label>
+            <div class="form-radio-group" id="milGroup">
+              <label class="form-radio-label"><input type="radio" name="mil" value="igen"> Igen</label>
+              <label class="form-radio-label"><input type="radio" name="mil" value="nem"> Nem</label>
+              <label class="form-radio-label"><input type="radio" name="mil" value="nemtudom"> Nem tudom</label>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Vizsga előrejelzés
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RESULT ═══════════════ -->
+  <section class="tool-result" id="resultSection">
+    <div class="container">
+
+      <!-- Edge case notices (hidden by default) -->
+      <div class="edge-notice notice-info" id="preObdNotice" style="display:none;">
+        NEM ALKALMAZHATÓ — 2001 előtti járműveknél az OBD leolvasás nem kötelező, ezért a prediktor korlátozott pontosságú.
+      </div>
+      <div class="edge-notice notice-electric" id="electricNotice" style="display:none;">
+        KORLÁTOZOTT — Elektromos járműveknél nincs kipufogó emisszió vizsgálat. A prediktor csak a fék- és futóművet értékeli.
+      </div>
+
+      <!-- Score -->
+      <div class="score-header">
+        <div class="score-number-large" id="scoreDisplay">0</div>
+        <div class="score-bar-wrap">
+          <div class="score-bar">
+            <div class="score-bar-fill" id="scoreBarFill"></div>
+          </div>
+        </div>
+        <div id="verdictBadge" class="verdict-badge"></div>
+      </div>
+
+      <!-- DTC Warnings -->
+      <div class="dtc-warnings" id="dtcWarnings" style="display:none;">
+        <h3>Hibakód figyelmeztetések</h3>
+        <div id="dtcWarningsList"></div>
+      </div>
+
+      <!-- Diesel Warning -->
+      <div class="diesel-warning" id="dieselWarning" style="display:none;"></div>
+
+      <!-- Wear Parts -->
+      <div class="wear-section" id="wearSection" style="display:none;">
+        <h3>Kopó alkatrész állapotbecslés</h3>
+        <div id="wearAlertsList"></div>
+      </div>
+
+      <!-- Tips -->
+      <div class="tips-section" id="tipsSection" style="display:none;">
+        <h3>Ezeket javítsd ki a vizsga előtt</h3>
+        <div id="tipsList"></div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="tool-disclaimer">
+        <strong>Fontos:</strong> Ez egy becslés a megadott adatok alapján. A tényleges vizsgaeredmény a vizsgáztató megítélésétől és a jármű fizikai állapotától függ. Nem helyettesíti a hivatalos műszaki vizsgát. Az AutoCognitix semmilyen felelősséget nem vállal a vizsga eredményéért.
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-heading">Termék</div>
+          <a href="/hu/#features" class="footer-link">Funkciók</a>
+          <a href="/hu/#pricing" class="footer-link">Csomagok</a>
+          <a href="#" class="footer-link">API Dokumentáció</a>
+          <a href="#" class="footer-link">Changelog</a>
+        </div>
+        <div>
+          <div class="footer-heading">Tudástár</div>
+          <a href="/hu/blog/" class="footer-link">Blog</a>
+          <a href="/hu/eszkozok/" class="footer-link">Eszközök</a>
+          <a href="#" class="footer-link">DTC kódszótár</a>
+          <a href="/hu/#faq" class="footer-link">GYIK</a>
+        </div>
+        <div>
+          <div class="footer-heading">Jogi</div>
+          <a href="/hu/legal/adatvedelmi-szabalyzat.html" class="footer-link">Adatvédelmi szabályzat</a>
+          <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a>
+          <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a>
+          <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@autocognitix.hu
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Budapest, Magyarország
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span>
+        <span>Készítette: Norbi & AI</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+  <script src="/shared/js/vehicle-data.js?v=1.0"></script>
+  <script src="/shared/js/tool-common.js?v=1.0"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // ─── INIT FORM ───
+    ToolCommon.setupBrandModelCascade('brand', 'model');
+    ToolCommon.populateYearSelect('year', 1995, 2026);
+
+    // Radio button visual selection
+    document.querySelectorAll('.form-radio-label input').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        var group = radio.closest('.form-radio-group');
+        group.querySelectorAll('.form-radio-label').forEach(function(lbl) {
+          lbl.classList.remove('selected');
+        });
+        radio.closest('.form-radio-label').classList.add('selected');
+      });
+    });
+
+    // ─── EMISSION CRITICAL DTC LIST ───
+    var EMISSION_CRITICAL = [
+      'P0420','P0430','P0440','P0441','P0442','P0443','P0446','P0455','P0456','P0457',
+      'P0300','P0301','P0302','P0303','P0304','P0305','P0306','P0307','P0308',
+      'P0130','P0131','P0132','P0133','P0134','P0135','P0136','P0137','P0138','P0139','P0140','P0141',
+      'P0400','P0401','P0402','P0403','P0404','P2000','P2002','P2004'
+    ];
+
+    var DTC_DESCRIPTIONS = {
+      'P0420': 'Katalizátor hatásfok a küszöbérték alatt (1. sor)',
+      'P0430': 'Katalizátor hatásfok a küszöbérték alatt (2. sor)',
+      'P0440': 'Párolgásemisszió rendszer hiba',
+      'P0441': 'Párolgásemisszió rendszer — helytelen öblítési áramlás',
+      'P0442': 'Párolgásemisszió rendszer — kis szivárgás',
+      'P0443': 'Párolgásemisszió öblítő szelep hiba',
+      'P0446': 'Párolgásemisszió szellőzés hiba',
+      'P0455': 'Párolgásemisszió rendszer — nagy szivárgás',
+      'P0456': 'Párolgásemisszió rendszer — nagyon kis szivárgás',
+      'P0457': 'Párolgásemisszió rendszer — szivárgás (tanksapka)',
+      'P0300': 'Több hengeres gyújtáskimaradás',
+      'P0301': 'Gyújtáskimaradás — 1. henger',
+      'P0302': 'Gyújtáskimaradás — 2. henger',
+      'P0303': 'Gyújtáskimaradás — 3. henger',
+      'P0304': 'Gyújtáskimaradás — 4. henger',
+      'P0305': 'Gyújtáskimaradás — 5. henger',
+      'P0306': 'Gyújtáskimaradás — 6. henger',
+      'P0307': 'Gyújtáskimaradás — 7. henger',
+      'P0308': 'Gyújtáskimaradás — 8. henger',
+      'P0130': 'O2 szonda hiba — 1. sor, 1. szonda',
+      'P0131': 'O2 szonda alacsony feszültség — 1. sor, 1. szonda',
+      'P0132': 'O2 szonda magas feszültség — 1. sor, 1. szonda',
+      'P0133': 'O2 szonda lassú válasz — 1. sor, 1. szonda',
+      'P0134': 'O2 szonda nincs aktivitás — 1. sor, 1. szonda',
+      'P0135': 'O2 szonda fűtés hiba — 1. sor, 1. szonda',
+      'P0136': 'O2 szonda hiba — 1. sor, 2. szonda',
+      'P0137': 'O2 szonda alacsony feszültség — 1. sor, 2. szonda',
+      'P0138': 'O2 szonda magas feszültség — 1. sor, 2. szonda',
+      'P0139': 'O2 szonda lassú válasz — 1. sor, 2. szonda',
+      'P0140': 'O2 szonda nincs aktivitás — 1. sor, 2. szonda',
+      'P0141': 'O2 szonda fűtés hiba — 1. sor, 2. szonda',
+      'P0400': 'EGR áramlás hiba',
+      'P0401': 'EGR áramlás elégtelen',
+      'P0402': 'EGR áramlás túlzott',
+      'P0403': 'EGR szelep vezérlés hiba',
+      'P0404': 'EGR szelep tartomány/teljesítmény',
+      'P2000': 'NOx csapda hatásfok a küszöb alatt (1. sor)',
+      'P2002': 'DPF részecskeszűrő hatásfok a küszöb alatt (1. sor)',
+      'P2004': 'Szívócsonk levegőáramlás szabályozó hiba (1. sor)'
+    };
+
+    // ─── WEAR PARTS DATABASE ───
+    var WEAR_PARTS = {
+      fekbetet: {
+        benzin: [30000, 80000], dizel: [30000, 80000], lpg: [30000, 80000], hibrid: [40000, 100000], elektromos: [50000, 120000],
+        deduction: 10, label: 'Fékbetétek', impact: 'BUKÁS ha <2mm'
+      },
+      fektarcsa: {
+        benzin: [60000, 120000], dizel: [60000, 120000], lpg: [60000, 120000], hibrid: [70000, 140000], elektromos: [80000, 160000],
+        deduction: 10, label: 'Féktárcsák', impact: 'BUKÁS ha kopáshatáron túl'
+      },
+      katalizator: {
+        benzin: [100000, 160000], dizel: null, lpg: [80000, 140000], hibrid: [120000, 200000], elektromos: null,
+        deduction: 15, label: 'Katalizátor', impact: 'BUKÁS ha emisszió túllépi határértéket'
+      },
+      dpf: {
+        benzin: null, dizel: [100000, 200000], lpg: null, hibrid: null, elektromos: null,
+        deduction: 15, label: 'DPF részecskeszűrő', impact: 'BUKÁS ha P2000-P2099 + MIL ON'
+      },
+      lambda: {
+        benzin: [80000, 160000], dizel: [80000, 160000], lpg: [60000, 120000], hibrid: [80000, 160000], elektromos: null,
+        deduction: 10, label: 'Lambda szonda', impact: 'BUKÁS ha MIL ON (P013x)'
+      },
+      egr: {
+        benzin: null, dizel: [80000, 150000], lpg: null, hibrid: null, elektromos: null,
+        deduction: 10, label: 'EGR szelep', impact: 'BUKÁS ha MIL ON (P040x)'
+      },
+      turbo: {
+        benzin: null, dizel: [170000, 250000], lpg: null, hibrid: null, elektromos: null,
+        deduction: 10, label: 'Turbó', impact: 'BUKÁS ha MIL ON (P0299)'
+      },
+      gyujtotekercs: {
+        benzin: [80000, 160000], dizel: null, lpg: [80000, 160000], hibrid: [80000, 160000], elektromos: null,
+        deduction: 8, label: 'Gyújtótekercsek', impact: 'BUKÁS ha MIL ON (P030x)'
+      },
+      lengescsillapito: {
+        benzin: [80000, 160000], dizel: [80000, 160000], lpg: [80000, 160000], hibrid: [80000, 160000], elektromos: [80000, 160000],
+        deduction: 8, label: 'Lengéscsillapítók', impact: 'BUKÁS ha hatástalan'
+      },
+      idozito: {
+        benzin: [60000, 120000], dizel: [80000, 150000], lpg: [60000, 120000], hibrid: [60000, 120000], elektromos: null,
+        deduction: 5, label: 'Időzítő szíj', impact: 'Nem vizsgált, de szakadás = motorkár'
+      },
+      kuplung: {
+        benzin: [100000, 200000], dizel: [100000, 200000], lpg: [100000, 200000], hibrid: null, elektromos: null,
+        deduction: 3, label: 'Kuplung', impact: 'Nem közvetlenül vizsgált'
+      }
+    };
+
+    // ─── FORM SUBMIT ───
+    var form = document.getElementById('vizsgaForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Validate required fields
+      var requiredFields = [
+        { id: 'brand' },
+        { id: 'model' },
+        { id: 'year' },
+        { id: 'mileage' }
+      ];
+      if (!ToolCommon.validateRequired(requiredFields)) return;
+
+      // Get fuel type
+      var fuelRadio = document.querySelector('input[name="fuel"]:checked');
+      if (!fuelRadio) {
+        document.getElementById('fuelGroup').closest('.form-group').classList.add('error');
+        return;
+      }
+      document.getElementById('fuelGroup').closest('.form-group').classList.remove('error');
+
+      // Get MIL
+      var milRadio = document.querySelector('input[name="mil"]:checked');
+      if (!milRadio) {
+        document.getElementById('milGroup').closest('.form-group').classList.add('error');
+        return;
+      }
+      document.getElementById('milGroup').closest('.form-group').classList.remove('error');
+
+      // Gather values
+      var year = parseInt(document.getElementById('year').value, 10);
+      var km = parseInt(document.getElementById('mileage').value, 10) || 0;
+      var fuel = fuelRadio.value;
+      var milOn = milRadio.value;
+      var dtcRaw = document.getElementById('dtcCodes').value.trim();
+
+      // Parse DTC codes
+      var dtcCodes = [];
+      if (dtcRaw) {
+        dtcCodes = dtcRaw.split(',').map(function(c) { return c.trim().toUpperCase(); }).filter(function(c, i, arr) { return c.length > 0 && arr.indexOf(c) === i; });
+      }
+
+      // Calculate
+      var result = calculate(year, km, fuel, milOn, dtcCodes);
+
+      // Render
+      renderResult(result, year, km, fuel);
+    });
+
+    // ─── CALCULATION ENGINE ───
+    function calculate(year, km, fuel, milOn, dtcCodes) {
+      var score = 100;
+      var verdict = '';
+      var dtcWarnings = [];
+      var wearAlerts = [];
+      var tips = [];
+      var isPreObd = year < 2001;
+      var isElectric = fuel === 'elektromos';
+      var dieselWarning = '';
+
+      // MIL CHECK — instant fail
+      var milFailed = false;
+      if (milOn === 'igen') {
+        score = 0;
+        verdict = 'MEGBUKIK';
+        milFailed = true;
+        tips.push('A MIL (Check Engine) lámpa világít — a vizsgán ez azonnali bukást jelent. Javíttasd meg a hibát a vizsga előtt!');
+      } else if (milOn === 'nemtudom') {
+        score -= 10;
+        tips.push('Ellenőrizd a MIL (Check Engine) lámpa állapotát a műszaki vizsga előtt!');
+      }
+
+      if (!milFailed) {
+        // DTC SCORING
+        dtcCodes.forEach(function(code) {
+          if (EMISSION_CRITICAL.indexOf(code) !== -1) {
+            if (!isElectric) {
+              score -= 15;
+              var desc = DTC_DESCRIPTIONS[code] || 'Emissziókritikus hibakód';
+              dtcWarnings.push({ code: code, desc: desc, severity: 'critical' });
+              tips.push(code + ' javítása kötelező a vizsga előtt');
+            } else {
+              dtcWarnings.push({ code: code, desc: 'Elektromos járműnél ez a kód nem releváns.', severity: 'info' });
+            }
+          } else if (code.indexOf('P0') === 0) {
+            score -= 5;
+            dtcWarnings.push({ code: code, desc: 'Hajtáslánc hibakód — emissziós hatás lehetséges', severity: 'moderate' });
+          } else if (code.charAt(0) === 'C' || code.charAt(0) === 'U') {
+            score -= 3;
+            dtcWarnings.push({ code: code, desc: code.charAt(0) === 'C' ? 'Futómű/fék hibakód' : 'Kommunikációs hibakód', severity: 'minor' });
+          } else if (code.charAt(0) === 'B') {
+            score -= 2;
+            dtcWarnings.push({ code: code, desc: 'Karosszéria/kényelmi hibakód — általában nem vizsgaérintett', severity: 'info' });
+          } else if (code.indexOf('P') === 0) {
+            score -= 5;
+            dtcWarnings.push({ code: code, desc: 'Gyártó-specifikus hibakód', severity: 'moderate' });
+          }
+        });
+
+        // WEAR PARTS ANALYSIS
+        Object.keys(WEAR_PARTS).forEach(function(partKey) {
+          var part = WEAR_PARTS[partKey];
+          var lifespan = part[fuel];
+          if (!lifespan) return; // Not applicable for this fuel type
+
+          var midpoint = (lifespan[0] + lifespan[1]) / 2;
+          var wearPct = km / midpoint;
+
+          if (wearPct >= 0.90) {
+            score -= part.deduction;
+            wearAlerts.push({
+              label: part.label,
+              urgency: 'MAGAS',
+              urgencyClass: 'urgency-high',
+              wearPct: Math.round(wearPct * 100),
+              impact: part.impact,
+              lifespan: lifespan
+            });
+            tips.push(part.label + ' ellenőrzése/cseréje javasolt (' + Math.round(wearPct * 100) + '% kopás)');
+          } else if (wearPct >= 0.75) {
+            wearAlerts.push({
+              label: part.label,
+              urgency: 'KÖZEPES',
+              urgencyClass: 'urgency-medium',
+              wearPct: Math.round(wearPct * 100),
+              impact: part.impact,
+              lifespan: lifespan
+            });
+          }
+        });
+
+        // AGE DEDUCTION
+        var age = 2026 - year;
+        if (age > 10) {
+          var ageDeduction = Math.min((age - 10) * 2, 20);
+          score -= ageDeduction;
+        }
+
+        // DIESEL EXTRA
+        if (fuel === 'dizel' && km > 150000) {
+          score -= 5;
+          dieselWarning = 'Dízel ' + km.toLocaleString('hu-HU') + ' km felett: fokozott füstölés-kockázat. Az opacitás (füstátlátszóság) vizsgálaton szigorúbb a mérce.';
+        } else if (fuel === 'dizel' && km > 100000) {
+          dieselWarning = 'Dízel 100 000 km felett: készülj az opacitás (füstátlátszóság) vizsgálatra. Javasolt előtte egy hosszabb autópályás hajtás a DPF regenerálásához.';
+        }
+      }
+
+      // CLAMP
+      score = Math.max(0, Math.min(100, score));
+
+      // VERDICT (if not already set by MIL)
+      if (!verdict) {
+        if (score >= 80) {
+          verdict = 'ÁTMEGY';
+        } else if (score >= 50) {
+          verdict = 'KOCKÁZATOS';
+        } else {
+          verdict = 'MEGBUKIK';
+        }
+      }
+
+      return {
+        score: score,
+        verdict: verdict,
+        dtcWarnings: dtcWarnings,
+        wearAlerts: wearAlerts,
+        tips: tips,
+        isPreObd: isPreObd,
+        isElectric: isElectric,
+        dieselWarning: dieselWarning
+      };
+    }
+
+    // ─── RENDER RESULT ───
+    function renderResult(result, year, km, fuel) {
+      // Edge case notices
+      document.getElementById('preObdNotice').style.display = result.isPreObd ? 'block' : 'none';
+      document.getElementById('electricNotice').style.display = result.isElectric ? 'block' : 'none';
+
+      // Score display
+      var scoreEl = document.getElementById('scoreDisplay');
+      var barFill = document.getElementById('scoreBarFill');
+      var badgeEl = document.getElementById('verdictBadge');
+
+      // Determine color class
+      var colorClass;
+      if (result.score >= 80) colorClass = 'good';
+      else if (result.score >= 50) colorClass = 'warning';
+      else colorClass = 'bad';
+
+      scoreEl.className = 'score-number-large score-' + colorClass;
+      ToolCommon.animateNumber(scoreEl, result.score, 1200, function(v) { return Math.round(v) + '/100'; });
+
+      // Bar fill
+      barFill.className = 'score-bar-fill';
+      barFill.style.width = '0%';
+      // Set bar color via inline style
+      var barColors = { good: '#22C55E', warning: '#F59E0B', bad: '#EF4444' };
+      barFill.style.background = barColors[colorClass];
+      setTimeout(function() {
+        barFill.style.width = result.score + '%';
+      }, 100);
+
+      // Verdict badge
+      var verdictClasses = { 'ÁTMEGY': 'verdict-good', 'KOCKÁZATOS': 'verdict-warning', 'MEGBUKIK': 'verdict-bad' };
+      badgeEl.className = 'verdict-badge ' + (verdictClasses[result.verdict] || 'verdict-bad');
+      badgeEl.textContent = result.verdict;
+
+      // Accuracy note
+      var existingAccuracy = document.getElementById('accuracyNote');
+      if (existingAccuracy) existingAccuracy.remove();
+      var accuracyNote = document.createElement('p');
+      accuracyNote.id = 'accuracyNote';
+      accuracyNote.className = 'text-muted';
+      accuracyNote.style.cssText = 'font-size:13px;margin-top:8px;';
+      accuracyNote.textContent = 'Becslés pontossága: KÖZEPES — a végső döntés a vizsgáztatóé.';
+      document.querySelector('.score-header').appendChild(accuracyNote);
+
+      // Boundary case warning
+      var existingBoundary = document.getElementById('boundaryWarning');
+      if (existingBoundary) existingBoundary.remove();
+      if (result.score >= 45 && result.score <= 55) {
+        var boundaryWarning = document.createElement('div');
+        boundaryWarning.id = 'boundaryWarning';
+        boundaryWarning.className = 'wear-alert urgency-medium';
+        boundaryWarning.style.cssText = 'margin-top:16px;max-width:720px;margin-left:auto;margin-right:auto;';
+        boundaryWarning.innerHTML = '<strong>⚠ Határeset</strong><br>Az autód a bukás/átmenés határán van. Javítás erősen ajánlott a vizsga előtt!';
+        var tipsEl = document.getElementById('tipsSection');
+        tipsEl.parentNode.insertBefore(boundaryWarning, tipsEl);
+      }
+
+      // DTC Warnings
+      var dtcSection = document.getElementById('dtcWarnings');
+      var dtcList = document.getElementById('dtcWarningsList');
+      if (result.dtcWarnings.length > 0) {
+        dtcList.innerHTML = '';
+        result.dtcWarnings.forEach(function(w) {
+          var item = document.createElement('div');
+          item.className = 'dtc-warning-item';
+          item.innerHTML = '<span class="dtc-code">' + escapeHtml(w.code) + '</span><span class="dtc-desc">' + escapeHtml(w.desc) + '</span>';
+          dtcList.appendChild(item);
+        });
+        dtcSection.style.display = 'block';
+      } else {
+        dtcSection.style.display = 'none';
+      }
+
+      // Diesel warning
+      var dieselEl = document.getElementById('dieselWarning');
+      if (result.dieselWarning) {
+        dieselEl.textContent = result.dieselWarning;
+        dieselEl.style.display = 'block';
+      } else {
+        dieselEl.style.display = 'none';
+      }
+
+      // Wear alerts
+      var wearSection = document.getElementById('wearSection');
+      var wearList = document.getElementById('wearAlertsList');
+      if (result.wearAlerts.length > 0) {
+        wearList.innerHTML = '';
+        // Sort: high urgency first
+        result.wearAlerts.sort(function(a, b) {
+          var order = { 'MAGAS': 0, 'KÖZEPES': 1, 'ALACSONY': 2 };
+          return (order[a.urgency] || 2) - (order[b.urgency] || 2);
+        });
+        result.wearAlerts.forEach(function(alert) {
+          var el = document.createElement('div');
+          el.className = 'wear-alert ' + alert.urgencyClass;
+          el.innerHTML =
+            '<span class="wear-alert-urgency">' + escapeHtml(alert.urgency) + '</span>' +
+            '<div class="wear-alert-content">' +
+              '<div class="wear-alert-title">' + escapeHtml(alert.label) + ' — ' + alert.wearPct + '% becsült kopás</div>' +
+              '<div class="wear-alert-detail">' + escapeHtml(alert.impact) + ' | Élettartam: ' + formatKm(alert.lifespan[0]) + ' – ' + formatKm(alert.lifespan[1]) + ' km</div>' +
+            '</div>';
+          wearList.appendChild(el);
+        });
+        wearSection.style.display = 'block';
+      } else {
+        wearSection.style.display = 'none';
+      }
+
+      // Tips
+      var tipsSection = document.getElementById('tipsSection');
+      var tipsList = document.getElementById('tipsList');
+      if (result.tips.length > 0) {
+        tipsList.innerHTML = '';
+        result.tips.forEach(function(tip) {
+          var el = document.createElement('div');
+          el.className = 'tip-item';
+          el.innerHTML =
+            '<svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>' +
+            '<span>' + escapeHtml(tip) + '</span>';
+          tipsList.appendChild(el);
+        });
+        tipsSection.style.display = 'block';
+      } else {
+        tipsSection.style.display = 'none';
+      }
+
+      // Show result
+      ToolCommon.showResult('resultSection');
+    }
+
+    // ─── HELPERS ───
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatKm(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
+  })();
+  </script>
+
+</body>
+</html>

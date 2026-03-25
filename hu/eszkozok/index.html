@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ingyenes autós eszközök: Megéri-e megjavítani kalkulátor, Műszaki vizsga prediktor, Szervizkeresős. AI-alapú, magyar nyelvű.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/">
+  <meta property="og:title" content="Ingyenes autós eszközök | AutoCognitix">
+  <meta property="og:description" content="Megéri megjavítani? Átmegy a vizsgán? Milyen szervizbe vidd? Három ingyenes eszköz, azonnal.">
+  <meta property="og:url" content="https://autocognitix.hu/hu/eszkozok/">
+  <title>Ingyenes autós eszközök | AutoCognitix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+  <style>
+    body {
+      font-family: var(--font-primary);
+      font-size: var(--text-body);
+      color: var(--color-base-dark);
+      background: var(--color-base-light);
+      margin: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(242,242,244,0.85); backdrop-filter: blur(12px); padding: 16px 0; }
+    .navbar .container { display: flex; align-items: center; gap: 32px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; }
+    .logo-icon { width: 32px; height: 32px; background: var(--color-base-dark); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 16px; height: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+    .nav-link { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: background 0.15s ease; }
+    .nav-link:hover { background: rgba(0,0,0,0.05); }
+    .nav-link.active { background: rgba(0,0,0,0.05); font-weight: 600; }
+    .nav-cta { margin-left: 16px; }
+    .lang-switcher { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+    .lang-option.active { font-weight: 700; color: var(--color-accent); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-primary); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 20px 32px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; }
+    .btn-primary { background: var(--color-base-dark); color: var(--color-white); }
+    .btn-primary:hover { background: #2F3640; box-shadow: 0 0 20px rgba(217,119,87,0.3); }
+    .btn-sm { padding: 12px 24px; }
+    .text-muted { color: var(--color-muted); }
+    .footer { background: var(--color-base-dark); color: rgba(255,255,255,0.6); padding: 80px 0 40px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
+    .footer-heading { color: var(--color-white); font-weight: 600; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-link { display: block; font-size: 14px; padding: 6px 0; transition: color 0.15s ease; }
+    .footer-link:hover { color: var(--color-white); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; margin-bottom: 12px; }
+    .footer-contact-item svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; font-size: 12px; }
+    @media (max-width: 991px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+      .nav-cta { margin-left: auto; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="/hu/" class="nav-logo">
+        <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        AutoCognitix
+      </a>
+      <div class="nav-links">
+        <a href="/hu/#features" class="nav-link">Funkciók</a>
+        <a href="/hu/#pricing" class="nav-link">Csomagok</a>
+        <div class="nav-dropdown">
+          <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger active">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="/hu/eszkozok/megeri-megjavitani.html">Megéri megjavítani?</a>
+            <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a>
+            <a href="/hu/eszkozok/szerviz-kereso.html">Szervizkeresős</a>
+          </div>
+        </div>
+        <a href="/hu/blog/" class="nav-link">Blog</a>
+        <a href="/hu/#faq" class="nav-link">GYIK</a>
+      </div>
+      <div class="lang-switcher">
+        <a href="/hu/" class="lang-option active">HU</a>
+        <span class="text-muted">|</span>
+        <a href="/en/" class="lang-option">EN</a>
+      </div>
+      <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
+    </div>
+  </nav>
+
+  <section class="tool-hero">
+    <div class="container">
+      <h1>Ingyenes autós eszközök</h1>
+      <p>Három AI-alapú eszköz, amivel okosabb döntéseket hozhatsz az autód javításával, műszaki vizsgájával és szervizválasztásával kapcsolatban.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 var(--space-section);">
+    <div class="container">
+      <div class="tool-hub-grid">
+
+        <a href="/hu/eszkozok/megeri-megjavitani.html" class="tool-hub-card">
+          <div class="tool-hub-card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <h3>Megéri megjavítani?</h3>
+          <p>Számold ki, hogy a javítás vagy a csere éri-e meg jobban. Értékbecslés, javítási költség és 4 faktoros döntési algoritmus.</p>
+        </a>
+
+        <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="tool-hub-card">
+          <div class="tool-hub-card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <h3>Műszaki Vizsga Prediktor</h3>
+          <p>Hibakódok és jármű adatok alapján becsüljük meg, hogy átmegy-e a vizsgán. Kopási alkatrész figyelés és kockázati pontszám.</p>
+        </a>
+
+        <a href="/hu/eszkozok/szerviz-kereso.html" class="tool-hub-card">
+          <div class="tool-hub-card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Szervizkeresős</h3>
+          <p>Add meg a hibakódot és a helyszínt — megmondjuk, milyen típusú szervizbe vidd, és segítünk megtalálni a legközelebbit.</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-heading">Termék</div>
+          <a href="/hu/#features" class="footer-link">Funkciók</a>
+          <a href="/hu/#pricing" class="footer-link">Csomagok</a>
+          <a href="#" class="footer-link">API Dokumentáció</a>
+          <a href="#" class="footer-link">Changelog</a>
+        </div>
+        <div>
+          <div class="footer-heading">Eszközök</div>
+          <a href="/hu/eszkozok/megeri-megjavitani.html" class="footer-link">Megéri megjavítani?</a>
+          <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="footer-link">Vizsga Prediktor</a>
+          <a href="/hu/eszkozok/szerviz-kereso.html" class="footer-link">Szervizkeresős</a>
+          <a href="/hu/blog/" class="footer-link">Blog</a>
+        </div>
+        <div>
+          <div class="footer-heading">Jogi</div>
+          <a href="/hu/legal/adatvedelmi-szabalyzat.html" class="footer-link">Adatvédelmi szabályzat</a>
+          <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a>
+          <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a>
+          <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@autocognitix.hu
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Budapest, Magyarország
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span>
+        <span>Készítette: Norbi & AI</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/shared/js/tool-common.js?v=1.0"></script>
+</body>
+</html>
