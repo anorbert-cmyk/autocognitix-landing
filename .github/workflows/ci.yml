@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Docker build
+        run: docker build -t autocognitix-landing-test .
+      - name: Nginx config validation
+        run: docker run --rm autocognitix-landing-test nginx -t
+      - name: Verify pages load
+        run: |
+          docker rm -f test-container 2>/dev/null || true
+          docker run -d --name test-container -p 8080:8080 autocognitix-landing-test
+          sleep 2
+          curl -f -s http://localhost:8080/hu/ || { echo "FAIL: /hu/"; curl http://localhost:8080/hu/; exit 1; }
+          curl -f -s http://localhost:8080/en/ || { echo "FAIL: /en/"; curl http://localhost:8080/en/; exit 1; }
+          curl -f -s http://localhost:8080/hu/eszkozok/megeri-megjavitani.html || { echo "FAIL: /hu/eszkozok/megeri-megjavitani.html"; curl http://localhost:8080/hu/eszkozok/megeri-megjavitani.html; exit 1; }
+          curl -f -s http://localhost:8080/en/tools/worth-repairing.html || { echo "FAIL: /en/tools/worth-repairing.html"; curl http://localhost:8080/en/tools/worth-repairing.html; exit 1; }
+          curl -f -s http://localhost:8080/sitemap.xml || { echo "FAIL: /sitemap.xml"; curl http://localhost:8080/sitemap.xml; exit 1; }
+      - name: Verify security headers
+        run: |
+          docker rm -f header-test 2>/dev/null || true
+          docker run -d --name header-test -p 8081:8080 autocognitix-landing-test
+          sleep 2
+          HEADERS=$(curl -f -sI http://localhost:8081/hu/ || { echo "FAIL: could not fetch headers"; curl http://localhost:8081/hu/; exit 1; })
+          echo "$HEADERS" | grep -i "X-Frame-Options" || exit 1
+          echo "$HEADERS" | grep -i "X-Content-Type-Options" || exit 1
+          echo "$HEADERS" | grep -i "Referrer-Policy" || exit 1
+      - name: Cleanup Docker containers
+        if: always()
+        run: |
+          docker rm -f test-container 2>/dev/null || true
+          docker rm -f header-test 2>/dev/null || true
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Integration tests
+        run: npm run test:integration
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
+  html-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:html
+        continue-on-error: true

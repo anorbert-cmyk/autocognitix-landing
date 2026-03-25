@@ -11,3 +11,10 @@ assets/
 *.docx
 .git/
 .gitignore
+tests/
+node_modules/
+package.json
+package-lock.json
+vitest.config.js
+.github/
+coverage/
