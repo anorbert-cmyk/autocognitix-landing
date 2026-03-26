@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AutoCognitix változásnapló — Kövesd az AutoCognitix fejlődését. Minden fejlesztés, javítás és új funkció egy helyen. AI autódiagnosztika frissítések.">
+    <meta name="keywords" content="AutoCognitix változásnapló, frissítések, új funkciók, autódiagnosztika fejlesztés, changelog, verziókövetés">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="AutoCognitix">
+    <meta name="language" content="hu">
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://autocognitix.hu/changelog/">
+    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/changelog/">
+    <link rel="alternate" hreflang="en" href="https://autocognitix.com/en/changelog/">
+    <link rel="alternate" hreflang="x-default" href="https://autocognitix.com/en/changelog/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Változásnapló — AutoCognitix">
+    <meta property="og:description" content="Kövesd az AutoCognitix fejlődését. Minden fejlesztés, javítás és új funkció egy helyen.">
+    <meta property="og:url" content="https://autocognitix.hu/changelog/">
+    <meta property="og:site_name" content="AutoCognitix">
+    <meta property="og:locale" content="hu_HU">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Változásnapló — AutoCognitix">
+    <meta name="twitter:description" content="Kövesd az AutoCognitix fejlődését. Minden fejlesztés, javítás és új funkció egy helyen.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://autocognitix.hu/favicon.ico">
+    <link rel="apple-touch-icon" href="https://autocognitix.hu/apple-touch-icon.png">
+
+    <title>Változásnapló — AutoCognitix | Frissítések és új funkciók</title>
+
+    <!-- Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "AutoCognitix",
+                "item": "https://autocognitix.hu/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Változásnapló",
+                "item": "https://autocognitix.hu/changelog/"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="/shared/blog-post.css?v=3.0">
+
+    <style>
+        /* ============================================
+           CHANGELOG — Page-Specific Styles
+           ============================================ */
+
+        :root {
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        }
+
+        body {
+            font-family: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #F7F5F2;
+            color: #1A1814;
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ---- Navigation ---- */
+        .cl-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(255, 251, 248, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(212, 208, 202, 0.6);
+            padding: 16px 0;
+            box-shadow: 0 1px 2px rgba(26, 24, 20, 0.04);
+        }
+
+        .cl-nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cl-nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #D97757;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .cl-nav-logo:hover {
+            color: #C26141;
+        }
+
+        .cl-nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .cl-nav-links a {
+            color: #1A1814;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .cl-nav-links a:hover {
+            color: #D97757;
+        }
+
+        .cl-nav-links a.active {
+            color: #D97757;
+            font-weight: 600;
+        }
+
+        /* Nav Dropdown */
+        .cl-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cl-dropdown > a {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cl-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 230px;
+            background: #FFFBF8;
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+            transform: translateX(-50%) translateY(4px);
+            z-index: 200;
+        }
+
+        .cl-dropdown:hover .cl-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cl-dropdown-menu a {
+            display: block;
+            padding: 10px 24px;
+            font-size: 14px;
+            color: #1A1814;
+            text-decoration: none;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .cl-dropdown-menu a:hover {
+            background: rgba(217, 119, 87, 0.06);
+            color: #D97757;
+        }
+
+        /* Language Switch */
+        .cl-lang-switch {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6E6B66;
+            text-decoration: none;
+            border: 1px solid rgba(212, 208, 202, 0.6);
+            padding: 5px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .cl-lang-switch:hover {
+            border-color: #D97757;
+            color: #D97757;
+        }
+
+        /* Mobile Nav Toggle */
+        .cl-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #1A1814;
+        }
+
+        .cl-nav-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ---- Hero ---- */
+        .cl-hero {
+            text-align: center;
+            padding: 96px 32px 64px;
+            background: linear-gradient(180deg, rgba(217,119,87,0.04) 0%, rgba(247,245,242,0) 100%);
+        }
+
+        .cl-hero-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cl-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            color: #1A1814;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin: 0 0 20px;
+        }
+
+        .cl-hero-subtitle {
+            font-size: 18px;
+            color: #6E6B66;
+            line-height: 1.6;
+            max-width: 540px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* ---- Filter Bar ---- */
+        .cl-filters {
+            max-width: 800px;
+            margin: 0 auto 48px;
+            padding: 0 32px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cl-filter-btn {
+            padding: 8px 20px;
+            border: 1.5px solid rgba(212, 208, 202, 0.7);
+            background: #FFFBF8;
+            color: #4A4843;
+            border-radius: 100px;
+            cursor: pointer;
+            font-family: 'Funnel Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cl-filter-btn:hover {
+            border-color: #D97757;
+            color: #D97757;
+            background: rgba(217, 119, 87, 0.04);
+        }
+
+        .cl-filter-btn.active {
+            background: #D97757;
+            color: #fff;
+            border-color: #D97757;
+            box-shadow: 0 2px 8px rgba(217, 119, 87, 0.25);
+        }
+
+        /* ---- Timeline Container ---- */
+        .cl-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 32px 96px;
+        }
+
+        /* ---- Timeline Entry ---- */
+        .cl-entry {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 0 40px;
+            margin-bottom: 56px;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cl-entry.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Left sidebar: date + version */
+        .cl-entry-meta {
+            padding-top: 4px;
+            position: relative;
+        }
+
+        .cl-entry-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6E6B66;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .cl-entry-version {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 400;
+            color: #A8A49E;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cl-entry-version::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #D97757;
+            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15);
+            flex-shrink: 0;
+        }
+
+        /* Right: content card */
+        .cl-entry-card {
+            background: #FFFBF8;
+            border: 1px solid rgba(212, 208, 202, 0.5);
+            border-radius: 14px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 8px rgba(26, 24, 20, 0.04);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .cl-entry-card:hover {
+            box-shadow: 0 6px 20px rgba(26, 24, 20, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Change items */
+        .cl-change {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(212, 208, 202, 0.3);
+        }
+
+        .cl-change:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .cl-change:first-child {
+            padding-top: 0;
+        }
+
+        /* Category Badges */
+        .cl-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .cl-badge-new {
+            background: rgba(76, 175, 80, 0.1);
+            color: #3d8b40;
+        }
+
+        .cl-badge-improved {
+            background: rgba(91, 143, 212, 0.1);
+            color: #4a7ab5;
+        }
+
+        .cl-badge-fixed {
+            background: rgba(232, 160, 64, 0.1);
+            color: #b8832e;
+        }
+
+        .cl-change-text {
+            font-size: 15px;
+            line-height: 1.55;
+            color: #2E2C28;
+        }
+
+        .cl-change-text strong {
+            font-weight: 600;
+            color: #1A1814;
+        }
+
+        .cl-change-desc {
+            display: block;
+            font-size: 13.5px;
+            color: #6E6B66;
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+
+        /* ---- Timeline line (decorative) ---- */
+        .cl-entry-meta::after {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 3px;
+            width: 1px;
+            bottom: -56px;
+            background: linear-gradient(180deg, rgba(217, 119, 87, 0.25) 0%, rgba(212, 208, 202, 0.2) 100%);
+        }
+
+        .cl-entry:last-child .cl-entry-meta::after {
+            display: none;
+        }
+
+        /* ---- Footer ---- */
+        .cl-footer {
+            background-color: #1A1814;
+            color: #A8A49E;
+            padding: 64px 0 32px;
+        }
+
+        .cl-footer a {
+            color: #A8A49E;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .cl-footer a:hover {
+            color: #D97757;
+        }
+
+        .cl-footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .cl-footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .cl-footer-section h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #FFFBF8;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .cl-footer-section p {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #6E6B66;
+        }
+
+        .cl-footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cl-footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .cl-footer-section ul a {
+            font-size: 14px;
+        }
+
+        .cl-footer-bottom {
+            border-top: 1px solid rgba(168, 164, 158, 0.15);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cl-footer-bottom p {
+            font-size: 13px;
+            color: #6E6B66;
+            margin: 0;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .cl-nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 251, 248, 0.98);
+                backdrop-filter: blur(16px);
+                padding: 16px 32px 24px;
+                gap: 16px;
+                border-bottom: 1px solid rgba(212, 208, 202, 0.6);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            }
+
+            .cl-nav-links.open {
+                display: flex;
+            }
+
+            .cl-nav-toggle {
+                display: block;
+            }
+
+            .cl-dropdown-menu {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                border-radius: 8px;
+                background: rgba(247, 245, 242, 0.5);
+                margin-top: 8px;
+                padding: 4px 0;
+            }
+
+            .cl-dropdown:hover .cl-dropdown-menu {
+                transform: none;
+            }
+
+            .cl-hero {
+                padding: 64px 24px 48px;
+            }
+
+            .cl-hero h1 {
+                font-size: 36px;
+            }
+
+            .cl-hero-subtitle {
+                font-size: 16px;
+            }
+
+            .cl-filters {
+                padding: 0 24px;
+                margin-bottom: 32px;
+            }
+
+            .cl-timeline {
+                padding: 0 24px 64px;
+            }
+
+            .cl-entry {
+                grid-template-columns: 1fr;
+                gap: 12px 0;
+                margin-bottom: 40px;
+            }
+
+            .cl-entry-meta {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .cl-entry-meta::after {
+                display: none;
+            }
+
+            .cl-entry-card {
+                padding: 20px 24px;
+            }
+
+            .cl-footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .cl-footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cl-hero h1 {
+                font-size: 30px;
+            }
+
+            .cl-filter-btn {
+                padding: 7px 14px;
+                font-size: 13px;
+            }
+
+            .cl-change {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .cl-badge {
+                margin-top: 0;
+            }
+        }
+
+        /* ---- Staggered reveal delays ---- */
+        .cl-entry:nth-child(1) { transition-delay: 0ms; }
+        .cl-entry:nth-child(2) { transition-delay: 100ms; }
+        .cl-entry:nth-child(3) { transition-delay: 200ms; }
+        .cl-entry:nth-child(4) { transition-delay: 300ms; }
+        .cl-entry:nth-child(5) { transition-delay: 400ms; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="cl-nav">
+        <div class="cl-nav-inner">
+            <a href="/hu/" class="cl-nav-logo">AutoCognitix</a>
+
+            <button class="cl-nav-toggle" onclick="document.querySelector('.cl-nav-links').classList.toggle('open')" aria-label="Navigáció megnyitása">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+
+            <ul class="cl-nav-links">
+                <li><a href="/hu/">Kezdőlap</a></li>
+                <li><a href="/hu/blog/">Blog</a></li>
+                <li class="cl-dropdown">
+                    <a href="/hu/eszkozok/">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+                    <div class="cl-dropdown-menu">
+                        <a href="/hu/eszkozok/megeri-megjavitani.html">Megéri megjavítani?</a>
+                        <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a>
+                        <a href="/hu/eszkozok/szerviz-kereso.html">Szervizkeresős</a>
+                    </div>
+                </li>
+                <li><a href="/hu/changelog/" class="active">Változásnapló</a></li>
+                <li><a href="/hu/#gyik">GYIK</a></li>
+                <li><a href="/en/changelog/" class="cl-lang-switch">EN</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="cl-hero">
+        <div class="cl-hero-inner">
+            <h1>Változásnapló</h1>
+            <p class="cl-hero-subtitle">Kövesd az AutoCognitix fejlődését. Minden fejlesztés, javítás és új funkció egy helyen.</p>
+        </div>
+    </header>
+
+    <!-- Filter Buttons -->
+    <div class="cl-filters">
+        <button class="cl-filter-btn active" onclick="filterChangelog('all', this)">Összes</button>
+        <button class="cl-filter-btn" onclick="filterChangelog('new', this)">Új</button>
+        <button class="cl-filter-btn" onclick="filterChangelog('improved', this)">Fejlesztés</button>
+        <button class="cl-filter-btn" onclick="filterChangelog('fixed', this)">Javítás</button>
+    </div>
+
+    <!-- Timeline -->
+    <main class="cl-timeline">
+
+        <!-- Entry 1: March 2026 -->
+        <article class="cl-entry" data-version="2.4.0">
+            <div class="cl-entry-meta">
+                <div class="cl-entry-date">2026. március</div>
+                <div class="cl-entry-version">v2.4.0</div>
+            </div>
+            <div class="cl-entry-card">
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Valós idejű OBD-II streaming</strong>
+                        <span class="cl-change-desc">Élő adatok a jármű szenzoraiból közvetlenül a műszerfalon</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Szervizkeresős eszköz</strong>
+                        <span class="cl-change-desc">Megbízható szervizek keresése értékelésekkel és árbecslésekkel</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>DTC kóddatbázis bővítve 14 500+ kódra</strong>
+                        <span class="cl-change-desc">Gyártóspecifikus bejegyzésekkel</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="fixed">
+                    <span class="cl-badge cl-badge-fixed">Javítás</span>
+                    <div class="cl-change-text">
+                        <strong>Akkumulátor-élettartam előrejelzés pontossága</strong>
+                        <span class="cl-change-desc">87%-ról 94%-ra javult</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Entry 2: February 2026 -->
+        <article class="cl-entry" data-version="2.3.0">
+            <div class="cl-entry-meta">
+                <div class="cl-entry-date">2026. február</div>
+                <div class="cl-entry-version">v2.3.0</div>
+            </div>
+            <div class="cl-entry-card">
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Műszaki Vizsga Prediktor</strong>
+                        <span class="cl-change-desc">AI előrejelzés a vizsga átmenési esélyéről</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Teljes magyar nyelvű lokalizáció</strong>
+                        <span class="cl-change-desc">A platform immár teljes egészében elérhető magyar nyelven</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>Diagnosztikai jelentés PDF export</strong>
+                        <span class="cl-change-desc">Márkázott sablonokkal</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="fixed">
+                    <span class="cl-badge cl-badge-fixed">Javítás</span>
+                    <div class="cl-change-text">
+                        <strong>P0420 útmutató javítási költségei frissítve</strong>
+                        <span class="cl-change-desc">2026-os piaci árakkal</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Entry 3: January 2026 -->
+        <article class="cl-entry" data-version="2.2.0">
+            <div class="cl-entry-meta">
+                <div class="cl-entry-date">2026. január</div>
+                <div class="cl-entry-version">v2.2.0</div>
+            </div>
+            <div class="cl-entry-card">
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>"Megéri megjavítani?" kalkulátor</strong>
+                        <span class="cl-change-desc">Javítási költség vs. jármű értéke összehasonlítás</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>AI diagnosztikai motor frissítve GPT-4 Turbo-ra</strong>
+                        <span class="cl-change-desc">Autóipari finomhangolással</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>Mobil reszponzivitás teljes átdolgozása</strong>
+                        <span class="cl-change-desc">Minden eszközön</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="fixed">
+                    <span class="cl-badge cl-badge-fixed">Javítás</span>
+                    <div class="cl-change-text">
+                        <strong>Forint átváltás</strong>
+                        <span class="cl-change-desc">Most valós idejű árfolyamot használ</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Entry 4: December 2025 -->
+        <article class="cl-entry" data-version="2.1.0">
+            <div class="cl-entry-meta">
+                <div class="cl-entry-date">2025. december</div>
+                <div class="cl-entry-version">v2.1.0</div>
+            </div>
+            <div class="cl-entry-card">
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Blog indítás</strong>
+                        <span class="cl-change-desc">Szakértői DTC kód útmutatókkal</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>E-mail hírlevél</strong>
+                        <span class="cl-change-desc">Heti diagnosztikai tippekkel</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>Keresési teljesítmény</strong>
+                        <span class="cl-change-desc">Eredmények 200ms alatt betöltődnek</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="fixed">
+                    <span class="cl-badge cl-badge-fixed">Javítás</span>
+                    <div class="cl-change-text">
+                        <strong>Hreflang címkék javítva</strong>
+                        <span class="cl-change-desc">A kétnyelvű SEO-hoz</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Entry 5: November 2025 -->
+        <article class="cl-entry" data-version="2.0.0">
+            <div class="cl-entry-meta">
+                <div class="cl-entry-date">2025. november</div>
+                <div class="cl-entry-version">v2.0.0</div>
+            </div>
+            <div class="cl-entry-card">
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>Teljes platform újratervezés</strong>
+                        <span class="cl-change-desc">Új márkaidentitással</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="new">
+                    <span class="cl-badge cl-badge-new">Új</span>
+                    <div class="cl-change-text">
+                        <strong>AI-alapú természetes nyelvi diagnosztika</strong>
+                        <span class="cl-change-desc">Írd le a tüneteket egyszerű magyarul</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>Tudásgráf bővítve</strong>
+                        <span class="cl-change-desc">50 000+ javítási esettanulmánnyal</span>
+                    </div>
+                </div>
+                <div class="cl-change" data-type="improved">
+                    <span class="cl-badge cl-badge-improved">Fejlesztés</span>
+                    <div class="cl-change-text">
+                        <strong>Válasz pontosság 92%-ra nőtt</strong>
+                        <span class="cl-change-desc">Standard DTC kódokon</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="cl-footer">
+        <div class="cl-footer-inner">
+            <div class="cl-footer-grid">
+                <div class="cl-footer-section">
+                    <h3>AutoCognitix</h3>
+                    <p>AI-alapú járműdiagnosztikai platform magyar nyelvtámogatással. Egyszerű, gyors és megbízható autódiagnosztika.</p>
+                </div>
+                <div class="cl-footer-section">
+                    <h3>Hasznos Linkek</h3>
+                    <ul>
+                        <li><a href="/hu/">Kezdőlap</a></li>
+                        <li><a href="/hu/blog/">Blog</a></li>
+                        <li><a href="/hu/changelog/">Változásnapló</a></li>
+                        <li><a href="/hu/#gyik">GYIK</a></li>
+                    </ul>
+                </div>
+                <div class="cl-footer-section">
+                    <h3>Eszközök</h3>
+                    <ul>
+                        <li><a href="/hu/eszkozok/megeri-megjavitani.html">Megéri megjavítani?</a></li>
+                        <li><a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Vizsga Prediktor</a></li>
+                        <li><a href="/hu/eszkozok/szerviz-kereso.html">Szervizkeresős</a></li>
+                    </ul>
+                </div>
+                <div class="cl-footer-section">
+                    <h3>Jogi</h3>
+                    <ul>
+                        <li><a href="/hu/legal/adatvedelmi-szabalyzat.html">Adatvédelmi szabályzat</a></li>
+                        <li><a href="/hu/legal/hasznalati-feltetelek.html">Használati feltételek</a></li>
+                        <li><a href="/hu/legal/impresszum.html">Impresszum</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cl-footer-bottom">
+                <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
+                <p>Jármű diagnosztikai segédlet. Nem helyettesíti a professzionális szervizet.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---- Filter Logic ----
+        function filterChangelog(type, btn) {
+            const buttons = document.querySelectorAll('.cl-filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const changes = document.querySelectorAll('.cl-change');
+            const entries = document.querySelectorAll('.cl-entry');
+
+            if (type === 'all') {
+                changes.forEach(c => {
+                    c.style.display = '';
+                    c.style.opacity = '1';
+                });
+                entries.forEach(e => {
+                    e.style.display = '';
+                    e.style.opacity = '';
+                });
+                return;
+            }
+
+            entries.forEach(entry => {
+                const entryChanges = entry.querySelectorAll('.cl-change');
+                let hasVisible = false;
+
+                entryChanges.forEach(c => {
+                    if (c.dataset.type === type) {
+                        c.style.display = '';
+                        c.style.opacity = '1';
+                        hasVisible = true;
+                    } else {
+                        c.style.display = 'none';
+                        c.style.opacity = '0';
+                    }
+                });
+
+                if (hasVisible) {
+                    entry.style.display = '';
+                    entry.style.opacity = '';
+                } else {
+                    entry.style.display = 'none';
+                }
+            });
+        }
+
+        // ---- Staggered Scroll Reveal ----
+        function revealEntries() {
+            const entries = document.querySelectorAll('.cl-entry');
+            const observer = new IntersectionObserver((items) => {
+                items.forEach(item => {
+                    if (item.isIntersecting) {
+                        item.target.classList.add('visible');
+                        observer.unobserve(item.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            entries.forEach(entry => observer.observe(entry));
+        }
+
+        document.addEventListener('DOMContentLoaded', revealEntries);
+    </script>
+
+</body>
+</html>
