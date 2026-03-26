@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — Product Updates & New Features | AutoCognitix</title>
+  <meta name="description" content="Follow the evolution of AutoCognitix. Every improvement, every fix, every new feature in our AI-powered car diagnostics platform.">
+  <meta name="keywords" content="AutoCognitix changelog, product updates, new features, car diagnostics updates, AI diagnostics improvements">
+  <meta name="author" content="AutoCognitix Team">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://www.autocognitix.com/en/changelog/">
+  <link rel="alternate" hreflang="hu" href="https://www.autocognitix.com/hu/changelog/">
+  <meta property="og:title" content="Changelog — AutoCognitix Product Updates">
+  <meta property="og:description" content="Follow the evolution of AutoCognitix. Every improvement, every fix, every new feature.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.autocognitix.com/en/changelog/">
+  <meta property="og:image" content="https://www.autocognitix.com/images/changelog-hero.jpg">
+  <meta property="og:site_name" content="AutoCognitix">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Changelog — AutoCognitix">
+  <meta name="twitter:description" content="Every improvement, every fix, every new feature in our AI car diagnostics platform.">
+  <meta name="twitter:image" content="https://www.autocognitix.com/images/changelog-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/blog-post.css?v=3.0">
+  <style>
+    /* ============================================
+       CHANGELOG — Premium Editorial Design
+       Inspired by Linear / Raycast / Resend
+       ============================================ */
+
+    :root {
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    /* ---- NAV OVERRIDES ---- */
+    nav {
+      background-color: rgba(247, 245, 242, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-neutral-200);
+      padding: var(--space-base) 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .nav-links a {
+      color: var(--color-neutral-500);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: var(--text-body-sm);
+      transition: color var(--transition-fast);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-base-dark);
+      text-decoration: none;
+    }
+
+    .nav-links a.active {
+      color: var(--color-base-dark);
+      font-weight: 600;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-accent);
+      border-radius: 1px;
+    }
+
+    /* Tools dropdown */
+    .nav-dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .nav-dropdown-trigger svg {
+      transition: transform var(--transition-fast);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: var(--color-base-lighter);
+      border-radius: var(--radius-md);
+      box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.08), var(--shadow-lg);
+      padding: 8px 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--transition-fast), visibility var(--transition-fast);
+      z-index: 200;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 24px;
+      font-size: var(--text-body-sm);
+      color: var(--color-neutral-600);
+      text-decoration: none;
+      margin-left: 0;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: var(--color-accent-subtle);
+      color: var(--color-accent-dark);
+    }
+
+    .lang-switch {
+      background-color: var(--color-accent-subtle);
+      border: 1px solid var(--color-neutral-300);
+      color: var(--color-base-dark);
+      padding: 6px 14px;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: var(--text-body-sm);
+      font-weight: 600;
+      font-family: var(--font-primary);
+      transition: all var(--transition-fast);
+    }
+
+    .lang-switch:hover {
+      background-color: var(--color-accent);
+      color: white;
+      border-color: var(--color-accent);
+    }
+
+    /* ---- HERO ---- */
+    .changelog-hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+    }
+
+    .changelog-hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: var(--line-display);
+      margin: 0 0 var(--space-md) 0;
+      color: var(--color-base-dark);
+    }
+
+    .changelog-hero p {
+      font-size: var(--text-body-lg);
+      color: var(--color-neutral-500);
+      line-height: var(--line-body);
+      max-width: 560px;
+      margin: 0;
+    }
+
+    /* ---- FILTER BAR ---- */
+    .filter-bar {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg) var(--space-xl);
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 8px 18px;
+      border: 1.5px solid var(--color-neutral-300);
+      background: transparent;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      font-family: var(--font-primary);
+      color: var(--color-neutral-500);
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--color-neutral-400);
+      color: var(--color-base-dark);
+    }
+
+    .filter-pill.active {
+      background: var(--color-base-dark);
+      border-color: var(--color-base-dark);
+      color: white;
+    }
+
+    /* ---- TIMELINE ---- */
+    .changelog-timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg) var(--space-3xl);
+    }
+
+    .changelog-entry {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: var(--space-xl);
+      position: relative;
+      padding-bottom: var(--space-3xl);
+    }
+
+    .changelog-entry:last-child {
+      padding-bottom: 0;
+    }
+
+    /* Timeline line */
+    .changelog-entry::before {
+      content: '';
+      position: absolute;
+      left: 180px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--color-neutral-300);
+    }
+
+    .changelog-entry:last-child::before {
+      bottom: 100%;
+      display: none;
+    }
+
+    /* Timeline dot */
+    .changelog-entry::after {
+      content: '';
+      position: absolute;
+      left: 175px;
+      top: 8px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      border: 2.5px solid var(--color-base-light);
+      box-shadow: 0 0 0 1.5px var(--color-accent);
+      z-index: 1;
+    }
+
+    /* Date sidebar */
+    .entry-date {
+      text-align: right;
+      padding-top: 2px;
+    }
+
+    .entry-date .version {
+      font-family: var(--font-mono);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .entry-date .date {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      font-weight: 400;
+      color: var(--color-neutral-400);
+      display: block;
+    }
+
+    /* Entry content */
+    .entry-content {
+      padding-left: var(--space-xl);
+    }
+
+    .entry-content h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-h3);
+      font-weight: 600;
+      margin: 0 0 var(--space-md) 0;
+      letter-spacing: -0.5px;
+      color: var(--color-base-dark);
+    }
+
+    .entry-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-base);
+    }
+
+    .entry-item {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+      padding: var(--space-base) var(--space-md);
+      background: var(--color-base-lighter);
+      border-radius: var(--radius-base);
+      border: 1px solid var(--color-neutral-200);
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+    }
+
+    .entry-item:hover {
+      box-shadow: var(--shadow-base);
+      transform: translateY(-1px);
+    }
+
+    /* Category badges — Raycast inspired */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .badge-new {
+      background: rgba(76, 175, 80, 0.1);
+      color: #3d8b40;
+    }
+
+    .badge-improved {
+      background: rgba(91, 143, 212, 0.1);
+      color: #4a7ab5;
+    }
+
+    .badge-fixed {
+      background: rgba(232, 160, 64, 0.1);
+      color: #b8832e;
+    }
+
+    .entry-item-text {
+      flex: 1;
+    }
+
+    .entry-item-title {
+      font-weight: 600;
+      font-size: var(--text-body);
+      color: var(--color-base-dark);
+      margin-bottom: 2px;
+    }
+
+    .entry-item-desc {
+      font-size: var(--text-body-sm);
+      color: var(--color-neutral-500);
+      line-height: var(--line-tight);
+      margin: 0;
+    }
+
+    /* ---- SCROLL ANIMATIONS ---- */
+    .changelog-entry {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .changelog-entry.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .changelog-entry:nth-child(2) { transition-delay: 80ms; }
+    .changelog-entry:nth-child(3) { transition-delay: 160ms; }
+    .changelog-entry:nth-child(4) { transition-delay: 240ms; }
+    .changelog-entry:nth-child(5) { transition-delay: 320ms; }
+
+    /* ---- FOOTER ---- */
+    .site-footer {
+      background-color: var(--color-base-dark);
+      color: var(--color-neutral-300);
+      padding: var(--space-3xl) 0 var(--space-xl);
+      margin-top: var(--space-section);
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .footer-col h4 {
+      font-size: var(--text-body-sm);
+      font-weight: 600;
+      color: var(--color-neutral-200);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--color-neutral-400);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      margin-bottom: var(--space-sm);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-col a:hover {
+      color: var(--color-accent);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-lg) 0;
+      border-top: 1px solid var(--color-neutral-700);
+      text-align: center;
+      font-size: var(--text-caption);
+      color: var(--color-neutral-500);
+    }
+
+    /* ---- MOBILE RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: var(--space-base);
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        gap: var(--space-base);
+      }
+
+      .changelog-hero {
+        padding: var(--space-2xl) var(--space-md) var(--space-lg);
+      }
+
+      .changelog-hero h1 {
+        font-size: clamp(36px, 8vw, 56px);
+      }
+
+      .changelog-entry {
+        display: block;
+        padding-bottom: var(--space-2xl);
+      }
+
+      .changelog-entry::before,
+      .changelog-entry::after {
+        display: none;
+      }
+
+      .entry-date {
+        text-align: left;
+        margin-bottom: var(--space-base);
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .entry-date .version {
+        margin-bottom: 0;
+      }
+
+      .entry-date .date::before {
+        content: '\2014\00a0';
+      }
+
+      .entry-content {
+        padding-left: 0;
+      }
+
+      .filter-bar {
+        padding: 0 var(--space-md) var(--space-lg);
+      }
+
+      .changelog-timeline {
+        padding: 0 var(--space-md) var(--space-2xl);
+      }
+
+      .entry-item {
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .badge {
+        align-self: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .changelog-hero h1 {
+        font-size: 32px;
+      }
+
+      .filter-pill {
+        padding: 6px 14px;
+        font-size: var(--text-caption);
+      }
+    }
+
+    /* ---- REDUCED MOTION ---- */
+    @media (prefers-reduced-motion: reduce) {
+      .changelog-entry {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .entry-item:hover {
+        transform: none;
+      }
+    }
+
+    /* ---- PRINT ---- */
+    @media print {
+      nav, .filter-bar, .site-footer { display: none; }
+      .changelog-entry {
+        opacity: 1;
+        transform: none;
+        page-break-inside: avoid;
+      }
+      .changelog-entry::before,
+      .changelog-entry::after { display: none; }
+      .entry-content { padding-left: 0; }
+      .changelog-hero { padding: 20px 0; }
+      .badge { border: 1px solid currentColor; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/en/" class="logo" style="text-decoration:none;">AutoCognitix</a>
+      <div class="nav-links">
+        <a href="/en/">Home</a>
+        <a href="/en/blog/">Blog</a>
+        <div class="nav-dropdown">
+          <a href="/en/tools/" class="nav-dropdown-trigger" style="margin-left:0;">
+            Tools
+            <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="/en/tools/worth-repairing.html">Worth Repairing?</a>
+            <a href="/en/tools/mot-predictor.html">MOT Predictor</a>
+            <a href="/en/tools/workshop-finder.html">Workshop Finder</a>
+          </div>
+        </div>
+        <a href="/en/changelog/" class="active">Changelog</a>
+        <a href="/en/#faq">FAQ</a>
+        <button class="lang-switch" onclick="location.href='/hu/changelog/'">HU</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="changelog-hero">
+    <h1>Changelog</h1>
+    <p>Follow the evolution of AutoCognitix. Every improvement, every fix, every new feature.</p>
+  </section>
+
+  <!-- ============ FILTER BAR ============ -->
+  <div class="filter-bar">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="new">New</button>
+    <button class="filter-pill" data-filter="improved">Improved</button>
+    <button class="filter-pill" data-filter="fixed">Fixed</button>
+  </div>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="changelog-timeline">
+
+    <!-- Entry 1 — March 2026 — v2.4.0 -->
+    <div class="changelog-entry" data-categories="new improved fixed">
+      <div class="entry-date">
+        <span class="version">v2.4.0</span>
+        <span class="date">March 2026</span>
+      </div>
+      <div class="entry-content">
+        <h2>Real-time vehicle streaming & Workshop Finder</h2>
+        <div class="entry-items">
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Real-time OBD-II streaming</div>
+              <p class="entry-item-desc">Live data from your vehicle's sensors directly in the dashboard. Monitor RPM, coolant temp, fuel trims, and 40+ PIDs in real time.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Workshop Finder tool</div>
+              <p class="entry-item-desc">Find trusted repair shops near you with ratings and price estimates. Integrated with Google Maps and community reviews.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">DTC code database expanded to 14,500+ codes</div>
+              <p class="entry-item-desc">Now includes manufacturer-specific entries for BMW, Mercedes, Audi, Toyota, Honda, and 30+ more brands.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="fixed">
+            <span class="badge badge-fixed">Fixed</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Battery health prediction accuracy improved</div>
+              <p class="entry-item-desc">Prediction accuracy increased from 87% to 94% by retraining the model on 120,000+ real-world battery failure cases.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 2 — February 2026 — v2.3.0 -->
+    <div class="changelog-entry" data-categories="new improved fixed">
+      <div class="entry-date">
+        <span class="version">v2.3.0</span>
+        <span class="date">February 2026</span>
+      </div>
+      <div class="entry-content">
+        <h2>MOT Predictor & Hungarian localization</h2>
+        <div class="entry-items">
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">MOT/Vehicle Inspection Predictor</div>
+              <p class="entry-item-desc">AI predicts your inspection pass probability based on vehicle age, mileage, known issues, and historical MOT data.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Multi-language support: Hungarian fully localized</div>
+              <p class="entry-item-desc">All tools, diagnostics, and guides are now available in Hungarian with native-quality translations.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Diagnostic report PDF export with branded templates</div>
+              <p class="entry-item-desc">Generate professional PDF reports with your workshop branding. Includes charts, cost breakdowns, and severity ratings.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="fixed">
+            <span class="badge badge-fixed">Fixed</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">P0420 guide cost estimates updated</div>
+              <p class="entry-item-desc">Repair cost estimates for catalytic converter and O2 sensor replacements updated to reflect 2026 market prices.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 3 — January 2026 — v2.2.0 -->
+    <div class="changelog-entry" data-categories="new improved fixed">
+      <div class="entry-date">
+        <span class="version">v2.2.0</span>
+        <span class="date">January 2026</span>
+      </div>
+      <div class="entry-content">
+        <h2>"Worth Repairing?" calculator & AI engine upgrade</h2>
+        <div class="entry-items">
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">"Worth Repairing?" calculator</div>
+              <p class="entry-item-desc">Compare repair cost vs vehicle value with data-driven recommendations. Uses real market valuations and depreciation curves.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">AI diagnostic engine upgraded to GPT-4 Turbo</div>
+              <p class="entry-item-desc">Fine-tuned with automotive domain expertise for more accurate symptom-to-cause mapping and repair recommendations.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Mobile responsiveness overhaul</div>
+              <p class="entry-item-desc">Complete redesign of all tools for mobile devices. Touch-optimized controls, better layouts, and faster load times.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="fixed">
+            <span class="badge badge-fixed">Fixed</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Hungarian Forint currency conversion</div>
+              <p class="entry-item-desc">Now uses real-time exchange rates from the European Central Bank instead of static values.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 4 — December 2025 — v2.1.0 -->
+    <div class="changelog-entry" data-categories="new improved fixed">
+      <div class="entry-date">
+        <span class="version">v2.1.0</span>
+        <span class="date">December 2025</span>
+      </div>
+      <div class="entry-content">
+        <h2>Blog launch & search performance</h2>
+        <div class="entry-items">
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Blog launched with expert DTC code guides</div>
+              <p class="entry-item-desc">In-depth articles on P0420, P0171, battery diagnostics, and more. Written by automotive engineers and reviewed by ASE-certified mechanics.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Email newsletter with weekly diagnostic tips</div>
+              <p class="entry-item-desc">Subscribe to receive curated diagnostic guides, seasonal maintenance reminders, and platform updates.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Search performance: results in under 200ms</div>
+              <p class="entry-item-desc">Rebuilt the search index with edge caching and vector embeddings for near-instant DTC code lookups.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="fixed">
+            <span class="badge badge-fixed">Fixed</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Hreflang tags corrected for bilingual SEO</div>
+              <p class="entry-item-desc">Fixed cross-language canonical URLs and hreflang annotations across all pages for proper Google indexing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 5 — November 2025 — v2.0.0 -->
+    <div class="changelog-entry" data-categories="new improved">
+      <div class="entry-date">
+        <span class="version">v2.0.0</span>
+        <span class="date">November 2025</span>
+      </div>
+      <div class="entry-content">
+        <h2>Platform redesign & natural language diagnostics</h2>
+        <div class="entry-items">
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Complete platform redesign with new brand identity</div>
+              <p class="entry-item-desc">New visual identity with warm neutrals and terracotta accents. Rebuilt from scratch with performance and accessibility in mind.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="new">
+            <span class="badge badge-new">New</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">AI-powered natural language diagnostics</div>
+              <p class="entry-item-desc">Describe symptoms in plain English and get accurate diagnostic suggestions. "My car shakes when braking" now returns ranked probable causes.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Knowledge graph expanded with 50,000+ repair case studies</div>
+              <p class="entry-item-desc">Aggregated anonymized repair data from partner workshops to build the largest automotive diagnostic knowledge base.</p>
+            </div>
+          </div>
+          <div class="entry-item" data-type="improved">
+            <span class="badge badge-improved">Improved</span>
+            <div class="entry-item-text">
+              <div class="entry-item-title">Response accuracy increased to 92% on standard DTC codes</div>
+              <p class="entry-item-desc">Validated against ASE diagnostic benchmarks with blind testing across 2,000+ real-world cases.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/en/">Home</a>
+        <a href="/en/#features">Features</a>
+        <a href="/en/#pricing">Pricing</a>
+        <a href="/en/#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="/en/blog/">Blog</a>
+        <a href="/en/changelog/">Changelog</a>
+        <a href="/en/blog/dtc-trouble-code-lookup-guide.html">DTC Code Lookup</a>
+        <a href="/en/blog/car-diagnostics-at-home-beginners-guide.html">DIY Diagnostics</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="/en/tools/">All Tools</a>
+        <a href="/en/tools/worth-repairing.html">Worth Repairing?</a>
+        <a href="/en/tools/mot-predictor.html">MOT Predictor</a>
+        <a href="/en/tools/workshop-finder.html">Workshop Finder</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/en/">About Us</a>
+        <a href="/en/legal/privacy-policy.html">Privacy Policy</a>
+        <a href="/en/legal/terms-of-service.html">Terms of Service</a>
+        <a href="/en/legal/cookie-policy.html">Cookie Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://twitter.com/autocognitix">Twitter</a>
+        <a href="https://facebook.com/autocognitix">Facebook</a>
+        <a href="https://linkedin.com/company/autocognitix">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 AutoCognitix. All rights reserved. | Built with AI-powered diagnostics</p>
+    </div>
+  </footer>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+    // ---- Filter functionality ----
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const entries = document.querySelectorAll('.changelog-entry');
+    const allItems = document.querySelectorAll('.entry-item');
+
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        // Update active state
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const filter = pill.dataset.filter;
+
+        if (filter === 'all') {
+          // Show everything
+          entries.forEach(entry => {
+            entry.style.display = '';
+          });
+          allItems.forEach(item => {
+            item.style.display = '';
+          });
+        } else {
+          // Filter items within entries
+          entries.forEach(entry => {
+            const items = entry.querySelectorAll('.entry-item');
+            let hasVisible = false;
+
+            items.forEach(item => {
+              if (item.dataset.type === filter) {
+                item.style.display = '';
+                hasVisible = true;
+              } else {
+                item.style.display = 'none';
+              }
+            });
+
+            // Hide entire entry if no matching items
+            entry.style.display = hasVisible ? '' : 'none';
+          });
+        }
+      });
+    });
+
+    // ---- Scroll reveal with IntersectionObserver ----
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.changelog-entry').forEach(entry => {
+      observer.observe(entry);
+    });
+  </script>
+
+</body>
+</html>
