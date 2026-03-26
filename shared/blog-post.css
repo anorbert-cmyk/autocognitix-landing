@@ -28,9 +28,9 @@
     --color-error: #D94F4F;
     --color-info: #5B8FD4;
 
-    /* Typography — Serif + Sans pairing */
+    /* Typography — Serif + Sans editorial pairing (Stripe/Awwwards-inspired) */
     --font-primary: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
     --text-display: clamp(48px, 6vw, 80px);
@@ -744,6 +744,166 @@ blockquote {
 
 blockquote p:first-child { margin-top: 0; }
 blockquote p:last-child { margin-bottom: 0; }
+
+/* ============================================
+   EDITORIAL DROP CAP (NYT/Monocle-inspired)
+   ============================================ */
+
+article > p:first-of-type::first-letter,
+.drop-cap::first-letter {
+    font-family: var(--font-serif);
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.07em;
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+/* ============================================
+   GRAIN TEXTURE OVERLAY (anti-AI, human feel)
+   ============================================ */
+
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+}
+
+.grain-overlay::before {
+    content: '';
+    position: absolute;
+    inset: -200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    animation: grain 0.5s steps(4) infinite;
+}
+
+@keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5%, -10%); }
+    50% { transform: translate(8%, 3%); }
+    75% { transform: translate(-3%, 7%); }
+}
+
+/* ============================================
+   CHANGELOG TIMELINE STYLES
+   ============================================ */
+
+.changelog-entry {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: var(--space-lg);
+    position: relative;
+    padding-left: var(--space-md);
+    padding-bottom: var(--space-3xl);
+    border-left: 2px solid var(--color-neutral-200);
+}
+
+.changelog-entry::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid var(--color-base-light);
+}
+
+.changelog-entry:last-child {
+    border-left-color: transparent;
+}
+
+.changelog-sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.changelog-sidebar time {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-neutral-500);
+}
+
+.changelog-sidebar .version {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-h5);
+    font-weight: 600;
+    color: var(--color-base-dark);
+    margin-top: var(--space-xs);
+}
+
+.changelog-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.changelog-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.badge-new { background: rgba(76, 175, 80, 0.1); color: #3d8b40; }
+.badge-improved { background: rgba(91, 143, 212, 0.1); color: #4a7ab5; }
+.badge-fixed { background: rgba(232, 160, 64, 0.1); color: #b8832e; }
+
+.changelog-item {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.changelog-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.changelog-item h3 {
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    margin: var(--space-xs) 0 var(--space-xs);
+}
+
+.changelog-item p {
+    font-size: var(--text-body-sm);
+    color: var(--color-neutral-500);
+    margin: 0;
+    line-height: var(--line-body);
+}
+
+@media (max-width: 768px) {
+    .changelog-entry {
+        grid-template-columns: 1fr;
+        padding-left: var(--space-lg);
+    }
+    .changelog-sidebar {
+        position: static;
+        margin-bottom: var(--space-base);
+    }
+}
 
 /* ============================================
    READING PROGRESS BAR
