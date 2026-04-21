@@ -70,6 +70,19 @@ updates:
         update-types:
           - minor
           - patch
+    # Ignore majors that require code-level migration work.
+    # Re-evaluate case-by-case when we schedule test-infra upgrades.
+    ignore:
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/coverage-v8"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jsdom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "html-validate"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "glob"
+        update-types: ["version-update:semver-major"]
 
   # -------------------------------------------------------------------------
   # pip — proxy sidecar (FastAPI + httpx + uvicorn) + dev deps (pytest, respx).
@@ -102,6 +115,26 @@ updates:
         update-types:
           - minor
           - patch
+    # Ignore majors — httpx 0.28+ has Starlette TestClient ExceptionGroup
+    # incompatibility, pytest 9 / pytest-asyncio 1.x / respx 0.22+ need
+    # test-harness migration. Re-evaluate after upstream stabilizes.
+    ignore:
+      - dependency-name: "httpx"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "httpx"
+        versions: [">=0.28"]
+      - dependency-name: "pytest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "pytest-asyncio"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "respx"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "cachetools"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "starlette"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "uvicorn"
+        update-types: ["version-update:semver-major"]
 
   # -------------------------------------------------------------------------
   # Docker — the nginx:1.27-alpine3.20 base image. Weekly scan pairs with the
