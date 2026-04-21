@@ -39,13 +39,12 @@ COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Non-root runtime (DEVOPS-C1)
-# The official nginx:alpine image already has a `nginx` user (uid 101).
-# Create an 'app' group/user aligned with that uid, and chown runtime dirs.
+# The official nginx:alpine image already ships with a `nginx` user (uid 101)
+# and `nginx` group (gid 101). Reuse them instead of creating an overlapping
+# 'app' user (which would collide on -u 101 and break the build).
 # /run is where nginx writes its pid; must be writable by the runtime user.
-RUN addgroup -S app 2>/dev/null || true \
-    && adduser -S -D -H -u 101 -G app -s /sbin/nologin app 2>/dev/null || true \
-    && touch /run/nginx.pid \
-    && chown -R app:app \
+RUN touch /run/nginx.pid \
+    && chown -R nginx:nginx \
          /usr/share/nginx/html \
          /var/cache/nginx \
          /var/log/nginx \
@@ -53,7 +52,7 @@ RUN addgroup -S app 2>/dev/null || true \
          /opt/proxy \
          /run/nginx.pid
 
-USER app
+USER nginx
 
 # Dev default; Railway injects real value at deploy time (DEVOPS-L1)
 ENV PORT=8080
