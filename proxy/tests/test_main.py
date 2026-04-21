@@ -104,7 +104,11 @@ def test_rate_limit_429_after_30_requests_in_minute(client, proxy_module):
             headers={"x-forwarded-for": ip},
         )
         assert r.status_code == 429
-        assert r.json() == {"error": "Rate limit exceeded"}
+        # Production uses the canonical `{data, error, meta}` envelope.
+        body = r.json()
+        assert body["data"] is None
+        assert body["error"]["code"] == "RATE_LIMITED"
+        assert body["error"]["message"] == "Rate limit exceeded"
 
 
 # --------------------------------------------------------------------------- #
@@ -187,36 +191,66 @@ def test_invalid_json_body_returns_400(client):
         headers={"content-type": "application/json"},
     )
     assert r.status_code == 400
-    assert r.json() == {"error": "Invalid JSON body"}
+    # Envelope: {data, error: {code, message}, meta}. See rules/api.md.
+    body = r.json()
+    assert body["data"] is None
+    assert body["error"]["code"] == "INVALID_JSON"
+    assert body["error"]["message"] == "Invalid JSON body"
+    assert body["meta"] is None
 
 
 # --------------------------------------------------------------------------- #
-# TEST 4 — Missing required field returns 400 with field names                #
+# TEST 4 — Missing required field returns 422 with field names                #
 # --------------------------------------------------------------------------- #
+# Note: 422 (Unprocessable Entity) — not 400 — is the correct status for a
+# syntactically-valid body that fails semantic validation (RFC 4918 §11.2,
+# FastAPI/Pydantic convention). 400 is reserved for malformed syntax (see
+# test_invalid_json_body_returns_400). Production wraps Pydantic's
+# ValidationError in the canonical envelope with `details` = exc.errors().
 
 
-def test_missing_required_field_returns_400(client):
+def _field_names_from_errors(details: list[dict]) -> set[str]:
+    """Extract the top-level field name from each Pydantic error entry."""
+    names: set[str] = set()
+    for d in details or []:
+        loc = d.get("loc") or []
+        if loc:
+            names.add(str(loc[0]))
+    return names
+
+
+def test_missing_required_field_returns_422(client):
     body = _valid_calculator_body()
     body.pop("condition")  # missing required field
     body.pop("mileage_km")
 
     r = client.post("/proxy/calculator/evaluate", json=body)
-    assert r.status_code == 400
-    err = r.json().get("error", "")
-    # Must name BOTH missing fields — sorted so the message is deterministic.
-    assert "condition" in err
-    assert "mileage_km" in err
-    # And must NOT leak internals.
-    assert "traceback" not in err.lower()
-    assert "line " not in err.lower()
+    assert r.status_code == 422
+    payload = r.json()
+    assert payload["data"] is None
+    err = payload["error"]
+    assert err["code"] == "VALIDATION_ERROR"
+    # Must name BOTH missing fields in the structured `details` list.
+    missing = _field_names_from_errors(err.get("details", []))
+    assert "condition" in missing, f"expected 'condition' in {missing}"
+    assert "mileage_km" in missing, f"expected 'mileage_km' in {missing}"
+    # And must NOT leak internals — stringify the WHOLE response to be safe.
+    dump = str(payload).lower()
+    assert "traceback" not in dump
+    assert "/proxy/" not in dump  # no file-path leak
+    # The top-level message stays short and human-readable.
+    assert isinstance(err["message"], str) and len(err["message"]) < 200
 
 
-def test_missing_required_field_returns_400_inspection(client):
+def test_missing_required_field_returns_422_inspection(client):
     body = _valid_inspection_body()
     body.pop("dtc_codes")
     r = client.post("/proxy/inspection/evaluate", json=body)
-    assert r.status_code == 400
-    assert "dtc_codes" in r.json()["error"]
+    assert r.status_code == 422
+    payload = r.json()
+    assert payload["error"]["code"] == "VALIDATION_ERROR"
+    missing = _field_names_from_errors(payload["error"].get("details", []))
+    assert "dtc_codes" in missing, f"expected 'dtc_codes' in {missing}"
 
 
 # --------------------------------------------------------------------------- #
@@ -227,21 +261,22 @@ def test_missing_required_field_returns_400_inspection(client):
 @pytest.mark.parametrize(
     "code",
     [
-        "p0420",       # lowercase
+        # NOTE: 'p0420' was deliberately removed. The handler uppercases the
+        # path param before the regex check, so lowercase P-codes ARE valid.
+        # (The test file's own comment acknowledged this irony.) It is
+        # exercised positively in `test_dtc_regex_accepts_valid_codes` below.
         "P042",        # too short
         "P04200",      # too long
         "Z0420",       # bad prefix (not P/B/C/U)
         "P042G",       # non-hex final char
         "P0420;DROP",  # SQL-injection attempt
         "P 0420",      # embedded space
-        "P0420/../../etc/passwd",  # path traversal
+        "P0420/../../etc/passwd",  # path traversal (becomes a 404 route miss)
         "<script>",    # XSS payload
-        "",            # empty
+        "",            # empty path segment -> 404 route miss
     ],
 )
-def test_dtc_regex_rejects_lowercase_and_short_codes(client, code):
-    # The route uses .upper() before regex, so lowercase should actually match
-    # — which is why we use BOTH bad-prefix and too-short cases here.
+def test_dtc_regex_rejects_malformed_and_injection_codes(client, code):
     r = client.get(f"/proxy/dtc/{code}")
     # Path segments with "/" produce 404 routing mismatch, which is ALSO a reject.
     assert r.status_code in (400, 404), (
@@ -249,7 +284,10 @@ def test_dtc_regex_rejects_lowercase_and_short_codes(client, code):
         f"got {r.status_code}"
     )
     if r.status_code == 400:
-        assert "Invalid DTC" in r.json()["error"]
+        err = r.json()["error"]
+        # Envelope: error is a dict, not a bare string.
+        assert err["code"] == "INVALID_DTC"
+        assert "Invalid DTC" in err["message"]
 
 
 @pytest.mark.parametrize("code", ["P0420", "p0420", "B0001", "U1234", "CABCD"])
@@ -274,7 +312,8 @@ def test_backend_5xx_does_not_leak_stack_trace(client, proxy_module):
     """
     When the upstream backend returns a 500 with a Python traceback in the body,
     the proxy MUST return sanitized JSON. No 'Traceback', no '.py', no sql,
-    no file paths.
+    no file paths. Production maps upstream 5xx -> 502 (bad gateway) — the
+    client is NOT told the specifics of the upstream failure.
     """
     leaky_body = (
         'Traceback (most recent call last):\n'
@@ -297,20 +336,26 @@ def test_backend_5xx_does_not_leak_stack_trace(client, proxy_module):
 
         r = client.post("/proxy/calculator/evaluate", json=_valid_calculator_body())
 
-    assert r.status_code == 500
+    # Upstream 5xx -> proxy returns 502 with a sanitised envelope.
+    assert r.status_code == 502
     # Response body must be JSON, not text/plain passthrough.
     assert r.headers.get("content-type", "").startswith("application/json")
     body_text = r.text
     body = r.json()
-    # No traceback-like tokens in any part of the response.
-    for forbidden in ("Traceback", "File \"", ".py\", line", "supersecret", "password"):
+    # No traceback-like tokens anywhere in the response body.
+    for forbidden in ("Traceback", 'File "', ".py\", line", "supersecret", "password"):
         assert forbidden not in body_text, (
             f"Response leaked sensitive token {forbidden!r}:\n{body_text}"
         )
-    # Structure: `error` is a short human string; `detail` points to server logs.
-    assert "error" in body
-    assert "traceback" not in body  # literal key
-    assert isinstance(body.get("error"), str)
+    # Envelope shape: {data, error: {code, message}, meta}. `error` must be
+    # a short, opaque dict — no upstream payload pass-through.
+    assert body["data"] is None
+    err = body["error"]
+    assert isinstance(err, dict)
+    assert err["code"] == "UPSTREAM_ERROR"
+    assert isinstance(err["message"], str) and "service" in err["message"].lower()
+    # No raw "traceback" key leaked at any level.
+    assert "traceback" not in body_text.lower()
 
 
 # --------------------------------------------------------------------------- #
@@ -393,17 +438,22 @@ def test_cors_preflight_accepts_allowlisted_origin(client):
 def test_body_over_64kb_rejected(client):
     """
     DoS guard: oversized JSON bodies must be rejected before we even attempt
-    to parse them. The existing proxy has NO such middleware — this test
-    documents the expected behavior and will fail until backend-lead adds
-    a ContentSizeLimitMiddleware (or equivalent).
+    to parse them. The proxy has BodySizeLimitMiddleware + an in-handler
+    `len(raw) > MAX_BODY_BYTES` guard.
 
-    If the middleware isn't in place yet, this test is currently expected to
-    fail. It is NOT xfail — we WANT CI red until the middleware lands.
+    Historical bug in this test: the payload used
+      `{"vehicle_make": oversized, **_valid_calculator_body()}`
+    which places _valid_calculator_body()'s `vehicle_make="Toyota"` AFTER the
+    oversized value, silently overwriting it and producing a ~119-byte body.
+    Fixed by building a raw oversized payload that doesn't rely on key order.
     """
-    oversized = "x" * (65 * 1024)  # 65 KB
-    body = {"vehicle_make": oversized, **_valid_calculator_body()}
-    payload = json.dumps(body).encode()
-    assert len(payload) > 64 * 1024
+    # Build a body whose serialised size is definitively > 64 KB without
+    # depending on dict-merge order. We use a dedicated `_pad` key; the
+    # handler will reject on size BEFORE schema validation runs, so the
+    # presence of an unknown key is harmless.
+    padding = "x" * (70 * 1024)
+    payload = json.dumps({"_pad": padding}).encode()
+    assert len(payload) > 64 * 1024, f"payload only {len(payload)} bytes — test setup bug"
 
     r = client.post(
         "/proxy/calculator/evaluate",
@@ -411,11 +461,14 @@ def test_body_over_64kb_rejected(client):
         headers={"content-type": "application/json"},
     )
     # 413 Payload Too Large is the RFC-correct response.
-    # 400 is acceptable if the middleware wraps it as a validation error.
+    # 400 is acceptable if a middleware wraps it as a validation error.
     assert r.status_code in (400, 413), (
-        f"Oversized body should be rejected (400/413), got {r.status_code}. "
-        f"If no middleware exists yet, ask backend-lead to add a 64KB body cap."
+        f"Oversized body should be rejected (400/413), got {r.status_code}."
     )
+    # When 413, the envelope must still be well-formed.
+    if r.status_code == 413:
+        body = r.json()
+        assert body["error"]["code"] == "PAYLOAD_TOO_LARGE"
 
 
 # --------------------------------------------------------------------------- #
@@ -466,4 +519,6 @@ def test_csrf_fetch_failure_returns_502(client, proxy_module):
         )
         r = client.post("/proxy/calculator/evaluate", json=_valid_calculator_body())
     assert r.status_code == 502
-    assert r.json()["error"] == "Failed to obtain CSRF token"
+    err = r.json()["error"]
+    assert err["code"] == "UPSTREAM_UNAVAILABLE"
+    assert "CSRF" in err["message"]
