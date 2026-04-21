@@ -1,42 +1,35 @@
-name: Export Backend Data
+name: Export Backend Data (DISABLED)
+
+# -----------------------------------------------------------------------------
+# 2026-04-21: DISABLED.
+# The data-engineer deleted scripts/export-{vehicle-data,dtc-data,repair-costs}.py
+# because their output schemas did not match the committed bilingual data files —
+# running them would have silently corrupted the hand-curated bilingual content.
+#
+# shared/data/*.json are now marked HAND-CURATED (see shared/data/README.md).
+#
+# To re-enable: rewrite the exporter scripts to produce the canonical bilingual
+# schemas defined in shared/data/README.md, restore the cron, and add round-trip
+# tests that assert generated output matches committed shape byte-for-byte.
+# -----------------------------------------------------------------------------
 
 on:
-  schedule:
-    - cron: '0 3 * * 1'  # Weekly on Monday 3 AM UTC
-  workflow_dispatch:  # Manual trigger
+  # schedule:
+  #   - cron: '0 3 * * 1'  # DISABLED — would fail against deleted scripts
+  workflow_dispatch:  # Manual trigger remains, but fails fast with a clear message
+
+permissions:
+  contents: read
 
 jobs:
-  export:
+  disabled-notice:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install asyncpg aiofiles
-
-      - name: Export vehicle pricing data
-        env:
-          DATABASE_URL: ${{ secrets.BACKEND_DB_READ_URL }}
-        run: python scripts/export-vehicle-data.py
-
-      - name: Export DTC database
-        env:
-          DATABASE_URL: ${{ secrets.BACKEND_DB_READ_URL }}
-        run: python scripts/export-dtc-data.py
-
-      - name: Export repair costs
-        env:
-          DATABASE_URL: ${{ secrets.BACKEND_DB_READ_URL }}
-        run: python scripts/export-repair-costs.py
-
-      - name: Commit and push updated data
+      - name: Data export disabled
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add shared/data/
-          git diff --staged --quiet || git commit -m "chore: Update static data export [skip ci]"
-          git push
+          echo "::error::Data export workflow is disabled (2026-04-21)."
+          echo "::error::Exporter scripts were removed because their output schemas"
+          echo "::error::did not match the committed bilingual data files."
+          echo "::error::See shared/data/README.md for canonical schemas."
+          echo "::error::To re-enable, rewrite the exporters and restore the cron trigger."
+          exit 1

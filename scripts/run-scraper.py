@@ -18,16 +18,53 @@ Usage:
 
 import argparse
 import json
+import logging
 import os
 import sys
 import time
+import traceback
+import urllib.error
 
 # Ensure scrapers/ is on sys.path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRAPERS_DIR = os.path.join(SCRIPT_DIR, "scrapers")
 sys.path.insert(0, SCRAPERS_DIR)
 
-from config import BRANDS
+from config import BRANDS  # noqa: E402
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] run-scraper %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger("run-scraper")
+
+# Exception classes considered "recoverable per-model" — we log, count, and
+# continue. Anything else bubbles up (programming errors, KeyboardInterrupt, ...).
+SCRAPER_RECOVERABLE = (
+    urllib.error.URLError,
+    urllib.error.HTTPError,
+    OSError,           # covers connection resets, DNS, file I/O
+    ValueError,        # bad JSON, bad decode
+    KeyError,          # missing config slug
+    TimeoutError,
+)
+
+# Per-scraper model-failure threshold. If more than this fraction of
+# (brand, model) pairs fail, exit with code 1 so CI flags the run.
+MAX_FAILURE_FRACTION = 0.30
+
+
+def _handle_model_error(scraper_name: str, brand: str, model: str, exc: BaseException,
+                        failures: list[tuple[str, str, str]]) -> None:
+    """Log a traceback, record the failure, and never swallow non-recoverable errors."""
+    if isinstance(exc, SCRAPER_RECOVERABLE):
+        log.warning("[%s] %s %s failed: %s", scraper_name, brand, model, exc)
+        log.debug("Traceback:\n%s", traceback.format_exc())
+        failures.append((scraper_name, brand, model))
+    else:
+        # Programming errors / system signals: re-raise so run-scraper halts.
+        raise exc
 
 
 def run_hasznaltauto(today_brands, max_per_model):
@@ -44,17 +81,20 @@ def run_hasznaltauto(today_brands, max_per_model):
         "brands": {},
     }
     total_listings = 0
+    attempts = 0
+    failures: list[tuple[str, str, str]] = []
 
     for brand_name in today_brands:
         if brand_name not in BRANDS:
-            print(f"[SKIP] {brand_name} not in hasznaltauto config")
+            log.info("[SKIP] %s not in hasznaltauto config", brand_name)
             continue
 
         brand_info = BRANDS[brand_name]
         all_results["brands"][brand_name] = {}
 
         for model_name in brand_info["models"]:
-            print(f"\n--- Scraping hasznaltauto: {brand_name} {model_name} ---")
+            attempts += 1
+            log.info("--- Scraping hasznaltauto: %s %s ---", brand_name, model_name)
             try:
                 result = scrape_brand_model(brand_name, model_name, max_listings=max_per_model)
                 by_year = result.get("by_year", {})
@@ -75,15 +115,19 @@ def run_hasznaltauto(today_brands, max_per_model):
                     all_results["brands"][brand_name][model_name] = model_data
                     total_listings += result.get("listings_scraped", 0)
 
-                print(f'  -> {result.get("listings_scraped", 0)} listings, {len(model_data)} year buckets')
-            except Exception as e:
-                print(f"  [ERROR] {brand_name} {model_name}: {e}")
+                log.info("  -> %d listings, %d year buckets",
+                         result.get("listings_scraped", 0), len(model_data))
+            except Exception as e:  # noqa: BLE001 — narrowed inside helper
+                _handle_model_error("hasznaltauto", brand_name, model_name, e, failures)
 
             # Polite delay between models
             time.sleep(2)
 
     all_results["_meta"]["total_listings"] = total_listings
-    print(f"\nTotal hasznaltauto listings scraped: {total_listings}")
+    all_results["_meta"]["attempts"] = attempts
+    all_results["_meta"]["failures"] = len(failures)
+    log.info("Total hasznaltauto listings scraped: %d (failures: %d/%d)",
+             total_listings, len(failures), attempts)
     return all_results
 
 
@@ -105,24 +149,27 @@ def run_ooyyo(today_brands, max_per_model):
         "brands": {},
     }
     total_listings = 0
+    attempts = 0
+    failures: list[tuple[str, str, str]] = []
 
     for brand_name in today_brands:
         if brand_name not in BRANDS:
-            print(f"[SKIP] {brand_name} not in OOYYO config")
+            log.info("[SKIP] %s not in OOYYO config", brand_name)
             continue
 
         brand_info = BRANDS[brand_name]
         brand_data = {}
 
         for model_name in brand_info["models"]:
-            print(f"\n--- Scraping OOYYO: {brand_name} {model_name} ---")
+            attempts += 1
+            log.info("--- Scraping OOYYO: %s %s ---", brand_name, model_name)
             try:
                 result = scrape_brand_model(
                     brand_name, model_name, max_listings=max_per_model
                 )
 
                 if "error" in result and not result.get("by_year"):
-                    print(f"  [SKIP] {brand_name} {model_name}: {result['error']}")
+                    log.info("[SKIP] %s %s: %s", brand_name, model_name, result['error'])
                     continue
 
                 # Convert by_year to market-prices-compatible format
@@ -141,15 +188,19 @@ def run_ooyyo(today_brands, max_per_model):
                     brand_data[model_name] = model_prices
                     total_listings += result.get("listings_collected", 0)
 
-                print(f'  -> {result.get("listings_collected", 0)} listings, {len(model_prices)} year buckets')
-            except Exception as e:
-                print(f"  [ERROR] {brand_name} {model_name}: {e}")
+                log.info("  -> %d listings, %d year buckets",
+                         result.get("listings_collected", 0), len(model_prices))
+            except Exception as e:  # noqa: BLE001
+                _handle_model_error("ooyyo", brand_name, model_name, e, failures)
 
         if brand_data:
             all_results["brands"][brand_name] = brand_data
 
     all_results["_meta"]["total_listings"] = total_listings
-    print(f"\nTotal OOYYO listings collected: {total_listings}")
+    all_results["_meta"]["attempts"] = attempts
+    all_results["_meta"]["failures"] = len(failures)
+    log.info("Total OOYYO listings collected: %d (failures: %d/%d)",
+             total_listings, len(failures), attempts)
     return all_results
 
 
@@ -167,24 +218,27 @@ def run_autobazar(today_brands, max_per_model):
         "brands": {},
     }
     total_listings = 0
+    attempts = 0
+    failures: list[tuple[str, str, str]] = []
 
     for brand_name in today_brands:
         if brand_name not in BRANDS:
-            print(f"[SKIP] {brand_name} not in AutoBazar config")
+            log.info("[SKIP] %s not in AutoBazar config", brand_name)
             continue
 
         brand_info = BRANDS[brand_name]
         brand_data = {}
 
         for model_name in brand_info["models"]:
-            print(f"\n--- Scraping AutoBazar: {brand_name} {model_name} ---")
+            attempts += 1
+            log.info("--- Scraping AutoBazar: %s %s ---", brand_name, model_name)
             try:
                 result = scrape_brand_model(
                     brand_name, model_name, max_listings=max_per_model
                 )
 
                 if "error" in result:
-                    print(f"  [SKIP] {brand_name} {model_name}: {result['error']}")
+                    log.info("[SKIP] %s %s: %s", brand_name, model_name, result['error'])
                     continue
 
                 # Convert by_year to market-prices format (already has min/avg/max in HUF)
@@ -203,9 +257,10 @@ def run_autobazar(today_brands, max_per_model):
                     brand_data[model_name] = model_prices
                     total_listings += result.get("listings_scraped", 0)
 
-                print(f'  -> {result.get("listings_scraped", 0)} listings, {len(model_prices)} year buckets')
-            except Exception as e:
-                print(f"  [ERROR] {brand_name} {model_name}: {e}")
+                log.info("  -> %d listings, %d year buckets",
+                         result.get("listings_scraped", 0), len(model_prices))
+            except Exception as e:  # noqa: BLE001
+                _handle_model_error("autobazar", brand_name, model_name, e, failures)
 
             # Polite delay between models
             time.sleep(2)
@@ -214,7 +269,10 @@ def run_autobazar(today_brands, max_per_model):
             all_results["brands"][brand_name] = brand_data
 
     all_results["_meta"]["total_listings"] = total_listings
-    print(f"\nTotal AutoBazar listings scraped: {total_listings}")
+    all_results["_meta"]["attempts"] = attempts
+    all_results["_meta"]["failures"] = len(failures)
+    log.info("Total AutoBazar listings scraped: %d (failures: %d/%d)",
+             total_listings, len(failures), attempts)
     return all_results
 
 
@@ -232,22 +290,25 @@ def run_bazos(today_brands, max_per_model):
         "brands": {},
     }
     total_listings = 0
+    attempts = 0
+    failures: list[tuple[str, str, str]] = []
 
     for brand_name in today_brands:
         if brand_name not in BRANDS:
-            print(f"[SKIP] {brand_name} not in Bazos config")
+            log.info("[SKIP] %s not in Bazos config", brand_name)
             continue
 
         # Check if Bazos has a slug for this brand
         if not get_bazos_brand_slug(brand_name):
-            print(f"[SKIP] {brand_name} has no bazos.sk slug mapping")
+            log.info("[SKIP] %s has no bazos.sk slug mapping", brand_name)
             continue
 
         brand_info = BRANDS[brand_name]
         brand_data = {}
 
         for model_name in brand_info["models"]:
-            print(f"\n--- Scraping Bazos: {brand_name} {model_name} ---")
+            attempts += 1
+            log.info("--- Scraping Bazos: %s %s ---", brand_name, model_name)
             try:
                 result = scrape_brand_model(
                     brand_name, model_name,
@@ -256,7 +317,7 @@ def run_bazos(today_brands, max_per_model):
                 )
 
                 if "error" in result and result.get("listings_with_price", 0) == 0:
-                    print(f"  [SKIP] {brand_name} {model_name}: {result['error']}")
+                    log.info("[SKIP] %s %s: %s", brand_name, model_name, result['error'])
                     continue
 
                 # Convert by_year to market-prices format (already HUF-converted)
@@ -276,9 +337,10 @@ def run_bazos(today_brands, max_per_model):
                     brand_data[model_name] = model_prices
                     total_listings += result.get("listings_with_price", 0)
 
-                print(f'  -> {result.get("listings_with_price", 0)} priced listings, {len(model_prices)} year buckets')
-            except Exception as e:
-                print(f"  [ERROR] {brand_name} {model_name}: {e}")
+                log.info("  -> %d priced listings, %d year buckets",
+                         result.get("listings_with_price", 0), len(model_prices))
+            except Exception as e:  # noqa: BLE001
+                _handle_model_error("bazos", brand_name, model_name, e, failures)
 
             # Polite delay between models
             time.sleep(2)
@@ -287,7 +349,10 @@ def run_bazos(today_brands, max_per_model):
             all_results["brands"][brand_name] = brand_data
 
     all_results["_meta"]["total_listings"] = total_listings
-    print(f"\nTotal Bazos listings scraped: {total_listings}")
+    all_results["_meta"]["attempts"] = attempts
+    all_results["_meta"]["failures"] = len(failures)
+    log.info("Total Bazos listings scraped: %d (failures: %d/%d)",
+             total_listings, len(failures), attempts)
     return all_results
 
 
@@ -366,6 +431,18 @@ def main():
     print(f"  Elapsed: {elapsed:.1f}s ({elapsed / 60:.1f} min)")
     print(f"  Output: {args.output}")
     print(f"{'=' * 60}")
+
+    # Fail run if too many (brand, model) pairs failed.
+    attempts = results.get("_meta", {}).get("attempts", 0)
+    failures = results.get("_meta", {}).get("failures", 0)
+    if attempts > 0:
+        fail_fraction = failures / attempts
+        if fail_fraction > MAX_FAILURE_FRACTION:
+            log.error(
+                "Failure rate %.1f%% (%d/%d) exceeds threshold %.1f%% — exit 1",
+                fail_fraction * 100, failures, attempts, MAX_FAILURE_FRACTION * 100,
+            )
+            sys.exit(1)
 
 
 if __name__ == "__main__":

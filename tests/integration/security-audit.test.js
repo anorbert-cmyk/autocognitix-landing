@@ -149,9 +149,46 @@ describe('Secret & Credential Detection', () => {
 // --- innerHTML Safety Audit ---------------------------------------------------
 
 describe('innerHTML Safety Audit', () => {
-  // NOTE: This test is advisory, not blocking. It flags potential unsafe innerHTML
-  // usage for manual review. False positives are expected for computed/safe values.
-  // To make it blocking, uncomment the expect(unsafe).toHaveLength(0) below.
+  // NOTE: This test is NOW BLOCKING (previously advisory). An allow-list below
+  // records every .innerHTML = line that has been manually audited and confirmed
+  // safe. Anything not on the allow-list and not a safe computed value (numeric,
+  // escapeHTML-wrapped, etc.) will FAIL this test.
+  //
+  // HOW TO ADD AN ENTRY:
+  //   - Format: `relative/file/path.html:lineNumber`
+  //   - Only add entries whose innerHTML target is either (a) a static string
+  //     literal or (b) concatenates ONLY escapeHTML()-wrapped variables.
+  //   - If in doubt, refactor the code to use escapeHTML() instead of allow-listing.
+  const INNERHTML_ALLOWLIST = new Set([
+    'hu/eszkozok/megeri-megjavitani.html:794', // static spinner label
+    'hu/eszkozok/megeri-megjavitani.html:814', // static "frissítve" label
+    'hu/eszkozok/megeri-megjavitani.html:844', // static fallback label
+    'hu/eszkozok/megeri-megjavitani.html:927', // interpolates numeric uncertainty only
+    'hu/eszkozok/megeri-megjavitani.html:934', // static HTML, no user input
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:763', // static warning copy
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:878', // static spinner label
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:886', // static updated-from-backend label
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:894', // static header
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:906', // static fallback label
+    // EN mirrors of the above (see hu-en-parity.test.js for the pairing).
+    'en/tools/worth-repairing.html:794',
+    'en/tools/worth-repairing.html:814',
+    'en/tools/worth-repairing.html:844',
+    'en/tools/worth-repairing.html:927',
+    'en/tools/worth-repairing.html:934',
+    'en/tools/mot-predictor.html:763',
+    'en/tools/mot-predictor.html:878',
+    'en/tools/mot-predictor.html:886',
+    'en/tools/mot-predictor.html:894',
+    'en/tools/mot-predictor.html:906',
+    // Wave 2 line drift after <main>, <fieldset>, and i18n insertions
+    'hu/eszkozok/megeri-megjavitani.html:955', // shifted from :927 (numeric uncertainty only)
+    'en/tools/worth-repairing.html:953', // EN mirror, shifted from :927
+    // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
+    'hu/eszkozok/szerviz-kereso.html:576', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped)
+    'en/tools/workshop-finder.html:577',   // EN mirror of szerviz-kereso
+  ]);
+
   test('all innerHTML assignments with user-controllable data use escapeHtml()', async () => {
     const toolFiles = await getToolHtmlFiles();
     const unsafe = [];
@@ -209,12 +246,15 @@ describe('innerHTML Safety Audit', () => {
               /typeof/.test(segment);
 
             if (!isSafeComputed) {
-              unsafe.push({
-                file: relPath,
-                line: i + 1,
-                snippet: line.trim().substring(0, 120),
-                segment: segment.substring(0, 60),
-              });
+              const key = `${relPath}:${i + 1}`;
+              if (!INNERHTML_ALLOWLIST.has(key)) {
+                unsafe.push({
+                  file: relPath,
+                  line: i + 1,
+                  snippet: line.trim().substring(0, 120),
+                  segment: segment.substring(0, 60),
+                });
+              }
             }
           }
         }
@@ -228,15 +268,12 @@ describe('innerHTML Safety Audit', () => {
             `  ${u.file}:${u.line}\n    ${u.snippet}\n    Unescaped: ${u.segment}`
         )
         .join('\n');
-      // Report as warning -manual review needed for false positives
-      console.warn(
-        `Potential unsafe innerHTML assignments (review needed):\n${details}`
+      throw new Error(
+        `Unsafe innerHTML assignments found (wrap variables in escapeHTML() ` +
+        `or add the exact "file:line" to INNERHTML_ALLOWLIST after manual audit):\n${details}`
       );
     }
-    // This test documents findings; actual enforcement depends on project policy
-    // If strict enforcement is desired, uncomment:
-    // expect(unsafe).toHaveLength(0);
-    expect(true).toBe(true);
+    expect(unsafe).toHaveLength(0);
   });
 });
 

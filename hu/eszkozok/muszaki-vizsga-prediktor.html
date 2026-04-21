@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Műszaki vizsga prediktor: tudd meg előre, átmegy-e az autód a vizsgán. Add meg a márkát, km-órát és hibakódokat — AI-alapú előrejelzés kopásról, emissziós kockázatról és bukási esélyről.">
-  <meta name="keywords" content="műszaki vizsga, vizsga előrejelzés, autó vizsga, MOT teszt, emisszió vizsgálat, DTC hibakód, OBD2, műszaki vizsgáztatás, autó állapotfelmérés, kopás előrejelzés">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/muszaki-vizsga-prediktor.html">
@@ -194,6 +193,25 @@
       font-size: var(--text-body-sm);
       color: #92400e;
     }
+
+    /* A11y: <fieldset>/<legend> wrapper for radio groups — visually matches the
+       .form-label styling so the shift from <label> to <legend> is invisible.
+       WCAG 1.3.1 (Info and Relationships), WCAG 2.4.6 (Headings and Labels). */
+    .form-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0; /* fixes Firefox flex/grid overflow */
+    }
+    .form-legend {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      color: var(--color-base-dark);
+      margin-bottom: var(--space-sm);
+      padding: 0;
+    }
   </style>
 </head>
 <body>
@@ -219,7 +237,7 @@
         <a href="/hu/blog/" class="nav-link">Blog</a>
         <a href="/hu/#faq" class="nav-link">GYIK</a>
       </div>
-      <div class="lang-switcher"><a href="/hu/" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/" class="lang-option">EN</a></div>
+      <div class="lang-switcher"><a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/tools/mot-predictor.html" class="lang-option">EN</a></div>
       <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
     </div>
   </nav>
@@ -236,7 +254,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="vizsgaForm" novalidate>
+      <form class="tool-form" id="vizsgaForm">
         <div class="form-grid">
 
           <!-- Márka -->
@@ -271,14 +289,16 @@
 
           <!-- Üzemanyag -->
           <div class="form-group full-width">
-            <label class="form-label">Üzemanyag</label>
-            <div class="form-radio-group" id="fuelGroup">
-              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin"> Benzin</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel"> Dízel</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg"> LPG</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid"> Hibrid</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos"> Elektromos</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Üzemanyag</legend>
+              <div class="form-radio-group" id="fuelGroup">
+                <label class="form-radio-label"><input type="radio" name="fuel" value="benzin"> Benzin</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="dizel"> Dízel</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="lpg"> LPG</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid"> Hibrid</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos"> Elektromos</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- DTC hibakódok -->
@@ -290,12 +310,14 @@
 
           <!-- MIL lámpa -->
           <div class="form-group full-width">
-            <label class="form-label">MIL (motorfigyelmeztető) lámpa világít?</label>
-            <div class="form-radio-group" id="milGroup">
-              <label class="form-radio-label"><input type="radio" name="mil" value="igen"> Igen</label>
-              <label class="form-radio-label"><input type="radio" name="mil" value="nem"> Nem</label>
-              <label class="form-radio-label"><input type="radio" name="mil" value="nemtudom"> Nem tudom</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">MIL (motorfigyelmeztető) lámpa világít?</legend>
+              <div class="form-radio-group" id="milGroup">
+                <label class="form-radio-label"><input type="radio" name="mil" value="igen"> Igen</label>
+                <label class="form-radio-label"><input type="radio" name="mil" value="nem"> Nem</label>
+                <label class="form-radio-label"><input type="radio" name="mil" value="nemtudom"> Nem tudom</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- Submit -->
@@ -415,14 +437,20 @@
   (function() {
     'use strict';
 
-    // Preload DTC database for richer descriptions
-    if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
-      ToolCommon.loadDTCDatabase();
+    // Dev-mode flag for console debugging hooks in shared/js.
+    window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+    var CURRENT_YEAR = (window.VehicleDB && window.VehicleDB.CURRENT_YEAR) || new Date().getFullYear();
+
+    // Lazy DTC preload — defers the 641 KB XHR until the user focuses a DTC
+    // input (or the browser goes idle). See PERF-H2 in fix-lead5-performance.md.
+    if (typeof ToolCommon !== 'undefined' && ToolCommon.lazyLoadDTCDatabase) {
+      ToolCommon.lazyLoadDTCDatabase();
     }
 
     // ─── INIT FORM ───
     ToolCommon.setupBrandModelCascade('brand', 'model');
-    ToolCommon.populateYearSelect('year', 1995, 2026);
+    ToolCommon.populateYearSelect('year', 1995, CURRENT_YEAR);
 
     // Radio button visual selection
     document.querySelectorAll('.form-radio-label input').forEach(function(radio) {
@@ -666,7 +694,7 @@
         });
 
         // AGE DEDUCTION
-        var age = 2026 - year;
+        var age = CURRENT_YEAR - year;
         if (age > 10) {
           var ageDeduction = Math.min((age - 10) * 2, 20);
           score -= ageDeduction;

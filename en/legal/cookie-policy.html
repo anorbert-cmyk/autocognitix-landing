@@ -12,24 +12,26 @@
     <meta name="twitter:title" content="Cookie Policy - AutoCognitix" />
     <meta name="twitter:description" content="AutoCognitix Cookie Policy. Understand how we use cookies and tracking on our AI car diagnostics platform." />
     <title>Cookie Policy - AutoCognitix</title>
+    <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Cookie Policy",
       "description": "AutoCognitix Cookie Policy. Understand how we use cookies and tracking on our AI car diagnostics platform.",
-      "url": "https://www.autocognitix.com/en/legal/cookie-policy.html",
+      "url": "https://autocognitix.hu/en/legal/cookie-policy.html",
       "inLanguage": "en",
       "publisher": {
         "@type": "Organization",
         "name": "AutoCognitix",
-        "url": "https://www.autocognitix.com"
+        "url": "https://autocognitix.hu"
       }
     }
     </script>
-    <link rel="canonical" href="/en/legal/cookie-policy.html">
-    <link rel="alternate" hreflang="hu" href="/hu/legal/cookie-szabalyzat.html">
-    <link rel="alternate" hreflang="en" href="/en/legal/cookie-policy.html">
+    <link rel="canonical" href="https://autocognitix.hu/en/legal/cookie-policy.html">
+    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/legal/cookie-szabalyzat.html">
+    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/legal/cookie-policy.html">
+    <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/en/legal/cookie-policy.html">
     <style>
         :root {
             --primary: #FF6B35;
@@ -406,8 +408,13 @@
         <h1>Cookie Policy</h1>
         <div class="header-meta">
             <p><strong>Effective Date:</strong> March 21, 2026</p>
-            <p><strong>Last Updated:</strong> March 21, 2026</p>
-            <p><strong>Version:</strong> 1.0</p>
+            <p><strong>Last Updated:</strong> April 21, 2026</p>
+            <p><strong>Version:</strong> 1.1</p>
+        </div>
+
+        <div class="important-box">
+            <h3>What Changed in v1.1</h3>
+            <p>Version 1.1 (April 2026) reflects the deployment of our first-party cookie consent banner. Section 5 has been rewritten to accurately describe the banner that is now live on the site. The cookie storage method has changed: consent is now recorded in <code>localStorage</code> (not in a cookie) and expires after 6 months, after which the banner re-appears. The Functional cookie category has been merged into Strictly Necessary to reflect actual behaviour.</p>
         </div>
 
         <!-- Table of Contents -->
@@ -455,7 +462,7 @@
         <h2 id="3">3. Types of Cookies We Use</h2>
 
         <h3>3.1 Cookie Categories</h3>
-        <p>AutoCognitix uses cookies in the following categories:</p>
+        <p>AutoCognitix uses three categories of cookies. No analytics or marketing cookies load until you explicitly consent via the banner.</p>
 
         <table>
             <thead>
@@ -463,45 +470,27 @@
                     <th>Category</th>
                     <th>Purpose</th>
                     <th>Duration</th>
-                    <th>Required?</th>
-                    <th>Consent</th>
+                    <th>Requires Consent?</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Necessary/Essential</strong></td>
-                    <td>Authentication, security, platform functionality, CSRF protection</td>
-                    <td>Session to 24 months</td>
-                    <td>Yes</td>
-                    <td>No consent needed (legally required for security)</td>
-                </tr>
-                <tr>
-                    <td><strong>Functional</strong></td>
-                    <td>Remember user preferences, language settings, UI customization</td>
-                    <td>Up to 12 months</td>
-                    <td>No</td>
-                    <td>User consent required (can be implied by continued use)</td>
+                    <td><strong>Strictly Necessary</strong></td>
+                    <td>Session management, CSRF protection, language preference. The platform cannot function without these.</td>
+                    <td>Session to 12 months</td>
+                    <td>No — exempt under ePrivacy Directive Art. 5(3)</td>
                 </tr>
                 <tr>
                     <td><strong>Analytics</strong></td>
-                    <td>Google Analytics: page views, user behavior, traffic sources, device types</td>
-                    <td>Up to 24 months</td>
-                    <td>No</td>
-                    <td>Explicit user consent required (ePrivacy Directive)</td>
+                    <td>Pseudonymised data on how visitors use the site (e.g. PostHog, Google Analytics). Not loaded until consent is given.</td>
+                    <td>Up to 13 months (GA4 default)</td>
+                    <td>Yes — explicit opt-in required</td>
                 </tr>
                 <tr>
-                    <td><strong>Marketing/Advertising</strong></td>
-                    <td>Google Ads, Meta Pixel: track conversions, personalize ads, retargeting</td>
-                    <td>Up to 24 months</td>
-                    <td>No</td>
-                    <td>Explicit user consent required (ePrivacy Directive)</td>
-                </tr>
-                <tr>
-                    <td><strong>Social Media</strong></td>
-                    <td>LinkedIn, Facebook: enable social sharing, social login integration</td>
-                    <td>Varies by platform</td>
-                    <td>No</td>
-                    <td>Explicit user consent required</td>
+                    <td><strong>Marketing</strong></td>
+                    <td>Advertising conversion tracking and audience building (e.g. Meta Pixel, LinkedIn Insight Tag). Not loaded until consent is given.</td>
+                    <td>Up to 180 days</td>
+                    <td>Yes — explicit opt-in required</td>
                 </tr>
             </tbody>
         </table>
@@ -534,7 +523,7 @@
             <li><code>_gid</code> - Session identifier (expires 24 hours)</li>
             <li><code>_gat_gtag_UA_*</code> - Request throttling (expires 1 minute)</li>
         </ul>
-        <p>Google Analytics data is pseudonymized and your IP address is partially masked. You can opt out by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-Out Browser Extension</a>.</p>
+        <p>Google Analytics data is pseudonymized and your IP address is partially masked. You can opt out by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-Out Browser Extension</a>.</p>
 
         <h3>3.4 Marketing Cookies</h3>
         <p>We use advertising cookies to:</p>
@@ -565,31 +554,31 @@
                     <td><strong>Google Analytics</strong></td>
                     <td>User behavior analytics, traffic analysis</td>
                     <td>_ga, _gid, _gat_gtag_UA_*</td>
-                    <td><a href="https://policies.google.com/privacy" target="_blank">google.com/privacy</a></td>
+                    <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">google.com/privacy</a></td>
                 </tr>
                 <tr>
                     <td><strong>Google Ads</strong></td>
                     <td>Conversion tracking, remarketing, ad personalization</td>
                     <td>_gcl_au, frm, IDE</td>
-                    <td><a href="https://policies.google.com/privacy" target="_blank">google.com/privacy</a></td>
+                    <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">google.com/privacy</a></td>
                 </tr>
                 <tr>
                     <td><strong>Meta Pixel</strong></td>
                     <td>Conversion tracking, event monitoring, audience building</td>
                     <td>_fbp, _fbc</td>
-                    <td><a href="https://www.facebook.com/policies/" target="_blank">facebook.com/policies</a></td>
+                    <td><a href="https://www.facebook.com/policies/" target="_blank" rel="noopener noreferrer">facebook.com/policies</a></td>
                 </tr>
                 <tr>
                     <td><strong>LinkedIn Insight</strong></td>
                     <td>B2B analytics, conversion tracking</td>
                     <td>li_gc, li_sugr, bcookie</td>
-                    <td><a href="https://www.linkedin.com/legal/privacy-policy" target="_blank">linkedin.com/legal</a></td>
+                    <td><a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">linkedin.com/legal</a></td>
                 </tr>
                 <tr>
                     <td><strong>Stripe Payment</strong></td>
                     <td>Payment processing, fraud prevention</td>
                     <td>Various payment tokens</td>
-                    <td><a href="https://stripe.com/privacy" target="_blank">stripe.com/privacy</a></td>
+                    <td><a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">stripe.com/privacy</a></td>
                 </tr>
             </tbody>
         </table>
@@ -603,35 +592,35 @@
         <h2 id="5">5. Cookie Consent & Management</h2>
 
         <h3>5.1 Cookie Consent Banner</h3>
-        <p>When you first visit AutoCognitix, a cookie consent banner appears asking you to:</p>
+        <p>When you first visit AutoCognitix, a consent banner appears at the bottom of the screen. No analytics or marketing scripts load until you make a choice. The banner offers three options:</p>
         <ul>
-            <li><strong>Accept All:</strong> Enable all cookies (Necessary + Functional + Analytics + Marketing)</li>
-            <li><strong>Reject All:</strong> Disable all non-essential cookies</li>
-            <li><strong>Manage Preferences:</strong> Choose which cookie categories to enable</li>
+            <li><strong>Accept all:</strong> Enables Strictly Necessary + Analytics + Marketing cookies.</li>
+            <li><strong>Reject all:</strong> Only Strictly Necessary cookies are active. No tracking scripts load.</li>
+            <li><strong>Manage preferences:</strong> Opens a panel with three labelled toggles — one per category. Each toggle defaults to <strong>off</strong>. You choose what to enable.</li>
         </ul>
-        <p>Your consent choice is stored in a cookie and applied across the AutoCognitix platform. You can change your preferences at any time.</p>
+        <p>Your choice is stored in your browser's <code>localStorage</code> under the key <code>ac_cookie_consent</code> as a JSON record containing your category selections, a timestamp, and a schema version number. No consent tracking cookie is itself placed on your device without necessity. Consent expires after <strong>6 months</strong>; the banner reappears automatically to renew your choice.</p>
 
         <h3>5.2 Consent Requirements Under GDPR & ePrivacy Directive</h3>
-        <p>Under EU regulations (GDPR Article 7, ePrivacy Directive Article 5(3)), we must obtain your <strong>explicit consent</strong> before setting non-essential cookies. Consent must be:</p>
+        <p>Under EU regulations (GDPR Article 7, ePrivacy Directive Article 5(3)), we must obtain your <strong>explicit consent</strong> before setting non-essential cookies. Our banner is designed so that consent is:</p>
         <ul>
-            <li><strong>Freely given:</strong> Not a condition of using the Service</li>
-            <li><strong>Informed:</strong> You must understand what cookies do before consenting</li>
-            <li><strong>Specific:</strong> You consent to each cookie category separately</li>
-            <li><strong>Unambiguous:</strong> An affirmative action (clicking "Accept" or selecting preferences)</li>
-            <li><strong>Easy to withdraw:</strong> You can change your mind at any time</li>
+            <li><strong>Freely given:</strong> Rejecting all cookies does not block access to the site.</li>
+            <li><strong>Informed:</strong> Each category is described before you consent.</li>
+            <li><strong>Specific:</strong> Analytics and Marketing are separate toggles with separate explanations.</li>
+            <li><strong>Unambiguous:</strong> Requires an affirmative click. Closing the banner tab or scrolling does not count as consent.</li>
+            <li><strong>Easy to withdraw:</strong> The "Cookie preferences" link in the footer reopens the preference panel at any time.</li>
         </ul>
 
         <div class="important-box">
             <h3>No Pre-Checked Consent</h3>
-            <p>AutoCognitix does NOT use pre-checked boxes in the cookie consent banner. You must actively select which cookie categories you allow. Silence or inaction does NOT constitute consent.</p>
+            <p>AutoCognitix does NOT use pre-ticked boxes in the consent panel. All optional toggles default to <strong>off</strong>. Silence or inaction does NOT constitute consent (EDPB Guidelines 05/2020, §3.2.1).</p>
         </div>
 
         <h3>5.3 Managing Your Cookies</h3>
         <p>You can update your cookie preferences at any time by:</p>
         <ul>
-            <li>Clicking the cookie settings icon in the footer of any page</li>
-            <li>Accessing Settings → Privacy → Cookie Preferences in your account</li>
-            <li>Contacting support@autocognitix.hu</li>
+            <li>Clicking the <strong>"Cookie preferences"</strong> link in the footer of any page. This reopens the preferences panel immediately.</li>
+            <li>Clearing <code>localStorage</code> in your browser developer tools (key: <code>ac_cookie_consent</code>). The banner will reappear on your next visit.</li>
+            <li>Contacting <a href="mailto:privacy@autocognitix.hu">privacy@autocognitix.hu</a></li>
         </ul>
 
         <!-- Section 6 -->
@@ -679,10 +668,10 @@
         <h3>6.3 Opt-Out Services</h3>
         <p>Some advertisers offer opt-out mechanisms:</p>
         <ul>
-            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-Out Browser Extension</a></li>
-            <li><strong>Meta (Facebook):</strong> <a href="https://www.facebook.com/ads/preferences/" target="_blank">Facebook Ads Preferences</a></li>
-            <li><strong>Network Advertising Initiative:</strong> <a href="https://optout.networkadvertising.org/" target="_blank">NAI Consumer Opt-Out</a></li>
-            <li><strong>Digital Advertising Alliance (DAA):</strong> <a href="https://optout.aboutads.info/" target="_blank">DAA Consumer Choice</a></li>
+            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-Out Browser Extension</a></li>
+            <li><strong>Meta (Facebook):</strong> <a href="https://www.facebook.com/ads/preferences/" target="_blank" rel="noopener noreferrer">Facebook Ads Preferences</a></li>
+            <li><strong>Network Advertising Initiative:</strong> <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener noreferrer">NAI Consumer Opt-Out</a></li>
+            <li><strong>Digital Advertising Alliance (DAA):</strong> <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer">DAA Consumer Choice</a></li>
         </ul>
 
         <div class="important-box">
@@ -752,7 +741,7 @@
             <li><strong>Address:</strong> 1125 Budapest, Szilágyi Erzsébet fasor 22/c</li>
             <li><strong>Email:</strong> ugyfelszolgalat@naih.hu</li>
             <li><strong>Phone:</strong> +36 1 391-1400</li>
-            <li><strong>Website:</strong> <a href="https://www.naih.hu" target="_blank">www.naih.hu</a></li>
+            <li><strong>Website:</strong> <a href="https://www.naih.hu" target="_blank" rel="noopener noreferrer">www.naih.hu</a></li>
         </ul>
 
         <div class="back-to-top">
@@ -770,6 +759,7 @@
             <a href="/en/legal/terms-of-service.html">Terms of Service</a>
             <a href="/en/legal/ai-disclaimer.html">AI Disclaimer</a>
             <a href="/hu/legal/cookie-szabalyzat.html">Hungarian Cookies</a>
+            <a href="#" onclick="if(window.CookieConsent){CookieConsent.reset();}return false;">Cookie preferences</a>
             <a href="/en/tools/">Tools</a>
             <a href="/en/">Home</a>
         </div>

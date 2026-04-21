@@ -6,38 +6,79 @@ on:
   pull_request:
     branches: [main]
 
+# Cancel stale runs on the same ref (push-after-push, PR re-push).
+# cancel-in-progress: true is safe here because this pipeline only reads;
+# no deploys, no commits, no external mutations (contrast with price-update.yml).
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
+
+# Least privilege: no job here needs write access to the repo (DEVOPS-M8, H5).
+permissions:
+  contents: read
+
+# ---------------------------------------------------------------------------
+# DEVOPS-M6: All third-party actions are pinned by full commit SHA, not tag.
+# Rationale: tj-actions/changed-files CVE-2025-30066 (March 2025) demonstrated
+# that mutable tags can be repointed by a compromised maintainer to inject
+# secret-exfiltrating code. GitHub's own SECURITY.md and the OpenSSF
+# Scorecard "Pinned-Dependencies" check both recommend SHA pinning for
+# supply-chain resilience. Dependabot (see .github/dependabot.yml) opens
+# weekly PRs that bump the SHA and keep the comment in sync with the tag.
+# ---------------------------------------------------------------------------
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Docker build
-        run: docker build -t autocognitix-landing-test .
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349  # v3.7.1
+      - name: Docker build (with gha cache)
+        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75  # v6.9.0
+        with:
+          context: .
+          load: true
+          tags: autocognitix-landing-test:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Nginx config validation
-        run: docker run --rm autocognitix-landing-test nginx -t
+        run: docker run --rm autocognitix-landing-test:latest nginx -t
       - name: Verify pages load
         run: |
           docker rm -f test-container 2>/dev/null || true
-          docker run -d --name test-container -p 8080:8080 autocognitix-landing-test
-          sleep 2
+          docker run -d --name test-container -p 8080:8080 autocognitix-landing-test:latest
+          # Wait for proxy + nginx to start (proxy takes ~2-3s on first boot).
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            curl -f -s http://localhost:8080/proxy/health >/dev/null && break
+            sleep 1
+          done
           curl -f -s http://localhost:8080/hu/ || { echo "FAIL: /hu/"; curl http://localhost:8080/hu/; exit 1; }
           curl -f -s http://localhost:8080/en/ || { echo "FAIL: /en/"; curl http://localhost:8080/en/; exit 1; }
           curl -f -s http://localhost:8080/hu/eszkozok/megeri-megjavitani.html || { echo "FAIL: /hu/eszkozok/megeri-megjavitani.html"; curl http://localhost:8080/hu/eszkozok/megeri-megjavitani.html; exit 1; }
           curl -f -s http://localhost:8080/en/tools/worth-repairing.html || { echo "FAIL: /en/tools/worth-repairing.html"; curl http://localhost:8080/en/tools/worth-repairing.html; exit 1; }
           curl -f -s http://localhost:8080/sitemap.xml || { echo "FAIL: /sitemap.xml"; curl http://localhost:8080/sitemap.xml; exit 1; }
+      - name: Verify proxy sidecar health (DEVOPS-M7)
+        run: |
+          # Guards against silent pip install failure — /proxy/health must return 200 JSON.
+          curl -f -s http://localhost:8080/proxy/health \
+            | grep -q '"status":"ok"' \
+            || { echo "FAIL: /proxy/health"; curl -v http://localhost:8080/proxy/health; exit 1; }
       - name: Verify security headers
         run: |
           docker rm -f header-test 2>/dev/null || true
-          docker run -d --name header-test -p 8081:8080 autocognitix-landing-test
-          sleep 2
+          docker run -d --name header-test -p 8081:8080 autocognitix-landing-test:latest
+          # Give container time to boot before probing.
+          for i in 1 2 3 4 5; do
+            curl -f -sI http://localhost:8081/hu/ >/dev/null && break
+            sleep 1
+          done
           HEADERS=$(curl -f -sI http://localhost:8081/hu/ || { echo "FAIL: could not fetch headers"; curl http://localhost:8081/hu/; exit 1; })
           echo "$HEADERS" | grep -i "X-Frame-Options" || exit 1
           echo "$HEADERS" | grep -i "X-Content-Type-Options" || exit 1
           echo "$HEADERS" | grep -i "Referrer-Policy" || exit 1
+          echo "$HEADERS" | grep -i "Content-Security-Policy" || exit 1
+          echo "$HEADERS" | grep -i "Strict-Transport-Security" || exit 1
       - name: Cleanup Docker containers
         if: always()
         run: |
@@ -47,8 +88,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af  # v4.1.0
         with:
           node-version: 20
           cache: npm
@@ -57,18 +98,61 @@ jobs:
         run: npm run test:unit
       - name: Integration tests
         run: npm run test:integration
+      # A11y added per test-strategist Wave 1 ask (fix-lead6-tests.md, section 3).
+      # These are local DOM tests via jsdom — no external deps, block PRs normally.
+      - name: Accessibility tests
+        run: npm run test:a11y
+      # Smoke tests hit the live backend. When BACKEND_URL is unset, the suite
+      # `describe.skipIf(!BACKEND_URL)` skips cleanly (see tests/smoke/api-smoke.test.js).
+      # continue-on-error: true because a flaky prod backend must never block a PR.
+      # Failures still show up in the job log for oncall to review.
+      - name: Smoke tests (BACKEND_URL-gated, non-blocking)
+        run: npm run test:smoke
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+        continue-on-error: true
       - name: Upload coverage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
         with:
           name: coverage
           path: coverage/
 
+  # --------------------------------------------------------------------------
+  # Proxy pytest suite — guards the Python sidecar (proxy/main.py) that nginx
+  # proxies /proxy/* requests to. Fifteen tests across rate-limiting, CSRF,
+  # cache, DTC regex, stack-trace leakage, and body-size limits. See
+  # fix-lead6-tests.md section 1.1 for the full test inventory.
+  # --------------------------------------------------------------------------
+  proxy-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: proxy
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: proxy/requirements-dev.txt
+      - name: Install dev dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Run pytest with coverage
+        run: pytest -v --cov=main --cov-report=xml --cov-report=term
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
+        with:
+          name: proxy-coverage
+          path: proxy/coverage.xml
+          if-no-files-found: warn
+
   html-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af  # v4.1.0
         with:
           node-version: 20
           cache: npm

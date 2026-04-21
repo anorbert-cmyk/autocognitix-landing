@@ -1,8 +1,16 @@
 /**
  * AutoCognitix - Hungarian Vehicle Market Database
  * Top 25 brands with models, segments, and base MSRP for depreciation
+ *
+ * CURRENT_YEAR is computed once at script load from the runtime clock.
+ * Exposed on VehicleDB so tool pages and tests can share the same reference.
  */
+var VDB_CURRENT_YEAR = new Date().getFullYear();
+
 window.VehicleDB = {
+  /** Current year reference used by depreciation math. Exposed for testability. */
+  CURRENT_YEAR: VDB_CURRENT_YEAR,
+
   brands: {
     "Suzuki": {
       models: ["Swift", "Vitara", "SX4", "SX4 S-Cross", "Ignis", "Baleno", "Jimny", "Alto", "Splash", "Wagon R+"],
@@ -159,7 +167,7 @@ window.VehicleDB = {
     var brandData = this.brands[brand];
     if (!brandData) return 3000000;
     var msrp = brandData.avgMsrp;
-    var age = Math.max(2026 - year, 0);
+    var age = Math.max(VDB_CURRENT_YEAR - year, 0);
     if (age === 0) return msrp;
     var d1 = 0.22;
     var d = 0.12;

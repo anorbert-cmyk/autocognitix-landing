@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Szabályzat — AutoCognitix</title>
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
   <meta name="description" content="Az AutoCognitix Cookie Szabályzata. Tudjon meg az alkalmazott cookie-król, azok céljáról és a böngészési beállítások menedzseléséről.">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="Cookie Szabályzat — AutoCognitix" />
@@ -273,130 +274,99 @@
     <div class="container">
       <header class="legal-header">
         <h1>Cookie Szabályzat</h1>
-        <p class="legal-meta">Utolsó frissítés: 2026. március 21. | Verzió: 1.0</p>
+        <p class="legal-meta">Utolsó frissítés: 2026. április 21. | Verzió: 1.1</p>
       </header>
 
       <div class="legal-content">
+
+        <div class="legal-highlight">
+          <strong>Mi változott 1.1-es verzióban (2026. április):</strong> Ez a verzió az oldalon most már élő, első féltől származó cookie-hozzájárulási banner megjelenésének dokumentálása. A 3. fejezet cookie-kategóriái az aktuális megvalósítást tükrözik (a Funkcionális kategória beolvadt a Szükséges kategóriába). Az 5. fejezet pontosan írja le az élő bannert. A hozzájárulás tárolási módja megváltozott: a döntés mostantól a <code>localStorage</code>-ban (nem sütiben) tárolódik, 6 hónapos érvényességgel.
+        </div>
+
         <h2>1. Mi a Cookie?</h2>
         <p>A "cookie" egy kis szöveges fájl, amely az Ön böngészőjében tárolódik, amikor az AutoCognitix weboldalt vagy alkalmazást látogat meg. A cookie-k a felhasználói élmény javítására, az alkalmazás működésének elemzésére és a biztonsági szolgáltatások nyújtására szolgálnak.</p>
         <p>Az AutoCognitix az ePrivacy Direktíva és az Általános Adatvédelmi Rendelet (GDPR) szerinti cookie-kat használ.</p>
 
         <h2>2. Cookie Típusai</h2>
-        
+        <p>Az AutoCognitix három cookie-kategóriát használ. Analitikai és marketing szkriptek <strong>kizárólag az Ön hozzájárulása után töltődnek be</strong>.</p>
+
         <h3>2.1. Szükséges Cookie-k</h3>
-        <p>Ezek az cookie-k az alkalmazás alapvető működéséhez szükségesek. Ők nem igényelnek külön hozzájárulást:</p>
+        <p>Ezek a cookie-k az alkalmazás alapvető működéséhez szükségesek. Az ePrivacy Direktíva 5. cikk (3) bekezdése szerint kivételt képeznek a hozzájárulási kötelezettség alól:</p>
         <table>
           <tr>
             <th>Cookie Név</th>
             <th>Cél</th>
-            <th>Tartalom</th>
             <th>Lejárat</th>
           </tr>
           <tr>
             <td><code>session_id</code></td>
             <td>Felhasználói munkamenet azonosítása</td>
-            <td>Véletlenszerű token</td>
             <td>Munkamenet vége / 24 óra</td>
           </tr>
           <tr>
-            <td><code>auth_token</code></td>
-            <td>JWT hitelesítési token</td>
-            <td>Titkosított token</td>
-            <td>30 nap vagy kijelentkezésig</td>
-          </tr>
-          <tr>
             <td><code>csrf_token</code></td>
-            <td>CSRF (Cross-Site Request Forgery) támadások elleni védelem</td>
-            <td>Biztonsági token</td>
+            <td>CSRF-támadások elleni védelem</td>
             <td>Munkamenet vége</td>
           </tr>
           <tr>
-            <td><code>ui_preferences</code></td>
-            <td>Felhasználói felület beállításainak mentése (pl. sötét mód)</td>
-            <td>JSON formátum</td>
-            <td>1 év</td>
-          </tr>
-        </table>
-
-        <h3>2.2. Funkcionális Cookie-k</h3>
-        <p>Ezek az cookie-k az alkalmazás működésének javítására szolgálnak, az Ön előzményeinek megjegyzésével:</p>
-        <table>
-          <tr>
-            <th>Cookie Név</th>
-            <th>Cél</th>
-            <th>Hozzájárulás Szükséges</th>
-            <th>Lejárat</th>
-          </tr>
-          <tr>
-            <td><code>language_preference</code></td>
+            <td><code>locale</code></td>
             <td>Nyelvbeállítás (HU/EN) megjegyzése</td>
-            <td>Nem</td>
-            <td>1 év</td>
-          </tr>
-          <tr>
-            <td><code>theme_preference</code></td>
-            <td>Vizuális téma (világos/sötét) megjegyzése</td>
-            <td>Nem</td>
-            <td>1 év</td>
-          </tr>
-          <tr>
-            <td><code>recently_diagnosed</code></td>
-            <td>Legutóbbi diagnosztikai keresések gyors eléréséhez</td>
-            <td>Igen</td>
-            <td>30 nap</td>
+            <td>12 hónap</td>
           </tr>
         </table>
 
-        <h3>2.3. Analitikai Cookie-k</h3>
-        <p>Az AutoCognitix analitikai cookie-kat használ az alkalmazás teljesítményének és a felhasználói viselkedésnek az értékeléséhez:</p>
+        <h3>2.2. Analitikai Cookie-k</h3>
+        <p>Az AutoCognitix analitikai cookie-kat használ az oldal teljesítményének és a látogatói viselkedés megértéséhez. Ezek <strong>kizárólag kifejezett hozzájárulással</strong> töltődnek be:</p>
         <table>
           <tr>
             <th>Cookie Név</th>
             <th>Szolgáltató</th>
             <th>Cél</th>
-            <th>Hozzájárulás Szükséges</th>
+            <th>Lejárat</th>
           </tr>
           <tr>
             <td><code>_ga</code></td>
             <td>Google Analytics</td>
-            <td>Felhasználó azonosítása és munkamenet-nyomkövetés</td>
-            <td>Igen</td>
+            <td>Látogató azonosítása (pszeudoanonimizált)</td>
+            <td>13 hónap</td>
           </tr>
           <tr>
             <td><code>_ga_*</code></td>
             <td>Google Analytics</td>
             <td>Eseménytárolás és munkamenet-azonosítás</td>
-            <td>Igen</td>
+            <td>13 hónap</td>
           </tr>
         </table>
 
-        <h3>2.4. Marketing Cookie-k</h3>
-        <p>Ezek az cookie-k az Ön érdekei szerinti releváns hirdetések megjelenítésére szolgálnak:</p>
+        <h3>2.3. Marketing Cookie-k</h3>
+        <p>Hirdetési konverziók mérésére és célzott kampányokhoz. <strong>Kizárólag kifejezett hozzájárulással</strong> töltődnek be:</p>
         <ul>
-          <li><strong>Meta (Facebook) Pixel:</strong> Felhasználó-viselkedés nyomkövetése és hirdetési célzáshoz</li>
-          <li><strong>Google Ads:</strong> Hirdetési konverziók nyomkövetésének és célzás optimalizálásához</li>
-          <li><strong>LinkedIn:</strong> B2B hirdetési kampányok követéséhez</li>
+          <li><strong>Meta (Facebook) Pixel</strong> (<code>_fbp</code>, <code>_fbc</code>): hirdetési konverziók és közönség-szegmentálás</li>
+          <li><strong>LinkedIn Insight Tag</strong> (<code>li_gc</code>, <code>bcookie</code>): B2B hirdetési kampányok mérése</li>
         </ul>
-        <p>Ezekhez a cookie-khoz <strong>kifejezett hozzájárulás szükséges</strong> az oldalra történő első látogatáskor.</p>
+        <p>Ezekhez a cookie-khoz <strong>kifejezett hozzájárulás szükséges</strong>, amelyet az oldalon megjelenő banner segítségével adhat meg.</p>
 
         <h2>3. Cookie Hozzájárulás</h2>
 
         <h3>3.1. Hogyan Kezelünk Hozzájárulást</h3>
-        <p>Az AutoCognitix az alábbiak szerint kezeli a cookie-k hozzájárulásait:</p>
+        <p>Az AutoCognitix oldalán az első látogatáskor egy hozzájárulási sáv jelenik meg az oldal alján. Addig <strong>egyetlen analitikai vagy marketing szkript sem töltődik be</strong>, amíg nem választ. A banner három lehetőséget kínál:</p>
         <ul>
-          <li><strong>Szükséges cookie-k:</strong> Automatikusan telepítve, hozzájárulás nélkül</li>
-          <li><strong>Funkcionális cookie-k:</strong> Alap hozzájárulás kell (közvetett, bejelentkezésből)</li>
-          <li><strong>Analitikai és marketing cookie-k:</strong> Kifejezett hozzájárulás szükséges</li>
+          <li><strong>Mindet elfogadom:</strong> Szükséges + Analitikai + Marketing cookie-k engedélyezése.</li>
+          <li><strong>Mindet elutasítom:</strong> Csak a Szükséges cookie-k maradnak aktívak. Nyomkövető szkriptek nem töltődnek be.</li>
+          <li><strong>Beállítások kezelése:</strong> Megnyit egy panelt három kikapcsolható kapcsolóval (kategorianként). Az opcionális kapcsolók alapértelmezetten <strong>ki</strong> vannak kapcsolva.</li>
         </ul>
+        <p>A döntés a böngésző <code>localStorage</code>-ában tárolódik (<code>ac_cookie_consent</code> kulcs alatt) JSON formátumban, kategória-választásokkal, időbélyeggel és sémaverziószámmal. A hozzájárulás <strong>6 hónap</strong> elteltével lejár; a banner automatikusan újra megjelenik.</p>
+
+        <div class="legal-highlight">
+          <strong>Nincs előre bepipált jelölőnégyzet:</strong> Az opcionális toggle-ök alapértelmezetten kikapcsolva vannak. A hallgatás vagy az oldal görgetése nem minősül hozzájárulásnak (EDPB 05/2020 iránymutatás, §3.2.1).
+        </div>
 
         <h3>3.2. Hozzájárulás Visszavonása</h3>
-        <p>Az Ön hozzájárulásainak kezeléséhez:</p>
+        <p>Cookie-beállításait bármikor módosíthatja:</p>
         <ol>
-          <li>Nyissa meg az AutoCognitix Beállításokat</li>
-          <li>Kattintson az "Adatvédelem és Cookie-k" lehetőségre</li>
-          <li>Kattintson a "Cookie Beállítások Kezelése" gombra</li>
-          <li>Válassza ki, mely típusú cookie-kat szeretne engedélyezni</li>
-          <li>Kattintson a "Mentés" gombra</li>
+          <li>Az oldal láblécében lévő <strong>"Cookie-beállítások"</strong> linkre kattintva — azonnal megnyílik a preferencia-panel.</li>
+          <li>A böngésző fejlesztői eszközeiben a <code>localStorage</code> <code>ac_cookie_consent</code> kulcsának törlésével. A banner a következő látogatáskor újra megjelenik.</li>
+          <li>A <a href="mailto:privacy@autocognitix.hu">privacy@autocognitix.hu</a> e-mail-cím megírásával.</li>
         </ol>
 
         <h2>4. Harmadik Fél Cookie-k</h2>
@@ -515,6 +485,7 @@
         <a href="https://autocognitix.hu/hu/legal/felhasznalasi-feltetelek.html">Felhasználási Feltételek</a>
         <a href="https://autocognitix.hu/hu/legal/ai-felelossegi-nyilatkozat.html">AI Felelőségi Nyilatkozat</a>
         <a href="https://autocognitix.hu/hu/">Kezdőlap</a>
+        <a href="#" onclick="if(window.CookieConsent){CookieConsent.reset();}return false;">Cookie-beállítások</a>
       </div>
       <p>&copy; 2026 AutoCognitix Kft. Minden jog fenntartva.</p>
     </div>

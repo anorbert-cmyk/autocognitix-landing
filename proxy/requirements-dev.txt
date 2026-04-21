@@ -1,0 +1,12 @@
+# Dev/test dependencies for the landing proxy.
+# Install with: pip install -r proxy/requirements-dev.txt
+# Run tests with: cd proxy && pytest
+
+-r requirements.txt
+
+pytest>=8.0,<9
+pytest-asyncio>=0.23,<0.25
+pytest-mock>=3.12
+# httpx is already a prod dep; respx pins the same line for wire-mocking.
+respx>=0.21,<0.22
+# TestClient import path: starlette.testclient.TestClient (already vendors httpx).

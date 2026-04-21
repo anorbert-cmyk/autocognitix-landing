@@ -1,9 +1,26 @@
 User-agent: *
 Allow: /
+
+# Transactional pages — not useful for search
+Disallow: /hu/confirm.html
+Disallow: /en/confirm.html
+Disallow: /unsubscribe.html
+
+# Internal project files — never index
+Disallow: /*.bak$
+Disallow: /*.backup$
+Disallow: /*.old$
+Disallow: /node_modules/
+Disallow: /tasks/
+Disallow: /scripts/
+Disallow: /seo-strategy/
+Disallow: /seo/
+Disallow: /communication/
+Disallow: /market-research/
+Disallow: /design/
+Disallow: /content/
+Disallow: /legal/
+
+# /hu/legal/ and /en/legal/ are intentionally crawlable — real user-facing pages
+
 Sitemap: https://autocognitix.hu/sitemap.xml
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /

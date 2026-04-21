@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+tasks/
+proxy/.pytest_cache/
+proxy/__pycache__/
+proxy/tests/__pycache__/
+__pycache__/
+*.pyc
+.vscode/
+.idea/

@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Calculate whether it's worth repairing your car. Vehicle valuation, repair cost analysis, and 4-factor decision algorithm.">
-  <meta name="keywords" content="worth repairing, car repair cost, car market value, repair or replace, car calculator, car repair calculator, car valuation">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/en/tools/worth-repairing.html">
@@ -262,6 +261,24 @@
         display: none;
       }
     }
+
+    /* A11y: <fieldset>/<legend> wrapper for radio groups.
+       WCAG 1.3.1 (Info and Relationships), WCAG 2.4.6 (Headings and Labels). */
+    .form-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+    .form-legend {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      color: var(--color-base-dark);
+      margin-bottom: var(--space-sm);
+      padding: 0;
+    }
   </style>
 </head>
 <body>
@@ -306,7 +323,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="repairForm" novalidate>
+      <form class="tool-form" id="repairForm">
         <div class="form-grid">
 
           <!-- Vehicle data -->
@@ -338,25 +355,30 @@
             <input class="form-input" type="number" id="mileage" min="0" max="999999" placeholder="e.g. 185000" required>
           </div>
 
+          <!-- NOTE: radio values are canonical HU enums shared with the backend API. DO NOT localize. -->
           <div class="form-group">
-            <label class="form-label">Fuel Type</label>
-            <div class="form-radio-group" id="fuelGroup">
-              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin" required>Petrol</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel">Diesel</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg">LPG</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid">Hybrid</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos">Electric</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Fuel Type</legend>
+              <div class="form-radio-group" id="fuelGroup">
+                <label class="form-radio-label"><input type="radio" name="fuel" value="benzin" required>Petrol</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="dizel">Diesel</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="lpg">LPG</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid">Hybrid</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos">Electric</label>
+              </div>
+            </fieldset>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Condition</label>
-            <div class="form-radio-group" id="conditionGroup">
-              <label class="form-radio-label"><input type="radio" name="condition" value="kituno" required>Excellent</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="jo">Good</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="kozepes">Fair</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="rossz">Poor</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Condition</legend>
+              <div class="form-radio-group" id="conditionGroup">
+                <label class="form-radio-label"><input type="radio" name="condition" value="kituno" required>Excellent</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="jo">Good</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="kozepes">Fair</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="rossz">Poor</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- History -->
@@ -375,11 +397,13 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Service Book</label>
-            <div class="form-radio-group" id="serviceGroup">
-              <label class="form-radio-label"><input type="radio" name="service" value="igen" required>Yes</label>
-              <label class="form-radio-label"><input type="radio" name="service" value="nem">No</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Service Book</legend>
+              <div class="form-radio-group" id="serviceGroup">
+                <label class="form-radio-label"><input type="radio" name="service" value="igen" required>Yes</label>
+                <label class="form-radio-label"><input type="radio" name="service" value="nem">No</label>
+              </div>
+            </fieldset>
           </div>
 
           <div class="form-group">
@@ -539,6 +563,11 @@
   (function() {
     'use strict';
 
+    // Dev-mode flag for console debugging hooks in shared/js.
+    window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+    var CURRENT_YEAR = (window.VehicleDB && window.VehicleDB.CURRENT_YEAR) || new Date().getFullYear();
+
     // ─── Init form controls ───
     document.addEventListener('DOMContentLoaded', function() {
       // Preload real market prices
@@ -547,7 +576,7 @@
       }
 
       ToolCommon.setupBrandModelCascade('brand', 'model');
-      ToolCommon.populateYearSelect('year', 1995, 2026);
+      ToolCommon.populateYearSelect('year', 1995, CURRENT_YEAR);
 
       // Radio button visual selection
       document.querySelectorAll('.form-radio-label').forEach(function(label) {
@@ -634,7 +663,7 @@
       var hasServiceBook = service === 'igen';
 
       // ─── Calculate market value ───
-      var age = Math.max(2026 - year, 0);
+      var age = Math.max(CURRENT_YEAR - year, 0);
       if (mileage === 0 && age > 2) {
         if (!confirm('0 km on a ' + age + '-year-old car is unusual. Are you sure the data is correct?')) {
           return;

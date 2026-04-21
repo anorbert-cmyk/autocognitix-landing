@@ -42,6 +42,12 @@ log = logging.getLogger("hasznaltauto")
 SITEMAP_INDEX_URL = "https://www.hasznaltauto.hu/sitemap/sitemap_index.xml"
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
+# Sanity bounds for HUF prices (300k HUF – 200M HUF).
+# Lower: reject 1-HUF "ask for quote" entries.
+# Upper: reject obvious mis-scrapes (price typed with extra zeros).
+HUF_PRICE_MIN = 300_000
+HUF_PRICE_MAX = 200_000_000
+
 # ---------------------------------------------------------------------------
 # Config import (local)
 # ---------------------------------------------------------------------------
@@ -406,19 +412,44 @@ def parse_listing(html: str, url: str) -> Optional[Dict[str, Any]]:
 def aggregate_by_year(
     listings: List[Dict[str, Any]],
 ) -> Dict[str, Dict[str, Any]]:
-    """Group listings by year and compute min/median/max price stats."""
+    """
+    Group listings by year and compute min/median/max price stats.
+
+    Applies URL-based dedup (listings can appear across sitemap shards) and
+    HUF sanity bounds (reject < HUF_PRICE_MIN and > HUF_PRICE_MAX).
+    """
     by_year: Dict[int, List[int]] = defaultdict(list)
     no_year: List[int] = []
+    seen_urls: set[str] = set()
+    rejected_bounds = 0
+    rejected_dup = 0
 
     for item in listings:
+        url = item.get("source_url")
+        if url:
+            if url in seen_urls:
+                rejected_dup += 1
+                continue
+            seen_urls.add(url)
+
         price = item.get("price")
         if not price or price <= 0:
             continue
+        if price < HUF_PRICE_MIN or price > HUF_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
         year = item.get("year")
         if year and 1990 <= year <= 2030:
             by_year[year].append(price)
         else:
             no_year.append(price)
+
+    if rejected_bounds or rejected_dup:
+        log.info(
+            "aggregate_by_year: rejected %d out-of-bounds, %d duplicate URLs",
+            rejected_bounds, rejected_dup,
+        )
 
     result = {}
     for year in sorted(by_year.keys()):

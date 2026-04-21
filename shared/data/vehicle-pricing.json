@@ -1,7 +1,0 @@
-{
-  "_meta": {
-    "source": "fallback-estimation",
-    "updated": "2026-03-25",
-    "note": "Estimated values. Will be replaced by real DB export when BACKEND_DB_READ_URL is configured."
-  }
-}

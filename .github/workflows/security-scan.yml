@@ -1,0 +1,104 @@
+name: Security scan
+
+# Image vulnerability scan via Trivy. Runs on push/PR to main and weekly via
+# schedule (catches newly disclosed CVEs in the pinned base image even when
+# the repo is quiet).
+#
+# Rationale (DEVOPS-M6): Dockerfile pins `nginx:1.27-alpine3.20`, which will
+# age. Without a recurring scan, a newly disclosed libssl/apk/openssl CVE
+# would sit undetected until the next Dependabot Docker bump. Weekly scan +
+# SARIF upload means GitHub Security tab surfaces issues on its own schedule.
+#
+# Severity gate: CRITICAL,HIGH only. MEDIUM/LOW are noise at the image layer
+# (base distro tracker catches those; acting on every MEDIUM burns oncall time).
+#
+# Security note on expression interpolation: this workflow only interpolates
+# github.sha (GitHub-generated, format: 40-char hex, not user-controlled).
+# No event payload fields (issue.title, pull_request.body, head_ref, etc.)
+# are passed to run: steps — those are the unsafe-context inputs per
+# https://github.blog/security/vulnerability-research/how-to-catch-github-actions-workflow-injections-before-attackers-do/
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Mondays 06:00 UTC — early in the week so fixes can land before weekend freeze.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: security-scan-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  # Required to upload SARIF results to the GitHub Security tab.
+  security-events: write
+
+jobs:
+  trivy:
+    name: Trivy image scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349  # v3.7.1
+
+      - name: Build image for scanning
+        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75  # v6.9.0
+        with:
+          context: .
+          load: true
+          tags: autocognitix-landing-scan:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Trivy vulnerability scan (SARIF)
+        # SHA pinned to v0.28.0 per DEVOPS-M6 supply-chain guidance.
+        uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8  # v0.28.0
+        with:
+          image-ref: autocognitix-landing-scan:${{ github.sha }}
+          format: sarif
+          output: trivy-results.sarif
+          severity: 'CRITICAL,HIGH'
+          # Ignore unfixed CVEs — cannot action them until base image updates.
+          # Dependabot Docker ecosystem (see .github/dependabot.yml) opens the PR.
+          ignore-unfixed: true
+          # exit-code 0 here — SARIF upload step publishes findings to Security
+          # tab regardless. The table-format step below returns non-zero for
+          # log visibility but is wrapped in continue-on-error.
+          exit-code: '0'
+          limit-severities-for-sbom: true
+
+      - name: Trivy scan (table output for job log readability)
+        # Second run with table format so reviewers can read results inline.
+        # Cheap because Trivy DB is cached from the prior step.
+        uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8  # v0.28.0
+        with:
+          image-ref: autocognitix-landing-scan:${{ github.sha }}
+          format: table
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
+          exit-code: '1'  # surfaced as warning via continue-on-error below
+        continue-on-error: true
+
+      - name: Upload Trivy SARIF to Security tab
+        # `if: always()` so a scanner error still publishes a partial SARIF.
+        if: always()
+        uses: github/codeql-action/upload-sarif@4f3212b61783c3c68e8309a0f18a699764811cda  # v3.27.0
+        with:
+          sarif_file: trivy-results.sarif
+          category: trivy-image
+
+      - name: Upload raw SARIF as artifact
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
+        with:
+          name: trivy-sarif
+          path: trivy-results.sarif
+          if-no-files-found: warn
+          retention-days: 30

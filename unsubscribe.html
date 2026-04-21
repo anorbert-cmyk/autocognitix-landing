@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEC-H1: keep unsubscribe pages out of search + link prefetchers -->
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="referrer" content="no-referrer">
     <title>Unsubscribe | AutoCognitix</title>
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -67,6 +70,31 @@
             margin-bottom: 30px;
         }
 
+        .primary-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 14px 32px;
+            background-color: #D97757;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease, background-color 0.2s ease;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            background-color: #C26243;
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .back-link {
             display: inline-block;
             margin-top: 20px;
@@ -88,6 +116,16 @@
             background-color: #E5E5E7;
             margin: 30px 0;
         }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error-msg {
+            color: #B23A3A;
+            font-size: 14px;
+            margin-top: 12px;
+        }
     </style>
 </head>
 <body>
@@ -96,39 +134,177 @@
     </header>
 
     <div class="container">
-        <div class="card">
-            <h2>Sikeresen leiratkoztál</h2>
-            <h2>You have been unsubscribed</h2>
+        <!-- State 1: confirmation required — shown when a token is present in the URL. -->
+        <div id="confirm-card" class="card hidden">
+            <h2>Confirm unsubscribe</h2>
+            <h2>Leiratkozás megerősítése</h2>
             <div class="divider"></div>
-            <p>Sajnáljuk, hogy távozol!</p>
+            <p>Are you sure you want to unsubscribe from the AutoCognitix newsletter?</p>
+            <p>Biztosan leiratkozol az AutoCognitix hírlevélről?</p>
+            <p class="subtitle">Click the button to confirm. Nothing happens until you click.<br>Kattints a gombra a megerősítéshez. Előtte semmi nem történik.</p>
+            <button id="confirm-btn" class="primary-btn" type="button">
+                Yes, unsubscribe me / Igen, leiratkozom
+            </button>
+            <p id="confirm-error" class="error-msg hidden"></p>
+            <div>
+                <a href="/" class="back-link">← Back to Homepage / Vissza a kezdőoldalra</a>
+            </div>
+        </div>
+
+        <!-- State 2: in-flight — shown after user clicks, before webhook resolves. -->
+        <div id="pending-card" class="card hidden">
+            <h2>Processing…</h2>
+            <h2>Feldolgozás folyamatban…</h2>
+            <div class="divider"></div>
+            <p>Please wait a moment.</p>
+            <p>Kérlek várj egy pillanatot.</p>
+        </div>
+
+        <!-- State 3: success — shown only after the webhook POST resolves. -->
+        <div id="success-card" class="card hidden">
+            <h2>You have been unsubscribed</h2>
+            <h2>Sikeresen leiratkoztál</h2>
+            <div class="divider"></div>
             <p>Sorry to see you go!</p>
-            <p class="subtitle">Nem fogsz több értesítést kapni. / You won't receive further notifications.</p>
-            <a href="/" class="back-link">← Vissza a kezdőoldalra / Back to Homepage</a>
+            <p>Sajnáljuk, hogy távozol!</p>
+            <p class="subtitle">You won't receive further notifications.<br>Nem fogsz több értesítést kapni.</p>
+            <a href="/" class="back-link">← Back to Homepage / Vissza a kezdőoldalra</a>
+        </div>
+
+        <!-- State 4: missing or invalid token — shown when no token is in the URL or token format is obviously invalid. -->
+        <div id="invalid-card" class="card hidden">
+            <h2>Invalid unsubscribe link</h2>
+            <h2>Érvénytelen leiratkozási link</h2>
+            <div class="divider"></div>
+            <p>This link is missing or malformed. If you received an unsubscribe email, please use the link from that email directly.</p>
+            <p>A link hiányos vagy hibás. Használd közvetlenül a leiratkozási emailben kapott linket.</p>
+            <a href="/" class="back-link">← Back to Homepage / Vissza a kezdőoldalra</a>
+        </div>
+
+        <!-- State 5: error — shown when the webhook call fails after user click. -->
+        <div id="error-card" class="card hidden">
+            <h2>Something went wrong</h2>
+            <h2>Valami hiba történt</h2>
+            <div class="divider"></div>
+            <p>We couldn't process your request. Please try again in a moment, or contact us.</p>
+            <p>Nem sikerült feldolgozni a kérést. Próbáld újra, vagy vedd fel velünk a kapcsolatot.</p>
+            <button id="retry-btn" class="primary-btn" type="button">
+                Try again / Újrapróbálás
+            </button>
+            <div>
+                <a href="/" class="back-link">← Back to Homepage / Vissza a kezdőoldalra</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // Extract token from URL and process unsubscription
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get('token');
+        // SEC-FIX (Lead 9 audit, 2026-04-21):
+        // Previous version auto-POSTed the unsubscribe webhook on page load,
+        // so any link-preview bot, email-scanner, antivirus URL sandbox, or
+        // casually shared chat-link could silently unsubscribe the user with
+        // zero interaction. That is a one-click CSRF-equivalent exploit.
+        //
+        // This version REQUIRES an explicit button click before any network
+        // request is made. Token format is validated client-side first so we
+        // never send obviously malformed input to the webhook.
+        (function () {
+            'use strict';
 
-        if (token) {
-            // Call n8n webhook to process unsubscription
-            fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    type: 'unsubscribe',
-                    token: token
+            var WEBHOOK_URL = 'https://valid8strategy.app.n8n.cloud/webhook/newsletter-email';
+            // Token format gate: allow 16-128 chars of url-safe charset
+            // (base64url / hex / uuid — n8n-issued tokens fit this). Rejects
+            // empty/too-short/too-long/suspicious values without a network
+            // round-trip.
+            var TOKEN_RE = /^[A-Za-z0-9._\-]{16,128}$/;
+
+            var params = new URLSearchParams(window.location.search);
+            var token = params.get('token') || '';
+
+            var confirmCard = document.getElementById('confirm-card');
+            var pendingCard = document.getElementById('pending-card');
+            var successCard = document.getElementById('success-card');
+            var invalidCard = document.getElementById('invalid-card');
+            var errorCard   = document.getElementById('error-card');
+            var confirmBtn  = document.getElementById('confirm-btn');
+            var retryBtn    = document.getElementById('retry-btn');
+            var confirmErr  = document.getElementById('confirm-error');
+
+            function showOnly(card) {
+                [confirmCard, pendingCard, successCard, invalidCard, errorCard].forEach(function (el) {
+                    if (el) el.classList.add('hidden');
+                });
+                if (card) card.classList.remove('hidden');
+            }
+
+            function sendUnsubscribe() {
+                // Guard: don't double-submit; disable button during flight.
+                if (confirmBtn) confirmBtn.disabled = true;
+                if (retryBtn)   retryBtn.disabled = true;
+                showOnly(pendingCard);
+
+                // AbortController so a hung request eventually surfaces.
+                var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+                var timeoutId = setTimeout(function () {
+                    if (controller) controller.abort();
+                }, 15000);
+
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    credentials: 'omit',
+                    cache: 'no-store',
+                    redirect: 'error',
+                    referrerPolicy: 'no-referrer',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'unsubscribe', token: token }),
+                    signal: controller ? controller.signal : undefined
                 })
-            })
-            .catch(error => {
-                // Silently fail - user sees success message regardless
-                console.error('Unsubscribe webhook error:', error);
-            });
-        }
+                .then(function (resp) {
+                    clearTimeout(timeoutId);
+                    // Treat 2xx as success. n8n currently returns 200 even
+                    // when the token is stale, so we cannot distinguish
+                    // "already-unsubscribed" from "just-unsubscribed" on
+                    // the client — both are user-safe to show as success.
+                    if (resp.ok) {
+                        showOnly(successCard);
+                    } else {
+                        showOnly(errorCard);
+                        if (retryBtn) retryBtn.disabled = false;
+                    }
+                })
+                .catch(function () {
+                    clearTimeout(timeoutId);
+                    showOnly(errorCard);
+                    if (retryBtn) retryBtn.disabled = false;
+                });
+            }
+
+            // ---- Initial state selection ----
+            if (!token) {
+                showOnly(invalidCard);
+                return;
+            }
+            if (!TOKEN_RE.test(token)) {
+                showOnly(invalidCard);
+                return;
+            }
+
+            // Token looks valid → require explicit click.
+            showOnly(confirmCard);
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function (evt) {
+                    evt.preventDefault();
+                    if (confirmErr) confirmErr.classList.add('hidden');
+                    sendUnsubscribe();
+                });
+            }
+            if (retryBtn) {
+                retryBtn.addEventListener('click', function (evt) {
+                    evt.preventDefault();
+                    sendUnsubscribe();
+                });
+            }
+        })();
     </script>
 </body>
 </html>

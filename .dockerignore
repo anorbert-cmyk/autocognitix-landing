@@ -1,6 +1,7 @@
 # Don't include non-site files in Docker image
+
+# Source dirs not needed at runtime
 design/
-*.md
 communication/
 content/
 market-research/
@@ -8,13 +9,42 @@ seo/
 seo-strategy/
 legal/*.md
 assets/
-*.docx
-.git/
-.gitignore
 tests/
 node_modules/
+coverage/
+
+# Dev config / docs
+*.md
+*.docx
 package.json
 package-lock.json
 vitest.config.js
+
+# VCS + CI metadata
+.git/
+.gitignore
 .github/
-coverage/
+
+# Secrets — never ship (DEVOPS-M2)
+.env
+.env.*
+*.key
+*.pem
+id_rsa*
+*.p12
+*.pfx
+
+# Logs / temp / editor noise
+*.log
+*.bak
+*.backup
+*.old
+*.swp
+*.orig
+*~
+
+# Local tooling / agent state
+.claude/
+.antigravity/
+tasks/
+.DS_Store

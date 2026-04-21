@@ -53,6 +53,10 @@ logging.basicConfig(
 )
 log = logging.getLogger("ooyyo")
 
+# Sanity bounds for OOYYO (EUR prices, paired HUF check downstream).
+EUR_PRICE_MIN = 500
+EUR_PRICE_MAX = 300_000
+
 # ---------------------------------------------------------------------------
 # Config import (local)
 # ---------------------------------------------------------------------------
@@ -699,19 +703,49 @@ def aggregate_by_year(
     """
     Group listings by year and compute min/median/max price stats.
     Converts EUR prices to HUF using the provided exchange rate.
+
+    OOYYO listing records don't have a per-listing URL, so dedup uses a
+    composite natural key (brand, model, year, price, mileage, country).
+    Also applies EUR_PRICE_MIN/MAX sanity bounds.
     """
     by_year: Dict[int, List[int]] = defaultdict(list)
     no_year: List[int] = []
+    seen_keys: set[tuple] = set()
+    rejected_bounds = 0
+    rejected_dup = 0
 
     for item in listings:
         price_eur = item.get("price_eur")
         if not price_eur or price_eur <= 0:
             continue
+        if price_eur < EUR_PRICE_MIN or price_eur > EUR_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
+        key = (
+            item.get("brand"),
+            item.get("model"),
+            item.get("year"),
+            int(price_eur),
+            item.get("mileage_km"),
+            item.get("country"),
+        )
+        if key in seen_keys:
+            rejected_dup += 1
+            continue
+        seen_keys.add(key)
+
         year = item.get("year")
         if year and 1990 <= year <= 2030:
             by_year[year].append(price_eur)
         else:
             no_year.append(price_eur)
+
+    if rejected_bounds or rejected_dup:
+        log.info(
+            "aggregate_by_year: rejected %d out-of-bounds EUR, %d duplicates",
+            rejected_bounds, rejected_dup,
+        )
 
     result = {}
     for year in sorted(by_year.keys()):

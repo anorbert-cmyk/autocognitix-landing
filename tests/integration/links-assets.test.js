@@ -212,6 +212,66 @@ describe('Sitemap.xml Verification', () => {
     expect(urlCount).toBeGreaterThan(0);
     expect(urlCount).toBeLessThan(500);
   });
+
+  /**
+   * Inverse sitemap check: every user-facing HTML page on disk must be
+   * reachable via sitemap.xml. This catches the common failure of forgetting
+   * to add a new page to the sitemap (SEO regression).
+   *
+   * Excludes:
+   *   - *.bak                (backup copies)
+   *   - confirm.html         (email-flow landing, not indexed)
+   *   - unsubscribe.html     (unsubscribe landing, not indexed)
+   *   - pages starting with 'internal-' (ops/dev-only)
+   */
+  test('every user-facing HTML page is listed in sitemap.xml', async () => {
+    const DOMAIN = 'https://autocognitix.hu';
+    const EXCLUDE_NAMES = new Set(['confirm.html', 'unsubscribe.html']);
+    const EXCLUDE_PREFIXES = ['internal-'];
+
+    const htmlFiles = await glob('{hu,en}/**/*.html', {
+      cwd: ROOT,
+      ignore: ['**/*.bak', 'node_modules/**'],
+    });
+
+    const filtered = htmlFiles.filter((f) => {
+      const base = path.basename(f);
+      if (EXCLUDE_NAMES.has(base)) return false;
+      if (EXCLUDE_PREFIXES.some((p) => base.startsWith(p))) return false;
+      return true;
+    });
+
+    // Sitemap <loc> values can be directory-style ("/hu/blog/") which nginx
+    // serves via try_files. Normalize both sides before comparing.
+    const xml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf-8');
+    const $ = cheerio.load(xml, { xmlMode: true });
+    const locs = new Set();
+    $('url > loc').each((_, el) => {
+      const loc = $(el).text().trim();
+      if (!loc.startsWith(DOMAIN)) return;
+      let p = loc.slice(DOMAIN.length);
+      // Directory-style "/hu/" is equivalent to "/hu/index.html"
+      if (p.endsWith('/')) p = p + 'index.html';
+      locs.add(p);
+    });
+
+    const missing = [];
+    for (const rel of filtered) {
+      const urlPath = '/' + rel.split(path.sep).join('/');
+      if (!locs.has(urlPath)) {
+        missing.push(urlPath);
+      }
+    }
+
+    if (missing.length > 0) {
+      throw new Error(
+        `Pages on disk that are NOT in sitemap.xml:\n` +
+          missing.map((m) => `  ${m}`).join('\n') +
+          `\nAdd them to sitemap.xml or extend the EXCLUDE_NAMES/EXCLUDE_PREFIXES set.`
+      );
+    }
+    expect(missing).toHaveLength(0);
+  });
 });
 
 // --- Cache-Busting Params ----------------------------------------------------

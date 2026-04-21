@@ -3,7 +3,10 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-healthcheckPath = "/hu/index.html"
+# Probe proxy health — if proxy is down, tools break even if static HTML serves.
+# Docker HEALTHCHECK also probes /hu/; Railway uses this single path for routing.
+# Proxy /proxy/health returns 200 JSON, no external dependencies.
+healthcheckPath = "/proxy/health"
 healthcheckTimeout = 30
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3

@@ -1,0 +1,123 @@
+# Dependabot configuration for autocognitix-landing.
+#
+# Rationale: SHA-pinning third-party actions (DEVOPS-M6) freezes the
+# supply-chain surface, which is correct but creates a maintenance burden —
+# pinned SHAs never self-update against newly disclosed CVEs. Dependabot
+# closes that loop by opening a weekly PR that bumps each SHA to the latest
+# tag, with a changelog in the PR body. A human review + CI green = merge.
+#
+# Schedules are staggered (Mon/Tue/Wed) so noisy release days don't produce
+# 4 overlapping PRs. Grouping keeps patch-level noise minimal (one PR for
+# all dev deps) while surfacing major bumps individually.
+#
+# Renovate vs Dependabot: Renovate is more flexible (regex versioning, custom
+# managers) but requires a separate GitHub App install with broader perms.
+# Dependabot is GitHub-native, contents: read is enough, no extra secrets.
+# For a 3-workflow, single-package project, Dependabot is the right trade-off.
+
+version: 2
+updates:
+  # -------------------------------------------------------------------------
+  # GitHub Actions — highest priority because a compromised action executes
+  # with the workflow's secrets. Weekly bump keeps pinned SHAs current.
+  # -------------------------------------------------------------------------
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Budapest
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: 'ci'
+      include: scope
+    # Group minor/patch bumps of official actions — reduces PR noise. Majors
+    # still get individual PRs because they may contain breaking changes.
+    groups:
+      actions-minor-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # -------------------------------------------------------------------------
+  # npm — devDependencies only (vitest, jsdom, cheerio, html-validate, glob).
+  # No production npm deps in this repo — the site is static HTML served by
+  # nginx. Weekly cadence; grouped to one PR per week.
+  # -------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: tuesday
+      time: '06:00'
+      timezone: Europe/Budapest
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - javascript
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+      include: scope
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+
+  # -------------------------------------------------------------------------
+  # pip — proxy sidecar (FastAPI + httpx + uvicorn) + dev deps (pytest, respx).
+  # Separate groups for prod vs dev so a failing pytest-mock upgrade doesn't
+  # block a httpx security patch.
+  # -------------------------------------------------------------------------
+  - package-ecosystem: pip
+    directory: /proxy
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: '06:00'
+      timezone: Europe/Budapest
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - python
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+      include: scope
+    groups:
+      proxy-runtime:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+      proxy-dev:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+
+  # -------------------------------------------------------------------------
+  # Docker — the nginx:1.27-alpine3.20 base image. Weekly scan pairs with the
+  # Trivy security-scan.yml so base CVE disclosures trigger an immediate PR.
+  # -------------------------------------------------------------------------
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: '06:00'
+      timezone: Europe/Budapest
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - docker
+    commit-message:
+      prefix: 'chore(deps)'
+      include: scope

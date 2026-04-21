@@ -10,6 +10,16 @@ on:
         type: boolean
         default: false
 
+# Prevent overlapping cron + manual runs from double-pushing (DEVOPS-L4).
+# cancel-in-progress: false — let the current run finish, then gate the next.
+concurrency:
+  group: price-update
+  cancel-in-progress: false
+
+# Workflow-level default: read-only (DEVOPS-H5). Only aggregate job elevates.
+permissions:
+  contents: read
+
 env:
   # 5 brands per day rotation — cycles through all 25 brands in 5 days
   BRANDS_PER_DAY: 5
@@ -23,20 +33,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Fetch MNB exchange rate
         run: python scripts/fetch-mnb-rate.py
 
+      # DEVOPS-H6: Pass workflow inputs/env via `env:` and read with os.environ
+      # inside Python — never interpolate `${{ ... }}` into `python -c "..."` bodies.
       - name: Determine brand rotation
         id: rotation
+        env:
+          FORCE_FULL_REFRESH: ${{ inputs.force_full_refresh }}
+          BRANDS_PER_DAY: ${{ env.BRANDS_PER_DAY }}
         run: |
-          python -c "
-          import json, sys
+          python <<'PY'
+          import json
+          import os
           from datetime import date
 
           brands = [
@@ -47,12 +63,13 @@ jobs:
               'Volvo', 'Mitsubishi', 'Jeep', 'Alfa Romeo', 'Mini',
           ]
 
-          force_all = '${{ inputs.force_full_refresh }}' == 'true'
+          force_all = os.environ.get('FORCE_FULL_REFRESH', 'false').lower() == 'true'
+          per_day = int(os.environ.get('BRANDS_PER_DAY', '5'))
+
           if force_all:
               today_brands = brands
           else:
               day = date.today().timetuple().tm_yday
-              per_day = ${{ env.BRANDS_PER_DAY }}
               total_slots = (len(brands) + per_day - 1) // per_day
               slot = day % total_slots
               start = slot * per_day
@@ -62,17 +79,17 @@ jobs:
 
           with open('today_brands.json', 'w') as f:
               json.dump(today_brands, f)
-          "
+          PY
 
       - name: Upload exchange rate artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
         with:
           name: exchange-rate
           path: shared/data/exchange-rate.json
           retention-days: 1
 
       - name: Upload brand rotation artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
         with:
           name: today-brands
           path: today_brands.json
@@ -107,36 +124,42 @@ jobs:
             output: shared/data/bazos-prices.json
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Download exchange rate
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: exchange-rate
           path: shared/data/
 
       - name: Download brand rotation
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: today-brands
           path: /tmp/
 
+      # Matrix values come from this workflow file (trusted source),
+      # but pass via env for defence-in-depth consistency.
       - name: Run ${{ matrix.source.name }} scraper
+        env:
+          SCRAPER: ${{ matrix.source.script }}
+          MAX_PER_MODEL: ${{ matrix.source.max_per_model }}
+          OUTPUT: ${{ matrix.source.output }}
         run: |
           python scripts/run-scraper.py \
-            --scraper ${{ matrix.source.script }} \
+            --scraper "$SCRAPER" \
             --brands-file /tmp/today_brands.json \
-            --max ${{ matrix.source.max_per_model }} \
-            --output ${{ matrix.source.output }}
+            --max "$MAX_PER_MODEL" \
+            --output "$OUTPUT"
         continue-on-error: true
 
       - name: Upload scraper output
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
         with:
           name: scraper-${{ matrix.source.name }}
           path: ${{ matrix.source.output }}
@@ -151,42 +174,45 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Elevated: this job commits and pushes (DEVOPS-H5).
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Download exchange rate
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: exchange-rate
           path: shared/data/
 
       - name: Download hasznaltauto output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: scraper-hasznaltauto
           path: shared/data/
         continue-on-error: true
 
       - name: Download ooyyo output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: scraper-ooyyo
           path: shared/data/
         continue-on-error: true
 
       - name: Download autobazar output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: scraper-autobazar
           path: shared/data/
         continue-on-error: true
 
       - name: Download bazos output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
         with:
           name: scraper-bazos
           path: shared/data/
@@ -200,10 +226,12 @@ jobs:
       - name: Aggregate all price sources
         run: python scripts/aggregate-prices.py
 
+      # Heredoc safe: no `${{ }}` interpolation inside. Pure Python.
       - name: Validate output JSON
         run: |
-          python -c "
-          import json, sys
+          python <<'PY'
+          import json
+          import sys
 
           with open('shared/data/hungarian-market-prices.json') as f:
               data = json.load(f)
@@ -242,12 +270,12 @@ jobs:
               sys.exit(1)
 
           meta = data.get('_meta', {})
-          print(f'Validation passed:')
+          print('Validation passed:')
           print(f'  Brands: {len(brands)}')
-          print(f'  Sources: {meta.get(\"sources\", \"unknown\")}')
-          print(f'  Total observations: {meta.get(\"total_observations\", \"?\")}')
-          print(f'  Published price points: {meta.get(\"published_price_points\", \"?\")}')
-          "
+          print(f'  Sources: {meta.get("sources", "unknown")}')
+          print(f'  Total observations: {meta.get("total_observations", "?")}')
+          print(f'  Published price points: {meta.get("published_price_points", "?")}')
+          PY
 
       - name: Commit and push updated data
         run: |

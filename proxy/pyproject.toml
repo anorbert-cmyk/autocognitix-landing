@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+# Make `proxy/main.py` importable as `main` when running `pytest` from proxy/.
+pythonpath = ["."]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = [
+    # Starlette/httpx sometimes emit deprecation chatter during TestClient teardown.
+    "ignore::DeprecationWarning",
+]
+# Do NOT enable `-x`; we want to see the full picture per run.
+addopts = "-ra -q --strict-markers"
+markers = [
+    "integration: tests that require a live backend (skipped unless BACKEND_URL is reachable)",
+]

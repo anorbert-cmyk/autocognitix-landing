@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Szervizkereso — add meg a hibakodot es a helyszint, megmondjuk milyen tipusu szervizbe vidd az autod. AI-alapu muhelyajanlat a DTC kod alapjan.">
-  <meta name="keywords" content="szervizkereso, autoszerelo kereso, autoszerelo Budapest, kipufogojavitas, futomuszerviz, valto szerviz, DTC hibakod szerviz, auto szerviz kereso">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/szerviz-kereso.html">
@@ -286,7 +285,7 @@
         <a href="/hu/blog/" class="nav-link">Blog</a>
         <a href="/hu/#faq" class="nav-link">GYIK</a>
       </div>
-      <div class="lang-switcher"><a href="/hu/" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/" class="lang-option">EN</a></div>
+      <div class="lang-switcher"><a href="/hu/eszkozok/szerviz-kereso.html" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/tools/workshop-finder.html" class="lang-option">EN</a></div>
       <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
     </div>
   </nav>
@@ -303,7 +302,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="workshopForm" novalidate>
+      <form class="tool-form" id="workshopForm">
         <div class="form-grid">
 
           <div class="form-group full-width">
@@ -429,9 +428,13 @@
     (function() {
       'use strict';
 
-      // Preload DTC database for richer descriptions
-      if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
-        ToolCommon.loadDTCDatabase();
+      // Dev-mode flag for console debugging hooks in shared/js.
+      window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+      // Lazy DTC preload — defers the 641 KB XHR until the user focuses a DTC
+      // input (or the browser goes idle). See PERF-H2 in fix-lead5-performance.md.
+      if (typeof ToolCommon !== 'undefined' && ToolCommon.lazyLoadDTCDatabase) {
+        ToolCommon.lazyLoadDTCDatabase();
       }
 
       /* ─── DTC to Specialty Mapping ─── */

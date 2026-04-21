@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Workshop Finder — enter your fault code and location, we'll tell you what type of workshop to visit. AI-powered mechanic recommendation based on DTC codes.">
-  <meta name="keywords" content="workshop finder, mechanic finder, auto repair near me, exhaust repair, suspension service, transmission repair, DTC code workshop, car service finder">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/en/tools/workshop-finder.html">
@@ -304,7 +303,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="workshopForm" novalidate>
+      <form class="tool-form" id="workshopForm">
         <div class="form-grid">
 
           <div class="form-group full-width">
@@ -430,9 +429,13 @@
     (function() {
       'use strict';
 
-      // Preload DTC database for richer descriptions
-      if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
-        ToolCommon.loadDTCDatabase();
+      // Dev-mode flag for console debugging hooks in shared/js.
+      window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+      // Lazy DTC preload — defers the 641 KB XHR until the user focuses a DTC
+      // input (or the browser goes idle). See PERF-H2 in fix-lead5-performance.md.
+      if (typeof ToolCommon !== 'undefined' && ToolCommon.lazyLoadDTCDatabase) {
+        ToolCommon.lazyLoadDTCDatabase();
       }
 
       /* ─── DTC to Specialty Mapping ─── */

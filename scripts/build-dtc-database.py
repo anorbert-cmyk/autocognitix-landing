@@ -170,7 +170,10 @@ def main():
             "severity": estimate_severity(code),
         }
 
-    # Add metadata
+    # Add metadata — compute total from code keys (not dict length), since
+    # len(output)-1 was evaluated BEFORE _meta was inserted, giving an off-by-one
+    # (codes count N, but len(output) was N at evaluation time, so we got N-1).
+    total_codes = sum(1 for k in output if not k.startswith("_"))
     output["_meta"] = {
         "source": "open-source-merge",
         "sources": [
@@ -178,7 +181,10 @@ def main():
             "mytrile/obd-trouble-codes",
         ],
         "updated": date.today().isoformat(),
-        "total_codes": len(output) - 1,  # exclude _meta
+        "total_codes": total_codes,
+        "hu_coverage_percent": 0,
+        "hu_fallback": "en",
+        "hu_fallback_marker": "[EN] ",
     }
 
     # Write output

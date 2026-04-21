@@ -44,6 +44,12 @@ log = logging.getLogger("bazos")
 BASE_URL = "https://auto.bazos.sk"
 ITEMS_PER_PAGE = 20
 
+# Sanity bounds — reject junk listings (1 EUR teaser, 999k EUR supercars, etc.)
+EUR_PRICE_MIN = 500
+EUR_PRICE_MAX = 300_000
+HUF_PRICE_MIN = 300_000
+HUF_PRICE_MAX = 200_000_000
+
 # ---------------------------------------------------------------------------
 # Config import (local)
 # ---------------------------------------------------------------------------
@@ -510,20 +516,48 @@ def aggregate_by_year(
     listings: List[Dict[str, Any]],
     eur_huf_rate: float,
 ) -> Dict[str, Dict[str, Any]]:
-    """Group listings by year and compute min/median/max price stats in HUF."""
+    """
+    Group listings by year and compute min/median/max price stats in HUF.
+
+    URL-dedup (bazos pagination can re-surface listings) + EUR/HUF sanity bounds.
+    """
     by_year: Dict[int, List[int]] = defaultdict(list)
     no_year: List[int] = []
+    seen_urls: set[str] = set()
+    rejected_bounds = 0
+    rejected_dup = 0
 
     for item in listings:
+        url = item.get("url")
+        if url:
+            if url in seen_urls:
+                rejected_dup += 1
+                continue
+            seen_urls.add(url)
+
         price_eur = item.get("price_eur")
         if not price_eur or price_eur <= 0:
             continue
+        if price_eur < EUR_PRICE_MIN or price_eur > EUR_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
         price_huf = int(round(price_eur * eur_huf_rate))
+        if price_huf < HUF_PRICE_MIN or price_huf > HUF_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
         year = item.get("year")
         if year and 1990 <= year <= 2030:
             by_year[year].append(price_huf)
         else:
             no_year.append(price_huf)
+
+    if rejected_bounds or rejected_dup:
+        log.info(
+            "aggregate_by_year: rejected %d out-of-bounds, %d duplicate URLs",
+            rejected_bounds, rejected_dup,
+        )
 
     result = {}
     for year in sorted(by_year.keys()):

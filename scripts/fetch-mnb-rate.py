@@ -12,7 +12,7 @@ import sys
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
-from datetime import date
+from datetime import date, datetime, timezone
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -193,9 +193,14 @@ def main() -> None:
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
+    # Canonical schema — see shared/data/README.md (Wave 1, DATA-H4).
+    # Consumers read `rate` (float), `currency_pair`, `date`, `fetched_at`, `source`.
+    # Legacy `EUR_HUF` key is intentionally dropped — aggregate-prices.py reads `rate`.
     payload = {
-        "EUR_HUF": rate,
+        "rate": float(rate),
+        "currency_pair": "EUR_HUF",
         "date": rate_date,
+        "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": source,
     }
 

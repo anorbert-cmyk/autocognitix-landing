@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Megeri megjavitani az autod? Szamold ki a javitasi koltseg es a piaci ertek aranyt, es dontsd el, hogy javitas vagy csere eri meg jobban. Ingyenes online kalkulátor.">
-  <meta name="keywords" content="megéri megjavítani, autó javítás költség, autó piaci érték, javítás vagy csere, autó kalkulátor, autójavítás kalkulátor, autó értékbecslés">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
@@ -265,6 +264,24 @@
         display: none;
       }
     }
+
+    /* A11y: <fieldset>/<legend> wrapper for radio groups.
+       WCAG 1.3.1 (Info and Relationships), WCAG 2.4.6 (Headings and Labels). */
+    .form-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+    .form-legend {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      color: var(--color-base-dark);
+      margin-bottom: var(--space-sm);
+      padding: 0;
+    }
   </style>
 </head>
 <body>
@@ -293,7 +310,7 @@
         <a href="/hu/blog/" class="nav-link">Blog</a>
         <a href="/hu/#faq" class="nav-link">GYIK</a>
       </div>
-      <div class="lang-switcher"><a href="/hu/" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/" class="lang-option">EN</a></div>
+      <div class="lang-switcher"><a href="/hu/eszkozok/megeri-megjavitani.html" class="lang-option active">HU</a><span class="text-muted">|</span><a href="/en/tools/worth-repairing.html" class="lang-option">EN</a></div>
       <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Indulj el</a>
     </div>
   </nav>
@@ -309,7 +326,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="repairForm" novalidate>
+      <form class="tool-form" id="repairForm">
         <div class="form-grid">
 
           <!-- Jármű adatok -->
@@ -342,24 +359,28 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Üzemanyag</label>
-            <div class="form-radio-group" id="fuelGroup">
-              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin" required>Benzin</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel">Dízel</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg">LPG</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid">Hibrid</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos">Elektromos</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Üzemanyag</legend>
+              <div class="form-radio-group" id="fuelGroup">
+                <label class="form-radio-label"><input type="radio" name="fuel" value="benzin" required>Benzin</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="dizel">Dízel</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="lpg">LPG</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid">Hibrid</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos">Elektromos</label>
+              </div>
+            </fieldset>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Állapot</label>
-            <div class="form-radio-group" id="conditionGroup">
-              <label class="form-radio-label"><input type="radio" name="condition" value="kituno" required>Kitűnő</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="jo">Jó</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="kozepes">Közepes</label>
-              <label class="form-radio-label"><input type="radio" name="condition" value="rossz">Rossz</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Állapot</legend>
+              <div class="form-radio-group" id="conditionGroup">
+                <label class="form-radio-label"><input type="radio" name="condition" value="kituno" required>Kitűnő</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="jo">Jó</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="kozepes">Közepes</label>
+                <label class="form-radio-label"><input type="radio" name="condition" value="rossz">Rossz</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- Előzmények -->
@@ -378,11 +399,13 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Szervizkönyv</label>
-            <div class="form-radio-group" id="serviceGroup">
-              <label class="form-radio-label"><input type="radio" name="service" value="igen" required>Igen</label>
-              <label class="form-radio-label"><input type="radio" name="service" value="nem">Nem</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Szervizkönyv</legend>
+              <div class="form-radio-group" id="serviceGroup">
+                <label class="form-radio-label"><input type="radio" name="service" value="igen" required>Igen</label>
+                <label class="form-radio-label"><input type="radio" name="service" value="nem">Nem</label>
+              </div>
+            </fieldset>
           </div>
 
           <div class="form-group">
@@ -542,6 +565,11 @@
   (function() {
     'use strict';
 
+    // Dev-mode flag for console debugging hooks in shared/js.
+    window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+    var CURRENT_YEAR = (window.VehicleDB && window.VehicleDB.CURRENT_YEAR) || new Date().getFullYear();
+
     // ─── Init form controls ───
     document.addEventListener('DOMContentLoaded', function() {
       // Preload real market prices
@@ -550,7 +578,7 @@
       }
 
       ToolCommon.setupBrandModelCascade('brand', 'model');
-      ToolCommon.populateYearSelect('year', 1995, 2026);
+      ToolCommon.populateYearSelect('year', 1995, CURRENT_YEAR);
 
       // Radio button visual selection
       document.querySelectorAll('.form-radio-label').forEach(function(label) {
@@ -637,7 +665,7 @@
       var hasServiceBook = service === 'igen';
 
       // ─── Calculate market value ───
-      var age = Math.max(2026 - year, 0);
+      var age = Math.max(CURRENT_YEAR - year, 0);
       if (mileage === 0 && age > 2) {
         if (!confirm('0 km egy ' + age + ' éves autón szokatlan. Biztosan helyes az adat?')) {
           return;

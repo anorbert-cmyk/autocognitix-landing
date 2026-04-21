@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { createEnvironment } from '../setup/dom-shim.js';
 
 /**
@@ -7,18 +7,29 @@ import { createEnvironment } from '../setup/dom-shim.js';
  * The calculator lives as an inline script in the HTML page.
  * We reimplement the pure calculation functions here based on
  * the source code to test them in isolation without DOM dependencies.
+ *
+ * TIME-PIN: we pin system time to 2026-06-01 so `new Date().getFullYear()`
+ * is deterministic. Once the frontend-engineer replaces the literal `2026`
+ * in `shared/js/vehicle-data.js:162` with `new Date().getFullYear()`, the
+ * reimplementation below will continue to match production because both use
+ * the pinned clock.
  */
 
+const TEST_CLOCK = new Date('2026-06-01T12:00:00Z');
 let VehicleDB;
 
 beforeAll(() => {
+  vi.setSystemTime(TEST_CLOCK);
   const env = createEnvironment();
   VehicleDB = env.VehicleDB;
 });
 
+afterAll(() => vi.useRealTimers());
+
 // ─── Reimplemented pure calculation helpers ───────────────────────
 
-const CURRENT_YEAR = 2026;
+// Read from the pinned system clock, not a hardcoded literal.
+const CURRENT_YEAR = new Date().getFullYear();
 const REPLACEMENT_ANNUAL = 800000;
 
 function calculateMarketValue(brand, year, mileage, fuel, condition, accident, serviceBook, owners) {

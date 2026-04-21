@@ -7,7 +7,6 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="MOT Predictor: find out in advance if your car will pass inspection. Enter your brand, mileage, and fault codes — AI-powered prediction for wear, emission risk, and failure probability.">
-  <meta name="keywords" content="MOT test, inspection predictor, car inspection, vehicle inspection, emission test, DTC fault code, OBD2, vehicle roadworthiness, car condition assessment, wear prediction">
   <meta name="robots" content="index, follow">
   <meta name="author" content="AutoCognitix">
   <link rel="canonical" href="https://autocognitix.hu/en/tools/mot-predictor.html">
@@ -191,6 +190,24 @@
       font-size: var(--text-body-sm);
       color: #92400e;
     }
+
+    /* A11y: <fieldset>/<legend> wrapper for radio groups.
+       WCAG 1.3.1 (Info and Relationships), WCAG 2.4.6 (Headings and Labels). */
+    .form-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+    .form-legend {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      color: var(--color-base-dark);
+      margin-bottom: var(--space-sm);
+      padding: 0;
+    }
   </style>
 </head>
 <body>
@@ -233,7 +250,7 @@
   <!-- ═══════════════ FORM ═══════════════ -->
   <section class="tool-form-section">
     <div class="container">
-      <form class="tool-form" id="vizsgaForm" novalidate>
+      <form class="tool-form" id="vizsgaForm">
         <div class="form-grid">
 
           <!-- Brand -->
@@ -267,15 +284,18 @@
           </div>
 
           <!-- Fuel -->
+          <!-- NOTE: radio values are canonical HU enums shared with the backend API. DO NOT localize. -->
           <div class="form-group full-width">
-            <label class="form-label">Fuel type</label>
-            <div class="form-radio-group" id="fuelGroup">
-              <label class="form-radio-label"><input type="radio" name="fuel" value="benzin"> Petrol</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="dizel"> Diesel</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="lpg"> LPG</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid"> Hybrid</label>
-              <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos"> Electric</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">Fuel type</legend>
+              <div class="form-radio-group" id="fuelGroup">
+                <label class="form-radio-label"><input type="radio" name="fuel" value="benzin"> Petrol</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="dizel"> Diesel</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="lpg"> LPG</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="hibrid"> Hybrid</label>
+                <label class="form-radio-label"><input type="radio" name="fuel" value="elektromos"> Electric</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- DTC Trouble Codes -->
@@ -286,13 +306,16 @@
           </div>
 
           <!-- MIL Light -->
+          <!-- NOTE: radio values are canonical HU enums shared with the backend API. DO NOT localize. -->
           <div class="form-group full-width">
-            <label class="form-label">MIL (Check Engine) light on?</label>
-            <div class="form-radio-group" id="milGroup">
-              <label class="form-radio-label"><input type="radio" name="mil" value="igen"> Yes</label>
-              <label class="form-radio-label"><input type="radio" name="mil" value="nem"> No</label>
-              <label class="form-radio-label"><input type="radio" name="mil" value="nemtudom"> Don't know</label>
-            </div>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">MIL (Check Engine) light on?</legend>
+              <div class="form-radio-group" id="milGroup">
+                <label class="form-radio-label"><input type="radio" name="mil" value="igen"> Yes</label>
+                <label class="form-radio-label"><input type="radio" name="mil" value="nem"> No</label>
+                <label class="form-radio-label"><input type="radio" name="mil" value="nemtudom"> Don't know</label>
+              </div>
+            </fieldset>
           </div>
 
           <!-- Submit -->
@@ -412,14 +435,20 @@
   (function() {
     'use strict';
 
-    // Preload DTC database for richer descriptions
-    if (typeof ToolCommon !== 'undefined' && ToolCommon.loadDTCDatabase) {
-      ToolCommon.loadDTCDatabase();
+    // Dev-mode flag for console debugging hooks in shared/js.
+    window.__DEV__ = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+    var CURRENT_YEAR = (window.VehicleDB && window.VehicleDB.CURRENT_YEAR) || new Date().getFullYear();
+
+    // Lazy DTC preload — defers the 641 KB XHR until the user focuses a DTC
+    // input (or the browser goes idle). See PERF-H2 in fix-lead5-performance.md.
+    if (typeof ToolCommon !== 'undefined' && ToolCommon.lazyLoadDTCDatabase) {
+      ToolCommon.lazyLoadDTCDatabase();
     }
 
     // ─── INIT FORM ───
     ToolCommon.setupBrandModelCascade('brand', 'model');
-    ToolCommon.populateYearSelect('year', 1995, 2026);
+    ToolCommon.populateYearSelect('year', 1995, CURRENT_YEAR);
 
     // Radio button visual selection
     document.querySelectorAll('.form-radio-label input').forEach(function(radio) {
@@ -663,7 +692,7 @@
         });
 
         // AGE DEDUCTION
-        var age = 2026 - year;
+        var age = CURRENT_YEAR - year;
         if (age > 10) {
           var ageDeduction = Math.min((age - 10) * 2, 20);
           score -= ageDeduction;

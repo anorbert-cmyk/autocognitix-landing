@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AutoCognitix Sitemap — https://autocognitix.hu/sitemap.xml
+  Canonical domain: https://autocognitix.hu/ (all URLs must use this base)
+
+  Intentional omissions (transactional pages — not for indexing):
+    /hu/confirm.html       — email confirmation redirect, no user-facing content
+    /en/confirm.html       — email confirmation redirect, no user-facing content
+    /unsubscribe.html      — unsubscribe landing, ephemeral state page
+
+  Last full audit: 2026-04-21
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Landing Pages -->
   <url>
     <loc>https://autocognitix.hu/hu/</loc>
@@ -175,4 +187,5 @@
     <lastmod>2026-03-22</lastmod>
     <priority>0.3</priority>
   </url>
+
 </urlset>

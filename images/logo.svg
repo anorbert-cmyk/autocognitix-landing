@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="600" height="120" role="img" aria-label="AutoCognitix">
+  <rect x="8" y="30" width="60" height="60" rx="13" fill="#D97757"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 46 L54 54 L38 62 L22 54 Z"/>
+    <path d="M22 64 L38 72 L54 64"/>
+    <path d="M22 74 L38 82 L54 74"/>
+  </g>
+  <text x="90" y="78"
+        font-family="'Funnel Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif"
+        font-size="52" font-weight="700" fill="#12110E">AutoCognitix</text>
+</svg>

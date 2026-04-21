@@ -1,12 +1,99 @@
 /**
  * AutoCognitix - Shared Tool Utilities
- * Form handling, result rendering, animations
+ * Form handling, result rendering, animations, input validation, DTC DB loader.
+ *
+ * i18n: all user-facing strings live in the MESSAGES table below.
+ * Locale is auto-detected from <html lang="..">; falls back to HU.
+ *
+ * Back-compat: every public function on ToolCommon.* from v1.0 is preserved.
  */
+
+/* ─── Locale + i18n table ───────────────────────────────────────────── */
+var LANG = (function() {
+  try {
+    var l = (document.documentElement.lang || 'hu').toLowerCase();
+    return l.indexOf('en') === 0 ? 'en' : 'hu';
+  } catch(e) { return 'hu'; }
+})();
+
+var MESSAGES = {
+  hu: {
+    // Select placeholders
+    selectBrand: 'Válassz márkát...',
+    selectModel: 'Válassz modellt...',
+    chooseBrandFirst: 'Előbb válassz márkát',
+    yearPlaceholder: 'Évjárat...',
+
+    // DTC validation
+    emptyDTC: 'Üres hibakód',
+    invalidDTCFormat: 'Érvénytelen formátum: {code}. Helyes: P0420, C0035',
+
+    // Odometer anomaly
+    unusuallyHighMileage: 'Szokatlanul magas futás ({kmPerYear} km/év). Ellenőrizd az adatot!',
+    aboveAverageMileage: 'Átlag feletti futás ({kmPerYear} km/év).',
+    zeroKmOldCarUnusual: '0 km egy {age} éves autón szokatlan.',
+    unusuallyLowMileage: 'Szokatlanul alacsony futás ({kmPerYear} km/év). Lehetséges óraállás visszatekerés.',
+
+    // Numeric range
+    invalidNumber: '{field} érvénytelen szám.',
+    tooSmall: '{field} nem lehet kisebb mint {min}.',
+    tooLarge: '{field} nem lehet nagyobb mint {max}.',
+
+    // Currency / units
+    currencyUnit: ' Ft',
+
+    // DTC DB fallback marker (consumed by renderDTCInfo)
+    enFallbackPrefix: '[EN] '
+  },
+  en: {
+    selectBrand: 'Select brand...',
+    selectModel: 'Select model...',
+    chooseBrandFirst: 'Please select brand first',
+    yearPlaceholder: 'Year...',
+
+    emptyDTC: 'Empty DTC code',
+    invalidDTCFormat: 'Invalid format: {code}. Correct: P0420, C0035',
+
+    unusuallyHighMileage: 'Unusually high mileage ({kmPerYear} km/year). Please verify!',
+    aboveAverageMileage: 'Above-average mileage ({kmPerYear} km/year).',
+    zeroKmOldCarUnusual: '0 km on a {age}-year-old car is unusual.',
+    unusuallyLowMileage: 'Unusually low mileage ({kmPerYear} km/year). Possible odometer rollback.',
+
+    invalidNumber: '{field} is not a valid number.',
+    tooSmall: '{field} cannot be smaller than {min}.',
+    tooLarge: '{field} cannot be larger than {max}.',
+
+    currencyUnit: ' HUF',
+
+    enFallbackPrefix: '[EN] '
+  }
+};
+
+/** i18n lookup with {placeholder} interpolation. */
+function t(key, vars) {
+  var tbl = MESSAGES[LANG] || MESSAGES.hu;
+  var tpl = tbl[key];
+  if (tpl === undefined) tpl = MESSAGES.hu[key];
+  if (tpl === undefined) return key;
+  if (!vars) return tpl;
+  return tpl.replace(/\{(\w+)\}/g, function(_, k) {
+    return vars[k] !== undefined ? String(vars[k]) : '{' + k + '}';
+  });
+}
+
+/* ─── ToolCommon public API ─────────────────────────────────────────── */
 var ToolCommon = {
+
+  /** Current UI locale ('hu' | 'en'). Exposed for callers that branch on it. */
+  LANG: LANG,
+
+  /** Translate a key. Exposed so page inline scripts can reuse the table. */
+  t: t,
 
   /** Populate a <select> from an array of {id, label} or strings */
   populateSelect: function(selectEl, options, placeholder) {
-    selectEl.innerHTML = '';
+    // Clear safely without innerHTML.
+    while (selectEl.firstChild) selectEl.removeChild(selectEl.firstChild);
     if (placeholder) {
       var ph = document.createElement('option');
       ph.value = '';
@@ -35,16 +122,23 @@ var ToolCommon = {
     if (!brandEl || !modelEl || !window.VehicleDB) return;
 
     var brands = Object.keys(VehicleDB.brands).sort();
-    this.populateSelect(brandEl, brands, 'Valassz markat...');
+    this.populateSelect(brandEl, brands, t('selectBrand'));
 
     brandEl.addEventListener('change', function() {
       var brand = brandEl.value;
       var data = VehicleDB.brands[brand];
       if (data) {
-        ToolCommon.populateSelect(modelEl, data.models, 'Valassz modellt...');
+        ToolCommon.populateSelect(modelEl, data.models, t('selectModel'));
         modelEl.disabled = false;
       } else {
-        modelEl.innerHTML = '<option value="">Elobb valassz markat</option>';
+        // Clear and rebuild with a single disabled placeholder.
+        while (modelEl.firstChild) modelEl.removeChild(modelEl.firstChild);
+        var ph = document.createElement('option');
+        ph.value = '';
+        ph.textContent = t('chooseBrandFirst');
+        ph.disabled = true;
+        ph.selected = true;
+        modelEl.appendChild(ph);
         modelEl.disabled = true;
       }
     });
@@ -58,10 +152,10 @@ var ToolCommon = {
     for (var y = maxYear; y >= minYear; y--) {
       opts.push({ id: String(y), label: String(y) });
     }
-    this.populateSelect(el, opts, 'Evjarat...');
+    this.populateSelect(el, opts, t('yearPlaceholder'));
   },
 
-  /** Format number as Hungarian HUF */
+  /** Format number as HUF (currency stays Ft — HUF is the underlying currency in both locales). */
   formatHUF: function(num) {
     if (num === null || num === undefined) return '-';
     return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
@@ -161,9 +255,9 @@ var ToolCommon = {
   /** DTC format validation */
   validateDTC: function(code) {
     var pattern = /^[PBCU]\d{4}$/i;
-    if (!code || code.length === 0) return { valid: false, warning: 'Üres hibakód' };
+    if (!code || code.length === 0) return { valid: false, warning: t('emptyDTC') };
     var upper = code.toUpperCase().trim();
-    if (!pattern.test(upper)) return { valid: false, warning: 'Érvénytelen formátum: ' + code + '. Helyes: P0420, C0035' };
+    if (!pattern.test(upper)) return { valid: false, warning: t('invalidDTCFormat', { code: code }) };
     return { valid: true, code: upper };
   },
 
@@ -173,26 +267,32 @@ var ToolCommon = {
     var age = Math.max(currentYear - year, 0);
     if (age === 0) return null;
     var kmPerYear = km / age;
-    if (kmPerYear > 40000) return { level: 'high', message: 'Szokatlanul magas futás (' + Math.round(kmPerYear) + ' km/év). Ellenőrizd az adatot!' };
-    if (kmPerYear > 25000) return { level: 'medium', message: 'Átlag feletti futás (' + Math.round(kmPerYear) + ' km/év).' };
-    if (km === 0 && age > 2) return { level: 'high', message: '0 km egy ' + age + ' éves autón szokatlan.' };
-    if (kmPerYear < 1000 && age > 3) return { level: 'medium', message: 'Szokatlanul alacsony futás (' + Math.round(kmPerYear) + ' km/év). Lehetséges óraállás visszatekerés.' };
+    if (kmPerYear > 40000) return { level: 'high', message: t('unusuallyHighMileage', { kmPerYear: Math.round(kmPerYear) }) };
+    if (kmPerYear > 25000) return { level: 'medium', message: t('aboveAverageMileage', { kmPerYear: Math.round(kmPerYear) }) };
+    if (km === 0 && age > 2) return { level: 'high', message: t('zeroKmOldCarUnusual', { age: age }) };
+    if (kmPerYear < 1000 && age > 3) return { level: 'medium', message: t('unusuallyLowMileage', { kmPerYear: Math.round(kmPerYear) }) };
     return null;
   },
 
   /** Numeric range validation */
   validateNumericRange: function(value, min, max, fieldName) {
     var num = parseFloat(value);
-    if (isNaN(num)) return { valid: false, message: fieldName + ' érvénytelen szám.' };
-    if (num < min) return { valid: false, message: fieldName + ' nem lehet kisebb mint ' + min + '.' };
-    if (max !== null && num > max) return { valid: false, message: fieldName + ' nem lehet nagyobb mint ' + max + '.' };
+    if (isNaN(num)) return { valid: false, message: t('invalidNumber', { field: fieldName }) };
+    if (num < min) return { valid: false, message: t('tooSmall', { field: fieldName, min: min }) };
+    if (max !== null && num > max) return { valid: false, message: t('tooLarge', { field: fieldName, max: max }) };
     return { valid: true, value: num };
   },
 
   // --- DTC Database (loaded async from static JSON) ---
 
   _dtcDB: null,
+  _dtcLazyAttached: false,
 
+  /**
+   * Eager loader — kept for back-compat.
+   * Prefer lazyLoadDTCDatabase() which defers the 641 KB XHR until the user
+   * focuses a DTC input or the browser goes idle.
+   */
   loadDTCDatabase: function() {
     if (this._dtcDB) return Promise.resolve(this._dtcDB);
     var self = this;
@@ -216,9 +316,72 @@ var ToolCommon = {
     });
   },
 
+  /**
+   * Lazy DTC preloader — attach this once on DOMContentLoaded.
+   * Triggers on first interaction with any DTC input on the page; if no DTC
+   * input exists we still preload during idle time (~5s after load).
+   * Safety-net timer fires after 10s even if the user never touches the input.
+   * Idempotent: safe to call multiple times.
+   *
+   * @param {string} [selector] Optional CSS selector overriding the default.
+   */
+  lazyLoadDTCDatabase: function(selector) {
+    if (this._dtcDB || this._dtcLazyAttached) return;
+    this._dtcLazyAttached = true;
+    var self = this;
+    var sel = selector || 'input[name="dtc"], input[id*="dtc"], input[id*="Dtc"], input[data-dtc]';
+    var inputs = document.querySelectorAll(sel);
+    function trigger() { self.loadDTCDatabase(); }
+
+    if (inputs.length === 0) {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(trigger, { timeout: 5000 });
+      } else {
+        setTimeout(trigger, 3000);
+      }
+      return;
+    }
+
+    inputs.forEach(function(el) {
+      el.addEventListener('focus', trigger, { once: true, passive: true });
+      el.addEventListener('input', trigger, { once: true, passive: true });
+    });
+
+    // Safety net: preload even if the user never touches the input.
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(trigger, { timeout: 10000 });
+    } else {
+      setTimeout(trigger, 8000);
+    }
+  },
+
+  /**
+   * Return raw entry {en, hu, category, generic, severity} or null.
+   * hu may be null for codes not yet translated (see _meta.hu_coverage_percent).
+   */
   getDTCInfo: function(code) {
     if (!this._dtcDB) return null;
     return this._dtcDB[code.toUpperCase()] || null;
+  },
+
+  /**
+   * Locale-aware description renderer.
+   * HU locale: returns entry.hu when present; else "[EN] " + entry.en.
+   * EN locale: returns entry.en.
+   * Returns null when the code is not in the DB.
+   *
+   * Implements the data-engineer fallback contract from
+   * shared/data/dtc-database.json _meta.hu_fallback_marker.
+   */
+  renderDTCInfo: function(code) {
+    var entry = this.getDTCInfo(code);
+    if (!entry) return null;
+    if (LANG === 'hu') {
+      if (entry.hu) return entry.hu;
+      if (entry.en) return t('enFallbackPrefix') + entry.en;
+      return null;
+    }
+    return entry.en || null;
   },
 
   // --- Utility Functions ---
@@ -264,7 +427,7 @@ var ToolCommon = {
     var odo1 = ToolCommon.detectOdometerAnomaly(500000, 2020);
     if (odo1 && odo1.level === 'high') { pass++; } else { console.warn('[ODO FAIL] 500k km on 2020 should be high anomaly'); fail++; }
 
-    console.log('[ToolCommon selfTest] ' + pass + ' passed, ' + fail + ' failed');
+    console.log('[ToolCommon selfTest] lang=' + LANG + ' — ' + pass + ' passed, ' + fail + ' failed');
   }
 };
 
@@ -273,5 +436,16 @@ document.addEventListener('DOMContentLoaded', function() {
   ToolCommon.initNavDropdown();
 });
 
-// Run self-tests on load (development only)
-ToolCommon.selfTest();
+// Run self-tests only in development (localhost or window.__DEV__).
+// Prevents console noise for real users and keeps the test harness from
+// tripping any analytics that watch for unexpected console.* output.
+(function gatedSelfTest() {
+  try {
+    var host = location.hostname;
+    var isDev = host === 'localhost'
+      || host === '127.0.0.1'
+      || host === '::1'
+      || (typeof window.__DEV__ !== 'undefined' && window.__DEV__);
+    if (isDev) ToolCommon.selfTest();
+  } catch(e) { /* non-browser env */ }
+})();

@@ -1,5 +1,21 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { createEnvironment } from '../setup/dom-shim.js';
+
+/*
+ * TIME-PIN: the production MOT-predictor inline script uses `new Date().getFullYear()`
+ * (once the frontend-engineer lands the fix for the 2026 hardcode in
+ * `shared/js/vehicle-data.js:162`). Until then we pin system time here so this
+ * test file remains green even if today's date moves past 2026.
+ *
+ * If the prod fix HASN'T landed yet, the literal `2026` inside `calculate()`
+ * below still matches what production does, so the test is still accurate.
+ * Once the prod fix lands, replace the `2026` literal with `CURRENT_YEAR`.
+ */
+const TEST_CLOCK = new Date('2026-06-01T12:00:00Z');
+beforeAll(() => vi.setSystemTime(TEST_CLOCK));
+afterAll(() => vi.useRealTimers());
+
+const CURRENT_YEAR = TEST_CLOCK.getUTCFullYear(); // === 2026
 
 // ─── REIMPLEMENTED PURE CALCULATION LOGIC (from muszaki-vizsga-prediktor.html) ───
 
@@ -133,7 +149,7 @@ function calculate(year, km, fuel, milOn, dtcCodes) {
     });
 
     // AGE DEDUCTION
-    var age = 2026 - year;
+    var age = CURRENT_YEAR - year;
     if (age > 10) {
       var ageDeduction = Math.min((age - 10) * 2, 20);
       score -= ageDeduction;
@@ -509,6 +525,53 @@ describe('MOT Predictor — calculation engine', () => {
         dtcCodes: ['C1234', 'U0100']
       });
       expect(result.score).toBe(94); // -3 -3
+    });
+  });
+
+  // ─── ADR-006: metamorphic check against production inline script ─────────
+  //
+  // PROBLEM: This file REIMPLEMENTS `calculate()` from the inline <script> in
+  //   hu/eszkozok/muszaki-vizsga-prediktor.html (and its EN mirror). That means
+  //   a bug fix in the inline script does NOT automatically propagate to the
+  //   tests, and vice versa — the two can silently diverge.
+  //
+  // PROPOSED FIX (TODO for frontend-engineer):
+  //   Expose the inline function on `window` so both the page and the test
+  //   can import it. Minimal change:
+  //
+  //     // In the inline script, at the bottom:
+  //     window.MOTCalc = { calculate: calculate };  // eslint-disable-line no-undef
+  //
+  //   Then in this file, replace the reimplementation with:
+  //     import { loadToolPage } from '../setup/dom-shim.js';
+  //     const env = loadToolPage('hu/eszkozok/muszaki-vizsga-prediktor.html');
+  //     const { MOTCalc } = env.window;
+  //
+  // Until that lands, the metamorphic test below is skipped. When it runs, it
+  // compares a single representative input across both implementations and
+  // passes ONLY if the production function agrees with our reimplementation.
+  describe.skip('ADR-006 metamorphic parity with production inline script', () => {
+    it('production calculate() agrees with reimplementation on representative input', async () => {
+      const { loadToolPage } = await import('../setup/dom-shim.js');
+      const env = loadToolPage('hu/eszkozok/muszaki-vizsga-prediktor.html');
+      // Expects window.MOTCalc.calculate to be exposed by the inline script.
+      const prodCalc = env.window.MOTCalc?.calculate;
+      expect(prodCalc, 'Expose window.MOTCalc.calculate in the inline script').toBeTruthy();
+
+      const cases = [
+        { year: 2020, km: 10000, fuel: 'benzin', milOn: 'nem', dtcCodes: [] },
+        { year: 2011, km: 10000, fuel: 'benzin', milOn: 'nem', dtcCodes: ['P0420'] },
+        { year: 2018, km: 120000, fuel: 'dizel', milOn: 'nem', dtcCodes: ['P0420', 'C1234'] },
+        { year: 2024, km: 1000, fuel: 'elektromos', milOn: 'nem', dtcCodes: ['P0420'] },
+      ];
+
+      for (const c of cases) {
+        const mine = calculate(c.year, c.km, c.fuel, c.milOn, c.dtcCodes);
+        const theirs = prodCalc(c.year, c.km, c.fuel, c.milOn, c.dtcCodes);
+        expect(theirs.score, `score mismatch for ${JSON.stringify(c)}`).toBe(mine.score);
+        expect(theirs.verdict, `verdict mismatch for ${JSON.stringify(c)}`).toBe(mine.verdict);
+      }
+      env.cleanup();
     });
   });
 });

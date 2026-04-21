@@ -1,7 +1,7 @@
 {
-  "EUR_HUF": 389.88,
-  "eur_huf": 389.88,
-  "source": "ECB",
-  "updated": "2026-03-25T14:58:50.321270",
-  "date": "2026-03-25"
+  "rate": 389.88,
+  "currency_pair": "EUR_HUF",
+  "date": "2026-03-25",
+  "fetched_at": "2026-03-25T14:58:50Z",
+  "source": "ECB"
 }
