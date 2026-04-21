@@ -59,7 +59,7 @@ jobs:
 
       - name: Trivy vulnerability scan (SARIF)
         # SHA pinned to v0.28.0 per DEVOPS-M6 supply-chain guidance.
-        uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8  # v0.28.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1  # v0.28.0
         with:
           image-ref: autocognitix-landing-scan:${{ github.sha }}
           format: sarif
@@ -77,7 +77,7 @@ jobs:
       - name: Trivy scan (table output for job log readability)
         # Second run with table format so reviewers can read results inline.
         # Cheap because Trivy DB is cached from the prior step.
-        uses: aquasecurity/trivy-action@6e7b7d1fd3e4fef0c5fa8cce1229c54b2c9bd0d8  # v0.28.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1  # v0.28.0
         with:
           image-ref: autocognitix-landing-scan:${{ github.sha }}
           format: table
