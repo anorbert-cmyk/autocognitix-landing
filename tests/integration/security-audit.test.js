@@ -183,7 +183,7 @@ describe('innerHTML Safety Audit', () => {
     'en/tools/mot-predictor.html:906',
     // Wave 2 line drift after <main>, <fieldset>, and i18n insertions
     'hu/eszkozok/megeri-megjavitani.html:955', // shifted from :927 (numeric uncertainty only)
-    'en/tools/worth-repairing.html:953', // EN mirror, shifted from :927
+    'en/tools/worth-repairing.html:957', // EN mirror (shifted after parity fix added 4 meta-tag lines)
     // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
     'hu/eszkozok/szerviz-kereso.html:576', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped)
     'en/tools/workshop-finder.html:577',   // EN mirror of szerviz-kereso

@@ -664,91 +664,93 @@
         function toggleFAQ(element) {
             const toggle = element.querySelector('.faq-toggle');
             const answer = element.nextElementSibling;
-            
             toggle.classList.toggle('open');
             answer.classList.toggle('show');
         }
-        
-        // JSON-LD Schema.org Article
-        const articleSchema = {
-            "@context": "https://schema.org/",
-            "@type": "Article",
-            "headline": "Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]",
-            "description": "Teljes DIY útmutató autóhibák otthoni diagnosztikájához. Megtudhatod, hogyan diagnosztizálj magad minimális eszközökkel.",
-            "image": "https://www.autocognitix.hu/images/blog/home-diagnostics.jpg",
-            "author": {
-                "@type": "Organization",
-                "name": "AutoCognitix"
-            },
-            "datePublished": "2026-03-21",
-            "dateModified": "2026-03-21",
-            "mainEntity": {
-                "@type": "Thing",
-                "name": "Otthoni autódiagnosztika"
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Autódiagnosztika otthon: Kezdők útmutatója a DIY hibafelismeréshez [2026]",
+        "description": "Teljes DIY útmutató autóhibák otthoni diagnosztikájához. Megtudhatod, hogyan diagnosztizálj magad minimális eszközökkel.",
+        "image": "https://autocognitix.hu/images/diy-diagnostics-hero.jpg",
+        "datePublished": "2026-03-21",
+        "dateModified": "2026-03-21",
+        "inLanguage": "hu",
+        "author": {
+            "@type": "Organization",
+            "name": "AutoCognitix",
+            "url": "https://autocognitix.hu"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AutoCognitix",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://autocognitix.hu/logo.png"
             }
-        };
-        
-        // JSON-LD FAQPage Schema
-        const faqSchema = {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "Melyik az a legjobb OBD2 Scanner kezdőknek?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "A legjobb kezdők számára az ELM327 Bluetooth adapter egy olyan alkalmazásva, mint a Torque vagy OBD Fusion."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Biztonságos-e otthon diagnosztizálni, ha nem vagyok mechanikus?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Igen, ha követsz biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Lehet-e a hibakódot otthon megoldani?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Sok kód igen, de nem mind. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Mennyi ideig tart az otthoni diagnosztika?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Teljes diagnózis: 1-2 óra."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Mi van, ha többszörös kódok vannak?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Több kód akkor jelent meg, amikor egy alapvető probléma több szenzort is érint."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Lehet-e egy kódot falsan diagnosztizálni?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Igen, különösen az intermittent hibákat. A kód csak akkor jeleníkszik meg, ha a szenzor probléma észlel."
-                    }
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "hu",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Melyik az a legjobb OBD2 Scanner kezdőknek?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A kezdőknek az ELM327 Bluetooth adapter egy olyan alkalmazással, mint a Torque vagy OBD Fusion, a legjobb választás."
                 }
-            ]
-        };
-        
-        // Add Schema.org markup to page
-        const schemaScript = document.createElement('script');
-        schemaScript.type = 'application/ld+json';
-        schemaScript.textContent = JSON.stringify([articleSchema, faqSchema]);
-        document.head.appendChild(schemaScript);
+            },
+            {
+                "@type": "Question",
+                "name": "Biztonságos-e otthon diagnosztizálni, ha nem vagyok szerelő?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Igen, ha követed a biztonsági szabályokat. Az OBD2 szkennerezés teljesen biztonságos."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Lehet-e egy hibakódot otthon megoldani?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sok kódot igen, de nem mindet. Egyszerű javítások: szenzor csatlakozók, levegőszűrő csere, szűrő tisztítás."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mennyi ideig tart az otthoni diagnosztika?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Az OBD2 szkennerezés: 5-10 perc. Vizuális ellenőrzések: 15-30 perc. Teljes diagnózis: 1-2 óra."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mi van, ha többszörös kódok vannak?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Több kód akkor jelenik meg, amikor egy alapvető probléma több szenzort is érint."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Lehet-e egy kódot tévesen diagnosztizálni?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Igen, különösen az időszakos hibákat. A kód csak akkor jelenik meg, ha a szenzor problémát észlel."
+                }
+            }
+        ]
+    }
     </script>
 </body>
 </html>

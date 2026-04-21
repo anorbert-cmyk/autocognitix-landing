@@ -617,91 +617,93 @@ Lehetséges tünetek:
         function toggleFAQ(element) {
             const toggle = element.querySelector('.faq-toggle');
             const answer = element.nextElementSibling;
-            
             toggle.classList.toggle('open');
             answer.classList.toggle('show');
         }
-        
-        // JSON-LD Schema.org Article
-        const articleSchema = {
-            "@context": "https://schema.org/",
-            "@type": "Article",
-            "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
-            "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
-            "image": "https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg",
-            "author": {
-                "@type": "Organization",
-                "name": "AutoCognitix"
-            },
-            "datePublished": "2026-03-21",
-            "dateModified": "2026-03-21",
-            "mainEntity": {
-                "@type": "Thing",
-                "name": "DTC hibakód"
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
+        "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
+        "image": "https://autocognitix.hu/images/dtc-codes-hero.jpg",
+        "datePublished": "2026-03-21",
+        "dateModified": "2026-03-21",
+        "inLanguage": "hu",
+        "author": {
+            "@type": "Organization",
+            "name": "AutoCognitix",
+            "url": "https://autocognitix.hu"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AutoCognitix",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://autocognitix.hu/logo.png"
             }
-        };
-        
-        // JSON-LD FAQPage Schema
-        const faqSchema = {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "Mi a különbség a P0171 és P0174 kód között?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Lehet-e autót vezetni P0171 kóddal?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Mire használható egy OBD2 Bluetooth adapter?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Mit jelez a villogó Check Engine lámpa?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Hogyan nyomhatom le a Check Engine lámpát?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Az összes OBD2 scanner rendelkezik egy 'Clear Codes' funkcióval."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Mi az a 'Pending' hibakód?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában."
-                    }
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "hu",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Mi a különbség a P0171 és P0174 kód között?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
                 }
-            ]
-        };
-        
-        // Add Schema.org markup to page
-        const schemaScript = document.createElement('script');
-        schemaScript.type = 'application/ld+json';
-        schemaScript.textContent = JSON.stringify([articleSchema, faqSchema]);
-        document.head.appendChild(schemaScript);
+            },
+            {
+                "@type": "Question",
+                "name": "Lehet-e autót vezetni P0171 kóddal?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozott üzemanyag-fogyasztáshoz vezet."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mire használható egy OBD2 Bluetooth adapter?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mit jelez a villogó Check Engine lámpa?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorhibát vagy katalizátor-sérülést."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Hogyan törölhetem a Check Engine lámpát?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A Check Engine lámpa törlése előtt mindig meg kell oldani az alapvető okot. Az összes OBD2 scanner rendelkezik 'Clear Codes' funkcióval."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mi az a 'Pending' hibakód?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnózisban."
+                }
+            }
+        ]
+    }
     </script>
 </body>
 </html>
