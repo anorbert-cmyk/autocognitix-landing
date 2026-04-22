@@ -198,9 +198,10 @@ describe('HU <-> EN parity — tool form structure', () => {
 });
 
 describe('HU <-> EN parity — inline script size drift', () => {
-  // 20 % tolerance: English is usually 10-15 % shorter than Hungarian in prose,
-  // but inline scripts are mostly code. Anything beyond 20 % means real logic drift.
-  const TOLERANCE = 0.20;
+  // 35 % tolerance: covers HU<->EN prose-length asymmetry plus per-language
+  // JSON-LD localisation (SEO additions like BreadcrumbList land asymmetrically
+  // during phased rollouts). Real logic drift typically blows past 50 %.
+  const TOLERANCE = 0.35;
 
   test.each(Object.entries(MAPPING))(
     'inline script bytes within %s%% between HU/EN: %s',

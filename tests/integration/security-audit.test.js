@@ -182,11 +182,11 @@ describe('innerHTML Safety Audit', () => {
     'en/tools/mot-predictor.html:894',
     'en/tools/mot-predictor.html:906',
     // Wave 2 line drift after <main>, <fieldset>, and i18n insertions
-    'hu/eszkozok/megeri-megjavitani.html:955', // shifted from :927 (numeric uncertainty only)
-    'en/tools/worth-repairing.html:957', // EN mirror (shifted after parity fix added 4 meta-tag lines)
+    'hu/eszkozok/megeri-megjavitani.html:971', // shifted from :955 (numeric uncertainty only, line drift)
+    'en/tools/worth-repairing.html:973', // EN mirror (line shifts as Wave 4 SEO/perf agents add meta tags)
     // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
-    'hu/eszkozok/szerviz-kereso.html:576', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped)
-    'en/tools/workshop-finder.html:577',   // EN mirror of szerviz-kereso
+    'hu/eszkozok/szerviz-kereso.html:592', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped, line shifted)
+    'en/tools/workshop-finder.html:590',   // EN mirror of szerviz-kereso (line shifted)
   ]);
 
   test('all innerHTML assignments with user-controllable data use escapeHtml()', async () => {

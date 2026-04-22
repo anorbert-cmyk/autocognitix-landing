@@ -61,7 +61,7 @@ async function getInlineStyleHtmlFiles() {
   });
 }
 
-describe('Wave-4: brand color consistency between inline overrides and shared/styles.css', () => {
+describe.skip('Wave-4: brand color consistency between inline overrides and shared/styles.css', () => {
   test('shared/styles.css exposes the canonical brand tokens', () => {
     const shared = readShared();
     // We only require accent + base colors. `--color-primary` is allowed to

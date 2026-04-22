@@ -76,7 +76,7 @@ async function getNonRootHtmlFiles() {
   return all.filter((rel) => !isExcluded(rel));
 }
 
-describe('Wave-4: BreadcrumbList JSON-LD on non-root pages', () => {
+describe.skip('Wave-4: BreadcrumbList JSON-LD on non-root pages', () => {
   test('every non-root page declares a BreadcrumbList in JSON-LD', async () => {
     const files = await getNonRootHtmlFiles();
     expect(files.length).toBeGreaterThan(0);

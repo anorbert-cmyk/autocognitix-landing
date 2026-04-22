@@ -1,0 +1,460 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   COOKIE CONSENT BANNER — LAZY-LOADED STYLESHEET
+   Extracted from shared/styles.css by performance-engineer (Wave 4, 2026-04-22).
+
+   PERF RATIONALE
+   ──────────────
+   Rule depends on the cookie banner DOM that only renders for ~25-40% of
+   first-time visitors (the rest have GPC/DNT, persisted consent, or are
+   returning sessions). Shipping ~12 KB of unused CSS in the critical render
+   path on every page = wasted bytes + extra style-recalc work. We now load
+   this file on demand from cookie-consent.js, so:
+     • Repeat visitors with stored consent never pay the cost.
+     • GPC/DNT users never pay the cost.
+     • First-time visitors pay it ONCE (cached after first load).
+
+   LOAD ORDER
+   ──────────
+   This file references custom properties defined at :root in shared/styles.css
+   (--color-base-dark, --color-accent, --space-*, --text-*, --radius-*, etc.).
+   shared/styles.css MUST already be parsed before this file applies. Since
+   cookie-consent.js only injects the <link> AFTER DOMContentLoaded — by which
+   point the main stylesheet is already in the cascade — this is safe.
+
+   SELECTOR PREFIX
+   ───────────────
+   All selectors are prefixed with .cc- to avoid collision with page styles.
+
+   COMPLIANCE
+   ──────────
+   WCAG 2.2 AA: contrast ≥4.5:1 on all text, ≥3:1 on UI components.
+   Min touch target: 44×44 px (WCAG SC 2.5.5).
+   z-index ladder: banner=9000, overlay=9100, modal=9200.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BANNER — fixed bottom bar
+   Slides up from bottom on first visit.
+───────────────────────────────────────────────────────────────────────── */
+.cc-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  background: var(--color-base-dark);
+  color: var(--color-white);
+  padding: var(--space-lg) 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.cc-banner--visible {
+  transform: translateY(0);
+}
+
+.cc-banner-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.cc-banner-copy {
+  flex: 1;
+  min-width: 280px;
+}
+
+.cc-banner-title {
+  font-size: var(--text-h6);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--color-white);
+}
+
+.cc-banner-text {
+  font-size: var(--text-body-sm);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin-bottom: var(--space-xs);
+}
+
+.cc-learn-more {
+  font-size: var(--text-body-sm);
+  color: var(--color-accent);
+  text-decoration: underline;
+  transition: opacity var(--transition-fast);
+}
+
+.cc-learn-more:hover,
+.cc-learn-more:focus {
+  opacity: 0.8;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.cc-banner-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BUTTONS — cookie consent variants
+   Reject All uses cc-btn-outline so it has equal visual weight to Accept All.
+   This satisfies EDPB Guidelines 05/2020 §3.3.2 (no dark patterns).
+───────────────────────────────────────────────────────────────────────── */
+.cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;               /* WCAG SC 2.5.5 touch target */
+  min-width: 44px;
+  padding: 10px 20px;
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              border-color var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.cc-btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Primary — "Accept all" / "Save preferences" */
+.cc-btn-primary {
+  background: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+}
+
+.cc-btn-primary:hover {
+  background: #c4663f;
+  border-color: #c4663f;
+}
+
+/* Secondary — "Manage preferences" */
+.cc-btn-secondary {
+  background: transparent;
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cc-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* "Reject all" — solid filled button with EQUAL VISUAL WEIGHT to "Accept all".
+ * Hardened by security-sentinel (Wave 4, 2026-04-21):
+ *   Old design used transparent background + low-opacity border, which is the
+ *   textbook EDPB-flagged "dark pattern" (CNIL Decision SAN-2021-023, GOOGLE).
+ *   New design uses a solid neutral surface that contrasts strongly against
+ *   the dark banner background (var(--color-base-dark)) — same prominence as
+ *   the filled accent "Accept all", so neither button is visually de-emphasized.
+ * Contrast (WCAG SC 1.4.3 / 1.4.11):
+ *   #E8E8E8 surface vs #12110E text → ~16.7:1  (AAA for normal text)
+ *   2px #999999 border vs #12110E (banner bg) → 5.7:1 (AA non-text)
+ * Refs: GDPR Art. 7(3), EDPB Guidelines 05/2020 §3.3.2, CNIL SAN-2021-023. */
+.cc-btn-outline {
+  background: var(--color-gray-200, #E8E8E8);
+  color: var(--color-base-dark, #12110E);
+  border-color: #999999;
+}
+
+.cc-btn-outline:hover {
+  background: var(--color-white, #FFFFFF);
+  border-color: var(--color-base-dark, #12110E);
+}
+
+/* In modal context, buttons appear on light background */
+.cc-modal-footer .cc-btn-primary {
+  color: var(--color-white);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MODAL OVERLAY
+───────────────────────────────────────────────────────────────────────── */
+.cc-modal-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.cc-modal-wrap--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cc-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 17, 14, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MODAL DIALOG
+   role="dialog" aria-modal="true" — keyboard focus trapped inside.
+───────────────────────────────────────────────────────────────────────── */
+.cc-modal-dialog {
+  position: relative;
+  z-index: 9200;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - var(--space-2xl) * 2);
+  overflow-y: auto;
+  padding: var(--space-2xl);
+  outline: none; /* focusable via tabindex="-1", not visually */
+}
+
+.cc-modal-title {
+  font-size: var(--text-h5);
+  font-weight: 600;
+  color: var(--color-base-dark);
+  margin-bottom: var(--space-sm);
+  padding-right: var(--space-2xl); /* room for × button */
+}
+
+.cc-modal-intro {
+  font-size: var(--text-body-sm);
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+.cc-modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 22px;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  font-family: var(--font-primary);
+  line-height: 1;
+}
+
+.cc-modal-close:hover {
+  background: var(--color-gray-200);
+  color: var(--color-base-dark);
+}
+
+.cc-modal-close:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.cc-modal-footer {
+  margin-top: var(--space-xl);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   TOGGLE ROWS (cookie category controls)
+   Pre-ticked boxes are PROHIBITED per EDPB Guidelines 05/2020 §3.1.1.
+   The "Strictly Necessary" toggle is always active and visually locked.
+───────────────────────────────────────────────────────────────────────── */
+.cc-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.cc-toggle-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.cc-toggle-row:last-child {
+  border-bottom: none;
+}
+
+.cc-toggle-text {
+  flex: 1;
+}
+
+.cc-toggle-label {
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--color-base-dark);
+  margin-bottom: 4px;
+}
+
+.cc-toggle-desc {
+  font-size: var(--text-caption);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.cc-toggle-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+/* The actual checkbox is visually hidden but keyboard-accessible */
+.cc-toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Toggle track (label acts as the interactive element) */
+.cc-toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 28px;
+  background: var(--color-gray-300);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.cc-toggle-track:focus-within {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.cc-toggle-input:checked + .cc-toggle-track,
+.cc-toggle-track:has(.cc-toggle-input:checked) {
+  background: var(--color-accent);
+}
+
+/* Fallback for browsers without :has() support */
+.cc-toggle-input:checked ~ .cc-toggle-track {
+  background: var(--color-accent);
+}
+
+.cc-toggle-knob {
+  position: absolute;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: var(--color-white);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-fast);
+  pointer-events: none;
+}
+
+/* Move knob right when checked */
+.cc-toggle-input:checked ~ .cc-toggle-track .cc-toggle-knob {
+  transform: translateX(20px);
+}
+
+/* "Always active" badge replaces toggle for Strictly Necessary */
+.cc-always-active {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-success);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.cc-toggle-disabled {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   RESPONSIVE — mobile adjustments
+───────────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .cc-banner-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-lg);
+  }
+
+  .cc-banner-actions {
+    flex-direction: column;
+  }
+
+  .cc-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cc-modal-dialog {
+    padding: var(--space-lg);
+    max-height: 90vh;
+  }
+
+  .cc-toggle-row {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .cc-toggle-control {
+    align-self: flex-start;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cc-banner,
+  .cc-modal-wrap,
+  .cc-toggle-track,
+  .cc-toggle-knob,
+  .cc-btn {
+    transition: none;
+  }
+}
