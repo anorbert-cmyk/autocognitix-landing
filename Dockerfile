@@ -5,8 +5,15 @@
 # the 3.20 ABI mismatch that broke Wave 4.
 FROM nginx:1.29-alpine3.22
 
-# Install Python3 + proxy deps — mandatory, no silent failure (DEVOPS-C2)
-RUN apk add --no-cache python3 py3-pip \
+# Install Python3 + proxy deps — mandatory, no silent failure (DEVOPS-C2).
+# Wave 5: `apk upgrade` first so we pick up the latest distro patches that
+# landed after the nginx:1.29-alpine3.22 base tag was published. Trivy blocks
+# on HIGH+CRITICAL; the base tag is frozen, so weekly CVE fixes otherwise
+# pile up until Docker Hub rebuilds. `--no-cache` + `apk cache clean` keeps
+# the image small.
+RUN apk upgrade --no-cache \
+    && apk add --no-cache python3 py3-pip \
+    && rm -rf /var/cache/apk/* \
     && mkdir -p /opt/proxy
 
 # Copy requirements first for layer caching (DEVOPS-M1)
