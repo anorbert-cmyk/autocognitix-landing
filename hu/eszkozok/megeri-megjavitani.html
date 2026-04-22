@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- GDPR Cookie Consent (must load before any analytics) -->
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
+
   <!-- SEO Meta Tags -->
   <meta name="description" content="Megeri megjavitani az autod? Szamold ki a javitasi koltseg es a piaci ertek aranyt, es dontsd el, hogy javitas vagy csere eri meg jobban. Ingyenes online kalkulátor.">
   <meta name="robots" content="index, follow">
@@ -26,11 +29,17 @@
   <meta property="og:url" content="https://autocognitix.hu/hu/eszkozok/megeri-megjavitani.html">
   <meta property="og:site_name" content="AutoCognitix">
   <meta property="og:locale" content="hu_HU">
+  <meta property="og:image" content="https://autocognitix.hu/images/og/hu-tool-repair.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Megeri megjavitani az autod? — AutoCognitix Kalkulátor">
   <meta name="twitter:description" content="Szamold ki, hogy megeri-e megjavitani az autod. Ingyenes, adatalapú kalkulátor a magyar piacra.">
+  <meta name="twitter:image" content="https://autocognitix.hu/images/og/hu-tool-repair.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <title>Megeri megjavitani az autod? — Javitás vs. Csere Kalkulátor | AutoCognitix</title>
 
@@ -60,8 +69,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="/shared/styles.css?v=20260422">
 
   <style>
     /* Page-specific styles */
@@ -537,6 +552,7 @@
           <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a>
           <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a>
           <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a>
+          <a href="#" class="footer-link" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a>
         </div>
         <div>
           <div class="footer-heading">Kapcsolat</div>
@@ -558,9 +574,9 @@
   </footer>
 
   <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
-  <script src="/shared/js/vehicle-data.js?v=1.0"></script>
-  <script src="/shared/js/tool-common.js?v=1.0"></script>
-  <script src="/shared/js/api-client.js?v=1.0"></script>
+  <script src="/shared/js/vehicle-data.js?v=20260422"></script>
+  <script src="/shared/js/tool-common.js?v=20260422"></script>
+  <script src="/shared/js/api-client.js?v=20260422"></script>
   <script>
   (function() {
     'use strict';

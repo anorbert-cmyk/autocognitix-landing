@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -27,11 +28,17 @@
   <meta property="og:url" content="https://autocognitix.hu/en/tools/mot-predictor.html">
   <meta property="og:site_name" content="AutoCognitix">
   <meta property="og:locale" content="en_GB">
+  <meta property="og:image" content="https://autocognitix.hu/images/og/en-tool-mot.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="MOT Predictor — Vehicle Inspection Calculator | AutoCognitix">
   <meta name="twitter:description" content="Find out in advance if your car will pass the MOT inspection. Fault code + wear-based prediction.">
+  <meta name="twitter:image" content="https://autocognitix.hu/images/og/en-tool-mot.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <title>MOT Predictor — Vehicle Inspection Calculator | AutoCognitix</title>
 
@@ -61,8 +68,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/shared/styles.css?v=1.0">
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="/shared/styles.css?v=20260422">
 
   <style>
     /* ═══════════════════════════════════════════
@@ -432,9 +445,9 @@
   </footer>
 
   <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
-  <script src="/shared/js/vehicle-data.js?v=1.0"></script>
-  <script src="/shared/js/tool-common.js?v=1.0"></script>
-  <script src="/shared/js/api-client.js?v=1.0"></script>
+  <script src="/shared/js/vehicle-data.js?v=20260422"></script>
+  <script src="/shared/js/tool-common.js?v=20260422"></script>
+  <script src="/shared/js/api-client.js?v=20260422"></script>
   <script>
   (function() {
     'use strict';

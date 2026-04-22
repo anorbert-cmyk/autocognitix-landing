@@ -2801,16 +2801,26 @@ ul, ol {
   border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Outline — "Reject all" (same prominence as primary per EDPB) */
+/* "Reject all" — solid filled button with EQUAL VISUAL WEIGHT to "Accept all".
+ * Hardened by security-sentinel (Wave 4, 2026-04-21):
+ *   Old design used transparent background + low-opacity border, which is the
+ *   textbook EDPB-flagged "dark pattern" (CNIL Decision SAN-2021-023, GOOGLE).
+ *   New design uses a solid neutral surface that contrasts strongly against
+ *   the dark banner background (var(--color-base-dark)) — same prominence as
+ *   the filled accent "Accept all", so neither button is visually de-emphasized.
+ * Contrast (WCAG SC 1.4.3 / 1.4.11):
+ *   #E8E8E8 surface vs #12110E text → ~16.7:1  (AAA for normal text)
+ *   2px #999999 border vs #12110E (banner bg) → 5.7:1 (AA non-text)
+ * Refs: GDPR Art. 7(3), EDPB Guidelines 05/2020 §3.3.2, CNIL SAN-2021-023. */
 .cc-btn-outline {
-  background: transparent;
-  color: var(--color-white);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: var(--color-gray-200, #E8E8E8);
+  color: var(--color-base-dark, #12110E);
+  border-color: #999999;
 }
 
 .cc-btn-outline:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--color-white);
+  background: var(--color-white, #FFFFFF);
+  border-color: var(--color-base-dark, #12110E);
 }
 
 /* In modal context, buttons appear on light background */

@@ -2,6 +2,7 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AutoCognitix blog: Autódiagnosztika, karbantartási tanácsok és AI-alapú megoldások magyar autósoknak. Tudjon meg többet az OBD2-ről, hibakódokról és az intelligens járműdiagnosztikáról.">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -13,17 +14,17 @@
     <meta property="og:url" content="https://autocognitix.hu/blog/">
     <meta property="og:title" content="AutoCognitix Blog - Autódiagnosztika és Karbantartási Útmutatók">
     <meta property="og:description" content="Ismerj meg az autódiagnosztika világát. Részletes útmutatók, hibakód-megoldások és AI-alapú diagnosztikai tanácsok magyar nyelvűen.">
-    <meta property="og:image" content="https://autocognitix.hu/images/blog-og-image.png">
+    <meta property="og:image" content="https://autocognitix.hu/images/og/hu-blog.jpg">
     <meta property="og:site_name" content="AutoCognitix">
     <meta property="og:locale" content="hu_HU">
-    
+
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://autocognitix.hu/blog/">
     <meta name="twitter:title" content="AutoCognitix Blog - Autódiagnosztika és Karbantartási Útmutatók">
     <meta name="twitter:description" content="Ismerj meg az autódiagnosztika világát. Részletes útmutatók, hibakód-megoldások és AI-alapú diagnosztikai tanácsok.">
-    <meta name="twitter:image" content="https://autocognitix.hu/images/blog-og-image.png">
-    
+    <meta name="twitter:image" content="https://autocognitix.hu/images/og/hu-blog.jpg">
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://autocognitix.hu/hu/blog/">
 
@@ -31,10 +32,10 @@
     <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/">
     <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/">
     <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/en/blog/">
-    
+
     <!-- Favicon and Apple Touch Icon -->
-    <link rel="icon" type="image/x-icon" href="https://autocognitix.hu/favicon.ico">
-    <link rel="apple-touch-icon" href="https://autocognitix.hu/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
     <!-- Title -->
     <title>AutoCognitix Blog | Autódiagnosztika, Hibakódok és AI Megoldások</title>
@@ -665,9 +666,19 @@
             white-space: nowrap;
             border-width: 0;
         }
+        /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A) */
+        .skip-link {
+            position: absolute; top: -40px; left: 0;
+            background: #D97757; color: #fff;
+            padding: 8px 16px; z-index: 10000;
+            text-decoration: none; font-weight: 600;
+            border-bottom-right-radius: 8px;
+        }
+        .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Ugrás a fő tartalomhoz</a>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -697,7 +708,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container">
+    <main id="main-content" class="container">
         <!-- Filter Section -->
         <section class="filter-section">
             <h2>Szűrés kategória szerint</h2>

@@ -19,14 +19,16 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import ipaddress
 import json
 import logging
 import os
 import re
 import time
+import uuid
+from collections import OrderedDict
 from contextlib import asynccontextmanager
-from ipaddress import ip_address
-from typing import Any, Awaitable, Callable, Dict, Iterable, Optional
+from typing import Any, Awaitable, Callable, Dict, Iterable, Optional, Tuple
 
 import httpx
 from cachetools import TTLCache
@@ -49,14 +51,65 @@ CACHE_TTL = int(os.getenv("CACHE_TTL", "3600"))  # seconds
 CACHE_MAXSIZE = int(os.getenv("CACHE_MAXSIZE", "1000"))
 RATE_LIMIT_PER_MINUTE = int(os.getenv("PROXY_RATE_LIMIT", "30"))
 MAX_BODY_BYTES = int(os.getenv("PROXY_MAX_BODY_BYTES", str(64 * 1024)))  # 64 KB
+MAX_RESPONSE_BYTES = int(os.getenv("PROXY_MAX_RESPONSE_BYTES", str(5 * 1024 * 1024)))  # 5 MB
 MAX_QUERY_PARAMS = 16
 MAX_QUERY_VALUE_LEN = 256
 CSRF_TTL_SECONDS = int(os.getenv("PROXY_CSRF_TTL", "600"))  # 10 min
+NEGATIVE_CACHE_TTL = int(os.getenv("PROXY_NEGATIVE_CACHE_TTL", "60"))  # seconds
+NEGATIVE_CACHE_MAXSIZE = int(os.getenv("PROXY_NEGATIVE_CACHE_MAXSIZE", "10000"))
+RATE_LIMIT_MAX_ENTRIES = int(os.getenv("PROXY_RATE_LIMIT_MAX_ENTRIES", "10000"))
 
 # Hosts we trust to have set X-Forwarded-For correctly. The proxy runs behind
 # the local nginx sidecar (see nginx.conf: proxy_set_header X-Forwarded-For
 # $proxy_add_x_forwarded_for). Only treat XFF as authoritative when the peer
 # is one of these.
+#
+# Why CIDR (RFC 7239 + RFC 4291 §2.5.5.2): in containers / dual-stack stacks
+# the peer can present as `::ffff:127.0.0.1` (IPv4-mapped IPv6) or via the
+# Docker bridge network (172.17.0.0/16). A literal-string set misses these and
+# silently drops XFF parsing — that means rate-limit keys collapse onto the
+# loopback peer IP and the WHOLE proxy becomes trivially bypassable from
+# outside the sidecar topology.
+TRUSTED_PEER_NETWORKS: list[ipaddress._BaseNetwork] = [
+    ipaddress.ip_network("127.0.0.0/8"),            # IPv4 loopback (RFC 1122)
+    ipaddress.ip_network("::1/128"),                # IPv6 loopback
+    ipaddress.ip_network("::ffff:127.0.0.0/104"),   # IPv4-mapped IPv6 loopback (RFC 4291)
+]
+# Optional: extra trusted networks via env, comma-separated CIDRs.
+# e.g. PROXY_TRUSTED_PEER_CIDRS="172.17.0.0/16,10.0.0.0/8"
+_extra_cidrs = os.getenv("PROXY_TRUSTED_PEER_CIDRS", "").strip()
+if _extra_cidrs:
+    for _cidr in _extra_cidrs.split(","):
+        _cidr = _cidr.strip()
+        if not _cidr:
+            continue
+        try:
+            TRUSTED_PEER_NETWORKS.append(ipaddress.ip_network(_cidr, strict=False))
+        except ValueError:
+            logging.getLogger("proxy").warning("Ignoring malformed PROXY_TRUSTED_PEER_CIDRS entry: %r", _cidr)
+
+
+def _is_trusted_peer(client_host: str) -> bool:
+    """
+    True when the socket peer falls inside one of TRUSTED_PEER_NETWORKS.
+
+    We CIDR-match instead of string-equality because the peer can legitimately
+    present as `127.0.0.1`, `::1`, `::ffff:127.0.0.1`, or a Docker bridge IP
+    depending on how the listener is bound. A string set misses the IPv4-mapped
+    IPv6 form and any container-network address.
+    """
+    if not client_host:
+        return False
+    try:
+        ip = ipaddress.ip_address(client_host)
+    except ValueError:
+        return False
+    return any(ip in net for net in TRUSTED_PEER_NETWORKS)
+
+
+# Backwards-compat shim: some tests / external code still reference the old
+# string set. Keep it in sync with the canonical loopback CIDRs so anyone
+# inspecting it still sees the right semantics; do NOT use it for trust checks.
 TRUSTED_PEER_IPS = {"127.0.0.1", "::1"}
 
 # ---------------------------------------------------------------------------
@@ -89,9 +142,24 @@ logging.getLogger().addFilter(_RequestIDFilter())
 # Bounded LRU+TTL response cache (anonymous, no user data).
 _cache: TTLCache = TTLCache(maxsize=CACHE_MAXSIZE, ttl=CACHE_TTL)
 
-# Rate limit state: {client_ip: {minute_bucket: count}}. No colon parsing =>
-# IPv6-safe.
-_rate_limits: Dict[str, Dict[int, int]] = {}
+# Negative cache for upstream 404s on identifier lookups (e.g. /proxy/dtc/<code>).
+# Without this, an attacker can crawl arbitrary unknown codes and force a
+# round-trip to the backend on every request — a trivial cache-bypass DoS.
+# 60s TTL is short enough that a real backend recovery (codes added to the DB)
+# becomes visible to clients within one minute.
+_negative_cache: TTLCache = TTLCache(maxsize=NEGATIVE_CACHE_MAXSIZE, ttl=NEGATIVE_CACHE_TTL)
+
+# Rate limit state: OrderedDict so we can FIFO-evict the OLDEST entry when we
+# exceed RATE_LIMIT_MAX_ENTRIES. Key = (client_ip, minute_bucket); value = count.
+#
+# Why FIFO over LRU: LRU evicts the LEAST-recently-touched entry. Under attack,
+# attacker traffic is the most-recently-touched, so legitimate users (whose
+# entries are quietly aging in the background) get evicted first — and then
+# they re-enter with a fresh counter, which means the rate limiter helps the
+# legit user reset and helps the attacker stay above the limit. FIFO eviction
+# (popitem(last=False)) drops whatever was inserted earliest, regardless of
+# recent activity, so an attacker burst can't selectively wipe innocents.
+_rate_limits: "OrderedDict[Tuple[str, int], int]" = OrderedDict()
 
 # CSRF cache (module scope). asyncio.Lock guards the refresh.
 _csrf_cache: Dict[str, Any] = {"token": None, "expires_at": 0.0}
@@ -198,18 +266,20 @@ def _get_client_ip(request: Request) -> str:
 
     nginx (see nginx.conf) forwards `X-Forwarded-For: $proxy_add_x_forwarded_for`
     which APPENDS $remote_addr. So the client's real IP is always the LAST
-    comma-separated value. We only trust XFF when the peer is the local nginx
-    sidecar (127.0.0.1 / ::1). Otherwise we fall back to the socket peer.
+    comma-separated value. We only trust XFF when the peer is inside one of
+    TRUSTED_PEER_NETWORKS (covers loopback in IPv4, IPv6, IPv4-mapped IPv6 form,
+    and operator-configured container bridges). Otherwise we fall back to the
+    socket peer.
     """
     peer = request.client.host if request.client else ""
     forwarded = request.headers.get("x-forwarded-for", "").strip()
-    if forwarded and peer in TRUSTED_PEER_IPS:
+    if forwarded and _is_trusted_peer(peer):
         parts = [p.strip() for p in forwarded.split(",") if p.strip()]
         if parts:
             candidate = parts[-1]
             try:
                 # Validate it's actually an IP — reject garbage like "attacker".
-                ip_address(candidate)
+                ipaddress.ip_address(candidate)
                 return candidate
             except ValueError:
                 log.warning("Malformed XFF last-entry: %r", candidate)
@@ -220,43 +290,32 @@ def _check_rate_limit(client_ip: str) -> tuple[bool, int, int]:
     """
     Returns (allowed, remaining, reset_epoch_seconds).
 
-    Uses a dict-of-dicts (no string parsing) so IPv6 is safe.
+    Implementation: single OrderedDict keyed by (ip, minute_bucket). Keys are
+    inserted in arrival order; FIFO eviction drops the oldest entry once the
+    table grows past RATE_LIMIT_MAX_ENTRIES. See module-level comment for why
+    FIFO beats LRU under attack.
     """
     now = time.time()
     current_minute = int(now // 60)
-
-    per_ip = _rate_limits.get(client_ip)
-    if per_ip is None:
-        per_ip = {}
-        _rate_limits[client_ip] = per_ip
-
-    # Drop stale buckets for this IP (keep current only).
-    stale = [m for m in per_ip if m < current_minute]
-    for m in stale:
-        del per_ip[m]
-    if not per_ip:
-        # Nothing left? Drop the IP's entry entirely on next pass.
-        pass
-
-    count = per_ip.get(current_minute, 0)
+    key = (client_ip, current_minute)
     reset_epoch = (current_minute + 1) * 60
 
+    count = _rate_limits.get(key, 0)
     if count >= RATE_LIMIT_PER_MINUTE:
         return False, 0, reset_epoch
 
-    per_ip[current_minute] = count + 1
-    remaining = max(0, RATE_LIMIT_PER_MINUTE - per_ip[current_minute])
+    new_count = count + 1
+    if key in _rate_limits:
+        # Update count without changing insertion order (anchored to first hit).
+        _rate_limits[key] = new_count
+    else:
+        _rate_limits[key] = new_count
+        # FIFO eviction once we exceed the cap. popitem(last=False) drops the
+        # OLDEST inserted key — never the most recently active legit user.
+        while len(_rate_limits) > RATE_LIMIT_MAX_ENTRIES:
+            _rate_limits.popitem(last=False)
 
-    # Opportunistic global cleanup: drop empty IP entries.
-    if len(_rate_limits) > 10_000:
-        for ip in list(_rate_limits.keys()):
-            buckets = _rate_limits[ip]
-            for m in list(buckets.keys()):
-                if m < current_minute - 1:
-                    del buckets[m]
-            if not buckets:
-                del _rate_limits[ip]
-
+    remaining = max(0, RATE_LIMIT_PER_MINUTE - new_count)
     return True, remaining, reset_epoch
 
 
@@ -283,8 +342,27 @@ def _cache_key(path: str, payload: Any) -> str:
     return f"{path}:{body_hash}"
 
 
+_REQUEST_ID_RE = re.compile(r"^[A-Za-z0-9\-]{1,64}$")
+
+
+def _sanitize_request_id(raw: Optional[str]) -> str:
+    """
+    Accept the client's X-Request-ID only if it matches a strict alnum+dash
+    grammar bounded at 64 chars. Anything else (control chars, newlines,
+    quotes, length abuse) is replaced with a server-generated id.
+
+    Why: the value is interpolated into log lines via %(request_id)s. A
+    client-supplied "\\n2026-04-21 [CRITICAL] root: pwned" would inject a
+    forged log entry (OWASP Logging Cheat Sheet, CWE-117). Strict allow-list
+    is the only safe pattern here.
+    """
+    if raw and _REQUEST_ID_RE.fullmatch(raw):
+        return raw
+    return f"proxy-{uuid.uuid4().hex[:16]}"
+
+
 def _request_id(request: Request) -> str:
-    return request.headers.get("x-request-id") or f"proxy-{int(time.time() * 1000)}"
+    return _sanitize_request_id(request.headers.get("x-request-id"))
 
 
 def _sanitize_query_params(request: Request, backend_path: str) -> tuple[Optional[Dict[str, str]], Optional[JSONResponse]]:
@@ -370,6 +448,76 @@ def _decode_upstream_json(resp: httpx.Response, request_id: str) -> Optional[Any
         return None
 
 
+async def _read_capped(resp: httpx.Response, request_id: str, backend_path: str) -> bytes:
+    """
+    Read the response body but never accumulate more than MAX_RESPONSE_BYTES.
+
+    A truncated body will fail downstream JSON decoding, which we already
+    handle by returning a sanitised 502 — i.e. the cap acts as a hard memory
+    bound on a single upstream interaction. This protects the proxy from a
+    misbehaving (or compromised) backend that streams an enormous body.
+
+    Counter to "5MB might break large DTC list responses": 5MB serialised JSON
+    is ~tens of thousands of records; the backend should never return that
+    much from a single landing-page endpoint, and the limit is env-overridable
+    (PROXY_MAX_RESPONSE_BYTES) for the rare exception.
+    """
+    body = b""
+    truncated = False
+    async for chunk in resp.aiter_bytes(chunk_size=8192):
+        if len(body) + len(chunk) > MAX_RESPONSE_BYTES:
+            # Take just enough to hit the cap, then mark truncated and stop.
+            remaining = MAX_RESPONSE_BYTES - len(body)
+            if remaining > 0:
+                body += chunk[:remaining]
+            truncated = True
+            break
+        body += chunk
+    if truncated:
+        log.warning(
+            "Upstream response exceeded %d bytes on %s, truncating",
+            MAX_RESPONSE_BYTES, backend_path,
+            extra={"request_id": request_id},
+        )
+    return body
+
+
+def _decode_json_bytes(body: bytes, content_type: str, request_id: str) -> Optional[Any]:
+    """Defensive json decode for raw bytes (mirrors _decode_upstream_json)."""
+    if not content_type.lower().startswith("application/json"):
+        log.warning("Upstream non-JSON content-type: %s", content_type,
+                    extra={"request_id": request_id})
+        return None
+    try:
+        return json.loads(body.decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError, ValueError) as exc:
+        log.warning("Upstream JSON decode failed: %s", exc, extra={"request_id": request_id})
+        return None
+
+
+# CSRF rejection codes the BACKEND uses to signal "your token was bad".
+# We MUST distinguish these from a generic 403 (auth/permissions failure):
+# auto-refreshing on a permissions failure leaks an unrelated retry attempt
+# and masks the real error from the client.
+_CSRF_REJECT_CODES = frozenset({"CSRF_INVALID", "CSRF_EXPIRED", "CSRF_MISSING"})
+
+
+def _is_csrf_rejection(body: Any) -> bool:
+    """
+    True iff the upstream JSON body looks like a CSRF-specific 403.
+    Body shape we expect: {"data": null, "error": {"code": "CSRF_INVALID", ...}, ...}
+    Any other 403 (perms, IP block, generic auth) returns False so we PROPAGATE
+    rather than refresh-and-retry.
+    """
+    if not isinstance(body, dict):
+        return False
+    err = body.get("error")
+    if not isinstance(err, dict):
+        return False
+    code = err.get("code")
+    return isinstance(code, str) and code in _CSRF_REJECT_CODES
+
+
 def _cache_response_headers(etag: str) -> Dict[str, str]:
     return {
         "Cache-Control": f"public, max-age={CACHE_TTL}",
@@ -380,6 +528,21 @@ def _cache_response_headers(etag: str) -> Dict[str, str]:
 # ---------------------------------------------------------------------------
 # Core proxy logic
 # ---------------------------------------------------------------------------
+
+
+async def _stream_request(method: str, url: str, **kwargs) -> Tuple[httpx.Response, bytes, str]:
+    """
+    Issue a streamed HTTP call and read at most MAX_RESPONSE_BYTES of body.
+
+    Returns: (response, body_bytes, content_type). The Response is fully
+    consumed by the time we return.
+    """
+    request_id = kwargs.pop("__request_id", "-")
+    backend_path = kwargs.pop("__backend_path", url)
+    async with _client().stream(method, url, **kwargs) as resp:
+        body = await _read_capped(resp, request_id, backend_path)
+        ct = resp.headers.get("content-type", "")
+        return resp, body, ct
 
 
 async def _proxy_post(
@@ -403,8 +566,9 @@ async def _proxy_post(
         headers = {"X-Cache": "HIT", **_cache_response_headers(etag)}
         return JSONResponse(cached, headers=headers)
 
-    async def _send(csrf_token: str) -> httpx.Response:
-        return await _client().post(
+    async def _send(csrf_token: str) -> Tuple[httpx.Response, bytes, str]:
+        return await _stream_request(
+            "POST",
             f"{BACKEND_URL}{backend_path}",
             json=payload,
             headers={
@@ -413,6 +577,8 @@ async def _proxy_post(
                 "X-Request-ID": request_id,
             },
             cookies={"csrf_token": csrf_token},
+            __request_id=request_id,
+            __backend_path=backend_path,
         )
 
     try:
@@ -422,15 +588,23 @@ async def _proxy_post(
                 _envelope(error={"code": "UPSTREAM_UNAVAILABLE", "message": "Could not obtain CSRF token"}),
                 status_code=502,
             )
-        resp = await _send(csrf_token)
+        resp, body_bytes, ct = await _send(csrf_token)
 
-        # If the token was stale, invalidate + single retry.
+        # If we get 403, ONLY refresh-and-retry when the upstream explicitly
+        # signals a CSRF-specific code. A generic 403 (perms, IP block) is
+        # propagated as-is — refreshing then is wasted backend QPS and masks
+        # the real reason the request was denied.
         if resp.status_code == 403:
-            log.info("CSRF rejected, refreshing token", extra={"request_id": request_id})
-            _invalidate_csrf()
-            csrf_token = await _get_csrf_token(request_id)
-            if csrf_token:
-                resp = await _send(csrf_token)
+            decoded_403 = _decode_json_bytes(body_bytes, ct, request_id)
+            if _is_csrf_rejection(decoded_403):
+                log.info("CSRF rejected by backend, refreshing token", extra={"request_id": request_id})
+                _invalidate_csrf()
+                csrf_token = await _get_csrf_token(request_id)
+                if csrf_token:
+                    resp, body_bytes, ct = await _send(csrf_token)
+            else:
+                log.info("Non-CSRF 403 on %s, propagating", backend_path,
+                         extra={"request_id": request_id})
     except httpx.TimeoutException:
         log.warning("Upstream timeout on POST %s", backend_path, extra={"request_id": request_id})
         return JSONResponse(
@@ -446,7 +620,7 @@ async def _proxy_post(
 
     # 4xx: forward upstream body verbatim (helps UI show validation errors).
     if 400 <= resp.status_code < 500:
-        body = _decode_upstream_json(resp, request_id)
+        body = _decode_json_bytes(body_bytes, ct, request_id)
         if body is None:
             # Non-JSON 4xx — don't leak raw HTML. Return sanitised error.
             return JSONResponse(
@@ -457,9 +631,14 @@ async def _proxy_post(
                  extra={"request_id": request_id})
         return JSONResponse(body, status_code=resp.status_code)
 
-    # 5xx: sanitised error. Log the body for operators.
+    # 5xx: sanitised error. Log a slice for operators.
     if resp.status_code >= 500:
-        log.error("Upstream 5xx %s on %s: %s", resp.status_code, backend_path, resp.text[:500],
+        # Decode body bytes safely; never leak raw upstream payload to client.
+        try:
+            preview = body_bytes[:500].decode("utf-8", errors="replace")
+        except Exception:  # pragma: no cover - decode is total with errors=replace
+            preview = "<undecodable>"
+        log.error("Upstream 5xx %s on %s: %s", resp.status_code, backend_path, preview,
                   extra={"request_id": request_id})
         return JSONResponse(
             _envelope(error={"code": "UPSTREAM_ERROR", "message": "Upstream service error"}),
@@ -467,7 +646,7 @@ async def _proxy_post(
         )
 
     # 2xx happy path.
-    data = _decode_upstream_json(resp, request_id)
+    data = _decode_json_bytes(body_bytes, ct, request_id)
     if data is None:
         return JSONResponse(
             _envelope(error={"code": "UPSTREAM_BAD_RESPONSE", "message": "Upstream returned non-JSON"}),
@@ -485,7 +664,23 @@ async def _proxy_post(
     return JSONResponse(data, headers=headers)
 
 
-async def _proxy_get(request: Request, backend_path: str) -> Response:
+async def _proxy_get(
+    request: Request,
+    backend_path: str,
+    *,
+    use_negative_cache: bool = False,
+) -> Response:
+    """
+    Generic GET proxy.
+
+    use_negative_cache: when True, upstream 404s are cached for
+    NEGATIVE_CACHE_TTL seconds against (backend_path, params). This is for
+    identifier-shaped routes (e.g. /api/v1/dtc/<code>) where an attacker can
+    cheaply enumerate non-existent IDs and force a backend round-trip per
+    request. Counter to "negative caching could mask backend recovery": TTL
+    is 60s by default and the user is welcome to retry — they will see fresh
+    state within the minute.
+    """
     request_id = _request_id(request)
     client_ip = _get_client_ip(request)
 
@@ -503,11 +698,23 @@ async def _proxy_get(request: Request, backend_path: str) -> Response:
         etag = cache_key.split(":", 1)[1][:16]
         return JSONResponse(cached, headers={"X-Cache": "HIT", **_cache_response_headers(etag)})
 
+    if use_negative_cache:
+        neg = _negative_cache.get(cache_key)
+        if neg is not None:
+            return JSONResponse(
+                neg,
+                status_code=404,
+                headers={"X-Cache": "HIT-NEG"},
+            )
+
     try:
-        resp = await _client().get(
+        resp, body_bytes, ct = await _stream_request(
+            "GET",
             f"{BACKEND_URL}{backend_path}",
             params=params,
             headers={"X-Request-ID": request_id},
+            __request_id=request_id,
+            __backend_path=backend_path,
         )
     except httpx.TimeoutException:
         log.warning("Upstream timeout on GET %s", backend_path, extra={"request_id": request_id})
@@ -523,23 +730,30 @@ async def _proxy_get(request: Request, backend_path: str) -> Response:
         )
 
     if 400 <= resp.status_code < 500:
-        body = _decode_upstream_json(resp, request_id)
+        body = _decode_json_bytes(body_bytes, ct, request_id)
         if body is None:
             return JSONResponse(
                 _envelope(error={"code": "UPSTREAM_BAD_RESPONSE", "message": "Upstream returned non-JSON"}),
                 status_code=resp.status_code,
             )
+        # Negative-cache 404s only for routes that opted in.
+        if use_negative_cache and resp.status_code == 404:
+            _negative_cache[cache_key] = body
         return JSONResponse(body, status_code=resp.status_code)
 
     if resp.status_code >= 500:
-        log.error("Upstream 5xx %s on GET %s: %s", resp.status_code, backend_path, resp.text[:500],
+        try:
+            preview = body_bytes[:500].decode("utf-8", errors="replace")
+        except Exception:  # pragma: no cover
+            preview = "<undecodable>"
+        log.error("Upstream 5xx %s on GET %s: %s", resp.status_code, backend_path, preview,
                   extra={"request_id": request_id})
         return JSONResponse(
             _envelope(error={"code": "UPSTREAM_ERROR", "message": "Upstream service error"}),
             status_code=502,
         )
 
-    data = _decode_upstream_json(resp, request_id)
+    data = _decode_json_bytes(body_bytes, ct, request_id)
     if data is None:
         return JSONResponse(
             _envelope(error={"code": "UPSTREAM_BAD_RESPONSE", "message": "Upstream returned non-JSON"}),
@@ -630,7 +844,10 @@ async def dtc_detail(request: Request) -> Response:
             _envelope(error={"code": "INVALID_DTC", "message": "Invalid DTC code format"}),
             status_code=400,
         )
-    return await _proxy_get(request, f"/api/v1/dtc/{code}")
+    # use_negative_cache=True: an attacker enumerating P0001..PFFFF would
+    # otherwise force one backend round-trip per code. 60s TTL caches the 404
+    # so a brute-force scan hits the proxy memory, not the database.
+    return await _proxy_get(request, f"/api/v1/dtc/{code}", use_negative_cache=True)
 
 
 async def health(request: Request) -> Response:

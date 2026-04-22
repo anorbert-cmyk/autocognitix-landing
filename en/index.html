@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- GDPR Cookie Consent (must load before any analytics) -->
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
+
   <!-- SEO Meta Tags -->
   <meta name="description" content="Enter your car's error code and get instant AI diagnosis. Find what's wrong, what to fix, and how much it costs — in seconds.">
   <meta name="robots" content="index, follow">
@@ -23,13 +26,17 @@
   <meta property="og:url" content="https://autocognitix.hu/en/">
   <meta property="og:site_name" content="AutoCognitix">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://autocognitix.hu/images/og-default.jpg">
+  <meta property="og:image" content="https://autocognitix.hu/images/og/en-homepage.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AutoCognitix - AI-Powered Car Diagnostics">
   <meta name="twitter:description" content="Enter your car's error code and get instant AI diagnosis. Find what's wrong, what to fix, and how much it costs — in seconds.">
-  <meta name="twitter:image" content="https://autocognitix.hu/images/og-default.jpg">
+  <meta name="twitter:image" content="https://autocognitix.hu/images/og/en-homepage.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <title>AutoCognitix - AI-Powered Car Diagnostics | DTC Code Lookup & Repair Cost Estimates</title>
 
@@ -135,6 +142,17 @@
       .nav-cta { margin-left: auto; }
       .hero-grid { grid-template-columns: 1fr; gap: 30px; }
     }
+    /* Disabled-link visual hint for aria-disabled="true" anchors (coming-soon CTAs) — parity with HU */
+    a[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
+    /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A): hidden until keyboard focus */
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: var(--color-accent, #D97757); color: #fff;
+      padding: 8px 16px; z-index: 10000;
+      text-decoration: none; font-weight: 600;
+      border-bottom-right-radius: var(--radius-sm, 8px);
+    }
+    .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
   </style>
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
@@ -260,6 +278,7 @@
   </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- ═══════════════ NAVIGATION ═══════════════ -->
   <nav class="navbar">
@@ -290,7 +309,7 @@
       <div class="lang-switcher">
         <a href="/hu/" class="lang-option">HU</a>
         <span class="text-muted" aria-hidden="true">|</span>
-        <a href="/en/" class="lang-option active">EN</a>
+        <a href="/en/" class="lang-option active" aria-current="true">EN</a>
       </div>
       <a href="#pricing" class="btn btn-primary btn-sm nav-cta">Get Started</a>
     </div>
@@ -893,6 +912,7 @@
           <a href="/en/legal/terms-of-service.html" class="footer-link">Terms of Service</a>
           <a href="/en/legal/cookie-policy.html" class="footer-link">Cookie Policy</a>
           <a href="/en/legal/ai-disclaimer.html" class="footer-link">AI Disclaimer</a>
+          <a href="#" class="footer-link" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie preferences</a>
         </div>
         <div>
           <div class="footer-heading">Contact</div>
@@ -935,15 +955,10 @@
     })();
 
     /* ─── FAQ Accordion ─── */
-    (function initFAQ() {
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const wasActive = item.classList.contains('active');
-          document.querySelectorAll('.faq-item.active').forEach(i => i.classList.remove('active'));
-          if (!wasActive) item.classList.add('active');
-        });
-      });
-    })();
+    /* LEAD5-002 fix (Wave 4 a11y): legacy initFAQ() removed.
+       FAQ migrated to native <details>/<summary>; the JS toggling
+       .faq-item.active produced a double-state bug (native open + JS class).
+       Native <details> is now the single source of truth. */
 
     /* ─── Pricing Toggle ─── */
     (function initPricingToggle() {

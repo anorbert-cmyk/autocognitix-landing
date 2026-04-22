@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEC-H1: keep unsubscribe pages out of search + link prefetchers -->
     <meta name="robots" content="noindex,nofollow,noarchive">
@@ -126,14 +127,25 @@
             font-size: 14px;
             margin-top: 12px;
         }
+
+        /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A) */
+        .skip-link {
+            position: absolute; top: -40px; left: 0;
+            background: #D97757; color: #fff;
+            padding: 8px 16px; z-index: 10000;
+            text-decoration: none; font-weight: 600;
+            border-bottom-right-radius: 8px;
+        }
+        .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content / Ugrás a fő tartalomhoz</a>
     <header>
         <h1>AutoCognitix</h1>
     </header>
 
-    <div class="container">
+    <main id="main-content" class="container">
         <!-- State 1: confirmation required — shown when a token is present in the URL. -->
         <div id="confirm-card" class="card hidden">
             <h2>Confirm unsubscribe</h2>
@@ -195,7 +207,7 @@
                 <a href="/" class="back-link">← Back to Homepage / Vissza a kezdőoldalra</a>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
         // SEC-FIX (Lead 9 audit, 2026-04-21):

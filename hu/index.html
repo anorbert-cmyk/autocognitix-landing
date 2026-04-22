@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- GDPR Cookie Consent (must load before any analytics) -->
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
+
   <!-- SEO Meta Tags -->
   <meta name="description" content="AI-alapú autódiagnosztika magyar nyelven. Írd be a hibakódot (DTC) vagy a tüneteket — megkapod a diagnosztikát, a javítási tervet és a valós alkatrészárakat. 26 800+ tudásbázis, 90 mp válaszidő.">
   <meta name="robots" content="index, follow">
@@ -27,13 +30,17 @@
   <meta property="og:url" content="https://autocognitix.hu/hu/">
   <meta property="og:site_name" content="AutoCognitix">
   <meta property="og:locale" content="hu_HU">
-  <meta property="og:image" content="https://autocognitix.hu/images/og-default.jpg">
+  <meta property="og:image" content="https://autocognitix.hu/images/og/hu-homepage.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AutoCognitix — AI autódiagnosztika magyarul">
   <meta name="twitter:description" content="Írd be a hibakódot vagy írd le a tüneteket — megkapod a diagnosztikát, a javítási tervet és a valós alkatrészárakat.">
-  <meta name="twitter:image" content="https://autocognitix.hu/images/og-default.jpg">
+  <meta name="twitter:image" content="https://autocognitix.hu/images/og/hu-homepage.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <title>AutoCognitix — AI autódiagnosztika magyarul | Hibakód értelmezés és javítási költségbecslés</title>
 
@@ -165,6 +172,15 @@
     }
     /* Disabled-link visual hint for aria-disabled="true" anchors (coming-soon CTAs) */
     a[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
+    /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A): hidden until keyboard focus */
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: var(--color-accent, #D97757); color: #fff;
+      padding: 8px 16px; z-index: 10000;
+      text-decoration: none; font-weight: 600;
+      border-bottom-right-radius: var(--radius-sm, 8px);
+    }
+    .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
   </style>
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
@@ -294,6 +310,7 @@
   </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Ugrás a fő tartalomhoz</a>
 
   <!-- ═══════════════ NAVIGATION ═══════════════ -->
   <nav class="navbar">
@@ -322,7 +339,7 @@
         <a href="#contact" class="nav-link">Kapcsolat</a>
       </div>
       <div class="lang-switcher">
-        <a href="/hu/" class="lang-option active">HU</a>
+        <a href="/hu/" class="lang-option active" aria-current="true">HU</a>
         <span class="text-muted">|</span>
         <a href="/en/" class="lang-option">EN</a>
       </div>
@@ -924,6 +941,7 @@
           <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasznalasi feltetelek</a>
           <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabalyzat</a>
           <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelossegi nyilatkozat</a>
+          <a href="#" class="footer-link" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a>
         </div>
         <div>
           <div class="footer-heading">Kapcsolat</div>

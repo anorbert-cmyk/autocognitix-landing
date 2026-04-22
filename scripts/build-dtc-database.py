@@ -12,6 +12,7 @@ Schema: { "P0420": { "en": "...", "hu": null, "category": "powertrain", "generic
 Usage: python3 scripts/build-dtc-database.py
 """
 
+import argparse
 import csv
 import io
 import json
@@ -125,8 +126,58 @@ def estimate_severity(code: str) -> str:
     return "low"
 
 
+def load_existing_db(path: str) -> dict:
+    """Load existing DTC database (if present) so HU translations can be preserved.
+
+    Returns an empty dict on first run or any read/parse failure. Failures are
+    logged but never abort the build — that path is for the explicit
+    `--reset-hu` workflow.
+    """
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            existing = json.load(f)
+        if not isinstance(existing, dict):
+            print(f"  WARNING: existing DB is not a dict ({type(existing).__name__}); ignoring",
+                  file=sys.stderr)
+            return {}
+        return existing
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"  WARNING: could not read existing DB at {path}: {exc}", file=sys.stderr)
+        return {}
+
+
 def main():
+    parser = argparse.ArgumentParser(description="Build DTC database from open-source sources.")
+    parser.add_argument(
+        "--reset-hu",
+        action="store_true",
+        help=(
+            "WIPE existing Hungarian translations and rebuild from scratch. "
+            "Default behavior preserves HU values from any existing dtc-database.json. "
+            "Use this only when you intentionally want to throw away translations "
+            "(e.g. wholesale retranslation). Audit-logged in stdout."
+        ),
+    )
+    args = parser.parse_args()
+
     print("Building DTC database from open-source sources...\n")
+
+    # Preserve existing HU translations unless --reset-hu was passed.
+    # Wave 3 invested ~95% HU coverage (4690 codes); a default rebuild that
+    # wipes them is a data-loss bug, not a feature.
+    if args.reset_hu:
+        print("  --reset-hu PASSED: existing Hungarian translations will be DISCARDED.\n")
+        existing = {}
+    else:
+        existing = load_existing_db(OUTPUT_PATH)
+        if existing:
+            preserved = sum(
+                1 for k, v in existing.items()
+                if not k.startswith("_") and isinstance(v, dict) and v.get("hu")
+            )
+            print(f"  Loaded existing DB: {preserved:,} HU translations will be preserved.\n")
 
     merged = {}  # code -> description (xinings is secondary, mytrile can override for overlap)
 
@@ -160,6 +211,7 @@ def main():
 
     # Build output in our schema
     output = {}
+    preserved_hu_count = 0
     for code in sorted(merged.keys()):
         desc = merged[code]
         output[code] = {
@@ -169,11 +221,23 @@ def main():
             "generic": is_generic(code),
             "severity": estimate_severity(code),
         }
+        # Preserve HU translation from existing DB (unless --reset-hu cleared `existing`)
+        prior = existing.get(code) if isinstance(existing, dict) else None
+        if isinstance(prior, dict) and prior.get("hu"):
+            output[code]["hu"] = prior["hu"]
+            preserved_hu_count += 1
+
+    # Compute HU coverage from the rebuilt output (not from a hardcoded 0).
+    total_codes = sum(1 for k in output if not k.startswith("_"))
+    hu_translated = sum(
+        1 for k, v in output.items()
+        if not k.startswith("_") and v.get("hu")
+    )
+    hu_coverage = round(hu_translated * 100.0 / total_codes, 2) if total_codes else 0.0
 
     # Add metadata — compute total from code keys (not dict length), since
     # len(output)-1 was evaluated BEFORE _meta was inserted, giving an off-by-one
     # (codes count N, but len(output) was N at evaluation time, so we got N-1).
-    total_codes = sum(1 for k in output if not k.startswith("_"))
     output["_meta"] = {
         "source": "open-source-merge",
         "sources": [
@@ -182,10 +246,19 @@ def main():
         ],
         "updated": date.today().isoformat(),
         "total_codes": total_codes,
-        "hu_coverage_percent": 0,
+        "hu_coverage_percent": hu_coverage,
         "hu_fallback": "en",
         "hu_fallback_marker": "[EN] ",
+        "warning": (
+            "HAND-CURATED DATA SOURCE. Do NOT regenerate via export-dtc-data.py "
+            "(schema mismatch). Rebuild only via scripts/build-dtc-database.py."
+        ),
     }
+    if args.reset_hu:
+        output["_meta"]["hu_reset_at"] = date.today().isoformat()
+
+    print(f"\n  Preserved {preserved_hu_count:,} existing HU translations "
+          f"({hu_coverage:.2f}% coverage)")
 
     # Write output
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)

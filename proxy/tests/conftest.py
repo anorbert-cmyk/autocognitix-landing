@@ -56,16 +56,19 @@ def clean_state(proxy_module):
     """
     Reset ALL module-level mutable state between tests:
       - response cache
+      - negative cache (404 short-TTL cache for identifier routes)
       - rate-limit counters
       - CSRF token cache (otherwise a test that populates the token poisons
         the failure-path test that expects a None token)
     """
     proxy_module._cache.clear()
+    proxy_module._negative_cache.clear()
     proxy_module._rate_limits.clear()
     proxy_module._csrf_cache["token"] = None
     proxy_module._csrf_cache["expires_at"] = 0.0
     yield
     proxy_module._cache.clear()
+    proxy_module._negative_cache.clear()
     proxy_module._rate_limits.clear()
     proxy_module._csrf_cache["token"] = None
     proxy_module._csrf_cache["expires_at"] = 0.0

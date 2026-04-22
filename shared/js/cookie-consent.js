@@ -15,9 +15,22 @@
  * - i18n: reads document.documentElement.lang at runtime; falls back to 'en'.
  *
  * @api
- * - window.CookieConsent.get()           → {analytics: bool, marketing: bool}
+ * - window.CookieConsent.get()           → {analytics: bool, marketing: bool}|null
+ * - window.CookieConsent.getSync()       → {analytics: bool, marketing: bool, _firstVisit?: bool}
+ *                                          (never-null snapshot for late-loading scripts
+ *                                           that miss the `cookie-consent-updated` event)
  * - window.CookieConsent.onReady(fn)     → fires once when consent is known
  * - window.CookieConsent.reset()         → re-opens the preferences modal
+ *
+ * @privacy-signals
+ * Honors `navigator.globalPrivacyControl === true` (GPC, W3C draft) and
+ * `navigator.doNotTrack === '1'` (legacy DNT). When either is asserted on
+ * first visit, we auto-record reject-all and skip the banner.
+ *
+ * @cross-tab
+ * Listens for the `storage` event on STORAGE_KEY. If the user accepts or
+ * rejects in another tab, this tab hides its banner and refires
+ * `cookie-consent-updated` so analytics gates re-evaluate.
  *
  * @compliance
  * - GDPR Article 7 — conditions for consent (specific, informed, freely given,
@@ -174,15 +187,38 @@
     return MESSAGES[getLang()][key] || key;
   }
 
+  /* Strict, defense-in-depth deserializer.
+   * Threat model: an attacker (or a buggy 3rd-party script) writes a forged
+   * record to localStorage to flip analytics/marketing to true and bypass the
+   * banner. JSON.parse alone gives us no type guarantees — a value of
+   * `{ analytics: 1, marketing: "yes", v: 1, ts: "..." }` would coerce to
+   * truthy and silently grant consent. Every field is therefore type-checked
+   * and any deviation triggers a hard reject + re-prompt.
+   * Also guards against clock-skew tampering (future-dated ts) and stale
+   * entries past CONSENT_TTL_MS (EDPB-recommended periodic re-consent).
+   * Refs: GDPR Art. 7 (unambiguous consent), OWASP Web Storage 2024. */
   function loadConsent() {
     try {
       var raw = window.localStorage.getItem(STORAGE_KEY);
       if (!raw) return null;
       var parsed = JSON.parse(raw);
-      // Discard if schema version is stale
-      if (!parsed || parsed.v !== SCHEMA_VERSION) return null;
-      // Discard if consent is expired (6 months)
-      if (parsed.ts && Date.now() - new Date(parsed.ts).getTime() > CONSENT_TTL_MS) return null;
+      // Must be a plain object
+      if (typeof parsed !== 'object' || parsed === null) return null;
+      // Schema-version pin
+      if (parsed.v !== SCHEMA_VERSION) return null;
+      // Strict type guards on consent flags — prevents truthy-coercion attacks
+      if (typeof parsed.analytics !== 'boolean') return null;
+      if (typeof parsed.marketing !== 'boolean') return null;
+      // ts is stored as ISO8601 string (existing schema). Validate it parses
+      // to a finite, positive epoch and is not future-dated (clock-skew guard).
+      if (typeof parsed.ts !== 'string' || !parsed.ts) return null;
+      var tsMs = new Date(parsed.ts).getTime();
+      if (!isFinite(tsMs) || tsMs <= 0) return null;
+      var now = Date.now();
+      // Allow 60s of harmless clock skew; anything farther in the future = bogus
+      if (tsMs > now + 60 * 1000) return null;
+      // TTL: drop stale consent (EDPB periodic re-consent guidance)
+      if (now - tsMs > CONSENT_TTL_MS) return null;
       return parsed;
     } catch (e) {
       return null;
@@ -567,10 +603,62 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────────────
+     GLOBAL PRIVACY CONTROL (GPC) + DO NOT TRACK (DNT)
+     Honoring GPC is best-practice for EU users (CCPA-binding in California
+     since 2021; W3C TPWG draft). DNT is the older signal. If either is
+     asserted, we auto-record a "reject all" decision so the user is not
+     forced to interact with a banner that can only confirm their stated
+     preference. Per GDPR Art. 25 (privacy by design/default), this is the
+     safest default.
+     Refs: https://globalprivacycontrol.org/, EDPB Guidelines 05/2020 §3.1.2
+  ───────────────────────────────────────────────────────────────────────── */
+  function shouldRespectPrivacySignal() {
+    try {
+      if (navigator.globalPrivacyControl === true) return true;
+      // DNT: '1' = opt out. Some browsers expose on window; navigator is canonical.
+      var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      if (dnt === '1' || dnt === 'yes') return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     CROSS-TAB SYNC
+     If the user accepts/rejects in tab A, hide the banner in tab B. Without
+     this, the banner persists in background tabs and the user must click
+     twice. The `storage` event only fires in OTHER tabs (never the originator),
+     so no infinite loop possible.
+  ───────────────────────────────────────────────────────────────────────── */
+  function onStorageEvent(e) {
+    if (!e || e.key !== STORAGE_KEY) return;
+    // newValue === null means another tab cleared/reset consent → re-prompt.
+    if (e.newValue === null) {
+      _state = null;
+      // If a banner is already visible, leave it; otherwise show one.
+      if (!_banner) showBanner();
+      return;
+    }
+    var consent = loadConsent();
+    if (!consent) return; // Tampered/invalid write — ignore, don't disrupt UI
+    _state = consent;
+    hideBanner();
+    if (_modal) closeModal();
+    emitEvent({ analytics: consent.analytics, marketing: consent.marketing });
+    while (_readyCallbacks.length) {
+      try { _readyCallbacks.shift()(_state); } catch (err) {}
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────
      INIT
   ───────────────────────────────────────────────────────────────────────── */
 
   function init() {
+    // Wire cross-tab sync once, before any state work
+    try { window.addEventListener('storage', onStorageEvent); } catch (e) {}
+
     var stored = loadConsent();
 
     if (stored !== null) {
@@ -580,11 +668,20 @@
       while (_readyCallbacks.length) {
         try { _readyCallbacks.shift()(_state); } catch (e) {}
       }
-    } else {
-      // No valid consent found — show banner (privacy-by-default)
-      // onReady callbacks will fire only after user makes a choice
-      showBanner();
+      return;
     }
+
+    // No stored consent: respect GPC/DNT before showing a banner.
+    if (shouldRespectPrivacySignal()) {
+      // User has expressed a global "do not track" — record a reject-all
+      // decision and skip the banner entirely. They can still re-open
+      // preferences via CookieConsent.reset() to opt INTO analytics.
+      applyConsent(false, false);
+      return;
+    }
+
+    // Privacy-by-default: show banner. onReady fires only after user choice.
+    showBanner();
   }
 
   // Run after DOM is ready
@@ -611,6 +708,27 @@
     get: function () {
       if (_state === null) return null;
       return { analytics: _state.analytics, marketing: _state.marketing };
+    },
+
+    /**
+     * Synchronous, never-null snapshot of the current consent state.
+     *
+     * Late-loading scripts (lazy-loaded analytics, deferred bundles, code that
+     * runs *after* the `cookie-consent-updated` event has already fired) miss
+     * the one-shot event and would otherwise see no consent signal. Use this
+     * helper to read the state on demand without waiting for events.
+     *
+     * If no decision has been recorded yet, returns a privacy-safe default
+     * (`{analytics: false, marketing: false, _firstVisit: true}`). The
+     * `_firstVisit` flag lets callers distinguish "no answer yet" from an
+     * explicit "rejected" decision; never load tracking on first-visit.
+     *
+     * @returns {{analytics: boolean, marketing: boolean, _firstVisit?: boolean}}
+     */
+    getSync: function () {
+      var s = loadConsent();
+      if (s) return { analytics: s.analytics, marketing: s.marketing };
+      return { analytics: false, marketing: false, _firstVisit: true };
     },
 
     /**

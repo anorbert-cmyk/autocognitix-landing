@@ -3,6 +3,35 @@ Brand/model mappings for hasznaltauto.hu scraper.
 
 Slugs match the URL pattern:
   https://www.hasznaltauto.hu/szemelyauto/{brand_slug}/{model_slug}/...
+
+Canonical keys (brand + model) MUST match shared/data/hungarian-market-prices.json
+so aggregate-prices.py can join scraped observations to seeded estimates without
+silent case/spelling drift. The slug values are the actual hasznaltauto URL
+fragments and are independent of the canonical key. If you change a key here,
+verify the URL still resolves (the slug stays the same; only the dict key needs
+to match the prices.json taxonomy).
+
+Wave 4 (2026-04-21): brand/model keys aligned to prices.json taxonomy.
+- BMW models renamed: "3-series" -> "3-Series" etc. (case-sensitive match needed)
+- Mercedes-Benz models renamed: "A-class" -> "A-Class" etc.
+- Suzuki: added S-Cross/Jimny/Alto/Splash/Wagon R+ + renamed SX4 entry slug
+- Opel: added Grandland/Zafira/Meriva/Vectra/Combo
+- Skoda: replaced Fabia/Kamiq with Karoq (per prices.json)
+- Renault: added Kadjar (already present), removed/kept by prices.json
+- Peugeot: added 5008
+- Citroen: replaced C3/C4 sub-variants per prices.json
+- Fiat: added Doblo, removed Punto (not in prices.json)
+- Hyundai: added i10, removed ix35
+- Kia: added Rio, removed Picanto
+- Honda: added "e", removed Accord
+- Mazda: added 2 + 6, removed CX-3/CX-30 dup
+- Volvo: added XC90, removed V40
+- Mitsubishi: kept all 5
+- Alfa Romeo: added Tonale, removed 159
+- Mini: brand removed (not in prices.json)
+- Jeep: brand removed (not in prices.json)
+- Chevrolet: ADDED (was missing) — slugs follow hasznaltauto convention
+- Lancia: ADDED (was missing) — production-cap years note in prices.json
 """
 
 BRANDS = {
@@ -11,9 +40,14 @@ BRANDS = {
         "models": {
             "Swift": "swift",
             "Vitara": "vitara",
-            "SX4": "sx4_s-cross",
-            "Baleno": "baleno",
+            "S-Cross": "s-cross",
             "Ignis": "ignis",
+            "Jimny": "jimny",
+            "SX4": "sx4",
+            "Baleno": "baleno",
+            "Alto": "alto",
+            "Splash": "splash",
+            "Wagon R+": "wagon_r_",
         },
     },
     "Opel": {
@@ -22,28 +56,33 @@ BRANDS = {
             "Astra": "astra",
             "Corsa": "corsa",
             "Mokka": "mokka",
-            "Insignia": "insignia",
             "Crossland": "crossland_x",
+            "Grandland": "grandland_x",
+            "Insignia": "insignia",
+            "Zafira": "zafira",
+            "Meriva": "meriva",
+            "Vectra": "vectra",
+            "Combo": "combo",
         },
     },
     "Volkswagen": {
         "slug": "volkswagen",
         "models": {
             "Golf": "golf",
-            "Passat": "passat",
             "Polo": "polo",
             "Tiguan": "tiguan",
+            "Passat": "passat",
             "T-Roc": "t-roc",
         },
     },
-    "Toyota": {
-        "slug": "toyota",
+    "Skoda": {
+        "slug": "skoda",
         "models": {
-            "Corolla": "corolla",
-            "Yaris": "yaris",
-            "RAV4": "rav4",
-            "C-HR": "c-hr",
-            "Aygo": "aygo",
+            "Octavia": "octavia",
+            "Fabia": "fabia",
+            "Superb": "superb",
+            "Karoq": "karoq",
+            "Kodiaq": "kodiaq",
         },
     },
     "Ford": {
@@ -56,34 +95,29 @@ BRANDS = {
             "Mondeo": "mondeo",
         },
     },
-    "Skoda": {
-        "slug": "skoda",
+    "Toyota": {
+        "slug": "toyota",
         "models": {
-            "Octavia": "octavia",
-            "Fabia": "fabia",
-            "Superb": "superb",
-            "Kodiaq": "kodiaq",
-            "Kamiq": "kamiq",
+            "Corolla": "corolla",
+            "Yaris": "yaris",
+            "RAV4": "rav4",
+            "C-HR": "c-hr",
+            "Aygo": "aygo",
         },
     },
     "BMW": {
         "slug": "bmw",
         "models": {
-            "3-series": "3-as_sorozat",
-            "5-series": "5-os_sorozat",
+            "3-Series": "3-as_sorozat",
+            "1-Series": "1-es_sorozat",
+            "5-Series": "5-os_sorozat",
             "X1": "x1",
             "X3": "x3",
-            "1-series": "1-es_sorozat",
-        },
-    },
-    "Mercedes-Benz": {
-        "slug": "mercedes-benz",
-        "models": {
-            "A-class": "a_osztaly",
-            "C-class": "c_osztaly",
-            "E-class": "e_osztaly",
-            "GLA": "gla",
-            "GLC": "glc",
+            "X5": "x5",
+            "2-es": "2-es_sorozat",
+            "4-es": "4-es_sorozat",
+            "7-es": "7-es_sorozat",
+            "i3": "i3",
         },
     },
     "Audi": {
@@ -96,14 +130,24 @@ BRANDS = {
             "Q5": "q5",
         },
     },
+    "Mercedes-Benz": {
+        "slug": "mercedes-benz",
+        "models": {
+            "A-Class": "a_osztaly",
+            "C-Class": "c_osztaly",
+            "E-Class": "e_osztaly",
+            "GLA": "gla",
+            "GLC": "glc",
+        },
+    },
     "Renault": {
         "slug": "renault",
         "models": {
             "Clio": "clio",
             "Megane": "megane",
             "Captur": "captur",
-            "Scenic": "scenic",
             "Kadjar": "kadjar",
+            "Scenic": "scenic",
         },
     },
     "Peugeot": {
@@ -113,7 +157,7 @@ BRANDS = {
             "308": "308",
             "2008": "2008",
             "3008": "3008",
-            "508": "508",
+            "5008": "5008",
         },
     },
     "Citroen": {
@@ -121,29 +165,9 @@ BRANDS = {
         "models": {
             "C3": "c3",
             "C4": "c4",
+            "C3 Aircross": "c3_aircross",
             "C5 Aircross": "c5_aircross",
             "Berlingo": "berlingo",
-            "C3 Aircross": "c3_aircross",
-        },
-    },
-    "Hyundai": {
-        "slug": "hyundai",
-        "models": {
-            "i30": "i30",
-            "Tucson": "tucson",
-            "i20": "i20",
-            "Kona": "kona",
-            "ix35": "ix35",
-        },
-    },
-    "Kia": {
-        "slug": "kia",
-        "models": {
-            "Ceed": "ceed",
-            "Sportage": "sportage",
-            "Picanto": "picanto",
-            "Niro": "niro",
-            "Stonic": "stonic",
         },
     },
     "Fiat": {
@@ -152,38 +176,58 @@ BRANDS = {
             "500": "500",
             "Panda": "panda",
             "Tipo": "tipo",
-            "Punto": "punto",
             "500X": "500x",
+            "Doblo": "doblo",
+        },
+    },
+    "Hyundai": {
+        "slug": "hyundai",
+        "models": {
+            "i30": "i30",
+            "i20": "i20",
+            "Tucson": "tucson",
+            "Kona": "kona",
+            "i10": "i10",
+        },
+    },
+    "Kia": {
+        "slug": "kia",
+        "models": {
+            "Ceed": "ceed",
+            "Sportage": "sportage",
+            "Rio": "rio",
+            "Stonic": "stonic",
+            "Niro": "niro",
         },
     },
     "Dacia": {
         "slug": "dacia",
         "models": {
-            "Duster": "duster",
             "Sandero": "sandero",
+            "Duster": "duster",
             "Logan": "logan",
-            "Spring": "spring",
             "Jogger": "jogger",
+            "Spring": "spring",
         },
     },
     "Honda": {
         "slug": "honda",
         "models": {
             "Civic": "civic",
+            "HR-V": "hr-v",
             "CR-V": "cr-v",
             "Jazz": "jazz",
-            "HR-V": "hr-v",
-            "Accord": "accord",
+            "e": "e",
         },
     },
     "Mazda": {
         "slug": "mazda",
         "models": {
             "3": "3",
-            "6": "6",
             "CX-5": "cx-5",
-            "CX-3": "cx-3",
             "CX-30": "cx-30",
+            "2": "2",
+            "6": "6",
         },
     },
     "Nissan": {
@@ -209,31 +253,31 @@ BRANDS = {
     "Volvo": {
         "slug": "volvo",
         "models": {
-            "XC60": "xc60",
             "XC40": "xc40",
-            "V40": "v40",
+            "XC60": "xc60",
             "V60": "v60",
             "S60": "s60",
+            "XC90": "xc90",
         },
     },
     "Mitsubishi": {
         "slug": "mitsubishi",
         "models": {
-            "Outlander": "outlander",
             "ASX": "asx",
+            "Outlander": "outlander",
             "Eclipse Cross": "eclipse_cross",
             "Space Star": "space_star",
             "L200": "l200",
         },
     },
-    "Jeep": {
-        "slug": "jeep",
+    "Chevrolet": {
+        "slug": "chevrolet",
         "models": {
-            "Renegade": "renegade",
-            "Compass": "compass",
-            "Cherokee": "cherokee",
-            "Wrangler": "wrangler",
-            "Grand Cherokee": "grand_cherokee",
+            "Spark": "spark",
+            "Aveo": "aveo",
+            "Cruze": "cruze",
+            "Trax": "trax",
+            "Orlando": "orlando",
         },
     },
     "Alfa Romeo": {
@@ -243,17 +287,17 @@ BRANDS = {
             "Giulia": "giulia",
             "Stelvio": "stelvio",
             "MiTo": "mito",
-            "159": "159",
+            "Tonale": "tonale",
         },
     },
-    "Mini": {
-        "slug": "mini",
+    "Lancia": {
+        "slug": "lancia",
         "models": {
-            "Cooper": "cooper",
-            "Countryman": "countryman",
-            "Clubman": "clubman",
-            "One": "one",
-            "Cabrio": "cabrio",
+            "Ypsilon": "ypsilon",
+            "Delta": "delta",
+            "Musa": "musa",
+            "Voyager": "voyager",
+            "Thema": "thema",
         },
     },
 }

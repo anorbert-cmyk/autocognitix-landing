@@ -342,6 +342,9 @@ def round_price(price: float) -> int:
     return int(round(price / 10000) * 10000)
 
 
+_PRESERVE_METADATA_FIELDS = ("source", "_estimated", "_donor_model")
+
+
 def adjust_prices(
     base_data: dict,
     current_rate: float,
@@ -350,6 +353,12 @@ def adjust_prices(
     """
     Adjust all prices in the dataset.
     Returns (new_data, statistics).
+
+    Preserves provenance metadata fields (`source`, `_estimated`, `_donor_model`)
+    on each {year} entry so downstream consumers can keep distinguishing seeded
+    estimates, observed-from-scraper data, and donor-copy placeholders. Wave 4
+    fix for Review 6 CRIT-002: prior version dropped these on every run, which
+    silently demoted 120 placeholder entries to look like real observations.
     """
     today = date.today()
     month = today.month
@@ -363,6 +372,7 @@ def adjust_prices(
         "max_decrease_pct": 0.0,
         "brands_processed": 0,
         "mobile_de_samples": 0,
+        "metadata_preserved": 0,
         "price_changes": [],
     }
 
@@ -407,11 +417,22 @@ def adjust_prices(
                 change_pct = ((new_avg - old_avg) / old_avg) * 100
                 all_change_pcts.append(change_pct)
 
-                new_years[year_str] = {
+                output_entry = {
                     "min": new_min,
                     "avg": new_avg,
                     "max": new_max,
                 }
+                # Preserve provenance metadata from the prior entry. We do NOT
+                # invent these fields — only carry forward what was already
+                # there. `source` defaults to "estimated" upstream when it's
+                # missing, but here we stay strictly read-only on metadata.
+                for flag in _PRESERVE_METADATA_FIELDS:
+                    if flag in price_info:
+                        output_entry[flag] = price_info[flag]
+                        if flag != "source":
+                            stats["metadata_preserved"] += 1
+
+                new_years[year_str] = output_entry
                 stats["total_entries"] += 1
 
             new_models[model] = new_years
@@ -518,6 +539,8 @@ def main() -> None:
     log(f"  Max increase:        {stats['max_increase_pct']:+.2f}%")
     log(f"  Max decrease:        {stats['max_decrease_pct']:+.2f}%")
     log(f"  mobile.de samples:   {stats['mobile_de_samples']}")
+    log(f"  Placeholder flags preserved: {stats.get('metadata_preserved', 0)} "
+        f"(_estimated/_donor_model)")
     log("")
     log("Done.")
 

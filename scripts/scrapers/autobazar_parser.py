@@ -192,7 +192,11 @@ def _load_eur_huf_rate() -> float:
         try:
             with open(_EXCHANGE_RATE_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            rate = data.get("EUR_HUF") or data.get("eur_huf")
+            # Canonical key is `rate` (Wave 1 schema, see shared/data/README.md);
+            # legacy `EUR_HUF`/`eur_huf` kept as backwards-compat for stale local
+            # checkouts. Without `rate` here the loader silently fell through to
+            # the hardcoded 400.0 fallback after Wave 1 — Wave 4 fix.
+            rate = data.get("rate") or data.get("EUR_HUF") or data.get("eur_huf")
             if rate and float(rate) > 0:
                 log.info("EUR/HUF rate from %s: %.2f", _EXCHANGE_RATE_FILE.name, float(rate))
                 return float(rate)

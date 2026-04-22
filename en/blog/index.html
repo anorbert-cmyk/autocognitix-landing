@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Car Diagnostics Blog: DTC Codes, Repair Guides & AI Tech | AutoCognitix</title>
   <meta name="description" content="Expert car diagnostics blog covering DTC codes, repair costs, symptoms & AI-powered troubleshooting. Learn P0420, P0171 & more with step-by-step guides.">
@@ -13,11 +14,13 @@
   <meta property="og:description" content="Expert guides on DTC codes, symptoms, repair costs & AI diagnostics.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://autocognitix.hu/en/blog/">
-  <meta property="og:image" content="https://autocognitix.hu/images/blog-hero.jpg">
+  <meta property="og:image" content="https://autocognitix.hu/images/og/en-blog.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Car Diagnostics Blog">
   <meta name="twitter:description" content="Learn car troubleshooting with expert DTC code guides">
-  <meta name="twitter:image" content="https://autocognitix.hu/images/blog-hero.jpg">
+  <meta name="twitter:image" content="https://autocognitix.hu/images/og/en-blog.jpg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
   <style>
     * {
@@ -337,9 +340,19 @@
         grid-template-columns: 1fr;
       }
     }
+    /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A) */
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: #D97757; color: #fff;
+      padding: 8px 16px; z-index: 10000;
+      text-decoration: none; font-weight: 600;
+      border-bottom-right-radius: 8px;
+    }
+    .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="main-header">
     <div class="header-container">
       <a href="/en/" class="logo">AutoCognitix</a>
@@ -362,7 +375,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <section class="blog-hero">
       <h1>Car Diagnostics Blog</h1>
       <p>Expert guides on DTC codes, repair costs, symptoms, and AI-powered troubleshooting</p>
