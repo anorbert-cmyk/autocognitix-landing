@@ -25,6 +25,7 @@ import json
 import os
 import statistics
 import sys
+import tempfile
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -477,11 +478,21 @@ def main() -> None:
     # Build output
     output = build_output(merged, meta)
 
-    # Write output
+    # Write output ATOMICALLY: tempfile + os.replace so SIGTERM/disk-full
+    # mid-write cannot leave a 0-byte or truncated baseline (which would make
+    # extract_baseline_observations return empty and silently destroy the
+    # baseline until restored from git).
     os.makedirs(DATA_DIR, exist_ok=True)
-    with open(PRICES_FILE, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
-        f.write("\n")
+    fd, tmp = tempfile.mkstemp(prefix=".prices.", suffix=".tmp", dir=str(DATA_DIR))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(output, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        os.replace(tmp, PRICES_FILE)
+    except Exception:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+        raise
 
     # Summary
     published = output["_meta"]["published_price_points"]

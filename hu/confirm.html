@@ -2,8 +2,11 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
+  <link rel="stylesheet" href="/shared/cookie-banner.css?v=20260422">
   <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="referrer" content="no-referrer">
     <title>Feliratkozás megerősítve — AutoCognitix</title>
     <style>
         * {
@@ -122,28 +125,98 @@
     </div>
     
     <div class="container">
-        <div class="card">
+        <!-- State 1: confirmation required (default) -->
+        <div id="confirm-card" class="card">
+            <h2>Erősítsd meg a feliratkozást</h2>
+            <p>Kattints a gombra a feliratkozás megerősítéséhez. Előtte semmi nem történik.</p>
+            <button id="confirm-btn" class="button" type="button">Megerősítem</button>
+            <p id="confirm-error" style="color:#DC2626;display:none;margin-top:16px;"></p>
+        </div>
+
+        <!-- State 2: in-flight -->
+        <div id="pending-card" class="card" style="display:none;">
+            <h2>Feldolgozás folyamatban…</h2>
+            <p>Kérlek várj egy pillanatot.</p>
+        </div>
+
+        <!-- State 3: success (only shown after webhook resolves) -->
+        <div id="success-card" class="card" style="display:none;">
             <div class="success-icon">✓</div>
             <h2>Sikeres megerősítés!</h2>
             <p>Köszönjük! Az email címed megerősítve. Mostantól megkapod a heti DTC kódszótárat, DIY útmutatókat és szerviz tippeket.</p>
             <a href="/hu/" class="button">Vissza a főoldalra</a>
         </div>
+
+        <!-- State 4: invalid/missing token -->
+        <div id="invalid-card" class="card" style="display:none;">
+            <h2>Érvénytelen megerősítési link</h2>
+            <p>A link hiányos vagy hibás. Használd közvetlenül a megerősítő emailben kapott linket.</p>
+            <a href="/hu/" class="button">Vissza a főoldalra</a>
+        </div>
+
+        <!-- State 5: webhook error -->
+        <div id="error-card" class="card" style="display:none;">
+            <h2>Valami hiba történt</h2>
+            <p>Nem sikerült feldolgozni a kérést. Próbáld újra egy pillanat múlva.</p>
+            <button id="retry-btn" class="button" type="button">Újrapróbálás</button>
+        </div>
     </div>
-    
+
     <div class="footer">
         <p>© 2026 AutoCognitix. Minden jog fenntartva.</p>
     </div>
-    
+
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get('token');
-        if (token) {
-            fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({type: 'welcome', token: token, language: 'hu'})
-            }).catch(() => {});
-        }
+        // SEC-FIX (Wave 5 audit, 2026-04-22):
+        // Mirrors unsubscribe.html click-required pattern. Previous version
+        // auto-POSTed on page load — link-preview bots / antivirus URL
+        // sandboxes silently confirmed subscriptions. CSRF-equivalent.
+        (function () {
+            'use strict';
+            var WEBHOOK_URL = 'https://valid8strategy.app.n8n.cloud/webhook/newsletter-email';
+            var TOKEN_RE = /^[A-Za-z0-9._\-]{16,128}$/;
+
+            var params = new URLSearchParams(window.location.search);
+            var token = params.get('token') || '';
+
+            var confirmCard = document.getElementById('confirm-card');
+            var pendingCard = document.getElementById('pending-card');
+            var successCard = document.getElementById('success-card');
+            var invalidCard = document.getElementById('invalid-card');
+            var errorCard   = document.getElementById('error-card');
+            var confirmBtn  = document.getElementById('confirm-btn');
+            var retryBtn    = document.getElementById('retry-btn');
+            var confirmErr  = document.getElementById('confirm-error');
+
+            function showOnly(card) {
+                [confirmCard, pendingCard, successCard, invalidCard, errorCard].forEach(function (el) {
+                    if (el) el.style.display = 'none';
+                });
+                if (card) card.style.display = '';
+            }
+
+            if (!token || !TOKEN_RE.test(token)) {
+                showOnly(invalidCard);
+                return;
+            }
+
+            function doConfirm() {
+                showOnly(pendingCard);
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'welcome', token: token, language: 'hu' })
+                })
+                .then(function (r) {
+                    if (r && r.ok) { showOnly(successCard); }
+                    else { showOnly(errorCard); }
+                })
+                .catch(function () { showOnly(errorCard); });
+            }
+
+            confirmBtn.addEventListener('click', doConfirm);
+            if (retryBtn) retryBtn.addEventListener('click', doConfirm);
+        })();
     </script>
 </body>
 </html>

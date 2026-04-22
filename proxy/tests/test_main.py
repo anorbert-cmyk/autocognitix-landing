@@ -268,7 +268,8 @@ def test_missing_required_field_returns_422_inspection(client):
         "P042",        # too short
         "P04200",      # too long
         "Z0420",       # bad prefix (not P/B/C/U)
-        "P042G",       # non-hex final char
+        "P042G",       # non-digit final char (per SAE J2012)
+        "PABCD",       # hex letters not allowed (Wave 5: aligned with JS/DB schema)
         "P0420;DROP",  # SQL-injection attempt
         "P 0420",      # embedded space
         "P0420/../../etc/passwd",  # path traversal (becomes a 404 route miss)
@@ -290,9 +291,15 @@ def test_dtc_regex_rejects_malformed_and_injection_codes(client, code):
         assert "Invalid DTC" in err["message"]
 
 
-@pytest.mark.parametrize("code", ["P0420", "p0420", "B0001", "U1234", "CABCD"])
+@pytest.mark.parametrize("code", ["P0420", "p0420", "B0001", "U1234", "C9999"])
 def test_dtc_regex_accepts_valid_codes(client, code, proxy_module):
-    """Complement to the reject test — make sure we aren't over-rejecting."""
+    """Complement to the reject test — make sure we aren't over-rejecting.
+
+    Per SAE J2012 + Wave 5 cross-stack alignment: codes are [PBCU] + 4 decimal
+    digits. Hex letters (A-F) used to be accepted at the proxy/nginx layer but
+    rejected by the JS validator and DB lookup — codes were undisplayable
+    despite passing the proxy. Fixed in Wave 5.
+    """
     with respx.mock(assert_all_called=False) as mock:
         mock.get(f"{proxy_module.BACKEND_URL}/api/v1/dtc/{code.upper()}").mock(
             return_value=httpx.Response(200, json={"code": code.upper()})

@@ -199,7 +199,12 @@
    * Refs: GDPR Art. 7 (unambiguous consent), OWASP Web Storage 2024. */
   function loadConsent() {
     try {
-      var raw = window.localStorage.getItem(STORAGE_KEY);
+      // Wave 5: even READING `window.localStorage` as a property can throw
+      // SecurityError in Safari Lockdown / private mode and Firefox
+      // resist-fingerprinting — the existing try/catch only covered getItem.
+      var ls = window.localStorage;
+      if (!ls) return null;
+      var raw = ls.getItem(STORAGE_KEY);
       if (!raw) return null;
       var parsed = JSON.parse(raw);
       // Must be a plain object
@@ -233,7 +238,9 @@
       v: SCHEMA_VERSION,
     };
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+      // Wave 5: guard property access too (Safari Lockdown / private mode).
+      var ls = window.localStorage;
+      if (ls) ls.setItem(STORAGE_KEY, JSON.stringify(record));
     } catch (e) {
       // localStorage may be blocked (private browsing etc); degrade gracefully
     }
@@ -452,14 +459,24 @@
 
   function hideBanner() {
     if (!_banner) return;
+    var bannerRef = _banner;  // capture for closure
     _banner.classList.remove('cc-banner--visible');
-    _banner.addEventListener('transitionend', function handler() {
-      _banner.removeEventListener('transitionend', handler);
-      if (_banner && _banner.parentNode) {
-        _banner.parentNode.removeChild(_banner);
+    var done = false;
+    function cleanup() {
+      if (done) return;
+      done = true;
+      try { bannerRef.removeEventListener('transitionend', cleanup); } catch (e) {}
+      if (bannerRef && bannerRef.parentNode) {
+        bannerRef.parentNode.removeChild(bannerRef);
       }
-      _banner = null;
-    });
+      if (_banner === bannerRef) _banner = null;
+    }
+    bannerRef.addEventListener('transitionend', cleanup);
+    // Wave 5: prefers-reduced-motion → CSS transition: none → transitionend
+    // never fires → the banner stays in DOM and a future showBanner() no-ops
+    // because the `if (_banner) return` guard. 400ms safety net cleans up
+    // regardless of CSS support.
+    setTimeout(cleanup, 400);
   }
 
   /* ─────────────────────────────────────────────────────────────────────────
@@ -583,17 +600,26 @@
 
   function closeModal() {
     if (!_modal) return;
-    document.removeEventListener('keydown', _modal._keyHandler);
-    _modal.classList.remove('cc-modal-wrap--visible');
+    var modalRef = _modal;  // capture for closure
+    document.removeEventListener('keydown', modalRef._keyHandler);
+    modalRef.classList.remove('cc-modal-wrap--visible');
     document.body.style.overflow = '';
 
-    _modal.addEventListener('transitionend', function handler() {
-      _modal.removeEventListener('transitionend', handler);
-      if (_modal && _modal.parentNode) {
-        _modal.parentNode.removeChild(_modal);
+    var done = false;
+    function cleanup() {
+      if (done) return;
+      done = true;
+      try { modalRef.removeEventListener('transitionend', cleanup); } catch (e) {}
+      if (modalRef && modalRef.parentNode) {
+        modalRef.parentNode.removeChild(modalRef);
       }
-      _modal = null;
-    });
+      if (_modal === modalRef) _modal = null;
+    }
+    modalRef.addEventListener('transitionend', cleanup);
+    // Wave 5: reduced-motion deadlock fix — without this safety net, the
+    // modal stays in DOM forever and body.overflow:hidden was already
+    // cleared above, but _modal stays non-null so reset() / reopen() no-ops.
+    setTimeout(cleanup, 400);
 
     // Restore focus to element that triggered the modal (WCAG SC 2.4.3)
     if (_lastFocusedElement && typeof _lastFocusedElement.focus === 'function') {
@@ -642,10 +668,17 @@
     }
     var consent = loadConsent();
     if (!consent) return; // Tampered/invalid write — ignore, don't disrupt UI
+    // Wave 5: only emit when state actually changed. Previous behavior fired
+    // cookie-consent-updated on every storage event (even no-op re-saves),
+    // double-loading PostHog/GA when listeners aren't idempotent.
+    var oldA = _state ? _state.analytics : null;
+    var oldM = _state ? _state.marketing : null;
     _state = consent;
     hideBanner();
     if (_modal) closeModal();
-    emitEvent({ analytics: consent.analytics, marketing: consent.marketing });
+    if (consent.analytics !== oldA || consent.marketing !== oldM) {
+      emitEvent({ analytics: consent.analytics, marketing: consent.marketing });
+    }
     while (_readyCallbacks.length) {
       try { _readyCallbacks.shift()(_state); } catch (err) {}
     }
@@ -656,13 +689,32 @@
   ───────────────────────────────────────────────────────────────────────── */
 
   function init() {
+    // Wave 5: defense-in-depth — inject the banner stylesheet if no <link>
+    // tag is present (handles pages that ship the JS but forgot the CSS link).
+    try {
+      if (!document.querySelector('link[href*="cookie-banner.css"]')) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/shared/cookie-banner.css?v=20260422';
+        document.head.appendChild(link);
+      }
+    } catch (e) {}
+
     // Wire cross-tab sync once, before any state work
     try { window.addEventListener('storage', onStorageEvent); } catch (e) {}
 
     var stored = loadConsent();
+    var gpcAsserted = shouldRespectPrivacySignal();
 
     if (stored !== null) {
-      // Consent already given and still valid — restore state and fire events
+      // Wave 5: GPC re-check on every load. If user accepted analytics on
+      // visit 1, then enabled GPC in browser, we MUST honour the latest
+      // signal — otherwise EDPB Guidelines 05/2020 §3.1.2 violation.
+      if (gpcAsserted && (stored.analytics || stored.marketing)) {
+        stored.analytics = false;
+        stored.marketing = false;
+        stored._gpcOverride = true;
+      }
       _state = stored;
       emitEvent({ analytics: _state.analytics, marketing: _state.marketing });
       while (_readyCallbacks.length) {
@@ -672,7 +724,7 @@
     }
 
     // No stored consent: respect GPC/DNT before showing a banner.
-    if (shouldRespectPrivacySignal()) {
+    if (gpcAsserted) {
       // User has expressed a global "do not track" — record a reject-all
       // decision and skip the banner entirely. They can still re-open
       // preferences via CookieConsent.reset() to opt INTO analytics.
@@ -726,8 +778,17 @@
      * @returns {{analytics: boolean, marketing: boolean, _firstVisit?: boolean}}
      */
     getSync: function () {
+      // Wave 5: read in-memory _state FIRST so callers invoked before init()
+      // finishes don't get a misleading _firstVisit:true even when consent
+      // is stored. Also exposes _gpcOverride flag so callers can distinguish
+      // "GPC forced reject" from "user chose reject".
+      if (_state !== null) {
+        var snap = { analytics: !!_state.analytics, marketing: !!_state.marketing };
+        if (_state._gpcOverride) snap._gpcOverride = true;
+        return snap;
+      }
       var s = loadConsent();
-      if (s) return { analytics: s.analytics, marketing: s.marketing };
+      if (s) return { analytics: !!s.analytics, marketing: !!s.marketing };
       return { analytics: false, marketing: false, _firstVisit: true };
     },
 

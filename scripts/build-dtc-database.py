@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import urllib.request
 from datetime import date
 
@@ -260,10 +261,21 @@ def main():
     print(f"\n  Preserved {preserved_hu_count:,} existing HU translations "
           f"({hu_coverage:.2f}% coverage)")
 
-    # Write output
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=None, separators=(",", ":"))
+    # Write output ATOMICALLY: tempfile + os.replace so SIGTERM/disk-full
+    # mid-write cannot leave a 0-byte or truncated database (which would make
+    # load_existing_db return {} and silently wipe all preserved HU
+    # translations on the next rebuild).
+    out_dir = os.path.dirname(OUTPUT_PATH) or "."
+    os.makedirs(out_dir, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(prefix=".dtc-database.", suffix=".tmp", dir=out_dir)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(output, f, ensure_ascii=False, indent=None, separators=(",", ":"))
+        os.replace(tmp, OUTPUT_PATH)
+    except Exception:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+        raise
 
     # Summary stats
     cats = {}

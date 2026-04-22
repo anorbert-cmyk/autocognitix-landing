@@ -20,10 +20,15 @@ Design notes
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
 import pytest
+
+# Wave 5: proxy/main.py fail-fasts when ENVIRONMENT=production and BACKEND_URL
+# is missing. Tests must opt-in to the dev default before importing main.
+os.environ.setdefault("ENVIRONMENT", "development")
 
 # Ensure proxy/ is on sys.path even if pyproject.toml pythonpath is not picked up
 # (e.g. when running pytest from a different cwd).

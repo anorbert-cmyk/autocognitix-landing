@@ -104,8 +104,13 @@ def fetch_from_mnb() -> tuple[float, str, str]:
         for rate_elem in day.iter("Rate"):
             curr = rate_elem.attrib.get("curr", "")
             if curr == "EUR":
-                # MNB uses comma as decimal separator
-                rate_str = rate_elem.text.strip().replace(",", ".")
+                # MNB uses comma as decimal separator. Guard against
+                # self-closing <Rate /> elements (rate_elem.text is None on
+                # market holidays / partial outages) before .strip() crashes.
+                text = (rate_elem.text or "").strip()
+                if not text:
+                    continue
+                rate_str = text.replace(",", ".")
                 return float(rate_str), day_date, "MNB"
 
     raise ValueError("EUR rate not found in MNB response")
@@ -133,10 +138,14 @@ def fetch_from_ecb() -> tuple[float, str, str]:
     except ImportError:
         root = ET.fromstring(raw)  # Python 3 ET is safe against XXE by default
 
-    # ECB namespaces
+    # ECB namespaces. The official feed uses `eurofxref` (not `euref`).
+    # See: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    # Previous typo silently returned empty findall results, making the entire
+    # ECB fallback chain a no-op and dropping every MNB outage to the hardcoded
+    # historical rate.
     ns = {
         "gesmes": "http://www.gesmes.org/xml/2002-08-01",
-        "ecb": "http://www.ecb.int/vocabulary/2002-08-01/euref",
+        "ecb": "http://www.ecb.int/vocabulary/2002-08-01/eurofxref",
     }
 
     # Structure: <Cube><Cube time="2026-03-25"><Cube currency="HUF" rate="408.50"/>...

@@ -54,9 +54,12 @@ RUN touch /run/nginx.pid \
 
 USER nginx
 
-# Dev default; Railway injects real value at deploy time (DEVOPS-L1)
+# Dev default; Railway injects real value at deploy time (DEVOPS-L1).
+# BACKEND_URL is intentionally NOT set here — proxy/main.py fail-fasts when
+# ENVIRONMENT=production and BACKEND_URL is missing, preventing a staging
+# container from silently pointing at the prod backend.
 ENV PORT=8080
-ENV BACKEND_URL=https://autocognitix-production.up.railway.app
+ENV ENVIRONMENT=production
 EXPOSE 8080
 
 # Composite healthcheck: both nginx AND proxy sidecar must be healthy (DEVOPS-H2)

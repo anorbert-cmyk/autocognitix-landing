@@ -28,7 +28,7 @@ import time
 import uuid
 from collections import OrderedDict
 from contextlib import asynccontextmanager
-from typing import Any, Awaitable, Callable, Dict, Iterable, Optional, Tuple
+from typing import Any, Awaitable, Callable, Dict, Iterable, List, Literal, Optional, Tuple
 
 import httpx
 from cachetools import TTLCache
@@ -46,7 +46,15 @@ from starlette.types import ASGIApp
 # Configuration
 # ---------------------------------------------------------------------------
 
-BACKEND_URL = os.getenv("BACKEND_URL", "https://autocognitix-production.up.railway.app")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development").lower()
+BACKEND_URL = os.getenv("BACKEND_URL", "")
+if not BACKEND_URL:
+    if ENVIRONMENT == "production":
+        raise RuntimeError(
+            "BACKEND_URL must be set when ENVIRONMENT=production "
+            "(refusing to silently default to the prod backend)"
+        )
+    BACKEND_URL = "https://autocognitix-production.up.railway.app"
 CACHE_TTL = int(os.getenv("CACHE_TTL", "3600"))  # seconds
 CACHE_MAXSIZE = int(os.getenv("CACHE_MAXSIZE", "1000"))
 RATE_LIMIT_PER_MINUTE = int(os.getenv("PROXY_RATE_LIMIT", "30"))
@@ -58,6 +66,10 @@ CSRF_TTL_SECONDS = int(os.getenv("PROXY_CSRF_TTL", "600"))  # 10 min
 NEGATIVE_CACHE_TTL = int(os.getenv("PROXY_NEGATIVE_CACHE_TTL", "60"))  # seconds
 NEGATIVE_CACHE_MAXSIZE = int(os.getenv("PROXY_NEGATIVE_CACHE_MAXSIZE", "10000"))
 RATE_LIMIT_MAX_ENTRIES = int(os.getenv("PROXY_RATE_LIMIT_MAX_ENTRIES", "10000"))
+# Total wall-time per upstream request. httpx Timeout(read=...) is per-chunk —
+# a slow-drip backend (e.g. 8KB every 14s) can hold a connection open for hours
+# before the body cap is reached. asyncio.wait_for(_read_capped) bounds it.
+PROXY_REQUEST_TOTAL_TIMEOUT = float(os.getenv("PROXY_REQUEST_TOTAL_TIMEOUT", "30.0"))
 
 # Hosts we trust to have set X-Forwarded-For correctly. The proxy runs behind
 # the local nginx sidecar (see nginx.conf: proxy_set_header X-Forwarded-For
@@ -198,12 +210,17 @@ def _client() -> httpx.AsyncClient:
 _Str = constr(strip_whitespace=True, min_length=1, max_length=128)
 
 
+_FuelType = Literal["gasoline", "diesel", "hybrid", "electric", "lpg", "cng", "other"]
+
+
 class CalculatorRequest(BaseModel):
     vehicle_make: _Str
     vehicle_model: _Str
     vehicle_year: int = Field(ge=1950, le=2030)
     mileage_km: int = Field(ge=0, le=2_000_000)
     condition: constr(strip_whitespace=True, min_length=1, max_length=32)
+    repair_cost_huf: Optional[int] = Field(default=None, ge=0, le=99_999_999)
+    fuel_type: Optional[_FuelType] = None
 
     model_config = {"extra": "forbid"}
 
@@ -215,14 +232,24 @@ class InspectionRequest(BaseModel):
     dtc_codes: list[constr(strip_whitespace=True, min_length=1, max_length=16)] = Field(
         min_length=1, max_length=50
     )
+    repair_cost_huf: Optional[int] = Field(default=None, ge=0, le=99_999_999)
+    fuel_type: Optional[_FuelType] = None
+    symptoms: Optional[List[constr(strip_whitespace=True, min_length=1, max_length=128)]] = Field(
+        default=None, max_length=20
+    )
 
     model_config = {"extra": "forbid"}
 
 
 # Allow-list of query params per GET endpoint.
+# Identifier routes (e.g. /api/v1/dtc/{code}) get an EMPTY allow-list so unknown
+# query params get stripped before the cache key is computed — otherwise an
+# attacker can vary `?x=1`, `?x=2`, ... to bypass the negative cache and force
+# a backend round-trip per request.
 _GET_PARAM_ALLOWLISTS: Dict[str, set[str]] = {
     "/api/v1/services/search": {"q", "category", "city", "region", "limit", "offset"},
     "/api/v1/dtc/search": {"q", "system", "limit", "offset", "lang"},
+    "/api/v1/dtc/{code}": set(),  # path-param route, no query allowed
 }
 
 
@@ -540,7 +567,17 @@ async def _stream_request(method: str, url: str, **kwargs) -> Tuple[httpx.Respon
     request_id = kwargs.pop("__request_id", "-")
     backend_path = kwargs.pop("__backend_path", url)
     async with _client().stream(method, url, **kwargs) as resp:
-        body = await _read_capped(resp, request_id, backend_path)
+        try:
+            body = await asyncio.wait_for(
+                _read_capped(resp, request_id, backend_path),
+                timeout=PROXY_REQUEST_TOTAL_TIMEOUT,
+            )
+        except asyncio.TimeoutError as exc:
+            # Translate to httpx.ReadTimeout so existing httpx.TimeoutException
+            # handlers in _proxy_get / _proxy_post catch it cleanly.
+            raise httpx.ReadTimeout(
+                f"total wall-time exceeded {PROXY_REQUEST_TOTAL_TIMEOUT}s for {backend_path}"
+            ) from exc
         ct = resp.headers.get("content-type", "")
         return resp, body, ct
 
@@ -669,6 +706,7 @@ async def _proxy_get(
     backend_path: str,
     *,
     use_negative_cache: bool = False,
+    param_allow_key: Optional[str] = None,
 ) -> Response:
     """
     Generic GET proxy.
@@ -688,7 +726,7 @@ async def _proxy_get(
     if not allowed:
         return _rate_limited_response(reset_epoch)
 
-    params, err = _sanitize_query_params(request, backend_path)
+    params, err = _sanitize_query_params(request, param_allow_key or backend_path)
     if err is not None:
         return err
 
@@ -833,7 +871,12 @@ async def dtc_search(request: Request) -> Response:
     return await _proxy_get(request, "/api/v1/dtc/search")
 
 
-_DTC_RE = re.compile(r"^[PBCU][0-9A-F]{4}$")
+# Per SAE J2012, OBD-II DTC codes are [PBCU] + 4 decimal digits. The previous
+# pattern allowed hex (A-F) which diverged from JS validation, the database
+# schema, and the build script — codes accepted at the proxy were rejected
+# everywhere else. Aligned to digits-only to match shared/js/tool-common.js,
+# scripts/build-dtc-database.py, and tests/unit/workshop-finder.test.js.
+_DTC_RE = re.compile(r"^[PBCU][0-9]{4}$")
 
 
 async def dtc_detail(request: Request) -> Response:
@@ -847,7 +890,12 @@ async def dtc_detail(request: Request) -> Response:
     # use_negative_cache=True: an attacker enumerating P0001..PFFFF would
     # otherwise force one backend round-trip per code. 60s TTL caches the 404
     # so a brute-force scan hits the proxy memory, not the database.
-    return await _proxy_get(request, f"/api/v1/dtc/{code}", use_negative_cache=True)
+    return await _proxy_get(
+        request,
+        f"/api/v1/dtc/{code}",
+        use_negative_cache=True,
+        param_allow_key="/api/v1/dtc/{code}",
+    )
 
 
 async def health(request: Request) -> Response:

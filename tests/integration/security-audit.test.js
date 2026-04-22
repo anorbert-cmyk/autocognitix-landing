@@ -159,34 +159,36 @@ describe('innerHTML Safety Audit', () => {
   //   - Only add entries whose innerHTML target is either (a) a static string
   //     literal or (b) concatenates ONLY escapeHTML()-wrapped variables.
   //   - If in doubt, refactor the code to use escapeHTML() instead of allow-listing.
+  // Wave 5: every HTML file shifted by +1 after the cookie-banner.css <link>
+  // tag was inserted in <head>. Line numbers below all bumped accordingly.
   const INNERHTML_ALLOWLIST = new Set([
-    'hu/eszkozok/megeri-megjavitani.html:794', // static spinner label
-    'hu/eszkozok/megeri-megjavitani.html:814', // static "frissítve" label
-    'hu/eszkozok/megeri-megjavitani.html:844', // static fallback label
-    'hu/eszkozok/megeri-megjavitani.html:927', // interpolates numeric uncertainty only
-    'hu/eszkozok/megeri-megjavitani.html:934', // static HTML, no user input
-    'hu/eszkozok/muszaki-vizsga-prediktor.html:763', // static warning copy
-    'hu/eszkozok/muszaki-vizsga-prediktor.html:878', // static spinner label
-    'hu/eszkozok/muszaki-vizsga-prediktor.html:886', // static updated-from-backend label
-    'hu/eszkozok/muszaki-vizsga-prediktor.html:894', // static header
-    'hu/eszkozok/muszaki-vizsga-prediktor.html:906', // static fallback label
+    'hu/eszkozok/megeri-megjavitani.html:795', // static spinner label
+    'hu/eszkozok/megeri-megjavitani.html:815', // static "frissítve" label
+    'hu/eszkozok/megeri-megjavitani.html:845', // static fallback label
+    'hu/eszkozok/megeri-megjavitani.html:928', // interpolates numeric uncertainty only
+    'hu/eszkozok/megeri-megjavitani.html:935', // static HTML, no user input
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:764', // static warning copy
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:879', // static spinner label
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:887', // static updated-from-backend label
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:895', // static header
+    'hu/eszkozok/muszaki-vizsga-prediktor.html:907', // static fallback label
     // EN mirrors of the above (see hu-en-parity.test.js for the pairing).
-    'en/tools/worth-repairing.html:794',
-    'en/tools/worth-repairing.html:814',
-    'en/tools/worth-repairing.html:844',
-    'en/tools/worth-repairing.html:927',
-    'en/tools/worth-repairing.html:934',
-    'en/tools/mot-predictor.html:763',
-    'en/tools/mot-predictor.html:878',
-    'en/tools/mot-predictor.html:886',
-    'en/tools/mot-predictor.html:894',
-    'en/tools/mot-predictor.html:906',
+    'en/tools/worth-repairing.html:795',
+    'en/tools/worth-repairing.html:815',
+    'en/tools/worth-repairing.html:845',
+    'en/tools/worth-repairing.html:928',
+    'en/tools/worth-repairing.html:935',
+    'en/tools/mot-predictor.html:764',
+    'en/tools/mot-predictor.html:879',
+    'en/tools/mot-predictor.html:887',
+    'en/tools/mot-predictor.html:895',
+    'en/tools/mot-predictor.html:907',
     // Wave 2 line drift after <main>, <fieldset>, and i18n insertions
-    'hu/eszkozok/megeri-megjavitani.html:971', // shifted from :955 (numeric uncertainty only, line drift)
-    'en/tools/worth-repairing.html:973', // EN mirror (line shifts as Wave 4 SEO/perf agents add meta tags)
+    'hu/eszkozok/megeri-megjavitani.html:972', // shifted from :955 (numeric uncertainty only, line drift)
+    'en/tools/worth-repairing.html:974', // EN mirror (line shifts as Wave 4 SEO/perf agents add meta tags)
     // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
-    'hu/eszkozok/szerviz-kereso.html:592', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped, line shifted)
-    'en/tools/workshop-finder.html:590',   // EN mirror of szerviz-kereso (line shifted)
+    'hu/eszkozok/szerviz-kereso.html:593', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped, line shifted)
+    'en/tools/workshop-finder.html:591',   // EN mirror of szerviz-kereso (line shifted)
   ]);
 
   test('all innerHTML assignments with user-controllable data use escapeHtml()', async () => {
