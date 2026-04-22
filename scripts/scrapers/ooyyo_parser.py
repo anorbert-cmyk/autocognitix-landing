@@ -937,7 +937,6 @@ def scrape_brand_model(
         "brand": brand_name,
         "model": model_name,
         "source": "ooyyo.com",
-        "scrape_timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "eur_huf_rate": eur_huf_rate,
         "total_available_eu": total_available,
         "countries_scanned": len(scan_countries),

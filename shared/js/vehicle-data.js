@@ -242,15 +242,35 @@ window.VehicleDB = {
     return null;
   },
 
-  /** Enhanced getBaseValue that tries market prices first, falls back to formula */
+  /** Enhanced getBaseValue that tries market prices first, falls back to formula.
+   *
+   * Wave 5: respect aggregator's `_estimated:true` contract — those entries
+   * are donor-model copies (e.g. Suzuki SX4 inherits Vitara prices) and the
+   * shared/data/README.md warns "must NOT be treated as independent samples."
+   * Previous behaviour returned them as authoritative, misleading users.
+   */
   getEnhancedValue: function(brand, model, year) {
     var marketPrice = this.getMarketPrice(brand, model, year);
-    if (marketPrice) {
+    // Only treat as authoritative if real observations (not donor placeholders)
+    if (marketPrice && !marketPrice._estimated) {
       return {
         source: 'market',
         min: marketPrice.min,
         avg: marketPrice.avg,
         max: marketPrice.max
+      };
+    }
+    // _estimated entries fall through to formula AND surface a flag so the
+    // UI can show an "estimate" badge instead of a confident price band.
+    if (marketPrice && marketPrice._estimated) {
+      var formulaFallback = this.getBaseValue(brand, year);
+      return {
+        source: 'estimated',
+        min: marketPrice.min,
+        avg: marketPrice.avg,
+        max: marketPrice.max,
+        donor: marketPrice._donor_model,
+        formula: formulaFallback
       };
     }
     // Fallback to formula-based estimation

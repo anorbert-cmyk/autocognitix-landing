@@ -835,7 +835,6 @@ def scrape_brand_model(
         "source": "autobazar.eu",
         "currency_original": "EUR",
         "eur_huf_rate": eur_huf_rate,
-        "scrape_timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "listings_scraped": len(all_listings),
         "overall_stats_eur": overall_eur,
         "overall_stats_huf": overall_huf,

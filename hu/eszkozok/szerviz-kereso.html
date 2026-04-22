@@ -21,6 +21,8 @@
 
   <!-- hreflang -->
   <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/eszkozok/szerviz-kereso.html">
+    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/tools/workshop-finder.html">
+    <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/hu/eszkozok/szerviz-kereso.html">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -588,7 +590,7 @@
         var mapsURL = getMapsLink(group.specialty.terms, location);
         var btnHTML = '<a href="' + escapeHTML(mapsURL) + '" target="_blank" rel="noopener noreferrer" class="btn-maps">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
-          'Kereses Google Maps-en</a>';
+          'Keresés Google Maps-en</a>';
 
         card.innerHTML = headerHTML + descHTML + btnHTML;
         return card;
@@ -639,9 +641,9 @@
         // Update subtitle
         var subtitle = document.getElementById('resultSubtitle');
         if (codes.length === 0) {
-          subtitle.textContent = 'Nem adtal meg hibakodot — ime az altalanos ajanlasunk ' + location + ' kornyeken.';
+          subtitle.textContent = 'Nem adtál meg hibakódot — íme az általános ajánlásunk ' + location + ' környékén.';
         } else {
-          subtitle.textContent = codes.length + ' hibakod elemezve — ' + groups.length + ' szerviz tipust ajanlunk ' + location + ' kornyeken.';
+          subtitle.textContent = codes.length + ' hibakód elemezve — ' + groups.length + ' szerviz típust ajánlunk ' + location + ' környékén.';
         }
 
         // Render cards

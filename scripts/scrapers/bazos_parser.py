@@ -787,7 +787,6 @@ def scrape_brand_model(
         "source": "bazos.sk",
         "bazos_brand_slug": bazos_slug,
         "bazos_model_search": model_search,
-        "scrape_timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "eur_huf_rate": eur_huf_rate,
         "pages_fetched": pages_fetched,
         "listings_found": len(all_listings),

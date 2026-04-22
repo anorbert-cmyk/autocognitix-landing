@@ -187,7 +187,7 @@ describe('innerHTML Safety Audit', () => {
     'hu/eszkozok/megeri-megjavitani.html:972', // shifted from :955 (numeric uncertainty only, line drift)
     'en/tools/worth-repairing.html:974', // EN mirror (line shifts as Wave 4 SEO/perf agents add meta tags)
     // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
-    'hu/eszkozok/szerviz-kereso.html:593', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped, line shifted)
+    'hu/eszkozok/szerviz-kereso.html:595', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped; line shifted +2 in Wave 5 diacritics restore)
     'en/tools/workshop-finder.html:591',   // EN mirror of szerviz-kereso (line shifted)
   ]);
 

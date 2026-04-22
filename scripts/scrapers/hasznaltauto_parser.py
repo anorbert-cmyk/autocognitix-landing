@@ -595,7 +595,6 @@ def scrape_brand_model(
         "model": model_name,
         "brand_slug": brand_slug,
         "model_slug": model_slug,
-        "scrape_timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "urls_found": len(all_listing_urls),
         "listings_scraped": len(listings),
         "parse_errors": errors,

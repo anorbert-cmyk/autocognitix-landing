@@ -408,7 +408,8 @@ def main():
     results = run_fn(today_brands, args.max)
 
     elapsed = time.time() - start_time
-    results["_meta"]["elapsed_seconds"] = round(elapsed, 1)
+    # Wave 5: elapsed_seconds removed from output JSON (reproducibility)
+    print(f"[INFO] Total elapsed: {round(elapsed, 1)}s", file=sys.stderr)
 
     # Write output
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
