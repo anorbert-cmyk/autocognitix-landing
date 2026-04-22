@@ -883,7 +883,8 @@
                 <p>Jármű diagnosztikai segédlet. Nem helyettesíti a professzionális szervizet.</p>
             </div>
         </div>
-    </footer>
+    <p class="footer-cookie-link" style="text-align:center; font-size:13px; padding:10px;"><a href="#" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a></p>
+</footer>
 
     <script>
         function filterArticles(category) {
@@ -930,12 +931,21 @@
             const language = 'hu';
             const domain = 'https://autocognitix-landing-production.up.railway.app';
             
-            // Generate random token
+            // Generate random token — Wave 6: fail-closed on missing CSPRNG.
             function generateToken() {
                 if (typeof crypto !== 'undefined' && crypto.randomUUID) {
                     return crypto.randomUUID();
                 }
-                return Math.random().toString(36).substring(2) + Date.now().toString(36);
+                if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+                    var bytes = new Uint8Array(16);
+                    crypto.getRandomValues(bytes);
+                    var hex = '';
+                    for (var i = 0; i < bytes.length; i++) {
+                        hex += bytes[i].toString(16).padStart(2, '0');
+                    }
+                    return hex;
+                }
+                throw new Error('Browser lacks secure RNG. Please update your browser.');
             }
             
             const token = generateToken();

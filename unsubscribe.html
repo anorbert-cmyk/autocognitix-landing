@@ -67,7 +67,8 @@
 
         .card .subtitle {
             font-size: 14px;
-            color: #999;
+            /* Wave 6 WCAG fix: #999 on #FFF = 2.85:1 FAIL. Darkened to #595959 (7.00:1). */
+            color: #595959;
             font-style: italic;
             margin-bottom: 30px;
         }

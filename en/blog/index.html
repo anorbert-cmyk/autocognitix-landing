@@ -452,7 +452,8 @@
     <div class="footer-bottom">
       <p>&copy; 2026 AutoCognitix. All rights reserved. | Built with AI-powered diagnostics</p>
     </div>
-  </footer>
+  <p class="footer-cookie-link" style="text-align:center; font-size:13px; padding:10px;"><a href="#" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie preferences</a></p>
+</footer>
 
   <script>
     const articles = [
@@ -573,10 +574,22 @@
       
       // Generate random token
       function generateToken() {
+        // Wave 6: fail-closed. Math.random() fallback was predictable (~30
+        // bits + known timestamp). If crypto.randomUUID is unavailable,
+        // refuse to generate rather than ship a guessable token.
         if (typeof crypto !== 'undefined' && crypto.randomUUID) {
           return crypto.randomUUID();
         }
-        return Math.random().toString(36).substring(2) + Date.now().toString(36);
+        if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+          var bytes = new Uint8Array(16);
+          crypto.getRandomValues(bytes);
+          var hex = '';
+          for (var i = 0; i < bytes.length; i++) {
+            hex += bytes[i].toString(16).padStart(2, '0');
+          }
+          return hex;
+        }
+        throw new Error('Browser lacks secure RNG. Please update your browser.');
       }
       
       const token = generateToken();

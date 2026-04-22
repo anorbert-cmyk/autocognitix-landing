@@ -363,10 +363,26 @@ def _load_hash_cache() -> Dict[str, str]:
 
 
 def _save_hash_cache(cache: Dict[str, str]) -> None:
-    """Persist discovered hashes to disk for reuse."""
+    """Persist discovered hashes to disk for reuse.
+
+    Wave 5 + 6: atomic tempfile + os.replace. Two scrapers running in
+    parallel (CI matrix, scrape-all + ad-hoc) used to race on the file:
+    one truncated while the other was mid-read, losing all discovered
+    hashes. SIGTERM mid-write left the JSON truncated → next load_hash_cache
+    swallowed json.JSONDecodeError and returned {} silently.
+    """
+    import tempfile
+    out_dir = os.path.dirname(_HASH_CACHE_PATH) or "."
     try:
-        with open(_HASH_CACHE_PATH, "w") as f:
-            json.dump(cache, f, indent=2)
+        fd, tmp = tempfile.mkstemp(prefix=".ooyyo-hash.", suffix=".tmp", dir=out_dir)
+        try:
+            with os.fdopen(fd, "w") as f:
+                json.dump(cache, f, indent=2)
+            os.replace(tmp, _HASH_CACHE_PATH)
+        except Exception:
+            if os.path.exists(tmp):
+                os.unlink(tmp)
+            raise
     except OSError as exc:
         log.debug("Could not save hash cache: %s", exc)
 

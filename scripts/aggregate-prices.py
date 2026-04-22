@@ -22,6 +22,7 @@ Uses only Python stdlib. No pip dependencies.
 from __future__ import annotations
 
 import json
+import math
 import os
 import statistics
 import sys
@@ -291,7 +292,7 @@ def extract_scraper_observations(
                         if "prices" in prices and isinstance(prices["prices"], list):
                             # Raw price list — each entry is an independent observation.
                             for p in prices["prices"]:
-                                if isinstance(p, (int, float)) and p > 0:
+                                if isinstance(p, (int, float)) and math.isfinite(p) and p > 0:
                                     _record_obs(brand, model, year, p)
                         elif "avg" in prices and isinstance(prices["avg"], (int, float)) and prices["avg"] > 0:
                             # Pre-aggregated block — the avg IS the observation.
@@ -308,7 +309,7 @@ def extract_scraper_observations(
                     elif isinstance(prices, list):
                         # Direct price list at the year node.
                         for p in prices:
-                            if isinstance(p, (int, float)) and p > 0:
+                            if isinstance(p, (int, float)) and math.isfinite(p) and p > 0:
                                 _record_obs(brand, model, year, p)
 
     # Format B: single brand/model result from hasznaltauto_parser.py
@@ -322,7 +323,7 @@ def extract_scraper_observations(
                 continue
             if "prices" in stats and isinstance(stats["prices"], list):
                 for p in stats["prices"]:
-                    if isinstance(p, (int, float)) and p > 0:
+                    if isinstance(p, (int, float)) and math.isfinite(p) and p > 0:
                         _record_obs(brand, model, year, p)
             elif "avg" in stats and isinstance(stats["avg"], (int, float)) and stats["avg"] > 0:
                 _record_obs(brand, model, year, stats["avg"])

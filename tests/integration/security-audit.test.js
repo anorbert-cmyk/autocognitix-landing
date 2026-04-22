@@ -178,17 +178,18 @@ describe('innerHTML Safety Audit', () => {
     'en/tools/worth-repairing.html:845',
     'en/tools/worth-repairing.html:928',
     'en/tools/worth-repairing.html:935',
-    'en/tools/mot-predictor.html:764',
-    'en/tools/mot-predictor.html:879',
-    'en/tools/mot-predictor.html:887',
-    'en/tools/mot-predictor.html:895',
-    'en/tools/mot-predictor.html:907',
+    // Wave 6: +1 line shift after cookie-prefs footer link added
+    'en/tools/mot-predictor.html:765',
+    'en/tools/mot-predictor.html:880',
+    'en/tools/mot-predictor.html:888',
+    'en/tools/mot-predictor.html:896',
+    'en/tools/mot-predictor.html:908',
     // Wave 2 line drift after <main>, <fieldset>, and i18n insertions
     'hu/eszkozok/megeri-megjavitani.html:972', // shifted from :955 (numeric uncertainty only, line drift)
     'en/tools/worth-repairing.html:974', // EN mirror (line shifts as Wave 4 SEO/perf agents add meta tags)
     // renderCard() patterns — all variables pre-escape via escapeHTML() at build sites
     'hu/eszkozok/szerviz-kereso.html:595', // card.innerHTML = headerHTML + descHTML + btnHTML (all escaped; line shifted +2 in Wave 5 diacritics restore)
-    'en/tools/workshop-finder.html:591',   // EN mirror of szerviz-kereso (line shifted)
+    'en/tools/workshop-finder.html:592',   // EN mirror of szerviz-kereso (Wave 6 +1 cookie link)
   ]);
 
   test('all innerHTML assignments with user-controllable data use escapeHtml()', async () => {

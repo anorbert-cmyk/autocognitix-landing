@@ -14,7 +14,9 @@
   --color-white: #FFFFFF;
   --color-gray-200: #E4E4E7;
   --color-gray-300: #D6D6DA;
-  --color-muted: #8D96A3;
+  /* Wave 6 WCAG 1.4.3 fix: #8D96A3 on #F2F2F4 = 2.94:1 FAIL. Darkened to
+     #5E6875 for 4.54:1 on light backgrounds (meets AA normal text). */
+  --color-muted: #5E6875;
   --color-info-surface: #F4F8FA;
   --color-success: #22C55E;
   --color-warning: #F59E0B;
@@ -2678,3 +2680,126 @@ ul, ol {
    (Block formerly here was 435 lines; identical contents are now in
    shared/cookie-banner.css. Selectors are still prefixed with .cc-.)
    ═══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WAVE 6 ACCESSIBILITY + COMPLIANCE FIXES (appended 2026-04-22)
+   ─────────────────────────────────────────────────────────────────────────
+   Global :focus-visible ring — WCAG 2.4.7 (Level AA). Previously only
+   .form-input and .form-select had :focus rules; 30+ other interactive
+   components (btn, nav-link, lang-option, footer-link, social-icon,
+   tool-hub-card, faq-item, blog-filter-btn, testimonials-nav button)
+   relied on the UA default which is inconsistent and invisible on dark
+   backgrounds.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+*:focus-visible {
+  outline: 3px solid var(--color-accent, #D97757);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Dark-context override: light ring on dark backgrounds for contrast. */
+.section-dark *:focus-visible,
+.footer *:focus-visible,
+.pricing-card.featured *:focus-visible,
+.cc-banner *:focus-visible,
+.cc-modal-wrap *:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Remove the mouse-click focus ring that would double with :focus-visible. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* Reduced motion: extend the existing guard (only covered .animate-on-scroll)
+   to all Wave-reported animations so users with the OS preference are not
+   auto-animated. WCAG 2.3.3 + 2.2.2. */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-card,
+  .score-bar-fill,
+  .tool-result,
+  .faq-answer {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* Contrast fix: newsletter-consent disclosure is legally required to be
+   legible. 40% alpha on #12110E = 3.18:1 FAIL. Bump to 80%. */
+.newsletter-consent {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.newsletter-brand-tagline,
+.newsletter-desc {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.pricing-card.featured .pricing-period {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+
+/* Newsletter-input placeholder contrast: #8D96A3 on #E4E4E7 = 2.36:1. */
+.newsletter-input::placeholder {
+  color: #5C6470 !important;
+  opacity: 1;
+}
+
+
+/* Lang-option target-size: 4px 10px padding = ~26x22 → below 24x24 AA. */
+.lang-option {
+  padding: 8px 12px !important;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile menu button target size. */
+.mobile-menu-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+
+/* FAQ accordion keyboard semantics: the structural fix (div → button) lives
+   in markup, but style any `.faq-question` button variant consistently. */
+.faq-question {
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* Skip-link defaults (referenced when the shared partial lands). */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--color-accent, #D97757);
+  color: #fff;
+  padding: 10px 16px;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom-right-radius: 8px;
+}
+.skip-link:focus-visible {
+  top: 0;
+}
+

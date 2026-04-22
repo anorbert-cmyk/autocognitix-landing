@@ -32,7 +32,7 @@ from typing import Any, Awaitable, Callable, Dict, Iterable, List, Literal, Opti
 
 import httpx
 from cachetools import TTLCache
-from pydantic import BaseModel, Field, ValidationError, constr
+from pydantic import BaseModel, Field, ValidationError, constr, field_validator
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -55,8 +55,52 @@ if not BACKEND_URL:
             "(refusing to silently default to the prod backend)"
         )
     BACKEND_URL = "https://autocognitix-production.up.railway.app"
+
+
+def _validate_backend_url(url: str) -> None:
+    """Wave 6 SSRF fix: reject BACKEND_URL that points at internal/metadata IPs.
+
+    Without this, a misconfigured Railway env or compromised secret store can
+    set BACKEND_URL=http://169.254.169.254/... (AWS/GCP metadata) and the
+    first CSRF prefetch exfiltrates IAM credentials into the cache.
+    """
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(url)
+    except Exception as exc:
+        raise RuntimeError(f"BACKEND_URL is unparseable: {exc}") from exc
+    if parsed.scheme not in ("http", "https"):
+        raise RuntimeError(f"BACKEND_URL must be http(s), got scheme={parsed.scheme!r}")
+    if ENVIRONMENT == "production" and parsed.scheme != "https":
+        raise RuntimeError("BACKEND_URL must use https in production")
+    if not parsed.hostname:
+        raise RuntimeError("BACKEND_URL is missing hostname")
+    # Reject known SSRF targets. This cannot catch all private IPs without a
+    # DNS lookup (which we don't want to do at import time), but it blocks the
+    # most common cloud-metadata attack vectors plus loopback literals. The
+    # hostname autocognitix-production.up.railway.app resolves only at request
+    # time; httpx + Railway DNS handle that path.
+    SSRF_LITERAL_DENY = (
+        "169.254.169.254",   # AWS, GCP, Azure metadata (also Railway internal)
+        "metadata.google.internal",
+        "metadata.azure.com",
+        "metadata.gce",
+        "127.0.0.1", "localhost", "0.0.0.0",
+        "::1",
+    )
+    if ENVIRONMENT == "production":
+        host_lower = parsed.hostname.lower()
+        if host_lower in SSRF_LITERAL_DENY or host_lower.startswith("169.254."):
+            raise RuntimeError(f"BACKEND_URL points at forbidden host: {host_lower!r}")
+
+
+_validate_backend_url(BACKEND_URL)
 CACHE_TTL = int(os.getenv("CACHE_TTL", "3600"))  # seconds
 CACHE_MAXSIZE = int(os.getenv("CACHE_MAXSIZE", "1000"))
+# NOTE: this limit is PER WORKER PROCESS. The proxy runs with uvicorn
+# --workers 1 (see start.sh), so the limit == advertised value. If workers>1
+# is ever enabled, the effective rate limit multiplies by N — either move
+# _rate_limits to Redis or divide this value by worker count at startup.
 RATE_LIMIT_PER_MINUTE = int(os.getenv("PROXY_RATE_LIMIT", "30"))
 MAX_BODY_BYTES = int(os.getenv("PROXY_MAX_BODY_BYTES", str(64 * 1024)))  # 64 KB
 MAX_RESPONSE_BYTES = int(os.getenv("PROXY_MAX_RESPONSE_BYTES", str(5 * 1024 * 1024)))  # 5 MB
@@ -181,24 +225,63 @@ _csrf_lock = asyncio.Lock()
 _http_client: Optional[httpx.AsyncClient] = None
 
 
+# Wave 6 race fix: track in-flight requests so lifespan drain waits for them
+# before closing the httpx client. Previously `aclose()` fired while in-flight
+# `async with .stream()` contexts held connections → every deploy produced 502s
+# and mid-body truncation.
+_inflight_counter = 0
+_inflight_zero_event = asyncio.Event()
+_inflight_zero_event.set()  # starts at 0
+_shutting_down = False
+
+
+def _inflight_inc() -> None:
+    global _inflight_counter
+    _inflight_counter += 1
+    _inflight_zero_event.clear()
+
+
+def _inflight_dec() -> None:
+    global _inflight_counter
+    _inflight_counter -= 1
+    if _inflight_counter <= 0:
+        _inflight_counter = 0
+        _inflight_zero_event.set()
+
+
 @asynccontextmanager
 async def _lifespan(app: Starlette):
-    """Open/close the shared httpx.AsyncClient."""
-    global _http_client
+    """Open/close the shared httpx.AsyncClient with an in-flight drain."""
+    global _http_client, _shutting_down
+    _shutting_down = False  # Reset for test suites that re-enter lifespan
     _http_client = httpx.AsyncClient(
         timeout=httpx.Timeout(connect=5.0, read=15.0, write=5.0, pool=2.0),
         limits=httpx.Limits(max_keepalive_connections=20, max_connections=50),
         follow_redirects=False,
+        http2=False,  # Lock to HTTP/1.1 so a transitive `h2` install can't silently flip protocol.
     )
     try:
         yield
     finally:
-        await _http_client.aclose()
+        _shutting_down = True
+        # Drain in-flight upstream calls before closing the client. Bounded by
+        # PROXY_REQUEST_TOTAL_TIMEOUT so shutdown cannot hang forever.
+        try:
+            await asyncio.wait_for(_inflight_zero_event.wait(), timeout=PROXY_REQUEST_TOTAL_TIMEOUT + 2.0)
+        except asyncio.TimeoutError:
+            log.warning("Lifespan drain timed out with %d in-flight requests", _inflight_counter)
+        # Swap-then-close so new callers see `None` (raises cleanly) instead of
+        # a closed client (raises cryptically).
+        client = _http_client
         _http_client = None
+        try:
+            await client.aclose()
+        except Exception:  # pragma: no cover - shutdown path
+            pass
 
 
 def _client() -> httpx.AsyncClient:
-    if _http_client is None:
+    if _shutting_down or _http_client is None:
         raise RuntimeError("httpx client not initialized (lifespan not started)")
     return _http_client
 
@@ -213,6 +296,26 @@ _Str = constr(strip_whitespace=True, min_length=1, max_length=128)
 _FuelType = Literal["gasoline", "diesel", "hybrid", "electric", "lpg", "cng", "other"]
 
 
+# Validator regex for DTC codes. Mirrors `_DTC_RE` defined later at route level —
+# the Pydantic layer applies this to POST payloads (inspection) so null bytes,
+# CRLF, and SQL-injection attempts are rejected BEFORE reaching the backend.
+# Wave 6 fuzz audit found the POST path had no DTC pattern check — only the
+# GET `/proxy/dtc/{code}` handler did.
+_DTC_CODE_RE = re.compile(r"^[PBCU][0-9]{4}$")
+
+# Control-character + NUL filter for string inputs. Pydantic's strip_whitespace
+# only strips ASCII space/tab/newline at boundaries — embedded NUL/C0 control
+# chars survive. Wave 6 fuzz flagged e.g. "Toyota\x00\r\n" bypassing validation.
+_CONTROL_CHAR_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
+
+def _strip_control_chars(v: str) -> str:
+    """Raise ValueError if string contains control chars or NUL; used by model validators."""
+    if _CONTROL_CHAR_RE.search(v):
+        raise ValueError("string contains invalid control characters")
+    return v
+
+
 class CalculatorRequest(BaseModel):
     vehicle_make: _Str
     vehicle_model: _Str
@@ -223,6 +326,11 @@ class CalculatorRequest(BaseModel):
     fuel_type: Optional[_FuelType] = None
 
     model_config = {"extra": "forbid"}
+
+    @field_validator("vehicle_make", "vehicle_model", "condition")
+    @classmethod
+    def _no_control_chars(cls, v: str) -> str:
+        return _strip_control_chars(v)
 
 
 class InspectionRequest(BaseModel):
@@ -239,6 +347,42 @@ class InspectionRequest(BaseModel):
     )
 
     model_config = {"extra": "forbid"}
+
+    @field_validator("vehicle_make", "vehicle_model")
+    @classmethod
+    def _no_control_chars(cls, v: str) -> str:
+        return _strip_control_chars(v)
+
+    @field_validator("dtc_codes")
+    @classmethod
+    def _validate_dtc_codes(cls, codes: List[str]) -> List[str]:
+        """Wave 6 fuzz fix: enforce DTC format on POST payloads (not just GET).
+
+        Previous: `constr(max_length=16)` accepted `P0001\x00ADMIN`, CR/LF, etc.
+        Now: each code must match [PBCU][0-9]{4} after upper() — same contract
+        as /proxy/dtc/{code}. Also dedupe preserving order (fuzz flagged that
+        50 identical codes multiplied backend lookup load).
+        """
+        validated = []
+        seen = set()
+        for raw in codes:
+            code = raw.strip().upper()
+            if not _DTC_CODE_RE.match(code):
+                raise ValueError(f"invalid DTC code format: {raw!r}")
+            if code in seen:
+                continue  # dedupe
+            seen.add(code)
+            validated.append(code)
+        if not validated:
+            raise ValueError("dtc_codes must contain at least one unique valid code")
+        return validated
+
+    @field_validator("symptoms")
+    @classmethod
+    def _symptoms_no_control(cls, v: Optional[List[str]]) -> Optional[List[str]]:
+        if v is None:
+            return None
+        return [_strip_control_chars(s) for s in v]
 
 
 # Allow-list of query params per GET endpoint.
@@ -267,18 +411,37 @@ class BodySizeLimitMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next: Callable[[Request], Awaitable[Response]]) -> Response:
         cl = request.headers.get("content-length")
-        if cl is not None:
-            try:
-                if int(cl) > self.max_bytes:
-                    return JSONResponse(
-                        {"data": None, "error": {"code": "PAYLOAD_TOO_LARGE", "message": "Request body exceeds limit"}, "meta": None},
-                        status_code=413,
-                    )
-            except ValueError:
+        if cl is None:
+            # Wave 6 fuzz fix: reject body-carrying methods without Content-Length.
+            # Without this, an attacker sends `Transfer-Encoding: chunked` with
+            # no CL and the middleware's length guard is skipped — Starlette's
+            # request.body() then buffers GBs of chunked data into RAM before
+            # the post-read length check fires.
+            if request.method in ("POST", "PUT", "PATCH"):
                 return JSONResponse(
-                    {"data": None, "error": {"code": "BAD_HEADER", "message": "Invalid Content-Length"}, "meta": None},
-                    status_code=400,
+                    {"data": None, "error": {"code": "LENGTH_REQUIRED", "message": "Content-Length header is required"}, "meta": None},
+                    status_code=411,
                 )
+            return await call_next(request)
+        # Reject Transfer-Encoding explicitly — nginx de-chunks before forwarding
+        # so any TE header reaching the app is a smuggling artifact.
+        te = request.headers.get("transfer-encoding", "").lower()
+        if te and te != "identity":
+            return JSONResponse(
+                {"data": None, "error": {"code": "BAD_HEADER", "message": "Transfer-Encoding not accepted"}, "meta": None},
+                status_code=400,
+            )
+        try:
+            if int(cl) > self.max_bytes:
+                return JSONResponse(
+                    {"data": None, "error": {"code": "PAYLOAD_TOO_LARGE", "message": "Request body exceeds limit"}, "meta": None},
+                    status_code=413,
+                )
+        except ValueError:
+            return JSONResponse(
+                {"data": None, "error": {"code": "BAD_HEADER", "message": "Invalid Content-Length"}, "meta": None},
+                status_code=400,
+            )
         return await call_next(request)
 
 
@@ -423,7 +586,16 @@ async def _get_csrf_token(request_id: str) -> Optional[str]:
     if token and _csrf_cache.get("expires_at", 0) > now:
         return token
 
-    async with _csrf_lock:
+    # Wave 6 fix: bound lock acquisition so a slow CSRF refresh cannot
+    # serialize every POST request. Without this, a backend /health/status
+    # hang blocks all POSTs for up to 25s each → effective DoS via single
+    # slow upstream dependency.
+    try:
+        await asyncio.wait_for(_csrf_lock.acquire(), timeout=PROXY_REQUEST_TOTAL_TIMEOUT)
+    except asyncio.TimeoutError:
+        log.warning("CSRF lock acquisition timed out", extra={"request_id": request_id})
+        return None
+    try:
         # Double-check after acquiring lock.
         now = time.time()
         token = _csrf_cache.get("token")
@@ -440,19 +612,25 @@ async def _get_csrf_token(request_id: str) -> Optional[str]:
             log.warning("CSRF fetch timed out", extra={"request_id": request_id})
             return None
         except httpx.HTTPError as exc:
-            log.warning("CSRF fetch failed: %s", exc, extra={"request_id": request_id})
+            log.warning("CSRF fetch failed: %s", type(exc).__name__, extra={"request_id": request_id})
             return None
 
         token = resp.cookies.get("csrf_token")
         if not token:
             log.warning("CSRF cookie missing from backend health response", extra={"request_id": request_id})
             return None
+        # Wave 6 race fix: single atomic swap (no torn read between token
+        # set + expires_at set). expires_at MUST be the time after the await
+        # completed, not before it.
         _csrf_cache["token"] = token
-        _csrf_cache["expires_at"] = now + CSRF_TTL_SECONDS
+        _csrf_cache["expires_at"] = time.time() + CSRF_TTL_SECONDS
         return token
+    finally:
+        _csrf_lock.release()
 
 
 def _invalidate_csrf() -> None:
+    """Invalidate cached CSRF token. Safe under _csrf_lock only."""
     _csrf_cache["token"] = None
     _csrf_cache["expires_at"] = 0.0
 
@@ -831,8 +1009,20 @@ async def _parse_and_validate(request: Request, model_cls: type[BaseModel]) -> t
             status_code=413,
         )
     try:
-        body = json.loads(raw.decode("utf-8")) if raw else {}
-    except (json.JSONDecodeError, UnicodeDecodeError):
+        # Wave 6 fuzz fix: a 6KB JSON depth-bomb (`{"a":` × 1000) raises
+        # RecursionError, not JSONDecodeError — previous handler fell through
+        # to Starlette's 500 + stack trace. Also reject NaN/Infinity via
+        # parse_constant (Python's json.loads allows them by default; they
+        # then produce invalid RFC-8259 on re-serialization and poison cache).
+        body = (
+            json.loads(
+                raw.decode("utf-8"),
+                parse_constant=lambda c: (_ for _ in ()).throw(ValueError(f"non-finite JSON literal: {c}")),
+            )
+            if raw
+            else {}
+        )
+    except (json.JSONDecodeError, UnicodeDecodeError, RecursionError, ValueError):
         return None, JSONResponse(
             _envelope(error={"code": "INVALID_JSON", "message": "Invalid JSON body"}),
             status_code=400,
@@ -840,8 +1030,16 @@ async def _parse_and_validate(request: Request, model_cls: type[BaseModel]) -> t
     try:
         model = model_cls.model_validate(body)
     except ValidationError as exc:
+        # Wave 6 OWASP/fuzz fix: strip `input`, `ctx`, `url` from Pydantic
+        # error dicts. Those fields reflect raw attacker payload back to the
+        # client — reflected content disclosure, latent XSS if any error UI
+        # uses innerHTML.
+        safe_details = [
+            {"loc": e.get("loc", []), "msg": e.get("msg", ""), "code": e.get("type", "")}
+            for e in exc.errors()
+        ]
         return None, JSONResponse(
-            _envelope(error={"code": "VALIDATION_ERROR", "message": "Invalid input", "details": exc.errors()}),
+            _envelope(error={"code": "VALIDATION_ERROR", "message": "Invalid input", "details": safe_details}),
             status_code=422,
         )
     return model, None
