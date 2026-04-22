@@ -1,11 +1,11 @@
-# Pinned base image for reproducible builds (DEVOPS-H1)
-# Using alpine3.19 because alpine3.20's py3-pip wheel has a pyexpat.so/expat
-# ABI mismatch that breaks pip install (XML_SetAllocTrackerActivationThreshold
-# symbol missing). alpine3.19 ships Python 3.11 + matching expat, stable.
-FROM nginx:1.27-alpine3.19
+# Pinned base image for reproducible builds (DEVOPS-H1).
+# Wave 5: bumped from nginx:1.27-alpine3.19 to nginx:1.29-alpine3.22 to pick up
+# ~15 Alpine distro CVE patches (libxml2, libssl3, musl, xz-libs, libexpat).
+# Alpine 3.22 ships Python 3.12 with a matching libexpat that no longer has
+# the 3.20 ABI mismatch that broke Wave 4.
+FROM nginx:1.29-alpine3.22
 
 # Install Python3 + proxy deps — mandatory, no silent failure (DEVOPS-C2)
-# Alpine 3.19 ships Python 3.11 (stable ABI against its libexpat).
 RUN apk add --no-cache python3 py3-pip \
     && mkdir -p /opt/proxy
 
