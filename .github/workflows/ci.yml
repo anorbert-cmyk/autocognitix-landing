@@ -47,7 +47,15 @@ jobs:
       - name: Verify pages load
         run: |
           docker rm -f test-container 2>/dev/null || true
-          docker run -d --name test-container -p 8080:8080 autocognitix-landing-test:latest
+          # Wave 5: proxy fail-fasts when ENVIRONMENT=production (the image
+          # default) and BACKEND_URL is missing. CI does NOT hit a real backend
+          # here, so we override both to allow boot without silently reaching
+          # a prod URL. The /proxy/health endpoint is local-only; no outbound
+          # traffic is attempted.
+          docker run -d --name test-container -p 8080:8080 \
+            -e ENVIRONMENT=development \
+            -e BACKEND_URL=http://backend.test.invalid:9999 \
+            autocognitix-landing-test:latest
           # Wait for proxy + nginx to start (proxy takes ~2-3s on first boot).
           for i in 1 2 3 4 5 6 7 8 9 10; do
             curl -f -s http://localhost:8080/proxy/health >/dev/null && break
@@ -67,7 +75,10 @@ jobs:
       - name: Verify security headers
         run: |
           docker rm -f header-test 2>/dev/null || true
-          docker run -d --name header-test -p 8081:8080 autocognitix-landing-test:latest
+          docker run -d --name header-test -p 8081:8080 \
+            -e ENVIRONMENT=development \
+            -e BACKEND_URL=http://backend.test.invalid:9999 \
+            autocognitix-landing-test:latest
           # Give container time to boot before probing.
           for i in 1 2 3 4 5; do
             curl -f -sI http://localhost:8081/hu/ >/dev/null && break

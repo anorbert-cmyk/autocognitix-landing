@@ -1,0 +1,21 @@
+# Trivy suppressions for Wave 5.
+#
+# These are base-image distro CVEs inherited from nginx:1.27-alpine3.19.
+# The Alpine security team has pushed fixes; upgrading the base image to
+# alpine3.20+ picks them up. Alpine 3.20 has a known pyexpat ABI issue with
+# Python 3.12 that broke an earlier Wave — we'll re-evaluate once the upstream
+# nginx image publishes a 3.21 variant that avoids it.
+#
+# Deadline: review by 2026-05-15 — bump base image or accept.
+# Tracking: tasks/review-2026-04-22.md (H-DOCKERFILE-TAG / devops Round 2).
+
+# libxml2 + libxslt (base: alpine3.19)
+CVE-2024-55549
+CVE-2025-24855
+
+# musl / musl-utils (base: alpine3.19)
+CVE-2025-26519
+CVE-2026-40200
+
+# xz-libs (base: alpine3.19)
+CVE-2025-31115
