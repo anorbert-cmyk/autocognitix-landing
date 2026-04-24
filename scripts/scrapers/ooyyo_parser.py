@@ -114,15 +114,23 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Toyota/C-HR": "BAD3355B8DA7",
     "Toyota/Aygo": "BAD3355BB5A5",
     # BMW
-    "BMW/3-series": "BA7D355B8FA0",
-    "BMW/5-series": "BA7D355B90A0",
+    # Keys aligned to config.BRANDS (2026-04-24) — "3-series" -> "3-Series" etc.
+    "BMW/3-Series": "BA7D355B8FA0",
+    "BMW/5-Series": "BA7D355B90A0",
     "BMW/X1": "BA7D355BD4A3",
     "BMW/X3": "BA7D355B25A3",
-    "BMW/1-series": "BA7D355B48A0",
+    "BMW/1-Series": "BA7D355B48A0",
+    # TODO: hashes not yet discovered for these BMW models in config — run --discover
+    "BMW/X5": None,
+    "BMW/2-es": None,
+    "BMW/4-es": None,
+    "BMW/7-es": None,
+    "BMW/i3": None,
     # Mercedes-Benz
-    "Mercedes-Benz/A-class": "BA1F355BD0A2",
-    "Mercedes-Benz/C-class": "BA1F355BDEA2",
-    "Mercedes-Benz/E-class": "BA1F355BCBA2",
+    # Keys aligned to config.BRANDS (2026-04-24) — "A-class" -> "A-Class" etc.
+    "Mercedes-Benz/A-Class": "BA1F355BD0A2",
+    "Mercedes-Benz/C-Class": "BA1F355BDEA2",
+    "Mercedes-Benz/E-Class": "BA1F355BCBA2",
     "Mercedes-Benz/GLA": "BA1F355B7BA5",
     "Mercedes-Benz/GLC": "BA1F355B6FA5",
     # Ford
@@ -136,7 +144,10 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Skoda/Fabia": "BACE355BDEA6",
     "Skoda/Superb": "BACE355BCAA6",
     "Skoda/Kodiaq": "BACE355BD8A9",
+    # "Skoda/Kamiq" kept for legacy compat but removed from config.BRANDS
     "Skoda/Kamiq": "BACE355B21AC",
+    # TODO: hash not yet discovered — run --discover
+    "Skoda/Karoq": None,
     # Audi
     "Audi/A3": "BA153559DCA0",
     "Audi/A4": "BA15355904A0",
@@ -149,6 +160,12 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Opel/Mokka": "BAB5355BACA4",
     "Opel/Insignia": "BAB5355B0BA2",
     "Opel/Crossland": "BAB5355BB8A7",
+    # TODO: hashes not yet discovered — run --discover
+    "Opel/Grandland": None,
+    "Opel/Zafira": None,
+    "Opel/Meriva": None,
+    "Opel/Vectra": None,
+    "Opel/Combo": None,
     # Renault
     "Renault/Clio": "BAC1355B9CA1",
     "Renault/Megane": "BAC1355B97A1",
@@ -160,31 +177,49 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Peugeot/308": "BAB7355B38A2",
     "Peugeot/2008": "BAB7355BADA5",
     "Peugeot/3008": "BAB7355BB2A5",
+    # "Peugeot/508" kept for legacy compat but removed from config.BRANDS (replaced by 5008)
     "Peugeot/508": "BAB7355B47A3",
+    # TODO: hash not yet discovered — run --discover
+    "Peugeot/5008": None,
     # Hyundai
     "Hyundai/i30": "BA34355BA0A2",
     "Hyundai/Tucson": "BA34355B97A2",
     "Hyundai/i20": "BA34355B39A2",
     "Hyundai/Kona": "BA34355B9FA7",
+    # "Hyundai/ix35" kept for legacy compat but removed from config.BRANDS
     "Hyundai/ix35": "BA34355B0DA4",
+    # TODO: hash not yet discovered — run --discover
+    "Hyundai/i10": None,
     # Kia
     "Kia/Ceed": "BA38355BB6A3",
     "Kia/Sportage": "BA38355B8EA2",
+    # "Kia/Picanto" kept for legacy compat but removed from config.BRANDS (replaced by Rio)
     "Kia/Picanto": "BA38355B08A2",
     "Kia/Niro": "BA38355B2EA7",
     "Kia/Stonic": "BA38355B66A8",
+    # TODO: hash not yet discovered — run --discover
+    "Kia/Rio": None,
     # Suzuki
     "Suzuki/Swift": "BACF355B2EA1",
     "Suzuki/Vitara": "BACF355B0BA2",
     "Suzuki/SX4": "BACF355BD5A1",
     "Suzuki/Baleno": "BACF355B70A6",
     "Suzuki/Ignis": "BACF355B60A6",
+    # TODO: hashes not yet discovered — run --discover
+    "Suzuki/S-Cross": None,
+    "Suzuki/Jimny": None,
+    "Suzuki/Alto": None,
+    "Suzuki/Splash": None,
+    "Suzuki/Wagon R+": None,
     # Fiat
     "Fiat/500": "BA26355B4EA0",
     "Fiat/Panda": "BA26355BC0A0",
     "Fiat/Tipo": "BA26355BA2A5",
+    # "Fiat/Punto" kept for legacy compat but removed from config.BRANDS (replaced by Doblo)
     "Fiat/Punto": "BA26355B81A0",
     "Fiat/500X": "BA26355B27A5",
+    # TODO: hash not yet discovered — run --discover
+    "Fiat/Doblo": None,
     # Dacia
     "Dacia/Duster": "BA1C355B11A3",
     "Dacia/Sandero": "BA1C355B0CA2",
@@ -196,13 +231,19 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Honda/CR-V": "BA33355BD3A1",
     "Honda/Jazz": "BA33355BECA1",
     "Honda/HR-V": "BA33355B6AA5",
+    # "Honda/Accord" kept for legacy compat but removed from config.BRANDS (replaced by "e")
     "Honda/Accord": "BA33355B86A0",
+    # TODO: hash not yet discovered — run --discover
+    "Honda/e": None,
     # Mazda
     "Mazda/3": "BA3B355B8FA0",
     "Mazda/6": "BA3B355B90A0",
     "Mazda/CX-5": "BA3B355B64A4",
+    # "Mazda/CX-3" kept for legacy compat but removed from config.BRANDS (replaced by 2)
     "Mazda/CX-3": "BA3B355B89A5",
     "Mazda/CX-30": "BA3B355B53A9",
+    # TODO: hash not yet discovered — run --discover
+    "Mazda/2": None,
     # Nissan
     "Nissan/Qashqai": "BAB3355B17A3",
     "Nissan/Juke": "BAB3355B3AA3",
@@ -218,9 +259,12 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     # Volvo
     "Volvo/XC60": "BAA5355BFDA3",
     "Volvo/XC40": "BAA5355B59A8",
+    # "Volvo/V40" kept for legacy compat but removed from config.BRANDS (replaced by XC90)
     "Volvo/V40": "BAA5355B66A3",
     "Volvo/V60": "BAA5355B9EA2",
     "Volvo/S60": "BAA5355B6EA2",
+    # TODO: hash not yet discovered — run --discover
+    "Volvo/XC90": None,
     # Citroen
     "Citroen/C3": "BA1E355BFCA1",
     "Citroen/C4": "BA1E355B0CA2",
@@ -244,19 +288,44 @@ _BRAND_MODEL_HASHES: Dict[str, str] = {
     "Alfa Romeo/Giulia": "BA0C355B2DA5",
     "Alfa Romeo/Stelvio": "BA0C355B78A6",
     "Alfa Romeo/MiTo": "BA0C355BBBA2",
+    # "Alfa Romeo/159" kept for legacy compat but removed from config.BRANDS (replaced by Tonale)
     "Alfa Romeo/159": "BA0C355BB4A1",
-    # Mini
+    # TODO: hash not yet discovered — run --discover
+    "Alfa Romeo/Tonale": None,
+    # Mini — legacy compat, brand removed from config.BRANDS
     "Mini/Cooper": "BA3C355B66A0",
     "Mini/Countryman": "BA3C355B74A3",
     "Mini/Clubman": "BA3C355B12A2",
     "Mini/One": "BA3C355BBFA0",
     "Mini/Cabrio": "BA3C355B1EA1",
+    # Chevrolet — TODO: hashes not yet discovered, run --discover
+    "Chevrolet/Spark": None,
+    "Chevrolet/Aveo": None,
+    "Chevrolet/Cruze": None,
+    "Chevrolet/Trax": None,
+    "Chevrolet/Orlando": None,
+    # Lancia — TODO: hashes not yet discovered, run --discover
+    "Lancia/Ypsilon": None,
+    "Lancia/Delta": None,
+    "Lancia/Musa": None,
+    "Lancia/Voyager": None,
+    "Lancia/Thema": None,
 }
 
-# URL slug overrides for brand/model names that differ from config.py
+# URL slug overrides for brand/model names that differ from config.py.
+# Keyed by canonical config.BRANDS casing (e.g. "3-Series") plus legacy lowercase
+# aliases kept for cache compatibility.
 OOYYO_SLUG_OVERRIDES = {
     "Mercedes-Benz": "mercedes+benz",
     "Alfa Romeo": "alfa+romeo",
+    # Canonical casing (matches config.BRANDS)
+    "3-Series": "3+series",
+    "5-Series": "5+series",
+    "1-Series": "1+series",
+    "A-Class": "a-class",
+    "C-Class": "c-class",
+    "E-Class": "e-class",
+    # Legacy lowercase aliases — retained for any stale callers
     "3-series": "3+series",
     "5-series": "5+series",
     "1-series": "1+series",
@@ -278,6 +347,7 @@ OOYYO_SLUG_OVERRIDES = {
     "Space Star": "space+star",
     "Grand Cherokee": "grand+cherokee",
     "500X": "500x",
+    "Wagon R+": "wagon+r%2B",
 }
 
 # Maximum listings to collect per brand/model (across all countries)
@@ -865,6 +935,13 @@ def scrape_brand_model(
     errors = 0
     hash_cache = _load_hash_cache()
 
+    # Early-exit: bail out of the country loop if N consecutive countries yield
+    # zero listings. Without this, a broken hash/DOM combo would burn the
+    # full 8 × 30s crawl-delay per model and push the workflow past its 60m
+    # timeout. Counts both hash-mismatch pages and fetch failures as "empty".
+    consecutive_empty = 0
+    EARLY_EXIT_AFTER = 3
+
     for i, (country_slug, country_name, country_hash, country_suffix) in enumerate(scan_countries, 1):
         if len(all_listings) >= limit:
             log.info("Reached limit of %d listings -- stopping", limit)
@@ -878,6 +955,7 @@ def scrape_brand_model(
                  i, len(scan_countries), brand_name, model_name, country_name)
         log.info("  URL: %s", url)
 
+        got_listings_this_country = False
         html = fetch_url(url)
         if html:
             # Opportunistically discover/verify hash from the page
@@ -903,6 +981,7 @@ def scrape_brand_model(
                     item["source_url"] = url
 
                 all_listings.extend(listings)
+                got_listings_this_country = True
                 log.info("  Parsed %d listings (total so far: %d)", len(listings), len(all_listings))
 
                 sample = listings[0]
@@ -919,6 +998,18 @@ def scrape_brand_model(
         else:
             log.warning("  Failed to fetch page for %s", country_name)
             errors += 1
+
+        if got_listings_this_country:
+            consecutive_empty = 0
+        else:
+            consecutive_empty += 1
+            if consecutive_empty >= EARLY_EXIT_AFTER:
+                log.info(
+                    "Early-exit: %d consecutive empty countries for %s/%s — "
+                    "skipping remaining countries to protect workflow timeout",
+                    consecutive_empty, brand_name, model_name,
+                )
+                break
 
         # Respect Crawl-delay: 30s
         if i < len(scan_countries) and len(all_listings) < limit:

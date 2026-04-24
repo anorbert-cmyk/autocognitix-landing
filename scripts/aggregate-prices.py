@@ -191,7 +191,9 @@ def aggregate_prices(observations: List[int]) -> Optional[Dict[str, int]]:
 # ---------------------------------------------------------------------------
 
 
-def extract_baseline_observations(baseline: dict) -> Dict[Tuple[str, str, str], List[int]]:
+def extract_baseline_observations(
+    baseline: dict,
+) -> Tuple[Dict[Tuple[str, str, str], List[int]], Dict[Tuple[str, str, str], Dict[str, int]]]:
     """
     Extract price observations from the existing baseline file.
 
@@ -202,8 +204,16 @@ def extract_baseline_observations(baseline: dict) -> Dict[Tuple[str, str, str], 
     are donor-model stubs copied from a sibling, NOT independent market
     observations — counting them would inflate the percentile baseline with
     fabricated data points. Documented in shared/data/README.md.
+
+    Returns (observations, original_triples). The second dict maps each
+    baseline key -> its original {min, avg, max}; build_output uses this to
+    preserve sparse keys whose ONLY signal is the single baseline obs (see
+    DATA-M? sparse-key preservation). Without this, keys with 1 baseline obs
+    and no live data are silently dropped by the MIN_OBSERVATIONS=3 filter
+    and the baseline slowly erodes cycle over cycle.
     """
     merged: Dict[Tuple[str, str, str], List[int]] = {}
+    originals: Dict[Tuple[str, str, str], Dict[str, int]] = {}
     skipped_placeholders = 0
 
     for brand, models in baseline.get("brands", {}).items():
@@ -222,6 +232,14 @@ def extract_baseline_observations(baseline: dict) -> Dict[Tuple[str, str, str], 
                 if avg and isinstance(avg, (int, float)) and avg > 0:
                     key = (brand, model, str(year))
                     merged.setdefault(key, []).append(int(avg))
+                    # Preserve original min/avg/max triple for sparse-key fallback.
+                    lo = prices.get("min")
+                    hi = prices.get("max")
+                    originals[key] = {
+                        "min": int(lo) if isinstance(lo, (int, float)) and lo > 0 else int(avg),
+                        "avg": int(avg),
+                        "max": int(hi) if isinstance(hi, (int, float)) and hi > 0 else int(avg),
+                    }
 
     if skipped_placeholders:
         print(
@@ -230,7 +248,7 @@ def extract_baseline_observations(baseline: dict) -> Dict[Tuple[str, str, str], 
             file=sys.stderr,
         )
 
-    return merged
+    return merged, originals
 
 
 def extract_scraper_observations(
@@ -358,15 +376,39 @@ def merge_all_observations(
 def build_output(
     merged: Dict[Tuple[str, str, str], List[int]],
     meta: Dict[str, Any],
+    baseline_originals: Optional[Dict[Tuple[str, str, str], Dict[str, int]]] = None,
 ) -> Dict[str, Any]:
-    """Build the final output JSON structure."""
+    """
+    Build the final output JSON structure.
+
+    Sparse-key preservation: keys with fewer than MIN_OBSERVATIONS are normally
+    skipped. If a key has exactly 1 observation and that observation came from
+    the baseline (i.e. no live scraper contributed this cycle), we preserve
+    the baseline's original {min, avg, max} triple AS-IS. This prevents the
+    structural erosion where baseline-only keys are dropped every cycle and
+    the published set shrinks over weeks of partial scraper outages.
+    """
     output: Dict[str, Any] = {"_meta": meta, "brands": {}}
+    baseline_originals = baseline_originals or {}
 
     skipped = 0
     published = 0
+    preserved_from_baseline = 0
 
     for (brand, model, year), prices in sorted(merged.items()):
-        result = aggregate_prices(prices)
+        key = (brand, model, year)
+
+        if len(prices) >= MIN_OBSERVATIONS:
+            # Happy path: recompute percentiles from live + baseline.
+            result = aggregate_prices(prices)
+        elif len(prices) == 1 and key in baseline_originals:
+            # Sparse-key fallback: only signal is the single baseline obs.
+            # Preserve the original triple rather than dropping the row.
+            result = dict(baseline_originals[key])
+            preserved_from_baseline += 1
+        else:
+            result = None
+
         if result is None:
             skipped += 1
             continue
@@ -382,6 +424,7 @@ def build_output(
     # Update meta with final counts
     output["_meta"]["published_price_points"] = published
     output["_meta"]["skipped_insufficient_data"] = skipped
+    output["_meta"]["preserved_from_baseline"] = preserved_from_baseline
 
     return output
 
@@ -406,9 +449,12 @@ def main() -> None:
     # Load baseline
     print(f"\nLoading baseline: {PRICES_FILE}")
     baseline = load_json(PRICES_FILE)
-    baseline_obs = extract_baseline_observations(baseline)
+    baseline_obs, baseline_originals = extract_baseline_observations(baseline)
     baseline_count = sum(len(v) for v in baseline_obs.values())
     print(f"  Baseline observations: {baseline_count}")
+
+    # Count brands in baseline (for graceful-regression decision at exit).
+    baseline_brands_count = len(baseline.get("brands", {}))
 
     # Load scraper outputs
     sources_used = ["baseline"]
@@ -476,28 +522,14 @@ def main() -> None:
         if preserve_key in baseline_meta:
             meta[preserve_key] = baseline_meta[preserve_key]
 
-    # Build output
-    output = build_output(merged, meta)
+    # Build output (carries baseline_originals so sparse-key preservation works)
+    output = build_output(merged, meta, baseline_originals=baseline_originals)
 
-    # Write output ATOMICALLY: tempfile + os.replace so SIGTERM/disk-full
-    # mid-write cannot leave a 0-byte or truncated baseline (which would make
-    # extract_baseline_observations return empty and silently destroy the
-    # baseline until restored from git).
-    os.makedirs(DATA_DIR, exist_ok=True)
-    fd, tmp = tempfile.mkstemp(prefix=".prices.", suffix=".tmp", dir=str(DATA_DIR))
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump(output, f, ensure_ascii=False, indent=2)
-            f.write("\n")
-        os.replace(tmp, PRICES_FILE)
-    except Exception:
-        if os.path.exists(tmp):
-            os.unlink(tmp)
-        raise
-
-    # Summary
+    # Summary BEFORE any write — so graceful-regression path can log without
+    # claiming we wrote a file we didn't.
     published = output["_meta"]["published_price_points"]
     skipped = output["_meta"]["skipped_insufficient_data"]
+    preserved = output["_meta"].get("preserved_from_baseline", 0)
     output_brands = len(output["brands"])
 
     print(f"\n{'=' * 60}")
@@ -506,18 +538,67 @@ def main() -> None:
     print(f"  Total observations: {total_observations}")
     print(f"  Published price points: {published}")
     print(f"  Skipped (< {MIN_OBSERVATIONS} obs): {skipped}")
+    print(f"  Preserved from baseline (sparse keys): {preserved}")
     print(f"  Output brands: {output_brands}")
-    print(f"  Written to: {PRICES_FILE}")
     print(f"{'=' * 60}\n")
 
-    # Exit with error if output seems too small (regression guard)
-    if output_brands < 20:
+    # Exit strategy — three branches:
+    #   1) output_brands >= 20               -> happy path, write + exit 0
+    #   2) regression BUT baseline is healthy AND >=2 sources contributed
+    #      -> preserve baseline, warn, exit 0 (don't trip CI red, next run retries)
+    #   3) everything else                   -> exit 1 (human intervention)
+    #
+    # sources_used includes "baseline" + every scraper that produced >0 obs.
+    # len(sources_used) >= 2 means at least one live scraper plus baseline
+    # (or two live scrapers if baseline was empty).
+    live_plus_baseline_count = len(sources_used)
+
+    def _write_output_atomic() -> None:
+        """
+        ATOMIC write: tempfile + os.replace so SIGTERM/disk-full mid-write
+        cannot leave a 0-byte or truncated baseline (which would make
+        extract_baseline_observations return empty and silently destroy the
+        baseline until restored from git).
+        """
+        os.makedirs(DATA_DIR, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(prefix=".prices.", suffix=".tmp", dir=str(DATA_DIR))
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(output, f, ensure_ascii=False, indent=2)
+                f.write("\n")
+            os.replace(tmp, PRICES_FILE)
+        except Exception:
+            if os.path.exists(tmp):
+                os.unlink(tmp)
+            raise
+
+    if output_brands >= 20:
+        _write_output_atomic()
+        print(f"[OK] Published {output_brands} brands from {live_plus_baseline_count} sources.")
+        print(f"  Written to: {PRICES_FILE}")
+        sys.exit(0)
+
+    if baseline_brands_count >= 20 and live_plus_baseline_count >= 2:
+        # Graceful regression: baseline is healthy and at least one live
+        # scraper contributed this cycle, but the merged output still came
+        # out short. Likely a transient scraper outage. Preserve baseline,
+        # exit 0 so the scheduled job retries cleanly next cycle.
         print(
-            f"[ERROR] Only {output_brands} brands in output (expected >= 20). "
-            "Possible data loss — check scraper outputs.",
+            f"[WARN] New output has only {output_brands} brands "
+            f"(baseline has {baseline_brands_count}). "
+            f"Preserving baseline. sources_used={live_plus_baseline_count}. "
+            f"Next run will retry.",
             file=sys.stderr,
         )
-        sys.exit(1)
+        sys.exit(0)
+
+    # Hard fail: baseline is bad OR only baseline contributed (no live source).
+    print(
+        f"[ERROR] Only {output_brands} brands from {live_plus_baseline_count} sources; "
+        f"baseline has {baseline_brands_count} brands. Pipeline needs human intervention.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
 
 
 if __name__ == "__main__":

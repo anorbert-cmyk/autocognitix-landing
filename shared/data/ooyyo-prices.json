@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "source": "ooyyo.com EU-wide price aggregation",
+    "currency": "HUF",
+    "updated": "2026-04-24",
+    "eur_huf_rate": 366.95,
+    "countries_scanned": [
+      "Germany",
+      "France",
+      "Italy",
+      "Spain",
+      "Netherlands",
+      "Belgium",
+      "Austria",
+      "Poland"
+    ],
+    "max_per_model": 30,
+    "total_listings": 0,
+    "attempts": 15,
+    "failures": 0
+  },
+  "brands": {}
+}
