@@ -433,9 +433,43 @@ def main():
     print(f"  Output: {args.output}")
     print(f"{'=' * 60}")
 
-    # Fail run if too many (brand, model) pairs failed.
     attempts = results.get("_meta", {}).get("attempts", 0)
     failures = results.get("_meta", {}).get("failures", 0)
+
+    # Silent-empty guard: count total observations actually written to output.
+    # The failure-fraction check below only counts EXCEPTIONS; a scraper that
+    # is being bot-blocked or suffers selector drift returns empty-success for
+    # every model and would otherwise pass CI with 0 observations. Both gates
+    # are complementary: this catches shape regressions, the next catches
+    # connectivity/crash regressions.
+    total_observations = 0
+    brands_dict = results.get("brands", {})
+    for _brand, models in brands_dict.items():
+        if not isinstance(models, dict):
+            continue
+        for _model, years in models.items():
+            if not isinstance(years, dict):
+                continue
+            for _year, data in years.items():
+                if isinstance(data, dict) and (data.get("avg") or data.get("prices")):
+                    total_observations += 1
+                elif isinstance(data, list) and data:
+                    total_observations += 1
+
+    log.info(
+        "%s: wrote %d observations across %d brands: %s",
+        args.scraper, total_observations, len(brands_dict), list(brands_dict.keys()),
+    )
+
+    if total_observations == 0:
+        log.error(
+            "[FATAL] Scraper %s wrote 0 observations. "
+            "Attempts=%d Failures=%d — likely bot-block or selector drift.",
+            args.scraper, attempts, failures,
+        )
+        sys.exit(1)
+
+    # Fail run if too many (brand, model) pairs failed.
     if attempts > 0:
         fail_fraction = failures / attempts
         if fail_fraction > MAX_FAILURE_FRACTION:

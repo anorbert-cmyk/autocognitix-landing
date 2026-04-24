@@ -17,8 +17,11 @@ concurrency:
   cancel-in-progress: false
 
 # Workflow-level default: read-only (DEVOPS-H5). Only aggregate job elevates.
+# issues: write is needed at workflow level so the `if: failure()` notification
+# step in `aggregate` can open a tracking issue when the pipeline breaks.
 permissions:
   contents: read
+  issues: write
 
 env:
   # 5 brands per day rotation — cycles through all 25 brands in 5 days
@@ -144,6 +147,10 @@ jobs:
 
       # Matrix values come from this workflow file (trusted source),
       # but pass via env for defence-in-depth consistency.
+      # run-scraper.py now exits(1) on silent-empty output (backend-engineer
+      # change). We let matrix cells fail loudly instead of masking with
+      # continue-on-error. `fail-fast: false` above ensures other scrapers
+      # keep running; aggregate job still runs via `if: always()`.
       - name: Run ${{ matrix.source.name }} scraper
         env:
           SCRAPER: ${{ matrix.source.script }}
@@ -155,7 +162,48 @@ jobs:
             --brands-file /tmp/today_brands.json \
             --max "$MAX_PER_MODEL" \
             --output "$OUTPUT"
-        continue-on-error: true
+
+      # Per-scraper post-condition: the output JSON must exist and contain
+      # at least MIN_OBS observations. Catches the silent-empty failure mode
+      # that hid behind continue-on-error for 30 days.
+      # Heredoc is safe: no `${{ }}` interpolation inside the Python body.
+      - name: Validate scraper output non-empty
+        if: always()
+        env:
+          OUTPUT_FILE: ${{ matrix.source.output }}
+          MIN_OBS: '1'
+        run: |
+          set -e
+          if [ ! -s "$OUTPUT_FILE" ]; then
+            echo "::error title=Empty output::$OUTPUT_FILE missing or empty"
+            exit 1
+          fi
+          OBS=$(python3 <<'PY'
+          import json
+          import os
+
+          path = os.environ['OUTPUT_FILE']
+          with open(path) as f:
+              d = json.load(f)
+
+          count = 0
+          for brand, models in d.get('brands', {}).items():
+              for model, years in models.items():
+                  if not isinstance(years, dict):
+                      continue
+                  for year, val in years.items():
+                      if isinstance(val, dict) and (val.get('avg') or val.get('prices')):
+                          count += 1
+                      elif isinstance(val, list) and val:
+                          count += 1
+          print(count)
+          PY
+          )
+          echo "::notice::$OUTPUT_FILE: $OBS observations"
+          if [ "$OBS" -lt "$MIN_OBS" ]; then
+            echo "::error title=Insufficient data::$OUTPUT_FILE has only $OBS observations (min $MIN_OBS)"
+            exit 1
+          fi
 
       - name: Upload scraper output
         if: always()
@@ -243,8 +291,9 @@ jobs:
 
           brands = data.get('brands', {})
 
-          if len(brands) < 20:
-              errors.append(f'Only {len(brands)} brands (expected >= 20)')
+          # NOTE: The ">= 20 brands" guard was removed here — aggregate-prices.py
+          # now owns brand-count gating (with graceful-regression logic from the
+          # data-engineer change). Keeping it in two places caused config drift.
 
           invalid_count = 0
           for brand, models in brands.items():
@@ -284,3 +333,41 @@ jobs:
           git add shared/data/
           git diff --staged --quiet || git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
           git push
+
+      # Failure alerting: if any preceding step in this job (or any upstream
+      # job via `needs`) failed, open a single tracking issue. De-duplicates
+      # against existing open `pipeline-failure` issues so we don't spam.
+      # All untrusted values (run URL, date) are built from context + Date —
+      # no user-controlled input is interpolated.
+      - name: Open issue on failure
+        if: failure()
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'pipeline-failure',
+            });
+            if (issues.some(i => i.title.includes('Market price pipeline failing'))) {
+              console.log('Existing pipeline-failure issue open — not duplicating');
+              return;
+            }
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const today = new Date().toISOString().split('T')[0];
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Auto] Market price pipeline failing — ${today}`,
+              body: [
+                'The scheduled "Update Market Prices" workflow failed.',
+                '',
+                `- Run: ${runUrl}`,
+                '- Triggered by: scheduled cron 04:00 UTC',
+                '- Please investigate scraper silent-empty or aggregate regression.',
+                '',
+                'This issue was auto-created by the workflow. It will not duplicate — close when resolved.',
+              ].join('\n'),
+              labels: ['pipeline-failure', 'automated'],
+            });

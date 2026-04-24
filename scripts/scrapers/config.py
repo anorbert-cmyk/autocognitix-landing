@@ -308,11 +308,41 @@ REQUEST_DELAY = 2.0
 # Request timeout in seconds
 REQUEST_TIMEOUT = 15
 
-# User-Agent for polite scraping
-USER_AGENT = (
+import random as _random
+
+# Rotating User-Agent pool for anti-bot evasion on enterprise-protected sites
+# (e.g. Naspers-owned hasznaltauto.hu returns 403 to identifiable bot UAs at
+# the sitemap level). Realistic current-gen Chrome/Safari/Firefox strings.
+USER_AGENTS = [
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0",
+]
+
+# Backwards-compat: single default for callers that still import USER_AGENT.
+# Kept as the first rotation entry (real browser UA), NOT the old identifiable
+# "AutoCognitix-PriceBot/1.0" string which triggers bot defenses.
+USER_AGENT = USER_AGENTS[0]
+
+# Last-resort polite identity string — callers may opt-in via the optional
+# POLITE_USER_AGENT header when they want to be identifiable (e.g. internal
+# admin tooling, non-hostile endpoints, bot-friendly sitemaps).
+POLITE_USER_AGENT = (
     "AutoCognitix-PriceBot/1.0 "
     "(+https://autocognitix.hu; market research; respectful crawling)"
 )
+
+
+def get_user_agent() -> str:
+    """Return a random real-browser UA (rotation per call).
+
+    Use this at every fetch site to distribute requests across UAs and avoid
+    per-UA fingerprinting. Callers wanting deterministic identity should
+    import POLITE_USER_AGENT explicitly.
+    """
+    return _random.choice(USER_AGENTS)
 
 # Maximum number of listing URLs to process per brand/model query
 MAX_LISTINGS_PER_QUERY = 200

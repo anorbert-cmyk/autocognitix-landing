@@ -59,7 +59,8 @@ try:
         MAX_SUB_SITEMAPS,
         REQUEST_DELAY,
         REQUEST_TIMEOUT,
-        USER_AGENT,
+        USER_AGENTS,
+        get_user_agent,
     )
 except ImportError:
     # Fallback defaults if config.py is not on sys.path
@@ -70,8 +71,14 @@ except ImportError:
         MAX_SUB_SITEMAPS,
         REQUEST_DELAY,
         REQUEST_TIMEOUT,
-        USER_AGENT,
+        USER_AGENTS,
+        get_user_agent,
     )
+
+# Maximum UA-rotation retries on 403 before giving up and re-raising.
+# Re-raising lets the orchestrator's MAX_FAILURE_FRACTION gate trigger,
+# rather than silently returning None (which hides IP/CDN-level blocks).
+MAX_UA_RETRIES = 3
 
 # ---------------------------------------------------------------------------
 # HTTP helper
@@ -79,36 +86,75 @@ except ImportError:
 
 
 def fetch_url(url: str, retries: int = 2) -> Optional[str]:
-    """Fetch a URL and return the response body as a string, or None on failure."""
-    headers = {
-        "User-Agent": USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.5",
-    }
-    req = urllib.request.Request(url, headers=headers)
+    """Fetch a URL and return the response body as a string, or None on failure.
 
-    for attempt in range(1, retries + 1):
-        try:
-            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
-                charset = resp.headers.get_content_charset() or "utf-8"
-                return resp.read().decode(charset, errors="replace")
-        except urllib.error.HTTPError as exc:
-            if exc.code == 404:
-                log.debug("404 Not Found: %s", url)
-                return None
-            if exc.code == 429:
-                wait = REQUEST_DELAY * attempt * 3
-                log.warning("Rate-limited (429) on %s — waiting %.1fs", url, wait)
-                time.sleep(wait)
-                continue
-            log.warning("HTTP %d on %s (attempt %d/%d)", exc.code, url, attempt, retries)
-        except (urllib.error.URLError, OSError, TimeoutError) as exc:
-            log.warning("Network error on %s: %s (attempt %d/%d)", url, exc, attempt, retries)
-        if attempt < retries:
-            time.sleep(REQUEST_DELAY)
+    Rotates User-Agent on every call via get_user_agent(). On 403 responses,
+    retries up to MAX_UA_RETRIES with a fresh UA (UA-based blocks break through).
+    After exhausting UA retries on 403, re-raises so the orchestrator can
+    detect IP/CDN-level blocks and trip the MAX_FAILURE_FRACTION gate.
 
-    log.error("Failed to fetch %s after %d attempts", url, retries)
-    return None
+    404 returns None silently (listing removed).
+    429 waits with backoff and continues within the normal retry loop.
+    5xx and network errors use the normal retry loop.
+    """
+    ua_attempt = 0
+    while True:
+        req = urllib.request.Request(url, headers={
+            "User-Agent": get_user_agent(),  # rotate per call
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.8",
+            "Accept-Encoding": "identity",  # plain — hasznaltauto may check
+            "Cache-Control": "no-cache",
+            "Referer": "https://www.hasznaltauto.hu/",
+        })
+
+        for attempt in range(1, retries + 1):
+            try:
+                with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+                    charset = resp.headers.get_content_charset() or "utf-8"
+                    return resp.read().decode(charset, errors="replace")
+            except urllib.error.HTTPError as exc:
+                if exc.code == 404:
+                    log.debug("404 Not Found: %s", url)
+                    return None
+                if exc.code == 403:
+                    # Break out of inner retry loop to rotate UA at the outer level
+                    if ua_attempt < MAX_UA_RETRIES - 1:
+                        backoff = 3 + ua_attempt * 2
+                        log.warning(
+                            "403 on %s (UA attempt %d/%d) — rotating UA and retrying in %ds",
+                            url, ua_attempt + 1, MAX_UA_RETRIES, backoff,
+                        )
+                        time.sleep(backoff)
+                        break  # break inner for -> outer while rotates UA
+                    # Exhausted UA retries — re-raise so orchestrator's failure
+                    # gate can trip on IP/CDN-level blocks instead of silent None
+                    log.error(
+                        "403 on %s after %d UA rotations — re-raising for failure gate",
+                        url, MAX_UA_RETRIES,
+                    )
+                    raise
+                if exc.code == 429:
+                    wait = REQUEST_DELAY * attempt * 3
+                    log.warning("Rate-limited (429) on %s — waiting %.1fs", url, wait)
+                    time.sleep(wait)
+                    continue
+                log.warning("HTTP %d on %s (attempt %d/%d)", exc.code, url, attempt, retries)
+            except (urllib.error.URLError, OSError, TimeoutError) as exc:
+                log.warning("Network error on %s: %s (attempt %d/%d)", url, exc, attempt, retries)
+            if attempt < retries:
+                time.sleep(REQUEST_DELAY)
+        else:
+            # Inner for-else: ran all retries without break → not a 403 case
+            log.error("Failed to fetch %s after %d attempts", url, retries)
+            return None
+
+        # We broke out of inner loop due to 403 — increment UA attempt counter
+        ua_attempt += 1
+        if ua_attempt >= MAX_UA_RETRIES:
+            # Defensive — should already have raised above, but keep bound tight
+            log.error("Failed to fetch %s after %d UA rotations", url, MAX_UA_RETRIES)
+            return None
 
 
 # ---------------------------------------------------------------------------

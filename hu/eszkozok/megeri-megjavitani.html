@@ -298,6 +298,37 @@
       margin-bottom: var(--space-sm);
       padding: 0;
     }
+
+    /* Data-source honesty badge — clarifies that prices are statistical estimates,
+       not live market data. Placed near the market-value output. */
+    .data-source-badge {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      background: rgba(255, 193, 7, 0.08);
+      border-left: 3px solid #f59e0b;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      line-height: 1.45;
+      color: #4b3c0a;
+    }
+    .data-source-badge__icon {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: #f59e0b;
+    }
+    .data-source-badge__text strong { color: #111; }
+    @media (prefers-color-scheme: dark) {
+      .data-source-badge {
+        background: rgba(255, 193, 7, 0.12);
+        color: #fbbf24;
+        border-left-color: #f59e0b;
+      }
+      .data-source-badge__text strong { color: #fef3c7; }
+    }
   </style>
 </head>
 <body>
@@ -473,6 +504,15 @@
             </div>
           </div>
           <div id="verdictBadge" class="verdict-badge"></div>
+        </div>
+
+        <!-- Data-source honesty badge: shown directly above the pricing output. -->
+        <div class="data-source-badge data-source-badge--estimate" role="note">
+          <span class="data-source-badge__icon" aria-hidden="true">&#9432;</span>
+          <span class="data-source-badge__text">
+            <strong>Becsült érték</strong> — statisztikai becslés, nem élő piaci adat.
+            Pontosság ±15-20%.
+          </span>
         </div>
 
         <!-- Result Cards -->
