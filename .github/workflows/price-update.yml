@@ -222,9 +222,13 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # Elevated: this job commits and pushes (DEVOPS-H5).
+    # Elevated: this job commits, opens PR, opens failure issues (DEVOPS-H5).
+    # Job-level permissions REPLACE workflow-level in GitHub Actions — must
+    # restate all needed grants here.
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
@@ -326,13 +330,35 @@ jobs:
           print(f'  Published price points: {meta.get("published_price_points", "?")}')
           PY
 
-      - name: Commit and push updated data
+      - name: Commit updated data to branch + open PR (branch-protection compatible)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -e
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add shared/data/
-          git diff --staged --quiet || git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
-          git push
+          if git diff --staged --quiet; then
+            echo "No data changes to commit — skipping PR."
+            exit 0
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="data/price-update-$DATE"
+          git checkout -b "$BRANCH"
+          git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
+          git push --force origin "$BRANCH"
+          # Open PR (or reuse existing) + enable auto-merge
+          if gh pr view "$BRANCH" --json number -q .number 2>/dev/null; then
+            echo "PR already exists for $BRANCH — pushing update"
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore: Daily price update $DATE" \
+              --body "Automated daily price aggregation commit.\nSources that contributed live data this run are listed in the aggregate job log.\n\nThis PR is opened automatically by the Update Market Prices workflow. Merging will update the production baseline." \
+              --label "automated"
+            # Enable auto-merge squash so it lands without manual review (if branch protection allows)
+            gh pr merge "$BRANCH" --auto --squash --delete-branch || \
+              echo "::warning::auto-merge not enabled (likely missing admin right on GITHUB_TOKEN) — PR left open for manual review"
+          fi
 
       # Failure alerting: if any preceding step in this job (or any upstream
       # job via `needs`) failed, open a single tracking issue. De-duplicates
