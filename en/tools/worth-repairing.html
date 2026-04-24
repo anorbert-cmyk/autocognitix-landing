@@ -1011,7 +1011,7 @@
 
       var uncertaintyBadge = document.createElement('div');
       uncertaintyBadge.className = 'uncertainty-indicator verdict-' + uncertaintyClass;
-      uncertaintyBadge.innerHTML = 'Estimate uncertainty: <strong>' + uncertainty + '</strong>';
+      uncertaintyBadge.textContent = "Estimate uncertainty: "; var u = document.createElement("strong"); u.textContent = uncertainty; uncertaintyBadge.appendChild(u);
       uncertaintyContainer.appendChild(uncertaintyBadge);
 
       if (uncertainty === 'HIGH') {
