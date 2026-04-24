@@ -18,7 +18,9 @@ import argparse
 import json
 import logging
 import re
+import shutil
 import statistics
+import subprocess
 import sys
 import time
 import urllib.error
@@ -83,76 +85,197 @@ MAX_UA_RETRIES = 3
 # ---------------------------------------------------------------------------
 # HTTP helper
 # ---------------------------------------------------------------------------
+#
+# BOT DETECTION NOTE (2026-04-24)
+# --------------------------------
+# hasznaltauto.hu sits behind Cloudflare, which fingerprints the TLS/ClientHello
+# of Python's `ssl` module (used by urllib, requests, httpx, even curl_cffi in
+# some builds) and returns 403 regardless of UA/headers/cookies on HTTP/2.
+#
+# Verified 2026-04-24:
+#   - HTTP/2 + any headers + any UA  -> 403
+#   - HTTP/1.1 + urllib/curl_cffi    -> 403  (Python TLS still flagged)
+#   - HTTP/1.1 + system `curl` bin   -> 200  (system OpenSSL TLS passes)
+#
+# Fix: shell out to the system `curl` binary with --http1.1. This is the
+# minimal intervention that works without adding Chrome/Playwright/proxies.
+# Python's urllib is kept as a fallback if `curl` is missing.
+
+_CURL_BIN: Optional[str] = None
+
+
+def _get_curl_bin() -> Optional[str]:
+    """Return path to system curl binary, cached; None if not installed."""
+    global _CURL_BIN
+    if _CURL_BIN is None:
+        _CURL_BIN = shutil.which("curl") or ""
+    return _CURL_BIN or None
+
+
+def _fetch_via_curl(url: str, user_agent: str, timeout: int) -> Tuple[Optional[str], int]:
+    """Fetch via system curl binary. Returns (body, http_code).
+
+    Body is None on non-2xx or transport failure. http_code is the numeric
+    status (0 on transport failure so caller can distinguish from 403).
+    Forces --http1.1 because Cloudflare fingerprints HTTP/2 ClientHello.
+    """
+    curl = _get_curl_bin()
+    if not curl:
+        return None, -1  # -1 signals "no curl available, fallback"
+
+    try:
+        proc = subprocess.run(
+            [
+                curl,
+                "-s", "-S",           # silent but show errors
+                "--http1.1",          # critical: bypass h2 fingerprint block
+                "--compressed",       # accept gzip/br, auto-decompress
+                "--max-time", str(timeout),
+                "-w", "\n__HTTP_CODE__%{http_code}",
+                "-A", user_agent,
+                "-H", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "-H", "Accept-Language: hu-HU,hu;q=0.9,en;q=0.8",
+                "-H", "Cache-Control: no-cache",
+                "-H", "Referer: https://www.hasznaltauto.hu/",
+                url,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=timeout + 5,
+        )
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        log.warning("curl subprocess failed on %s: %s", url, exc)
+        return None, 0
+
+    out = proc.stdout or ""
+    # Split off the trailer "__HTTP_CODE__NNN" we appended with -w
+    marker = "\n__HTTP_CODE__"
+    idx = out.rfind(marker)
+    if idx >= 0:
+        body = out[:idx]
+        code_str = out[idx + len(marker):].strip()
+        try:
+            code = int(code_str)
+        except ValueError:
+            code = 0
+    else:
+        body = out
+        code = 0
+
+    if 200 <= code < 300:
+        return body, code
+    return None, code
+
+
+def _fetch_via_urllib(url: str, user_agent: str) -> Tuple[Optional[str], int]:
+    """Fallback: stdlib urllib. Returns (body, http_code).
+
+    Mostly here so the scraper still runs on hosts without the `curl` binary.
+    Expect 403 from Cloudflare-protected endpoints — caller should prefer curl.
+    """
+    req = urllib.request.Request(url, headers={
+        "User-Agent": user_agent,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.8",
+        "Accept-Encoding": "identity",
+        "Cache-Control": "no-cache",
+        "Referer": "https://www.hasznaltauto.hu/",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+            charset = resp.headers.get_content_charset() or "utf-8"
+            return resp.read().decode(charset, errors="replace"), resp.status
+    except urllib.error.HTTPError as exc:
+        return None, exc.code
+    except (urllib.error.URLError, OSError, TimeoutError) as exc:
+        log.warning("urllib network error on %s: %s", url, exc)
+        return None, 0
 
 
 def fetch_url(url: str, retries: int = 2) -> Optional[str]:
     """Fetch a URL and return the response body as a string, or None on failure.
 
-    Rotates User-Agent on every call via get_user_agent(). On 403 responses,
-    retries up to MAX_UA_RETRIES with a fresh UA (UA-based blocks break through).
-    After exhausting UA retries on 403, re-raises so the orchestrator can
-    detect IP/CDN-level blocks and trip the MAX_FAILURE_FRACTION gate.
+    Primary path: system `curl --http1.1` (bypasses Cloudflare TLS fingerprint
+    block on Python's ssl module). Falls back to urllib if curl is missing.
+
+    Rotates User-Agent on every attempt via get_user_agent(). On 403, retries
+    up to MAX_UA_RETRIES with a fresh UA and exponential backoff. After
+    exhausting UA retries on 403, re-raises urllib.error.HTTPError(403) so
+    the orchestrator's MAX_FAILURE_FRACTION gate can trip on IP/CDN blocks
+    rather than silently returning None.
 
     404 returns None silently (listing removed).
     429 waits with backoff and continues within the normal retry loop.
     5xx and network errors use the normal retry loop.
     """
+    curl_available = _get_curl_bin() is not None
+    if not curl_available:
+        log.warning(
+            "System `curl` not found on PATH — falling back to urllib. "
+            "Expect 403s from Cloudflare-protected endpoints."
+        )
+
     ua_attempt = 0
     while True:
-        req = urllib.request.Request(url, headers={
-            "User-Agent": get_user_agent(),  # rotate per call
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.8",
-            "Accept-Encoding": "identity",  # plain — hasznaltauto may check
-            "Cache-Control": "no-cache",
-            "Referer": "https://www.hasznaltauto.hu/",
-        })
+        ua = get_user_agent()
 
         for attempt in range(1, retries + 1):
-            try:
-                with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
-                    charset = resp.headers.get_content_charset() or "utf-8"
-                    return resp.read().decode(charset, errors="replace")
-            except urllib.error.HTTPError as exc:
-                if exc.code == 404:
-                    log.debug("404 Not Found: %s", url)
-                    return None
-                if exc.code == 403:
-                    # Break out of inner retry loop to rotate UA at the outer level
-                    if ua_attempt < MAX_UA_RETRIES - 1:
-                        backoff = 3 + ua_attempt * 2
-                        log.warning(
-                            "403 on %s (UA attempt %d/%d) — rotating UA and retrying in %ds",
-                            url, ua_attempt + 1, MAX_UA_RETRIES, backoff,
-                        )
-                        time.sleep(backoff)
-                        break  # break inner for -> outer while rotates UA
-                    # Exhausted UA retries — re-raise so orchestrator's failure
-                    # gate can trip on IP/CDN-level blocks instead of silent None
-                    log.error(
-                        "403 on %s after %d UA rotations — re-raising for failure gate",
-                        url, MAX_UA_RETRIES,
+            if curl_available:
+                body, code = _fetch_via_curl(url, ua, REQUEST_TIMEOUT)
+            else:
+                body, code = _fetch_via_urllib(url, ua)
+
+            # Success
+            if body is not None and 200 <= code < 300:
+                return body
+
+            # 404 — treat as empty result
+            if code == 404:
+                log.debug("404 Not Found: %s", url)
+                return None
+
+            # 403 — break to outer loop for UA rotation
+            if code == 403:
+                if ua_attempt < MAX_UA_RETRIES - 1:
+                    backoff = 3 + ua_attempt * 2
+                    log.warning(
+                        "403 on %s (UA attempt %d/%d) — rotating UA and retrying in %ds",
+                        url, ua_attempt + 1, MAX_UA_RETRIES, backoff,
                     )
-                    raise
-                if exc.code == 429:
-                    wait = REQUEST_DELAY * attempt * 3
-                    log.warning("Rate-limited (429) on %s — waiting %.1fs", url, wait)
-                    time.sleep(wait)
-                    continue
-                log.warning("HTTP %d on %s (attempt %d/%d)", exc.code, url, attempt, retries)
-            except (urllib.error.URLError, OSError, TimeoutError) as exc:
-                log.warning("Network error on %s: %s (attempt %d/%d)", url, exc, attempt, retries)
+                    time.sleep(backoff)
+                    break  # inner for -> outer while rotates UA
+                log.error(
+                    "403 on %s after %d UA rotations — re-raising for failure gate",
+                    url, MAX_UA_RETRIES,
+                )
+                # Re-raise so orchestrator's failure gate can trip
+                raise urllib.error.HTTPError(
+                    url, 403, "Forbidden (after UA rotation)", hdrs=None, fp=None
+                )
+
+            # 429 — rate limited, waits inside retry loop
+            if code == 429:
+                wait = REQUEST_DELAY * attempt * 3
+                log.warning("Rate-limited (429) on %s — waiting %.1fs", url, wait)
+                time.sleep(wait)
+                continue
+
+            # Other HTTP error or transport failure
+            if code > 0:
+                log.warning("HTTP %d on %s (attempt %d/%d)", code, url, attempt, retries)
+            else:
+                log.warning("Transport failure on %s (attempt %d/%d)", url, attempt, retries)
+
             if attempt < retries:
                 time.sleep(REQUEST_DELAY)
         else:
-            # Inner for-else: ran all retries without break → not a 403 case
+            # Inner for-else: ran all retries without break (no 403 rotation)
             log.error("Failed to fetch %s after %d attempts", url, retries)
             return None
 
-        # We broke out of inner loop due to 403 — increment UA attempt counter
+        # Inner loop broke due to 403 — count UA attempts
         ua_attempt += 1
         if ua_attempt >= MAX_UA_RETRIES:
-            # Defensive — should already have raised above, but keep bound tight
             log.error("Failed to fetch %s after %d UA rotations", url, MAX_UA_RETRIES)
             return None
 

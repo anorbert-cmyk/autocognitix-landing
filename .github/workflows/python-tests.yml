@@ -1,0 +1,24 @@
+name: Python tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'pyproject.toml'
+      - '.github/workflows/python-tests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test dependencies
+        run: pip install pytest pytest-mock
+      - name: Run tests
+        run: pytest scripts/tests -v

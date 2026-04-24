@@ -411,3 +411,5 @@
 {"ts": "2026-04-24T12:30:40Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Tonale", "year": "2023", "price": 9981040.0, "currency": "HUF"}
 {"ts": "2026-04-24T12:30:40Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Tonale", "year": "2024", "price": 8399486.0, "currency": "HUF"}
 {"ts": "2026-04-24T12:30:40Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Tonale", "year": "2026", "price": 10237905.0, "currency": "HUF"}
+{"ts": "2026-04-24T15:26:16Z", "src": "test-source", "brand": "Volkswagen", "model": "Golf", "year": "2019", "price": 4500000.0, "currency": "HUF"}
+{"ts": "2026-04-24T15:27:20Z", "src": "test-source", "brand": "Volkswagen", "model": "Golf", "year": "2019", "price": 4500000.0, "currency": "HUF"}

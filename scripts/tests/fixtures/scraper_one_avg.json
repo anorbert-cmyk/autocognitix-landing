@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "source": "test-avg-only",
+    "scraped": "2026-04-24",
+    "updated": "2026-04-24",
+    "currency": "HUF",
+    "attempts": 1,
+    "failures": 0,
+    "total_listings": 1
+  },
+  "brands": {
+    "Volkswagen": {
+      "Golf": {
+        "2019": {
+          "avg": 4500000,
+          "min": 4000000,
+          "max": 5000000,
+          "count": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "_meta": {
+    "source": "test-baseline-regress",
+    "currency": "HUF",
+    "updated": "2026-04-24"
+  },
+  "brands": {
+    "Suzuki": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Opel": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Volkswagen": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Skoda": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Ford": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Toyota": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "BMW": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Audi": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Mercedes-Benz": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Renault": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Peugeot": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Citroen": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Fiat": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Hyundai": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Kia": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Dacia": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Honda": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Mazda": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Nissan": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Seat": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Volvo": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Mitsubishi": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Chevrolet": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Alfa Romeo": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    },
+    "Lancia": {
+      "RegressModel": {
+        "2020": {
+          "min": 900000,
+          "avg": 1200000,
+          "max": 1800000
+        }
+      }
+    }
+  }
+}
