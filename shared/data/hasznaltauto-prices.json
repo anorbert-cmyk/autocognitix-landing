@@ -2,15 +2,17 @@
   "_meta": {
     "source": "hasznaltauto.hu",
     "currency": "HUF",
-    "updated": "2026-04-24",
+    "updated": "2026-04-26",
     "max_per_model": 50,
     "total_listings": 0,
-    "attempts": 15,
-    "failures": 15
+    "attempts": 30,
+    "failures": 30
   },
   "brands": {
-    "Volvo": {},
-    "Mitsubishi": {},
-    "Alfa Romeo": {}
+    "Skoda": {},
+    "BMW": {},
+    "Mercedes-Benz": {},
+    "Audi": {},
+    "Renault": {}
   }
 }
