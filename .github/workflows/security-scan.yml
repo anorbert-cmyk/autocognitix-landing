@@ -59,7 +59,7 @@ jobs:
 
       - name: Trivy vulnerability scan (SARIF)
         # SHA pinned to v0.28.0 per DEVOPS-M6 supply-chain guidance.
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1  # v0.28.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25  # v0.28.0
         with:
           image-ref: autocognitix-landing-scan:${{ github.sha }}
           format: sarif
@@ -80,7 +80,7 @@ jobs:
         # Wave 5: dropped continue-on-error so HIGH+CRITICAL CVEs now BLOCK
         # the merge. Combined with branch protection on main, this turns the
         # SARIF + the table run into a real gate, not just decoration.
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1  # v0.28.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25  # v0.28.0
         with:
           image-ref: autocognitix-landing-scan:${{ github.sha }}
           format: table
