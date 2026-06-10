@@ -144,6 +144,18 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Changelog Pages -->
+  <url>
+    <loc>https://autocognitix.hu/hu/changelog/</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://autocognitix.hu/en/changelog/</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+
   <!-- Hungarian Legal Pages -->
   <url>
     <loc>https://autocognitix.hu/hu/legal/adatvedelmi-szabalyzat.html</loc>
