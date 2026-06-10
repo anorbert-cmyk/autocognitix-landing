@@ -6,6 +6,7 @@
   <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI diagnosztika: Hogyan működik a mesterséges intelligencia az autódiagnosztikában? Ismerje meg az AI diagnosztikai rendszerek működését, pontosságát és előnyeit.">
+    <meta name="keywords" content="AI diagnosztika, mesterséges intelligencia autó, autó diagnosztika, OBD2, hibakód elemzés, gépi tanulás diagnosztika">
     <meta name="author" content="AutoCognitix">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     
@@ -13,48 +14,52 @@
     <meta property="og:title" content="AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]">
     <meta property="og:description" content="AI diagnosztika rendszerek működésének teljes útmutatója: gépi tanulás, adatfeldolgozás, előrejelzés és a hagyományos diagnosztika helyett.">
     <meta property="og:url" content="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
-    <meta property="og:image" content="https://autocognitix.hu/images/og/blog/hu-ai-diagnosztika.jpg">
+    <meta property="og:image" content="https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg">
     <meta property="og:locale" content="hu_HU">
-
+    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban?">
     <meta name="twitter:description" content="Ismerje meg az AI diagnosztika működésének alapjait, előnyeit és gyakorlati alkalmazásait.">
-    <meta name="twitter:image" content="https://autocognitix.hu/images/og/blog/hu-ai-diagnosztika.jpg">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="twitter:image" content="https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg">
     
-    <link rel="canonical" href="https://autocognitix.hu/hu/blog/ai-diagnosztika-hogyan-mukodik.html">
-    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/ai-diagnosztika-hogyan-mukodik.html">
-    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/how-ai-car-diagnostics-works.html">
-    <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/en/blog/how-ai-car-diagnostics-works.html">
+    <link rel="canonical" href="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
+    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/blog/ai-diagnosztika-hogyan-mukodik">
     
     <title>AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style"
-          href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
-          onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
-    </noscript>
-    <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/shared/blog-post.css?v=4.0">
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <a href="/">AutoCognitix</a>
-            <div>
-                <a href="/">Kezdőlap</a>
-                <a href="/hu/blog/">Blog</a>
-                <a href="/hu/eszkozok/">Eszközök</a>
-                <a href="/hu/changelog/">Változásnapló</a>
-            </div>
+    <nav class="navbar">
+  <div class="container">
+    <a href="/hu/" class="nav-logo"><span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AutoCognitix</a>
+    <div class="nav-links">
+      <a href="/hu/#funkciok" class="nav-link">Funkciók</a>
+      <a href="/hu/#arak" class="nav-link">Árak</a>
+      <div class="nav-dropdown">
+        <a href="/hu/tools/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+        <div class="nav-dropdown-menu">
+          <a href="/hu/tools/worth-repairing.html">Megéri javítani?</a>
+          <a href="/hu/tools/mot-predictor.html">Műszaki előrejelző</a>
+          <a href="/hu/tools/workshop-finder.html">Szervízkereső</a>
         </div>
-    </nav>
+      </div>
+      <a href="/hu/blog/" class="nav-link active">Blog</a>
+      <a href="/hu/changelog/" class="nav-link">Változásnapló</a>
+      <a href="/hu/#gyik" class="nav-link">GYIK</a>
+      <a href="/hu/#kapcsolat" class="nav-link">Kapcsolat</a>
+    </div>
+    <div class="lang-switcher">
+      <a href="/hu/blog/ai-diagnosztika-hogyan-mukodik.html" class="lang-option active">HU</a>
+      <span style="color:#8D96A3">|</span>
+      <a href="/en/blog/how-ai-car-diagnostics-works.html" class="lang-option">EN</a>
+    </div>
+    <a href="/hu/#arak" class="btn btn-primary btn-sm nav-cta">Kezdés</a>
+  </div>
+</nav>
     
     <article>
         <div class="article-header">
@@ -428,98 +433,19 @@
         </div>
     </article>
     
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
-            <p>AutoCognitix egy <strong>AI-alapú autó-diagnosztikai platform</strong> magyar nyelvű támogatással, OBD2 diagnosztikai adatok elemzésével és hibajelzés dekódolásával.</p>
-            <p><em>Jogi nyilatkozat: Az AI diagnosztikai információk oktatási célokra szolgálnak és nem helyettesítik a professzionális szervízt.</em></p>
-        </div>
-    <p class="footer-cookie-link" style="text-align:center; font-size:13px; padding:10px;"><a href="#" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a></p>
+    <footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-heading">Termék</div><a href="/hu/#funkciok" class="footer-link">Funkciók</a><a href="/hu/#arak" class="footer-link">Árak</a><a href="/hu/changelog/" class="footer-link">Változásnapló</a></div>
+      <div><div class="footer-heading">Eszközök</div><a href="/hu/tools/" class="footer-link">Összes eszköz</a><a href="/hu/tools/worth-repairing.html" class="footer-link">Megéri javítani?</a><a href="/hu/tools/mot-predictor.html" class="footer-link">Műszaki előrejelző</a><a href="/hu/tools/workshop-finder.html" class="footer-link">Szervízkereső</a></div>
+      <div><div class="footer-heading">Tudástár</div><a href="/hu/blog/" class="footer-link">Blog</a><a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="footer-link">DTC hibakód kereső</a><a href="/hu/#gyik" class="footer-link">GYIK</a></div>
+      <div><div class="footer-heading">Jogi</div><a href="/hu/legal/privacy-policy.html" class="footer-link">Adatvédelmi szabályzat</a><a href="/hu/legal/terms-of-service.html" class="footer-link">Felhasználási feltételek</a><a href="/hu/legal/cookie-policy.html" class="footer-link">Cookie szabályzat</a><a href="/hu/legal/ai-disclaimer.html" class="footer-link">AI felelősségi nyilatkozat</a></div>
+      <div><div class="footer-heading">Kapcsolat</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hello@autocognitix.hu</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Budapest, Magyarország</div></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span><span>Készítette: Norbi & AI</span></div>
+  </div>
 </footer>
     
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Hogyan működik az AI autódiagnosztika: A technológia az okos javítás mögött [2026]",
-        "description": "Ismerd meg, hogyan működik az AI autódiagnosztika: a neurális hálózatoktól a tudásgráfokig. Fedezd fel, hogyan elemzik az okos javítórendszerek a tüneteket és jelzik előre a hibákat 95%+ pontossággal.",
-        "image": "https://autocognitix.hu/images/og/blog/hu-ai-diagnosztika.jpg",
-        "datePublished": "2026-03-21",
-        "dateModified": "2026-03-21",
-        "inLanguage": "hu",
-        "author": {
-            "@type": "Organization",
-            "name": "AutoCognitix"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "AutoCognitix",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://autocognitix.hu/logo.png"
-            }
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "inLanguage": "hu",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Mennyire pontosak az AI diagnosztikai rendszerek?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az AI diagnosztikai rendszerek 85-95% pontossággal működnek a legnépszerűbb autóhibákban. Az autó típusa, az OBD2 szenzor minősége és az AI modell folyamatos tanulása befolyásolják a pontosságot. Az AutoCognitix rendszere magyar autók diagnosztizálására optimalizált, ami még pontosabb eredményeket ad."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Szükséges az AI diagnosztikát szerelővel ellenőriztetni?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Igen, javasolt a manuális ellenőrzés az AI diagnosztika után. Az AI egy kiváló kiindulási pont és időt és költséget takarít meg, de az olyan hibák, mint a szenzor meghibásodás vagy összetett elektromos problémák, még mindig szükséges a szerelő szakértelmét."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Működik az AI diagnosztika régi autókon?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az AI diagnosztika 1996-ban vagy később gyártott autókon működik, mivel az OBD2 szabvánnyal kezdődik. Az idősebb járművek kevésbé szabványosítottak, ezért az AI pontossága csökkenhet."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mennyibe kerül az AI diagnosztika?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az AI diagnosztikai alkalmazások gyakran ingyenesek vagy nagyon olcsók (5-20 EUR), míg a hagyományos szerviz diagnosztikája 200-300 EUR-ba kerülhet. Az AutoCognitix ingyenes alapcsomagot kínál az első elemzéshez."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Az AI diagnosztika helyettesítheti a szervízt?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az AI diagnosztika nem helyettesíti a szervízt, hanem kiegészíti azt. Az AI költségcsökkentést és gyorsabb diagnosztikát biztosít, de a tényleges javítás még mindig szervíz vagy DIY szerelő szükséges."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Működik az AI diagnosztika elektromos járműveken?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az AI diagnosztika részben működik elektromos járműveken. Az olyan rendszerek, mint az AutoCognitix, kiterjesztetett támogatást adnak az EV-khez, beleértve az akkumulátor állapot, terhelési ciklus és elektromos motor diagnosztikát."
-                }
-            }
-        ]
-    }
-    </script>
-
     <script>
         document.querySelectorAll('.faq-section').forEach(section => {
             section.querySelector('.faq-question').addEventListener('click', () => {

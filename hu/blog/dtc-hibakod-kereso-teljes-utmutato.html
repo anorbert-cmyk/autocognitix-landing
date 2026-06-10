@@ -6,59 +6,66 @@
   <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="DTC hibakód kereső útmutató: Megtudhatod, mit jelentenek az OBD2 kódok (P, B, C, U kategóriák). Értelmezési segítség, diagnosztikai lépések és gyakorlati tanácsok gépkocsisoknak.">
+    <meta name="keywords" content="DTC hibakód kereső, hibakód értelmezés, OBD2 kódok, P-kód, B-kód, C-kód, U-kód, autó hibakódok, diagnosztika">
     <meta name="author" content="AutoCognitix">
     <meta name="robots" content="index, follow">
     <meta name="language" content="Hungarian">
     <meta name="revisit-after" content="7 days">
-    <link rel="canonical" href="https://autocognitix.hu/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
-    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
-    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/dtc-trouble-code-lookup-guide.html">
+    <link rel="canonical" href="https://www.autocognitix.com/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
+    <link rel="alternate" hreflang="hu" href="https://www.autocognitix.com/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html">
+    <link rel="alternate" hreflang="en" href="https://www.autocognitix.com/en/blog/dtc-trouble-code-lookup-guide.html">
     
     <!-- Open Graph -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]">
     <meta property="og:description" content="DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.">
     <meta property="og:url" content="https://www.autocognitix.hu/blog/dtc-hibakod-kereso-teljes-utmutato">
-    <meta property="og:image" content="https://autocognitix.hu/images/og/blog/hu-dtc-utmutato.jpg">
+    <meta property="og:image" content="https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg">
     <meta property="og:site_name" content="AutoCognitix">
     <meta property="article:published_time" content="2026-03-21">
     <meta property="article:author" content="AutoCognitix Szerkesztőség">
-
+    
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez">
     <meta name="twitter:description" content="Tudj meg mindent az OBD2 hibakódokról és tanulj meg diagnosztizálni!">
-    <meta name="twitter:image" content="https://autocognitix.hu/images/og/blog/hu-dtc-utmutato.jpg">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="twitter:image" content="https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg">
     
     <title>DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style"
-          href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
-          onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
-    </noscript>
-    <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/shared/blog-post.css?v=4.0">
 </head>
 <body>
-    <nav>
-        <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;">
-            <a href="/" style="font-weight:600;text-decoration:none;color:#e74c3c;">AutoCognitix</a>
-            <div>
-                <a href="/" style="margin-right:16px;text-decoration:none;color:#333;">Kezdőlap</a>
-                <a href="/hu/blog/" style="margin-right:16px;text-decoration:none;color:#333;">Blog</a>
-                <a href="/hu/eszkozok/" style="text-decoration:none;color:#333;">Eszközök</a>
-                <a href="/hu/changelog/" style="text-decoration:none;color:#333;">Változásnapló</a>
-            </div>
+    <nav class="navbar">
+  <div class="container">
+    <a href="/hu/" class="nav-logo"><span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AutoCognitix</a>
+    <div class="nav-links">
+      <a href="/hu/#funkciok" class="nav-link">Funkciók</a>
+      <a href="/hu/#arak" class="nav-link">Árak</a>
+      <div class="nav-dropdown">
+        <a href="/hu/tools/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+        <div class="nav-dropdown-menu">
+          <a href="/hu/tools/worth-repairing.html">Megéri javítani?</a>
+          <a href="/hu/tools/mot-predictor.html">Műszaki előrejelző</a>
+          <a href="/hu/tools/workshop-finder.html">Szervízkereső</a>
         </div>
-    </nav>
+      </div>
+      <a href="/hu/blog/" class="nav-link active">Blog</a>
+      <a href="/hu/changelog/" class="nav-link">Változásnapló</a>
+      <a href="/hu/#gyik" class="nav-link">GYIK</a>
+      <a href="/hu/#kapcsolat" class="nav-link">Kapcsolat</a>
+    </div>
+    <div class="lang-switcher">
+      <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="lang-option active">HU</a>
+      <span style="color:#8D96A3">|</span>
+      <a href="/en/blog/dtc-trouble-code-lookup-guide.html" class="lang-option">EN</a>
+    </div>
+    <a href="/hu/#arak" class="btn btn-primary btn-sm nav-cta">Kezdés</a>
+  </div>
+</nav>
     <div class="container">
         <header>
             <span class="badge">Diagnosztika Útmutató</span>
@@ -620,10 +627,17 @@ Lehetséges tünetek:
             <a href="https://www.autocognitix.hu" class="cta-button">Nyiss meg az AutoCognitix-et</a>
         </div>
         
-        <footer>
-            <p>&copy; 2026 AutoCognitix. Minden jog fenntartva. | <a href="/hu/" style="color: #e74c3c; text-decoration: none;">Főoldal</a> | <a href="/hu/legal/adatvedelmi-szabalyzat.html" style="color: #e74c3c; text-decoration: none;">Adatvédelmi Szabályzat</a></p>
-            <p style="margin-top: 10px; font-size: 12px;">Az oldalon szereplő információ csak oktatási célokra szolgál. Mindig keress szakiját komoly autójavítási problémák esetén.</p>
-        <p class="footer-cookie-link" style="text-align:center; font-size:13px; padding:10px;"><a href="#" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a></p>
+        <footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-heading">Termék</div><a href="/hu/#funkciok" class="footer-link">Funkciók</a><a href="/hu/#arak" class="footer-link">Árak</a><a href="/hu/changelog/" class="footer-link">Változásnapló</a></div>
+      <div><div class="footer-heading">Eszközök</div><a href="/hu/tools/" class="footer-link">Összes eszköz</a><a href="/hu/tools/worth-repairing.html" class="footer-link">Megéri javítani?</a><a href="/hu/tools/mot-predictor.html" class="footer-link">Műszaki előrejelző</a><a href="/hu/tools/workshop-finder.html" class="footer-link">Szervízkereső</a></div>
+      <div><div class="footer-heading">Tudástár</div><a href="/hu/blog/" class="footer-link">Blog</a><a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="footer-link">DTC hibakód kereső</a><a href="/hu/#gyik" class="footer-link">GYIK</a></div>
+      <div><div class="footer-heading">Jogi</div><a href="/hu/legal/privacy-policy.html" class="footer-link">Adatvédelmi szabályzat</a><a href="/hu/legal/terms-of-service.html" class="footer-link">Felhasználási feltételek</a><a href="/hu/legal/cookie-policy.html" class="footer-link">Cookie szabályzat</a><a href="/hu/legal/ai-disclaimer.html" class="footer-link">AI felelősségi nyilatkozat</a></div>
+      <div><div class="footer-heading">Kapcsolat</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hello@autocognitix.hu</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Budapest, Magyarország</div></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span><span>Készítette: Norbi & AI</span></div>
+  </div>
 </footer>
     </div>
     
@@ -631,93 +645,91 @@ Lehetséges tünetek:
         function toggleFAQ(element) {
             const toggle = element.querySelector('.faq-toggle');
             const answer = element.nextElementSibling;
+            
             toggle.classList.toggle('open');
             answer.classList.toggle('show');
         }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
-        "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
-        "image": "https://autocognitix.hu/images/og/blog/hu-dtc-utmutato.jpg",
-        "datePublished": "2026-03-21",
-        "dateModified": "2026-03-21",
-        "inLanguage": "hu",
-        "author": {
-            "@type": "Organization",
-            "name": "AutoCognitix",
-            "url": "https://autocognitix.hu"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "AutoCognitix",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://autocognitix.hu/logo.png"
+        
+        // JSON-LD Schema.org Article
+        const articleSchema = {
+            "@context": "https://schema.org/",
+            "@type": "Article",
+            "headline": "DTC hibakód kereső: Teljes útmutató a hibakódok értelmezéséhez [2026]",
+            "description": "DTC hibakódok teljes értelmezési útmutatója. Megtudhatod, mit jelentenek az OBD2 kódok és hogyan diagnosztizálj magad.",
+            "image": "https://www.autocognitix.hu/images/blog/dtc-codes-guide.jpg",
+            "author": {
+                "@type": "Organization",
+                "name": "AutoCognitix"
+            },
+            "datePublished": "2026-03-21",
+            "dateModified": "2026-03-21",
+            "mainEntity": {
+                "@type": "Thing",
+                "name": "DTC hibakód"
             }
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "inLanguage": "hu",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Mi a különbség a P0171 és P0174 kód között?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
+        };
+        
+        // JSON-LD FAQPage Schema
+        const faqSchema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Mi a különbség a P0171 és P0174 kód között?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A P0171 (System Too Lean Bank 1) az 1-es henger csoportban jelöli a szegény keveréket, míg a P0174 (System Too Lean Bank 2) a 2-es henger csoportban ugyanazt a problémát jelzi."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Lehet-e autót vezetni P0171 kóddal?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozódott üzemanyag-fogyasztáshoz és csökkent teljesítményhez vezet."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mire használható egy OBD2 Bluetooth adapter?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mit jelez a villogó Check Engine lámpa?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorfűrészet vagy katalizátor-sérülést."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Hogyan nyomhatom le a Check Engine lámpát?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A Check Engine lámpa leállítása előtt mindig meg kell oldani az alapvető okot! Az összes OBD2 scanner rendelkezik egy 'Clear Codes' funkcióval."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Mi az a 'Pending' hibakód?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnosztikában."
+                    }
                 }
-            },
-            {
-                "@type": "Question",
-                "name": "Lehet-e autót vezetni P0171 kóddal?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Rövid távolságokon igen, de nem ajánlott hosszabb útra. A P0171 szegény keveréket jelent, amely fokozott üzemanyag-fogyasztáshoz vezet."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mire használható egy OBD2 Bluetooth adapter?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Az OBD2 Bluetooth adapterek költségvetés-barát megoldások, amelyek az autó OBD2 portjához csatlakoznak és Bluetooth-on keresztül kommunikálnak az okostelefonoddal."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mit jelez a villogó Check Engine lámpa?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A villogó Check Engine lámpa rendkívül komoly problémát jelez - általában motorhibát vagy katalizátor-sérülést."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Hogyan törölhetem a Check Engine lámpát?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A Check Engine lámpa törlése előtt mindig meg kell oldani az alapvető okot. Az összes OBD2 scanner rendelkezik 'Clear Codes' funkcióval."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Mi az a 'Pending' hibakód?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Egy 'Pending' hibakód azt jelenti, hogy az ECU egy potenciális problémát észlelt, de még nem biztos a diagnózisban."
-                }
-            }
-        ]
-    }
+            ]
+        };
+        
+        // Add Schema.org markup to page
+        const schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.textContent = JSON.stringify([articleSchema, faqSchema]);
+        document.head.appendChild(schemaScript);
     </script>
 </body>
 </html>
