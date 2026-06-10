@@ -32,14 +32,95 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/shared/blog-post.css?v=4.0">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban? [2026]",
+        "description": "AI diagnosztika: Hogyan működik a mesterséges intelligencia az autódiagnosztikában? Ismerje meg az AI diagnosztikai rendszerek működését, pontosságát és előnyeit.",
+        "image": "https://autocognitix.hu/images/blog/ai-diagnosztika-og-image.jpg",
+        "datePublished": "2026-03-21",
+        "dateModified": "2026-03-21",
+        "author": {
+            "@type": "Organization",
+            "name": "AutoCognitix"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AutoCognitix",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://autocognitix.com/logo.png"
+            }
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Helyettesítheti-e az AI diagnosztika a szerelőt?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nem. Az AI kiváló a valószínű okok azonosításában (diagnózis), de nem tudja fizikailag elvégezni a javításokat, ellenőrizni a hibaelhárítást, vagy biztosítani, hogy a biztonsági szempontból kritikus rendszerek megfeleljenek a szabályozási előírásoknak. Gondolj az AI-ra mint a 'szuperinformált másodpilótára' — megmondja, mi a baj, de egy szakképzett szerelőnek kell elvégeznie a javítást és ellenőriznie, hogy működött-e."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mennyire pontos valójában az AI diagnosztika?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Általános meghibásodásoknál (akkumulátor, generátor, katalizátor) az AI 92-98%-os pontosságot ér el. Több rendszert érintő meghibásodásoknál vagy ritka esetekben a pontosság 65-85%-ra csökken. A lényeg: az AI mindig megbízhatósági pontszámokat ad. A 92%-os megbízhatósági diagnózis lényegében biztos; a 68%-os megbízhatósági diagnózis fizikai ellenőrzést indokol."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Milyen adatokra van szüksége az AI-nak a diagnózishoz?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Legalább: a jármű márkája/modellje/évjárata, a tünet leírása egyszerű nyelven, és a jármű kilométerórájának állása. Opcionálisan, de hasznos: OBD-II hibakódok, legutóbbi karbantartási előzmények, és vezetési szokások (város vs. autópálya)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Privát és biztonságos-e a járműadatom?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ez a platformtól függ. A fogyasztói szintű platformoknak végponttól végpontig titkosítást kell alkalmazniuk, és anonimizálniuk kell a járműadatokat. Soha ne adjon meg érzékeny személyes adatokat (alvázszám, rendszám), kivéve, ha a platform kifejezetten HTTPS-titkosítást alkalmaz."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Képes az AI diagnosztika előre jelezni a meghibásodásokat a tünetek megjelenése előtt?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Igen, de csak akkor, ha az autó szenzorokat küld. A modern járművek (2010+) folyamatosan figyelik az akkumulátor feszültségét, az O2-érzékelő leolvasásait és egyéb paramétereket. A fejlett AI-rendszerek 3-6 hónappal előre jelezhetik az akkumulátor meghibásodását, vagy 6-12 hónappal a katalizátor leromlását."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Mi van, ha az AI téves diagnózist ad és 500 eurót költök rossz javításra?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ezért fontosak a megbízhatósági pontszámok. Ha az AI azt mondja '92% valószínűséggel X a probléma', tájékozott döntést hozsz. A felelős AI platformok arra ösztönzik a felhasználókat, hogy minden 300 euró feletti javításhoz kérjék ki egy szerelő fizikai ellenőrzését az engedélyezés előtt."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <nav class="navbar">
   <div class="container">
     <a href="/hu/" class="nav-logo"><span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AutoCognitix</a>
     <div class="nav-links">
-      <a href="/hu/#funkciok" class="nav-link">Funkciók</a>
-      <a href="/hu/#arak" class="nav-link">Árak</a>
+      <a href="/hu/#features" class="nav-link">Funkciók</a>
+      <a href="/hu/#pricing" class="nav-link">Árak</a>
       <div class="nav-dropdown">
         <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
         <div class="nav-dropdown-menu">
@@ -50,15 +131,15 @@
       </div>
       <a href="/hu/blog/" class="nav-link active">Blog</a>
       <a href="/hu/changelog/" class="nav-link">Változásnapló</a>
-      <a href="/hu/#gyik" class="nav-link">GYIK</a>
-      <a href="/hu/#kapcsolat" class="nav-link">Kapcsolat</a>
+      <a href="/hu/#faq" class="nav-link">GYIK</a>
+      <a href="/hu/#contact" class="nav-link">Kapcsolat</a>
     </div>
     <div class="lang-switcher">
       <a href="/hu/blog/ai-diagnosztika-hogyan-mukodik.html" class="lang-option active">HU</a>
       <span style="color:#8D96A3">|</span>
       <a href="/en/blog/how-ai-car-diagnostics-works.html" class="lang-option">EN</a>
     </div>
-    <a href="/hu/#arak" class="btn btn-primary btn-sm nav-cta">Kezdés</a>
+    <a href="/hu/#pricing" class="btn btn-primary btn-sm nav-cta">Kezdés</a>
   </div>
 </nav>
     
@@ -437,9 +518,9 @@
     <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <div><div class="footer-heading">Termék</div><a href="/hu/#funkciok" class="footer-link">Funkciók</a><a href="/hu/#arak" class="footer-link">Árak</a><a href="/hu/changelog/" class="footer-link">Változásnapló</a></div>
+      <div><div class="footer-heading">Termék</div><a href="/hu/#features" class="footer-link">Funkciók</a><a href="/hu/#pricing" class="footer-link">Árak</a><a href="/hu/changelog/" class="footer-link">Változásnapló</a></div>
       <div><div class="footer-heading">Eszközök</div><a href="/hu/eszkozok/" class="footer-link">Összes eszköz</a><a href="/hu/eszkozok/megeri-megjavitani.html" class="footer-link">Megéri javítani?</a><a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="footer-link">Műszaki előrejelző</a><a href="/hu/eszkozok/szerviz-kereso.html" class="footer-link">Szervízkereső</a></div>
-      <div><div class="footer-heading">Tudástár</div><a href="/hu/blog/" class="footer-link">Blog</a><a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="footer-link">DTC hibakód kereső</a><a href="/hu/#gyik" class="footer-link">GYIK</a></div>
+      <div><div class="footer-heading">Tudástár</div><a href="/hu/blog/" class="footer-link">Blog</a><a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="footer-link">DTC hibakód kereső</a><a href="/hu/#faq" class="footer-link">GYIK</a></div>
       <div><div class="footer-heading">Jogi</div><a href="/hu/legal/adatvedelmi-szabalyzat.html" class="footer-link">Adatvédelmi szabályzat</a><a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a><a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a><a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a></div>
       <div><div class="footer-heading">Kapcsolat</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hello@autocognitix.hu</div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Budapest, Magyarország</div></div>
     </div>

@@ -78,6 +78,9 @@ const MAPPING = Object.freeze({
   'hu/eszkozok/muszaki-vizsga-prediktor.html': 'en/tools/mot-predictor.html',
   'hu/eszkozok/szerviz-kereso.html': 'en/tools/workshop-finder.html',
 
+  // Changelog
+  'hu/changelog/index.html': 'en/changelog/index.html',
+
   // Legal
   'hu/legal/adatvedelmi-szabalyzat.html': 'en/legal/privacy-policy.html',
   'hu/legal/ai-felelossegi-nyilatkozat.html': 'en/legal/ai-disclaimer.html',
