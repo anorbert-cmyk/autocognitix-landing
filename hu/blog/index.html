@@ -1,1024 +1,399 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <link rel="stylesheet" href="/shared/cookie-banner.css?v=20260422">
   <script src="/shared/js/cookie-consent.js?v=20260421" defer></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AutoCognitix blog: Autódiagnosztika, karbantartási tanácsok és AI-alapú megoldások magyar autósoknak. Tudjon meg többet az OBD2-ről, hibakódokról és az intelligens járműdiagnosztikáról.">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="revisit-after" content="7 days">
-    <meta name="author" content="AutoCognitix">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://autocognitix.hu/blog/">
-    <meta property="og:title" content="AutoCognitix Blog - Autódiagnosztika és Karbantartási Útmutatók">
-    <meta property="og:description" content="Ismerj meg az autódiagnosztika világát. Részletes útmutatók, hibakód-megoldások és AI-alapú diagnosztikai tanácsok magyar nyelvűen.">
-    <meta property="og:image" content="https://autocognitix.hu/images/og/hu-blog.jpg">
-    <meta property="og:site_name" content="AutoCognitix">
-    <meta property="og:locale" content="hu_HU">
-
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://autocognitix.hu/blog/">
-    <meta name="twitter:title" content="AutoCognitix Blog - Autódiagnosztika és Karbantartási Útmutatók">
-    <meta name="twitter:description" content="Ismerj meg az autódiagnosztika világát. Részletes útmutatók, hibakód-megoldások és AI-alapú diagnosztikai tanácsok.">
-    <meta name="twitter:image" content="https://autocognitix.hu/images/og/hu-blog.jpg">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://autocognitix.hu/hu/blog/">
-
-    <!-- Alternate Language Links -->
-    <link rel="alternate" hreflang="hu" href="https://autocognitix.hu/hu/blog/">
-    <link rel="alternate" hreflang="en" href="https://autocognitix.hu/en/blog/">
-    <link rel="alternate" hreflang="x-default" href="https://autocognitix.hu/en/blog/">
-
-    <!-- Favicon and Apple Touch Icon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
-    <!-- Title -->
-    <title>AutoCognitix Blog | Autódiagnosztika, Hibakódok és AI Megoldások</title>
-    
-    <!-- Structured Data: BreadcrumbList -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "AutoCognitix",
-                "item": "https://autocognitix.hu/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://autocognitix.hu/blog/"
-            }
-        ]
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — AI autódiagnosztika útmutatók, DTC hibakódok és szakértői tippek | AutoCognitix</title>
+  <meta name="description" content="Szakértői autódiagnosztika blog: DTC hibakód útmutatók (P0420, P0171), AI diagnosztika, akkumulátor tippek és otthoni javítási útmutatók. Ingyenes tudástár minden autósnak.">
+  <meta name="keywords" content="autódiagnosztika blog, DTC hibakódok, OBD2 útmutató, P0420, P0171, autó akkumulátor, AI diagnosztika, motortér lámpa, autójavítás">
+  <meta name="author" content="AutoCognitix">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://autocognitix.com/hu/blog/">
+  <link rel="alternate" hreflang="hu" href="https://autocognitix.com/hu/blog/">
+  <link rel="alternate" hreflang="en" href="https://autocognitix.com/en/blog/">
+  <link rel="alternate" hreflang="x-default" href="https://autocognitix.com/en/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog — AI autódiagnosztika útmutatók és DTC hibakódok | AutoCognitix">
+  <meta property="og:description" content="Szakértői DTC hibakód útmutatók, AI diagnosztika és otthoni javítási tippek minden autósnak.">
+  <meta property="og:url" content="https://autocognitix.com/hu/blog/">
+  <meta property="og:site_name" content="AutoCognitix">
+  <meta property="og:locale" content="hu_HU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AutoCognitix Blog — Autódiagnosztika tudástár">
+  <meta name="twitter:description" content="DTC hibakód útmutatók, AI diagnosztika és szakértői autójavítási tippek.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "AutoCognitix Blog",
+    "description": "Szakértői autódiagnosztika útmutatók, DTC hibakód magyarázatok és AI-alapú hibaelhárítási tippek.",
+    "url": "https://autocognitix.com/hu/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AutoCognitix",
+      "url": "https://autocognitix.com"
+    },
+    "inLanguage": "hu",
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "P0420 hibakód: Teljes diagnosztikai és javítási útmutató",
+        "url": "https://autocognitix.com/hu/blog/p0420-hibakod-utmutato.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "5 figyelmeztető jel, hogy meghal az akkumulátor",
+        "url": "https://autocognitix.com/hu/blog/akkumulator-5-figyelmezteto-jel.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Hogyan működik az AI autódiagnosztika?",
+        "url": "https://autocognitix.com/hu/blog/ai-diagnosztika-hogyan-mukodik.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "P0171 hibakód: Okok, tünetek és javítási költség",
+        "url": "https://autocognitix.com/hu/blog/p0171-hibakod-okok-tunetek-javitas.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "DTC hibakód kereső: Teljes útmutató",
+        "url": "https://autocognitix.com/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Autódiagnosztika otthon: Kezdők útmutatója",
+        "url": "https://autocognitix.com/hu/blog/autodiagnosztika-otthon-kezdoknek.html"
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --color-base-light: #F2F2F4;
+      --color-base-dark: #12110E;
+      --color-accent: #D97757;
+      --color-white: #FFFFFF;
+      --color-gray-200: #E4E4E7;
+      --color-gray-300: #D6D6DA;
+      --color-muted: #8D96A3;
+      --font-primary: "Funnel Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", monospace;
+      --text-h3: 40px;
+      --text-h4: 28px;
+      --text-h5: 22px;
+      --text-h6: 18px;
+      --text-body-lg: 22px;
+      --text-body: 16px;
+      --text-body-sm: 14px;
+      --text-caption: 12px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-2xl: 40px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --shadow-md: 0px 0px 0px 1px rgba(0,0,0,0.1), 0px 1px 3px 0px rgba(0,0,0,0.1);
+      --shadow-lg: 0px 0px 0px 1px rgba(0,0,0,0.1), 0px 4px 12px 0px rgba(0,0,0,0.15);
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --container-max: 1200px;
     }
-    </script>
-    
-    <!-- Structured Data: Organization -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "AutoCognitix",
-        "url": "https://autocognitix.hu",
-        "logo": "https://autocognitix.hu/logo.png",
-        "description": "AI-alapú járműdiagnosztikai platform magyar nyelvtámogatással",
-        "sameAs": [
-            "https://www.facebook.com/autocognitix",
-            "https://www.linkedin.com/company/autocognitix"
-        ],
-        "contact": {
-            "@type": "ContactPoint",
-            "contactType": "Customer Service",
-            "email": "info@autocognitix.hu"
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-primary); font-size: var(--text-body); font-weight: 400; line-height: 26px; letter-spacing: -0.48px; color: var(--color-base-dark); background: var(--color-base-light); }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-lg); }
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(242,242,244,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
+    .logo-icon { width: 28px; height: 28px; background: var(--color-base-dark); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 16px; height: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link { font-size: var(--text-body-sm); font-weight: 500; padding: 8px 16px; border-radius: var(--radius-sm); transition: background var(--transition-fast); }
+    .nav-link:hover { background: rgba(0,0,0,0.05); }
+    .nav-link.active { background: rgba(0,0,0,0.05); font-weight: 600; }
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+    .nav-dropdown-trigger svg { transition: transform var(--transition-fast); }
+    .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); min-width: 220px; background: var(--color-white); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 8px 0; opacity: 0; visibility: hidden; transition: opacity var(--transition-fast), visibility var(--transition-fast); z-index: 200; }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 13px; transition: background var(--transition-fast); }
+    .nav-dropdown-menu a:hover { background: rgba(0,0,0,0.03); color: var(--color-accent); }
+    .lang-switcher { display: flex; align-items: center; gap: 8px; margin-right: 16px; }
+    .lang-option { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 4px; transition: all 0.15s ease; }
+    .lang-option.active { background: var(--color-accent); color: var(--color-white); }
+    .lang-option:not(.active):hover { background: rgba(0,0,0,0.05); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); font-family: var(--font-primary); font-size: var(--text-caption); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 20px 32px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: all var(--transition-normal); white-space: nowrap; }
+    .btn-primary { background: var(--color-base-dark); color: var(--color-white); }
+    .btn-primary:hover { background: #2F3640; box-shadow: 0 0 20px rgba(217,119,87,0.3); }
+    .btn-sm { padding: 12px 24px; }
+    .nav-cta { margin-left: 16px; }
+    .text-overline { font-size: var(--text-caption); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+    .text-muted { color: var(--color-muted); }
+    .text-accent { color: var(--color-accent); }
+    .newsletter-banner { background: var(--color-base-dark); padding: 16px 0; margin-top: 60px; }
+    .newsletter-banner .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .newsletter-banner p { color: var(--color-white); font-size: var(--text-body-sm); font-weight: 500; }
+    .newsletter-banner p span { color: var(--color-accent); }
+    .newsletter-form { display: flex; gap: 8px; }
+    .newsletter-form input { padding: 10px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-sm); background: rgba(255,255,255,0.1); color: var(--color-white); font-family: var(--font-primary); font-size: var(--text-body-sm); min-width: 260px; }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+    .newsletter-form input:focus { outline: none; border-color: var(--color-accent); }
+    .newsletter-form button { padding: 10px 24px; background: var(--color-accent); color: var(--color-white); border: none; border-radius: var(--radius-sm); font-family: var(--font-primary); font-size: var(--text-body-sm); font-weight: 600; cursor: pointer; transition: opacity var(--transition-fast); }
+    .newsletter-form button:hover { opacity: 0.9; }
+    .newsletter-success { color: #22C55E; font-size: var(--text-body-sm); display: none; }
+    .blog-hero { padding: 80px 0 60px; }
+    .blog-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .blog-hero .eyebrow { margin-bottom: 16px; }
+    .blog-hero h1 { font-size: clamp(36px, 4.5vw, 56px); font-weight: 400; letter-spacing: -1.68px; line-height: 1.07; margin-bottom: 20px; }
+    .blog-hero .subtitle { font-size: var(--text-body-lg); color: var(--color-muted); line-height: 1.45; letter-spacing: -0.66px; margin-bottom: 32px; max-width: 480px; }
+    .featured-card { background: var(--color-white); border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-md); transition: transform var(--transition-normal); display: block; }
+    .featured-card:hover { transform: translateY(-4px); }
+    .featured-card .badge { display: inline-block; font-size: var(--text-caption); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+    .featured-card h2 { font-size: var(--text-h4); font-weight: 500; letter-spacing: -0.84px; line-height: 1.14; margin-bottom: 12px; }
+    .featured-card p { color: var(--color-muted); line-height: 1.6; margin-bottom: 20px; }
+    .featured-card .meta { font-size: var(--text-body-sm); color: var(--color-muted); display: flex; gap: 16px; }
+    .featured-card .meta span { display: flex; align-items: center; gap: 6px; }
+    .blog-section { padding: 80px 0; }
+    .blog-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+    .blog-section-header h2 { font-size: var(--text-h3); font-weight: 400; letter-spacing: -1.2px; }
+    .blog-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .blog-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .blog-card { background: var(--color-white); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-md); transition: transform var(--transition-normal), box-shadow var(--transition-normal); display: flex; flex-direction: column; height: 100%; }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .blog-card .card-badge { font-size: var(--text-caption); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+    .blog-card h3 { font-size: var(--text-h5); font-weight: 600; letter-spacing: -0.66px; line-height: 1.27; margin-bottom: 12px; }
+    .blog-card .card-desc { font-size: var(--text-body-sm); color: var(--color-muted); line-height: 1.6; margin-bottom: 20px; flex: 1; }
+    .blog-card .card-meta { font-size: var(--text-caption); color: var(--color-muted); display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--color-gray-200); }
+    .blog-card .card-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-muted); }
+    .card-link { display: block; text-decoration: none; color: inherit; }
+    .cta-section { background: var(--color-base-dark); padding: 80px 0; }
+    .cta-inner { text-align: center; max-width: 640px; margin: 0 auto; }
+    .cta-inner h2 { font-size: var(--text-h3); font-weight: 400; letter-spacing: -1.2px; color: var(--color-white); margin-bottom: 16px; }
+    .cta-inner p { font-size: var(--text-body-lg); color: var(--color-muted); margin-bottom: 32px; letter-spacing: -0.66px; }
+    .btn-accent { background: var(--color-accent); color: var(--color-white); }
+    .btn-accent:hover { opacity: 0.9; }
+    .footer { background: var(--color-base-dark); color: var(--color-white); padding: 80px 0 40px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-2xl); margin-bottom: 60px; }
+    .footer-heading { font-size: var(--text-h6); font-weight: 600; margin-bottom: var(--space-lg); }
+    .footer-link { display: block; font-size: var(--text-body-sm); color: var(--color-muted); padding: 6px 0; transition: color var(--transition-fast); }
+    .footer-link:hover { color: var(--color-white); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: var(--space-sm); font-size: var(--text-body-sm); color: var(--color-muted); margin-bottom: var(--space-md); }
+    .footer-contact-item svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-lg); display: flex; justify-content: space-between; align-items: center; font-size: var(--text-body-sm); color: var(--color-muted); }
+    .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+    .stagger > *:nth-child(1) { transition-delay: 0s; }
+    .stagger > *:nth-child(2) { transition-delay: 0.1s; }
+    .stagger > *:nth-child(3) { transition-delay: 0.15s; }
+    @media (max-width: 991px) {
+      .blog-hero-inner { grid-template-columns: 1fr; }
+      .blog-grid-3 { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    </script>
-    
-    <!-- Structured Data: WebSite with SearchAction -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AutoCognitix Blog",
-        "url": "https://autocognitix.hu/blog/",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://autocognitix.hu/blog/?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-        }
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+      .nav-cta { margin-left: auto; }
+      .blog-hero h1 { font-size: 32px; }
+      .blog-grid-3, .blog-grid-2 { grid-template-columns: 1fr; }
+      .newsletter-banner .container { flex-direction: column; text-align: center; }
+      .newsletter-form { flex-direction: column; width: 100%; }
+      .newsletter-form input { min-width: unset; width: 100%; }
+      .featured-card { padding: 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
-    </script>
-    
-    <link rel="stylesheet" href="/shared/blog-post.css?v=2.0">
-    <style>
-        :root {
-            --color-base-light: #F7F5F2;
-            --color-base-lighter: #FFFBF8;
-            --color-base-dark: #2B2416;
-            --color-accent: #D97757;
-            --color-accent-light: #E8A9A0;
-            --color-accent-lighter: #F0D4CF;
-            --color-accent-dark: #C45A3D;
-            --color-secondary: #6B8E23;
-            --color-secondary-light: #9CAF57;
-            --color-tertiary: #4A5568;
-            --color-border: #D4CCBF;
-            --color-error: #DC2626;
-            --color-success: #16A34A;
-            --color-warning: #EA8C55;
-            --color-info: #3B82F6;
-            --color-shadow-light: rgba(43, 36, 22, 0.05);
-            --color-shadow-medium: rgba(43, 36, 22, 0.1);
-            --color-shadow-dark: rgba(43, 36, 22, 0.2);
-            --font-primary: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'Courier New', monospace;
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --spacing-3xl: 4rem;
-            --spacing-4xl: 6rem;
-            --shadow-sm: 0 1px 2px 0 var(--color-shadow-light);
-            --shadow-md: 0 4px 6px -1px var(--color-shadow-medium);
-            --shadow-lg: 0 10px 15px -3px var(--color-shadow-medium);
-            --shadow-xl: 0 20px 25px -5px var(--color-shadow-dark);
-            --transition-base: all 0.2s ease;
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            --breakpoint-sm: 640px;
-            --breakpoint-md: 768px;
-            --breakpoint-lg: 1024px;
-            --breakpoint-xl: 1280px;
-            --breakpoint-2xl: 1536px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-primary);
-            background-color: var(--color-base-light);
-            color: var(--color-base-dark);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
-
-        /* Navigation */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: rgba(255, 251, 248, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--color-border);
-            padding: var(--spacing-md) var(--spacing-xl);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-accent);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .nav-logo:hover {
-            color: var(--color-accent-dark);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: var(--spacing-xl);
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--color-base-dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition-base);
-        }
-
-        .nav-links a:hover {
-            color: var(--color-accent);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: var(--spacing-lg);
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Nav Dropdown */
-        .nav-dropdown:hover .nav-dropdown-menu {
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        .nav-dropdown-menu a:hover {
-            background: #F4F8FA !important;
-            color: var(--color-accent) !important;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--color-accent-lighter) 0%, var(--color-base-lighter) 100%);
-            padding: var(--spacing-4xl) var(--spacing-xl);
-            text-align: center;
-            border-bottom: 2px solid var(--color-accent);
-        }
-
-        .header-content {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-md);
-            color: var(--color-accent-dark);
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--color-base-dark);
-            margin-bottom: var(--spacing-lg);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.75rem;
-            }
-            .header p {
-                font-size: 1rem;
-            }
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-xl);
-        }
-
-        /* Filter Bar */
-        .filter-section {
-            margin-bottom: var(--spacing-3xl);
-            padding: var(--spacing-xl);
-            background-color: var(--color-base-lighter);
-            border-radius: 12px;
-            border: 1px solid var(--color-border);
-        }
-
-        .filter-section h2 {
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-lg);
-            color: var(--color-base-dark);
-            font-weight: 600;
-        }
-
-        .filter-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-md);
-        }
-
-        .filter-btn {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border: 2px solid var(--color-border);
-            background-color: white;
-            color: var(--color-base-dark);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            font-weight: 500;
-            font-family: var(--font-primary);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-        }
-
-        .filter-btn.active {
-            background-color: var(--color-accent);
-            color: white;
-            border-color: var(--color-accent);
-        }
-
-        /* Blog Grid */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: var(--spacing-2xl);
-            margin-bottom: var(--spacing-3xl);
-        }
-
-        /* Article Card */
-        .article-card {
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-smooth);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--color-border);
-        }
-
-        .article-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .article-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .article-image.diagnostics {
-            background: linear-gradient(135deg, var(--color-info) 0%, #60A5FA 100%);
-        }
-
-        .article-image.maintenance {
-            background: linear-gradient(135deg, var(--color-secondary) 0%, #A3E635 100%);
-        }
-
-        .article-image.technology {
-            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
-        }
-
-        .article-content {
-            padding: var(--spacing-xl);
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .article-category {
-            display: inline-block;
-            background-color: var(--color-accent-lighter);
-            color: var(--color-accent-dark);
-            padding: var(--spacing-xs) var(--spacing-md);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-md);
-            width: fit-content;
-        }
-
-        .article-category.maintenance {
-            background-color: #D1FAE5;
-            color: #065F46;
-        }
-
-        .article-category.technology {
-            background-color: #EDE9FE;
-            color: #5B21B6;
-        }
-
-        .article-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-md);
-            color: var(--color-base-dark);
-            line-height: 1.4;
-        }
-
-        .article-excerpt {
-            color: var(--color-tertiary);
-            margin-bottom: var(--spacing-lg);
-            flex-grow: 1;
-            font-size: 0.95rem;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--color-tertiary);
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-lg);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .article-read-time {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .article-link {
-            display: inline-block;
-            background-color: var(--color-accent);
-            color: white;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            align-self: flex-start;
-        }
-
-        .article-link:hover {
-            background-color: var(--color-accent-dark);
-            transform: translateX(4px);
-        }
-
-        .article-link.disabled {
-            background-color: var(--color-border);
-            color: var(--color-tertiary);
-            cursor: not-allowed;
-        }
-
-        .article-link.disabled:hover {
-            transform: none;
-        }
-
-        /* Newsletter Section */
-        .newsletter-section {
-            background: linear-gradient(135deg, var(--color-accent-lighter) 0%, var(--color-base-lighter) 100%);
-            padding: var(--spacing-3xl) var(--spacing-xl);
-            border-radius: 12px;
-            border: 2px solid var(--color-accent);
-            margin-bottom: var(--spacing-3xl);
-        }
-
-        .newsletter-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .newsletter-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: var(--spacing-md);
-            color: var(--color-accent-dark);
-        }
-
-        .newsletter-section p {
-            color: var(--color-base-dark);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .newsletter-form {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .form-group {
-            display: flex;
-            gap: var(--spacing-md);
-        }
-
-        .form-group input {
-            flex-grow: 1;
-            padding: var(--spacing-md);
-            border: 2px solid var(--color-border);
-            border-radius: 6px;
-            font-family: var(--font-primary);
-            font-size: 0.95rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--color-accent);
-            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.1);
-        }
-
-        .form-group button {
-            padding: var(--spacing-md) var(--spacing-xl);
-            background-color: var(--color-accent);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            font-family: var(--font-primary);
-        }
-
-        .form-group button:hover {
-            background-color: var(--color-accent-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .privacy-note {
-            font-size: 0.8rem;
-            color: var(--color-tertiary);
-            margin-top: var(--spacing-md);
-        }
-
-        @media (max-width: 640px) {
-            .form-group {
-                flex-direction: column;
-            }
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--color-base-dark);
-            color: white;
-            padding: var(--spacing-3xl) var(--spacing-xl);
-            margin-top: var(--spacing-4xl);
-        }
-
-        .footer-content {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--spacing-2xl);
-            margin-bottom: var(--spacing-2xl);
-        }
-
-        .footer-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-lg);
-            color: var(--color-accent);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: var(--spacing-md);
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .footer-section a:hover {
-            color: var(--color-accent);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--color-border);
-            padding-top: var(--spacing-xl);
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .footer-bottom p {
-            margin-bottom: var(--spacing-sm);
-        }
-
-        @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-xl);
-            }
-        }
-
-        /* Coming Soon Overlay */
-        .coming-soon-overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition-smooth);
-        }
-
-        .article-card:hover .coming-soon-overlay {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .coming-soon-text {
-            background-color: var(--color-accent);
-            color: white;
-            padding: var(--spacing-lg);
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* Responsive Typography */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.75rem;
-            }
-
-            .header p {
-                font-size: 0.95rem;
-            }
-
-            .article-title {
-                font-size: 1.1rem;
-            }
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-xl);
-            }
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-        /* Skip-link (WCAG 2.4.1 Bypass Blocks - Level A) */
-        .skip-link {
-            position: absolute; top: -40px; left: 0;
-            background: #D97757; color: #fff;
-            padding: 8px 16px; z-index: 10000;
-            text-decoration: none; font-weight: 600;
-            border-bottom-right-radius: 8px;
-        }
-        .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: -2px; }
-    </style>
+  </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Ugrás a fő tartalomhoz</a>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="https://autocognitix.hu/" class="nav-logo">AutoCognitix</a>
-            <ul class="nav-links">
-                <li><a href="https://autocognitix.hu/">Kezdőlap</a></li>
-                <li><a href="https://autocognitix.hu/blog/">Blog</a></li>
-                <li class="nav-dropdown" style="position:relative;display:inline-flex;align-items:center;">
-                  <a href="/hu/eszkozok/" style="display:inline-flex;align-items:center;gap:4px;">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
-                  <div class="nav-dropdown-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:220px;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(0,0,0,0.1),0 4px 12px rgba(0,0,0,0.15);padding:8px 0;opacity:0;visibility:hidden;transition:opacity 0.15s ease,visibility 0.15s ease;z-index:100;">
-                    <a href="/hu/eszkozok/megeri-megjavitani.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Megéri megjavítani?</a>
-                    <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Vizsga Prediktor</a>
-                    <a href="/hu/eszkozok/szerviz-kereso.html" style="display:block;padding:10px 24px;font-size:14px;color:#2B2416;text-decoration:none;">Szervizkeresős</a>
-                  </div>
-                </li>
-                <li><a href="mailto:hello@autocognitix.hu">Kapcsolat</a></li>
-            </ul>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/hu/" class="nav-logo"><span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AutoCognitix</a>
+      <div class="nav-links">
+        <a href="/hu/#funkciok" class="nav-link">Funkciók</a>
+        <a href="/hu/#arak" class="nav-link">Árak</a>
+        <div class="nav-dropdown">
+          <a href="/hu/tools/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <div class="nav-dropdown-menu">
+            <a href="/hu/tools/worth-repairing.html">Megéri javítani?</a>
+            <a href="/hu/tools/mot-predictor.html">Műszaki előrejelző</a>
+            <a href="/hu/tools/workshop-finder.html">Szervízkereső</a>
+          </div>
         </div>
-    </nav>
+        <a href="/hu/blog/" class="nav-link active">Blog</a>
+        <a href="/hu/changelog/" class="nav-link">Változásnapló</a>
+        <a href="/hu/#gyik" class="nav-link">GYIK</a>
+        <a href="/hu/#kapcsolat" class="nav-link">Kapcsolat</a>
+      </div>
+      <div class="lang-switcher">
+        <a href="/hu/blog/" class="lang-option active">HU</a>
+        <span class="text-muted">|</span>
+        <a href="/en/blog/" class="lang-option">EN</a>
+      </div>
+      <a href="/hu/#arak" class="btn btn-primary btn-sm nav-cta">Kezdés</a>
+    </div>
+  </nav>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <h1>AutoCognitix Blog</h1>
-            <p>Tudjon meg többet az autódiagnosztikáról, karbantartásról és az AI-alapú megoldásokról. Hasznos útmutatók magyar nyelvűen autósoknak.</p>
+  <div class="newsletter-banner">
+    <div class="container">
+      <p>Kapj <span>diagnosztikai tippeket</span> hetente az e-mail fiókodba.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="email@cimed.hu" required id="newsletterEmail">
+        <button type="submit">Feliratkozás</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">Sikeres feliratkozás!</p>
+    </div>
+  </div>
+
+  <section class="blog-hero">
+    <div class="container">
+      <div class="blog-hero-inner animate-on-scroll">
+        <div>
+          <div class="eyebrow text-overline text-accent">Tudástár</div>
+          <h1>Értsd meg az autód.<br>Javítsd okosabban.</h1>
+          <p class="subtitle">Mélyreható útmutatók DTC hibakódokról, AI-alapú diagnosztikáról és gyakorlati javítási tudásról. Mérnökök írták, szerelők ellenőrizték.</p>
+          <a href="/hu/blog/p0420-hibakod-utmutato.html" class="btn btn-primary btn-sm">Kiemelt cikk olvasása</a>
         </div>
-    </header>
+        <a href="/hu/blog/p0420-hibakod-utmutato.html" class="featured-card">
+          <div class="badge">KIEMELT ÚTMUTATÓ</div>
+          <h2>P0420 hibakód: Teljes diagnosztikai és javítási útmutató</h2>
+          <p>A katalizátor hatékonysági hibakód részletesen elmagyarázva. Ismerd meg az összes okot, tünetet és javítási lehetőséget valós költségbecslésekkel.</p>
+          <div class="meta">
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 12 perc olvasás</span>
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> AutoCognitix csapat</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- Main Content -->
-    <main id="main-content" class="container">
-        <!-- Filter Section -->
-        <section class="filter-section">
-            <h2>Szűrés kategória szerint</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterArticles('all')">Összes cikk</button>
-                <button class="filter-btn" onclick="filterArticles('diagnostics')">Diagnosztika</button>
-                <button class="filter-btn" onclick="filterArticles('maintenance')">Karbantartás</button>
-                <button class="filter-btn" onclick="filterArticles('technology')">Technológia</button>
-            </div>
-        </section>
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-section-header animate-on-scroll"><h2>Legújabb cikkek</h2></div>
+      <div class="blog-grid-3 stagger animate-on-scroll">
+        <a href="/hu/blog/akkumulator-5-figyelmezteto-jel.html" class="card-link">
+          <div class="blog-card">
+            <div class="card-badge">AKKUMULÁTOR</div>
+            <h3>5 figyelmeztető jel, hogy meghal az akkumulátor</h3>
+            <p class="card-desc">Lassú indítás, halvány fények, megduzzadt ház? Ismerd fel a jeleket, mielőtt az út szélén ragadsz. Tesztelési módszerek és csereköltség-becslés.</p>
+            <div class="card-meta"><span>8 perc olvasás</span><span class="dot"></span><span>Karbantartás</span></div>
+          </div>
+        </a>
+        <a href="/hu/blog/ai-diagnosztika-hogyan-mukodik.html" class="card-link">
+          <div class="blog-card">
+            <div class="card-badge">AI TECHNOLÓGIA</div>
+            <h3>Hogyan működik az AI autódiagnosztika?</h3>
+            <p class="card-desc">Az OBD2 adatfolyamoktól a neurális hálózat előrejelzéseiig. Közérthető magyarázat arról, hogyan értelmezi az AI az autód hibakódjait.</p>
+            <div class="card-meta"><span>10 perc olvasás</span><span class="dot"></span><span>Technológia</span></div>
+          </div>
+        </a>
+        <a href="/hu/blog/p0171-hibakod-okok-tunetek-javitas.html" class="card-link">
+          <div class="blog-card">
+            <div class="card-badge">DTC KÓDOK</div>
+            <h3>P0171: Sovány keverék — Okok, tünetek és költségek</h3>
+            <p class="card-desc">Üzemanyag-keverék egyensúlyhiány érthetően. Vákuumszivárgás, MAF szenzor hiba és üzemanyagpumpa problémák lépésről lépésre.</p>
+            <div class="card-meta"><span>11 perc olvasás</span><span class="dot"></span><span>DTC útmutató</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <!-- Newsletter Section -->
-        <section class="newsletter-section">
-            <div class="newsletter-content">
-                <h2>🔧 Heti Diagnosztikai Tippek</h2>
-                <p>Iratkozz fel hírlevelünkre és kapj heti tippeket az autódiagnosztikáról, karbantartásról és a legújabb AI megoldásokról.</p>
-                <form class="newsletter-form">
-                    <div class="form-group">
-                        <input type="email" placeholder="Írja be az e-mail címét..." required aria-label="E-mail cím">
-                        <button type="submit">Feliratkozás</button>
-                    </div>
-                    <p class="privacy-note">Nem küldünk spamot. Bármikor leiratkozhatsz.</p>
-                </form>
-            </div>
-        </section>
+  <section class="blog-section" style="padding-top: 0;">
+    <div class="container">
+      <div class="blog-section-header animate-on-scroll"><h2>További cikkek</h2></div>
+      <div class="blog-grid-2 stagger animate-on-scroll">
+        <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="card-link">
+          <div class="blog-card">
+            <div class="card-badge">KEZDŐ ÚTMUTATÓ</div>
+            <h3>DTC hibakód kereső: Teljes útmutató</h3>
+            <p class="card-desc">Mit jelentenek azok a betűk és számok? Tanuld meg, hogyan épülnek fel az OBD2 kódok, hogyan olvasd ki szkennerrel, és mit tegyél utána.</p>
+            <div class="card-meta"><span>9 perc olvasás</span><span class="dot"></span><span>OBD2 alapok</span></div>
+          </div>
+        </a>
+        <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek.html" class="card-link">
+          <div class="blog-card">
+            <div class="card-badge">OTTHONI DIAGNOSZTIKA</div>
+            <h3>Autódiagnosztika otthon: Kezdők teljes útmutatója</h3>
+            <p class="card-desc">Minden, ami az otthoni autódiagnosztikához kell. Szkenner ajánlások, szoftver beállítás és az első diagnosztikai munkamenet lépésről lépésre.</p>
+            <div class="card-meta"><span>7 perc olvasás</span><span class="dot"></span><span>Első lépések</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <!-- Blog Grid -->
-        <section class="blog-grid" id="blogGrid">
-            <!-- Article 1: P0420 Hibakód -->
-            <a href="./p0420-hibakod-utmutato.html" style="text-decoration:none;color:inherit;display:block;">
-            <article class="article-card" data-category="diagnostics">
-                <div class="article-image">🚗</div>
-                <div class="article-content">
-                    <span class="article-category">Diagnosztika</span>
-                    <h2 class="article-title">P0420 Hibakód: Mit Jelent és Mennyibe Kerül a Javítás?</h2>
-                    <p class="article-excerpt">Ismerd meg a P0420 hibakódot, amely az autó katalizátorának és oxigénérzékelőjének problémáit jelzi. Teljes útmutató a tünetekről, okokról és a javítási költségekről.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 8 perc olvasás</span>
-                        <span>2026. február</span>
-                    </div>
-                    <span class="article-link">Olvass többet →</span>
-                </div>
-            </article>
-            </a>
+  <section class="cta-section animate-on-scroll">
+    <div class="container">
+      <div class="cta-inner">
+        <h2>Ne találgass. Diagnosztizálj.</h2>
+        <p>Írd be a DTC hibakódot vagy írd le a tüneteket. Az AutoCognitix megmondja, mi a baj, mennyibe kerül és hogyan javítsd.</p>
+        <a href="/hu/#arak" class="btn btn-accent">Próbáld ki ingyen</a>
+      </div>
+    </div>
+  </section>
 
-            <!-- Article 2: Akkumulátor Figyelmeztető Jelek -->
-            <a href="./akkumulator-5-figyelmezteto-jel.html" style="text-decoration:none;color:inherit;display:block;">
-            <article class="article-card" data-category="maintenance">
-                <div class="article-image maintenance">🔋</div>
-                <div class="article-content">
-                    <span class="article-category maintenance">Karbantartás</span>
-                    <h2 class="article-title">Akkumulátor 5 Figyelmeztető Jel: Mikor Kell Cserélni?</h2>
-                    <p class="article-excerpt">Ismerd fel az akkumulátor lemerülésének jeleit: lassú indítás, halványabb fények és különös zajok. Tanuld meg, hogyan ellenőrizheted az akkumulátor egészségét.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 7 perc olvasás</span>
-                        <span>2026. február</span>
-                    </div>
-                    <span class="article-link">Olvass többet →</span>
-                </div>
-            </article>
-            </a>
-
-            <!-- Article 3: AI Diagnosztika -->
-            <a href="./ai-diagnosztika-hogyan-mukodik.html" style="text-decoration:none;color:inherit;display:block;">
-            <article class="article-card" data-category="technology">
-                <div class="article-image technology">🤖</div>
-                <div class="article-content">
-                    <span class="article-category technology">Technológia</span>
-                    <h2 class="article-title">AI Diagnosztika: Hogyan Működik a Mesterséges Intelligencia az Autóban?</h2>
-                    <p class="article-excerpt">Fedezd fel az AI-alapú autódiagnosztika világát. Hogyan használ az AutoCognitix gépi tanulást és adatfeldolgozást az autóhibák feltárásához.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 9 perc olvasás</span>
-                        <span>2026. február</span>
-                    </div>
-                    <span class="article-link">Olvass többet →</span>
-                </div>
-            </article>
-            </a>
-
-            <!-- Article 4: Placeholder - OBD2 Protocol -->
-            <article class="article-card" data-category="diagnostics" style="position: relative;">
-                <div class="article-image">📡</div>
-                <div class="coming-soon-overlay">
-                    <div class="coming-soon-text">Hamarosan megjelenik!</div>
-                </div>
-                <div class="article-content">
-                    <span class="article-category">Diagnosztika</span>
-                    <h2 class="article-title">OBD2 Protokoll: Az Autódiagnosztika Alapja</h2>
-                    <p class="article-excerpt">Ismerd meg az OBD2 protokollt, amely az autók diagnosztikai adatait olvassa. Részletes útmutató a szabványokról és az alkalmazásokról.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 8 perc olvasás</span>
-                        <span>Hamarosan</span>
-                    </div>
-                    <a href="#" class="article-link disabled">Hamarosan elérhetővé</a>
-                </div>
-            </article>
-
-            <!-- Article 5: Placeholder - Turbo Failure -->
-            <article class="article-card" data-category="maintenance" style="position: relative;">
-                <div class="article-image maintenance">⚙️</div>
-                <div class="coming-soon-overlay">
-                    <div class="coming-soon-text">Hamarosan megjelenik!</div>
-                </div>
-                <div class="article-content">
-                    <span class="article-category maintenance">Karbantartás</span>
-                    <h2 class="article-title">Turbo Hiba: Tünetek, Oka és a Javítás Költsége</h2>
-                    <p class="article-excerpt">A turbófeltöltő meghibásodásának jeleiben. Tanulj meg a tünetekről, az elsődleges okokról és a javítási lehetőségekről.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 7 perc olvasás</span>
-                        <span>Hamarosan</span>
-                    </div>
-                    <a href="#" class="article-link disabled">Hamarosan elérhetővé</a>
-                </div>
-            </article>
-
-            <!-- Article 6: Placeholder - Brake System -->
-            <article class="article-card" data-category="maintenance" style="position: relative;">
-                <div class="article-image maintenance">🛑</div>
-                <div class="coming-soon-overlay">
-                    <div class="coming-soon-text">Hamarosan megjelenik!</div>
-                </div>
-                <div class="article-content">
-                    <span class="article-category maintenance">Karbantartás</span>
-                    <h2 class="article-title">Fékrendszer Karbantartás: Teljes Útmutató és Ellenőrzési Lista</h2>
-                    <p class="article-excerpt">Az autóbiztonság alapja a jó fékrendszer. Ismerd meg a fékek karbantartásának alapjait és a megelőző ellenőrzéseket.</p>
-                    <div class="article-meta">
-                        <span class="article-read-time">⏱️ 9 perc olvasás</span>
-                        <span>Hamarosan</span>
-                    </div>
-                    <a href="#" class="article-link disabled">Hamarosan elérhetővé</a>
-                </div>
-            </article>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>AutoCognitix</h3>
-                    <p>AI-alapú járműdiagnosztikai platform magyar nyelvtámogatással. Egyszerű, gyors és megbízható autódiagnosztika.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Hasznos Linkek</h3>
-                    <ul>
-                        <li><a href="https://autocognitix.hu/hu/">Kezdőlap</a></li>
-                        <li><a href="https://autocognitix.hu/hu/blog/">Blog</a></li>
-                        <li><a href="mailto:hello@autocognitix.hu">Kapcsolat</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Jogi</h3>
-                    <ul>
-                        <li><a href="https://autocognitix.hu/adatvedelmi-szabalyzat/">Adatvédelmi szabályzat</a></li>
-                        <li><a href="https://autocognitix.hu/hasznalati-feltetelek/">Használati feltételek</a></li>
-                        <li><a href="https://autocognitix.hu/impresszum/">Impresszum</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Közösség</h3>
-                    <ul>
-                        <li><a href="https://www.facebook.com/autocognitix/">Facebook</a></li>
-                        <li><a href="https://www.linkedin.com/company/autocognitix/">LinkedIn</a></li>
-                        <li><a href="mailto:hello@autocognitix.hu">Kapcsolat</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 AutoCognitix. Minden jog fenntartva.</p>
-                <p>Jármű diagnosztikai segédlet. Nem helyettesíti a professzionális szervizet.</p>
-            </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-heading">Termék</div>
+          <a href="/hu/#funkciok" class="footer-link">Funkciók</a>
+          <a href="/hu/#arak" class="footer-link">Árak</a>
+          <a href="/hu/changelog/" class="footer-link">Változásnapló</a>
         </div>
-    <p class="footer-cookie-link" style="text-align:center; font-size:13px; padding:10px;"><a href="#" onclick="event.preventDefault(); window.CookieConsent && window.CookieConsent.reset();">Cookie beállítások</a></p>
-</footer>
+        <div>
+          <div class="footer-heading">Eszközök</div>
+          <a href="/hu/tools/" class="footer-link">Összes eszköz</a>
+          <a href="/hu/tools/worth-repairing.html" class="footer-link">Megéri javítani?</a>
+          <a href="/hu/tools/mot-predictor.html" class="footer-link">Műszaki előrejelző</a>
+          <a href="/hu/tools/workshop-finder.html" class="footer-link">Szervízkereső</a>
+        </div>
+        <div>
+          <div class="footer-heading">Tudástár</div>
+          <a href="/hu/blog/" class="footer-link">Blog</a>
+          <a href="/hu/blog/dtc-hibakod-kereso-teljes-utmutato.html" class="footer-link">DTC hibakód kereső</a>
+          <a href="/hu/blog/autodiagnosztika-otthon-kezdoknek.html" class="footer-link">DIY útmutatók</a>
+          <a href="/hu/#gyik" class="footer-link">GYIK</a>
+        </div>
+        <div>
+          <div class="footer-heading">Jogi</div>
+          <a href="/hu/legal/privacy-policy.html" class="footer-link">Adatvédelmi szabályzat</a>
+          <a href="/hu/legal/terms-of-service.html" class="footer-link">Felhasználási feltételek</a>
+          <a href="/hu/legal/cookie-policy.html" class="footer-link">Cookie szabályzat</a>
+          <a href="/hu/legal/ai-disclaimer.html" class="footer-link">AI felelősségi nyilatkozat</a>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@autocognitix.hu
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Budapest, Magyarország
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AutoCognitix. Minden jog fenntartva.</span>
+        <span>Készítette: Norbi & AI</span>
+      </div>
+    </div>
+  </footer>
 
-    <script>
-        function filterArticles(category) {
-            const articles = document.querySelectorAll('[data-category]');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Filter articles
-            articles.forEach(article => {
-                if (category === 'all' || article.dataset.category === category) {
-                    article.style.display = '';
-                    setTimeout(() => {
-                        article.style.opacity = '1';
-                    }, 0);
-                } else {
-                    article.style.opacity = '0';
-                    article.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        article.style.display = 'none';
-                    }, 300);
-                }
-            });
-        }
-
-        // Newsletter form handler
-        document.querySelector('.newsletter-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const emailInput = this.querySelector('input[type="email"]');
-            const button = this.querySelector('button');
-            const email = emailInput.value.trim();
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showMessage(button, 'Kérjük adjon meg érvényes e-mail címet!', 'error');
-                return;
-            }
-            
-            const n8nWebhook = 'https://valid8strategy.app.n8n.cloud/webhook/newsletter-email';
-            const language = 'hu';
-            const domain = 'https://autocognitix-landing-production.up.railway.app';
-            
-            // Generate random token — Wave 6: fail-closed on missing CSPRNG.
-            function generateToken() {
-                if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-                    return crypto.randomUUID();
-                }
-                if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-                    var bytes = new Uint8Array(16);
-                    crypto.getRandomValues(bytes);
-                    var hex = '';
-                    for (var i = 0; i < bytes.length; i++) {
-                        hex += bytes[i].toString(16).padStart(2, '0');
-                    }
-                    return hex;
-                }
-                throw new Error('Browser lacks secure RNG. Please update your browser.');
-            }
-            
-            const token = generateToken();
-            const confirmUrl = `${domain}/confirm?token=${token}`;
-            
-            // Show loading state
-            const originalText = button.textContent;
-            button.textContent = 'Feldolgozás...';
-            button.disabled = true;
-            emailInput.disabled = true;
-            
-            try {
-                const response = await fetch(n8nWebhook, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        type: 'confirm',
-                        email: email,
-                        language: language,
-                        token: token,
-                        base_url: domain
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Hálózati hiba');
-                }
-                
-                showMessage(button, 'Sikeres feliratkozás! Ellenőrizd az email címedet.', 'success');
-                emailInput.value = '';
-                button.textContent = '✓ Feliratkozva!';
-                button.style.backgroundColor = '#22C55E';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.backgroundColor = '';
-                    button.disabled = false;
-                    emailInput.disabled = false;
-                }, 3000);
-            } catch (error) {
-                console.error('Newsletter error:', error);
-                showMessage(button, 'Hiba történt. Kérjük próbálja meg később.', 'error');
-                button.textContent = originalText;
-                button.disabled = false;
-                emailInput.disabled = false;
-            }
-            
-            function showMessage(btn, message, type) {
-                const existingMsg = document.querySelector('.newsletter-message');
-                if (existingMsg) existingMsg.remove();
-                
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'newsletter-message';
-                msgDiv.textContent = message;
-                msgDiv.style.cssText = `
-                    margin-top: 12px;
-                    padding: 12px 16px;
-                    border-radius: 8px;
-                    font-size: 14px;
-                    text-align: center;
-                    background: ${type === 'success' ? '#D1FAE5' : '#FEE2E2'};
-                    color: ${type === 'success' ? '#065F46' : '#7F1D1D'};
-                `;
-                
-                btn.parentElement.appendChild(msgDiv);
-                
-                if (type === 'error') {
-                    setTimeout(() => msgDiv.remove(), 4000);
-                }
-            }
-        });
-    </script>
+  <script>
+    (function(){var o=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){t.target.classList.add('visible');if(t.target.classList.contains('stagger')){t.target.querySelectorAll(':scope > *').forEach(function(c){c.classList.add('visible')})}}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.animate-on-scroll').forEach(function(el){o.observe(el)})})();
+    (function(){var f=document.getElementById('newsletterForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var em=document.getElementById('newsletterEmail').value;if(!em)return;fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})}).then(function(){f.style.display='none';document.getElementById('newsletterSuccess').style.display='block'}).catch(function(){f.style.display='none';document.getElementById('newsletterSuccess').style.display='block'})})})();
+  </script>
 </body>
 </html>
