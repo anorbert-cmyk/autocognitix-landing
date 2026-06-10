@@ -222,11 +222,11 @@
         <a href="/hu/#funkciok" class="nav-link">Funkciók</a>
         <a href="/hu/#arak" class="nav-link">Árak</a>
         <div class="nav-dropdown">
-          <a href="/hu/tools/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
+          <a href="/hu/eszkozok/" class="nav-link nav-dropdown-trigger">Eszközök <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4l3 3 3-3"/></svg></a>
           <div class="nav-dropdown-menu">
-            <a href="/hu/tools/worth-repairing.html">Megéri javítani?</a>
-            <a href="/hu/tools/mot-predictor.html">Műszaki előrejelző</a>
-            <a href="/hu/tools/workshop-finder.html">Szervízkereső</a>
+            <a href="/hu/eszkozok/megeri-megjavitani.html">Megéri javítani?</a>
+            <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html">Műszaki előrejelző</a>
+            <a href="/hu/eszkozok/szerviz-kereso.html">Szervízkereső</a>
           </div>
         </div>
         <a href="/hu/blog/" class="nav-link active">Blog</a>
@@ -353,10 +353,10 @@
         </div>
         <div>
           <div class="footer-heading">Eszközök</div>
-          <a href="/hu/tools/" class="footer-link">Összes eszköz</a>
-          <a href="/hu/tools/worth-repairing.html" class="footer-link">Megéri javítani?</a>
-          <a href="/hu/tools/mot-predictor.html" class="footer-link">Műszaki előrejelző</a>
-          <a href="/hu/tools/workshop-finder.html" class="footer-link">Szervízkereső</a>
+          <a href="/hu/eszkozok/" class="footer-link">Összes eszköz</a>
+          <a href="/hu/eszkozok/megeri-megjavitani.html" class="footer-link">Megéri javítani?</a>
+          <a href="/hu/eszkozok/muszaki-vizsga-prediktor.html" class="footer-link">Műszaki előrejelző</a>
+          <a href="/hu/eszkozok/szerviz-kereso.html" class="footer-link">Szervízkereső</a>
         </div>
         <div>
           <div class="footer-heading">Tudástár</div>
@@ -367,10 +367,10 @@
         </div>
         <div>
           <div class="footer-heading">Jogi</div>
-          <a href="/hu/legal/privacy-policy.html" class="footer-link">Adatvédelmi szabályzat</a>
-          <a href="/hu/legal/terms-of-service.html" class="footer-link">Felhasználási feltételek</a>
-          <a href="/hu/legal/cookie-policy.html" class="footer-link">Cookie szabályzat</a>
-          <a href="/hu/legal/ai-disclaimer.html" class="footer-link">AI felelősségi nyilatkozat</a>
+          <a href="/hu/legal/adatvedelmi-szabalyzat.html" class="footer-link">Adatvédelmi szabályzat</a>
+          <a href="/hu/legal/felhasznalasi-feltetelek.html" class="footer-link">Felhasználási feltételek</a>
+          <a href="/hu/legal/cookie-szabalyzat.html" class="footer-link">Cookie szabályzat</a>
+          <a href="/hu/legal/ai-felelossegi-nyilatkozat.html" class="footer-link">AI felelősségi nyilatkozat</a>
         </div>
         <div>
           <div class="footer-heading">Kapcsolat</div>
@@ -393,7 +393,7 @@
 
   <script>
     (function(){var o=new IntersectionObserver(function(e){e.forEach(function(t){if(t.isIntersecting){t.target.classList.add('visible');if(t.target.classList.contains('stagger')){t.target.querySelectorAll(':scope > *').forEach(function(c){c.classList.add('visible')})}}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.animate-on-scroll').forEach(function(el){o.observe(el)})})();
-    (function(){var f=document.getElementById('newsletterForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var em=document.getElementById('newsletterEmail').value;if(!em)return;fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})}).then(function(){f.style.display='none';document.getElementById('newsletterSuccess').style.display='block'}).catch(function(){f.style.display='none';document.getElementById('newsletterSuccess').style.display='block'})})})();
+    (function(){var f=document.getElementById('newsletterForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var em=document.getElementById('newsletterEmail').value;if(!em||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))return;var btn=f.querySelector('button');btn.disabled=true;btn.textContent='Küldés...';fetch('https://valid8strategy.app.n8n.cloud/webhook/newsletter-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})}).then(function(r){if(!r.ok)throw new Error();f.style.display='none';document.getElementById('newsletterSuccess').style.display='block'}).catch(function(){btn.disabled=false;btn.textContent='Feliratkozás';alert('Hiba történt. Kérjük, próbáld újra.')})})})();
   </script>
 </body>
 </html>

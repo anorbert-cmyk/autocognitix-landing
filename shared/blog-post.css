@@ -1044,17 +1044,14 @@ article > p:first-of-type::first-letter,
 }
 .lang-option.active { background: var(--color-accent); color: #FFFFFF; }
 .lang-option:not(.active):hover { background: rgba(0,0,0,0.05); }
-.btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: var(--font-primary); font-size: 12px; font-weight: 600;
+.nav-cta {
+    margin-left: 16px; font-size: 12px; font-weight: 600;
     letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 20px 32px; border-radius: 8px; border: none; cursor: pointer;
-    transition: all 0.3s ease; white-space: nowrap; text-decoration: none;
+    padding: 12px 24px; border-radius: 8px; border: none;
+    background: var(--color-base-dark); color: #FFFFFF;
+    white-space: nowrap;
 }
-.btn-primary { background: var(--color-base-dark); color: #FFFFFF; }
-.btn-primary:hover { background: #2F3640; box-shadow: 0 0 20px rgba(217,119,87,0.3); }
-.btn-sm { padding: 12px 24px; }
-.nav-cta { margin-left: 16px; }
+.nav-cta:hover { background: #2F3640; box-shadow: 0 0 20px rgba(217,119,87,0.3); color: #FFFFFF; }
 
 /* ============================================
    SITE FOOTER (matches main page design system)
