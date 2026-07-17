@@ -83,6 +83,61 @@ except ImportError:
 MAX_UA_RETRIES = 3
 
 # ---------------------------------------------------------------------------
+# Optional TLS-impersonation transport (2026-07-17)
+# ---------------------------------------------------------------------------
+# As of ~mid-2026 Cloudflare blocks even system `curl --http1.1` from
+# datacenter IPs (GitHub runners included) with a hard 403. curl_cffi
+# impersonates a real browser's full TLS/JA3 + HTTP/2 fingerprint, which is
+# the strongest non-browser bypass available. It's an OPTIONAL dependency:
+# if the import fails we silently fall back to system curl -> urllib.
+# CI installs it via `pip install curl_cffi` in price-update.yml.
+
+try:
+    from curl_cffi import requests as _cffi_requests  # type: ignore
+    _CFFI_AVAILABLE = True
+except ImportError:
+    _cffi_requests = None
+    _CFFI_AVAILABLE = False
+
+# Impersonation profiles to rotate through on 403 (names depend on the
+# installed curl_cffi version — unknown ones are skipped at runtime).
+_CFFI_PROFILES = ("chrome131", "chrome124", "safari17_0", "chrome")
+
+
+def _fetch_via_cffi(url: str, timeout: int, profile: str) -> Tuple[Optional[str], int]:
+    """Fetch via curl_cffi with browser TLS impersonation.
+
+    Returns (body, http_code); (None, -1) signals "profile unavailable,
+    try next transport", (None, 0) is a transport failure.
+    The impersonation profile supplies its own matching User-Agent — we
+    deliberately do NOT override it (a mismatched UA/TLS pair is a red flag
+    to bot detection).
+    """
+    if not _CFFI_AVAILABLE:
+        return None, -1
+    try:
+        resp = _cffi_requests.get(
+            url,
+            impersonate=profile,
+            timeout=timeout,
+            headers={
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.8",
+                "Referer": "https://www.hasznaltauto.hu/",
+            },
+        )
+    except ValueError:
+        # Unknown impersonation profile in this curl_cffi version
+        return None, -1
+    except Exception as exc:  # curl_cffi raises its own error hierarchy
+        log.warning("curl_cffi(%s) failed on %s: %s", profile, url, exc)
+        return None, 0
+
+    if 200 <= resp.status_code < 300:
+        return resp.text, resp.status_code
+    return None, resp.status_code
+
+# ---------------------------------------------------------------------------
 # HTTP helper
 # ---------------------------------------------------------------------------
 #
@@ -209,10 +264,10 @@ def fetch_url(url: str, retries: int = 2) -> Optional[str]:
     5xx and network errors use the normal retry loop.
     """
     curl_available = _get_curl_bin() is not None
-    if not curl_available:
+    if not curl_available and not _CFFI_AVAILABLE:
         log.warning(
-            "System `curl` not found on PATH — falling back to urllib. "
-            "Expect 403s from Cloudflare-protected endpoints."
+            "Neither curl_cffi nor system `curl` available — falling back to "
+            "urllib. Expect 403s from Cloudflare-protected endpoints."
         )
 
     ua_attempt = 0
@@ -220,10 +275,18 @@ def fetch_url(url: str, retries: int = 2) -> Optional[str]:
         ua = get_user_agent()
 
         for attempt in range(1, retries + 1):
-            if curl_available:
-                body, code = _fetch_via_curl(url, ua, REQUEST_TIMEOUT)
-            else:
-                body, code = _fetch_via_urllib(url, ua)
+            # Transport preference: curl_cffi (browser TLS impersonation)
+            # -> system curl --http1.1 -> urllib. Each 403 rotation cycles
+            # to the next impersonation profile.
+            body, code = None, -1
+            if _CFFI_AVAILABLE:
+                profile = _CFFI_PROFILES[ua_attempt % len(_CFFI_PROFILES)]
+                body, code = _fetch_via_cffi(url, REQUEST_TIMEOUT, profile)
+            if code == -1:
+                if curl_available:
+                    body, code = _fetch_via_curl(url, ua, REQUEST_TIMEOUT)
+                else:
+                    body, code = _fetch_via_urllib(url, ua)
 
             # Success
             if body is not None and 200 <= code < 300:

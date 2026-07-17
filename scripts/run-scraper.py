@@ -51,8 +51,18 @@ SCRAPER_RECOVERABLE = (
 )
 
 # Per-scraper model-failure threshold. If more than this fraction of
-# (brand, model) pairs fail, exit with code 1 so CI flags the run.
+# (brand, model) pairs fail, the run is flagged as degraded.
 MAX_FAILURE_FRACTION = 0.30
+
+# Exit codes (2026-07-17):
+#   0  — scraper ran and produced observations within failure tolerance
+#   78 — scraper ran to completion but the SOURCE is degraded (0 observations
+#        or excessive per-model failures — typically bot-blocking or site
+#        redesign). The output file is still written. CI treats this as a
+#        warning, not a hard failure: one dead source must not turn the whole
+#        daily pipeline red while the remaining sources still deliver data.
+#   1  — real crash (unhandled exception / programming error) — CI goes red.
+EXIT_SOURCE_DEGRADED = 78
 
 
 def _handle_model_error(scraper_name: str, brand: str, model: str, exc: BaseException,
@@ -463,21 +473,23 @@ def main():
 
     if total_observations == 0:
         log.error(
-            "[FATAL] Scraper %s wrote 0 observations. "
-            "Attempts=%d Failures=%d — likely bot-block or selector drift.",
-            args.scraper, attempts, failures,
+            "[DEGRADED] Scraper %s wrote 0 observations. "
+            "Attempts=%d Failures=%d — likely bot-block or selector drift. "
+            "Exiting %d so CI warns without failing the pipeline.",
+            args.scraper, attempts, failures, EXIT_SOURCE_DEGRADED,
         )
-        sys.exit(1)
+        sys.exit(EXIT_SOURCE_DEGRADED)
 
-    # Fail run if too many (brand, model) pairs failed.
+    # Flag run as degraded if too many (brand, model) pairs failed.
     if attempts > 0:
         fail_fraction = failures / attempts
         if fail_fraction > MAX_FAILURE_FRACTION:
             log.error(
-                "Failure rate %.1f%% (%d/%d) exceeds threshold %.1f%% — exit 1",
+                "[DEGRADED] Failure rate %.1f%% (%d/%d) exceeds threshold %.1f%% — exit %d",
                 fail_fraction * 100, failures, attempts, MAX_FAILURE_FRACTION * 100,
+                EXIT_SOURCE_DEGRADED,
             )
-            sys.exit(1)
+            sys.exit(EXIT_SOURCE_DEGRADED)
 
 
 if __name__ == "__main__":

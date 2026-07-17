@@ -12,3 +12,6 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+
+# OOYYO runtime hash cache (auto-discovered, per-run)
+scripts/scrapers/.ooyyo_hash_cache.json

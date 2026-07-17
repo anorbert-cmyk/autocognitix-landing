@@ -37,6 +37,7 @@ import statistics
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from collections import defaultdict
 from html.parser import HTMLParser
@@ -356,6 +357,183 @@ DEFAULT_MAX_LISTINGS = 200
 # Path to hash cache file (persists discovered hashes across runs)
 _HASH_CACHE_PATH = os.path.join(_SCRIPT_DIR, ".ooyyo_hash_cache.json")
 
+# ---------------------------------------------------------------------------
+# Live hash discovery (2026-07-17)
+# ---------------------------------------------------------------------------
+# OOYYO periodically RENUMBERS its internal make/model IDs, which silently
+# invalidates the built-in _BRAND_MODEL_HASHES table. When that happens the
+# old URLs return 404 (or a generic app-shell page with no listings) and the
+# scraper collects 0 observations.
+#
+# Reverse-engineered 2026-07-17 from live link analysis: the 12-char
+# BRAND_MODEL hash segment is a byte-wise XOR obfuscation of the numeric
+# make/model IDs used by OOYYO's own quicksearch JSON API:
+#
+#   segment = "BA"                                (constant marker)
+#           + hex(idMake  ^ 0x64)                 (1 byte)
+#           + "355B"                              (model-search page marker)
+#           + hex(idModel_low_byte  ^ 0xCC)       (1 byte, little-endian)
+#           + hex(idModel_high_byte ^ 0xA2)       (1 byte)
+#
+# Verified against 10+ live brand/model pages (Dacia/Duster, Renault/Clio,
+# Seat/Leon, Nissan/Qashqai, Honda/Civic, Mazda/2, ...) — all return
+# server-rendered listing pages with this construction.
+#
+# The IDs come from /ooyyo-services/resources/quicksearch/qselements — the
+# same endpoint the site's own search form uses. That path is NOT in
+# robots.txt's disallow list (only /automobili/, /outlet-service-web/ and
+# /counter are blocked). Discovered segments are persisted via the on-disk
+# hash cache and take precedence over the built-in table (cache-first).
+
+_QS_ENDPOINT = BASE_URL + "/ooyyo-services/resources/quicksearch/qselements"
+
+# XOR obfuscation keys (stable across the 2026 renumbering; the encoding
+# survived the ID rotation — only the numeric IDs changed).
+_MAKE_XOR = 0x64
+_MODEL_LO_XOR = 0xCC
+_MODEL_HI_XOR = 0xA2
+
+# Base params for qselements calls. Country doesn't matter for ID lookup
+# (make/model IDs are global); Germany is used as the reference market.
+_QS_BASE_PARAMS = {
+    "idDomain": "1",
+    "idCountry": "10",
+    "idLanguage": "47",
+    "idCurrency": "3",
+    "isNew": "0",
+    "qsType": "advanced",
+}
+
+# Polite delay between JSON API calls (lighter than page crawls; this is the
+# endpoint the site's own frontend hits on every form interaction).
+_QS_DELAY = 5.0
+
+# Memo so each brand triggers at most one discovery per process.
+_discovered_brands_this_run: set = set()
+
+
+def _segment_from_ids(id_make: int, id_model: int) -> str:
+    """Build the 12-char BRAND_MODEL hash segment from numeric OOYYO IDs."""
+    return "BA%02X355B%02X%02X" % (
+        id_make ^ _MAKE_XOR,
+        (id_model & 0xFF) ^ _MODEL_LO_XOR,
+        ((id_model >> 8) & 0xFF) ^ _MODEL_HI_XOR,
+    )
+
+
+def _normalize_name(name: str) -> str:
+    """Normalize a brand/model name for matching (lowercase, alnum only)."""
+    return re.sub(r"[^a-z0-9]", "", str(name).lower())
+
+
+def _qs_call(params: Dict[str, Any]) -> Optional[dict]:
+    """Call the quicksearch qselements JSON endpoint. None on failure."""
+    url = _QS_ENDPOINT + "?json=" + urllib.parse.quote(json.dumps(params))
+    body = fetch_url(url)
+    if not body:
+        return None
+    try:
+        return json.loads(body)
+    except (json.JSONDecodeError, ValueError) as exc:
+        log.warning("[DISCOVER] qselements returned non-JSON: %s", exc)
+        return None
+
+
+def _flatten_groups(obj: Any) -> List[dict]:
+    """qselements groups entries as {'top': [...], 'black': [...], 'low': [...]}
+    (or sometimes a plain list). Return a single flat list."""
+    if isinstance(obj, list):
+        return [x for x in obj if isinstance(x, dict)]
+    if isinstance(obj, dict):
+        flat: List[dict] = []
+        for group in obj.values():
+            if isinstance(group, list):
+                flat.extend(x for x in group if isinstance(x, dict))
+        return flat
+    return []
+
+
+def discover_brand_model_hashes(brand_name: str) -> Dict[str, str]:
+    """
+    Refresh hash segments for ``brand_name`` from OOYYO's quicksearch JSON
+    API (make/model IDs -> XOR-encoded segments). Found segments are merged
+    into the on-disk cache.
+
+    Returns {"Brand/Model": segment} for every config model matched. Empty
+    dict on any fetch/parse failure (callers fall back to whatever they had).
+    """
+    brand_info = BRANDS.get(brand_name)
+    if not brand_info:
+        return {}
+
+    if brand_name in _discovered_brands_this_run:
+        # Already discovered in this process — serve from cache.
+        cache = _load_hash_cache()
+        return {
+            k: v for k, v in cache.items()
+            if k.startswith(f"{brand_name}/") and v
+        }
+    _discovered_brands_this_run.add(brand_name)
+
+    log.info("[DISCOVER] Looking up OOYYO make/model IDs for %s...", brand_name)
+
+    data = _qs_call(_QS_BASE_PARAMS)
+    if not data:
+        log.warning("[DISCOVER] qselements makes call failed")
+        return {}
+
+    makes = _flatten_groups(data.get("makes"))
+    want = _normalize_name(brand_name)
+    want_slug = _ooyyo_slug(brand_name)
+    make = next(
+        (m for m in makes
+         if _normalize_name(m.get("name", "")) == want
+         or m.get("urlName", "") == want_slug),
+        None,
+    )
+    if not make or not isinstance(make.get("idMake"), int):
+        log.warning("[DISCOVER] Brand %s not found in OOYYO makes list", brand_name)
+        return {}
+
+    time.sleep(_QS_DELAY)
+
+    params = dict(_QS_BASE_PARAMS)
+    params["idMake"] = str(make["idMake"])
+    data2 = _qs_call(params)
+    if not data2:
+        log.warning("[DISCOVER] qselements models call failed for %s", brand_name)
+        return {}
+
+    api_models = _flatten_groups(data2.get("models"))
+    by_norm = {
+        _normalize_name(m.get("name", "")): m
+        for m in api_models
+        if isinstance(m.get("idModel"), int)
+    }
+
+    found: Dict[str, str] = {}
+    for model_name in brand_info["models"]:
+        api_model = by_norm.get(_normalize_name(model_name))
+        if not api_model:
+            log.debug("[DISCOVER] %s/%s: no matching OOYYO model", brand_name, model_name)
+            continue
+        found[f"{brand_name}/{model_name}"] = _segment_from_ids(
+            make["idMake"], api_model["idModel"]
+        )
+
+    if found:
+        cache = _load_hash_cache()
+        cache.update(found)
+        _save_hash_cache(cache)
+        log.info(
+            "[DISCOVER] %s (idMake=%d): refreshed %d/%d model hashes",
+            brand_name, make["idMake"], len(found), len(brand_info["models"]),
+        )
+    else:
+        log.warning("[DISCOVER] %s: no config models matched OOYYO's model list", brand_name)
+
+    return found
+
 
 # ---------------------------------------------------------------------------
 # Hash management and URL construction
@@ -460,19 +638,22 @@ def _save_hash_cache(cache: Dict[str, str]) -> None:
 def get_brand_model_hash(brand_name: str, model_name: str) -> Optional[str]:
     """
     Get the brand/model hash segment, checking:
-    1. Built-in lookup table
-    2. On-disk cache (from previous discovery runs)
+    1. On-disk cache (fresh, from live discovery runs) — takes precedence
+    2. Built-in lookup table (static seed; goes stale when OOYYO rotates)
+
+    Cache-first matters: OOYYO rotates hash segments periodically, so a
+    discovered value must override the stale built-in seed.
     """
     key = f"{brand_name}/{model_name}"
 
-    # Check built-in table
+    # Check disk cache first (live-discovered values win)
+    cache = _load_hash_cache()
+    if cache.get(key):
+        return cache[key]
+
+    # Fall back to built-in table
     if key in _BRAND_MODEL_HASHES:
         return _BRAND_MODEL_HASHES[key]
-
-    # Check disk cache
-    cache = _load_hash_cache()
-    if key in cache:
-        return cache[key]
 
     return None
 
@@ -916,10 +1097,14 @@ def scrape_brand_model(
         )
         return {"error": f"Unknown model: {model_name} for {brand_name}"}
 
-    # Get brand/model hash
+    # Get brand/model hash; if unknown, try live discovery before giving up.
     bm_hash = get_brand_model_hash(brand_name, model_name)
     if not bm_hash:
-        log.error("No OOYYO hash known for %s/%s. Run with --discover first.", brand_name, model_name)
+        log.info("No OOYYO hash known for %s/%s — attempting live discovery", brand_name, model_name)
+        discover_brand_model_hashes(brand_name)
+        bm_hash = get_brand_model_hash(brand_name, model_name)
+    if not bm_hash:
+        log.error("No OOYYO hash for %s/%s (discovery failed too)", brand_name, model_name)
         return {"error": f"No OOYYO hash for {brand_name}/{model_name}"}
 
     limit = max_listings or DEFAULT_MAX_LISTINGS
@@ -942,7 +1127,16 @@ def scrape_brand_model(
     consecutive_empty = 0
     EARLY_EXIT_AFTER = 3
 
-    for i, (country_slug, country_name, country_hash, country_suffix) in enumerate(scan_countries, 1):
+    # Stale-hash self-healing: if the FIRST country yields no listings (404,
+    # or a generic app-shell page whose embedded code doesn't match ours),
+    # the hash has likely rotated. Run live discovery once, swap in the fresh
+    # hash, and retry that country before scanning the rest.
+    rediscovery_done = False
+
+    i = 0
+    while i < len(scan_countries):
+        country_slug, country_name, country_hash, country_suffix = scan_countries[i]
+        i += 1
         if len(all_listings) >= limit:
             log.info("Reached limit of %d listings -- stopping", limit)
             break
@@ -958,17 +1152,7 @@ def scrape_brand_model(
         got_listings_this_country = False
         html = fetch_url(url)
         if html:
-            # Opportunistically discover/verify hash from the page
             page_hash = discover_hash_from_page(html)
-            if page_hash:
-                bm_segment = extract_brand_model_segment(page_hash)
-                if bm_segment:
-                    cache_key = f"{brand_name}/{model_name}"
-                    if cache_key not in hash_cache:
-                        hash_cache[cache_key] = bm_segment
-                        _save_hash_cache(hash_cache)
-                        log.debug("Cached hash for %s: %s", cache_key, bm_segment)
-
             listings, count = parse_search_page(html)
             if count:
                 total_available += count
@@ -984,6 +1168,18 @@ def scrape_brand_model(
                 got_listings_this_country = True
                 log.info("  Parsed %d listings (total so far: %d)", len(listings), len(all_listings))
 
+                # Cache the page-embedded hash segment ONLY on pages that
+                # actually contained listings — a generic app-shell page also
+                # embeds a code, but caching that would poison the cache.
+                if page_hash:
+                    bm_segment = extract_brand_model_segment(page_hash)
+                    if bm_segment:
+                        cache_key = f"{brand_name}/{model_name}"
+                        if hash_cache.get(cache_key) != bm_segment:
+                            hash_cache[cache_key] = bm_segment
+                            _save_hash_cache(hash_cache)
+                            log.debug("Cached hash for %s: %s", cache_key, bm_segment)
+
                 sample = listings[0]
                 log.info("  Sample: %s %s %s -- %s EUR, %s km, %s",
                          sample.get("year", "?"),
@@ -998,6 +1194,24 @@ def scrape_brand_model(
         else:
             log.warning("  Failed to fetch page for %s", country_name)
             errors += 1
+
+        # Stale-hash retry: no listings anywhere yet -> discover fresh hash
+        # once, and if it differs, replay this country with the new hash.
+        if not got_listings_this_country and not all_listings and not rediscovery_done:
+            rediscovery_done = True
+            log.info(
+                "  Possible stale hash for %s/%s — attempting live re-discovery",
+                brand_name, model_name,
+            )
+            discover_brand_model_hashes(brand_name)
+            fresh_hash = get_brand_model_hash(brand_name, model_name)
+            if fresh_hash and fresh_hash != bm_hash:
+                log.info("  Hash refreshed: %s -> %s (retrying %s)",
+                         bm_hash, fresh_hash, country_name)
+                bm_hash = fresh_hash
+                hash_cache = _load_hash_cache()
+                i -= 1  # replay the same country with the fresh hash
+                continue
 
         if got_listings_this_country:
             consecutive_empty = 0
@@ -1253,11 +1467,28 @@ def main():
         help="List available brands and models"
     )
     parser.add_argument(
+        "--discover", type=str, default=None, metavar="BRAND",
+        help="Live-discover fresh hash segments for BRAND (updates cache)"
+    )
+    parser.add_argument(
         "--countries", type=str, default=None,
         help="Comma-separated country slugs (default: all EU countries)"
     )
 
     args = parser.parse_args()
+
+    if args.discover:
+        if args.verbose:
+            log.setLevel(logging.DEBUG)
+        found = discover_brand_model_hashes(args.discover)
+        if found:
+            print(f"\nDiscovered {len(found)} fresh hash segments for {args.discover}:")
+            for key, seg in sorted(found.items()):
+                print(f"  {key}: {seg}")
+            print(f"\nSaved to cache: {_HASH_CACHE_PATH}")
+        else:
+            print(f"\nNo hashes discovered for {args.discover} (check brand name / connectivity)")
+        return
 
     if args.list_brands:
         print("\nAvailable brands and models:\n")
