@@ -50,6 +50,14 @@ log = logging.getLogger("autobazar")
 BASE_URL = "https://www.autobazar.eu"
 SEARCH_PATH = "/en/vysledky/osobne-vozidla"
 
+# Sanity bounds — reject junk listings (1 EUR teaser, 999k EUR supercars,
+# parts ads, mis-parsed prices). Mirrors the ooyyo/bazos hardening so the
+# EUR-based Slovak-market scrapers apply a consistent price band.
+EUR_PRICE_MIN = 500
+EUR_PRICE_MAX = 300_000
+HUF_PRICE_MIN = 300_000
+HUF_PRICE_MAX = 200_000_000
+
 # ---------------------------------------------------------------------------
 # Config import (local)
 # ---------------------------------------------------------------------------
@@ -229,6 +237,12 @@ def fetch_url(url: str, retries: int = 2) -> Optional[str]:
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
                 log.debug("404 Not Found: %s", url)
+                return None
+            if exc.code == 403:
+                # Hard block (bot defense / geo). Don't burn retries — degrade
+                # gracefully to None so the scrape returns an empty result and
+                # run-scraper's silent-empty guard flags the source (exit 78).
+                log.warning("403 Forbidden on %s — source may be blocking; degrading gracefully", url)
                 return None
             if exc.code == 429:
                 wait = REQUEST_DELAY * attempt * 3
@@ -620,19 +634,66 @@ def aggregate_by_year(
     listings: List[Dict[str, Any]],
     eur_huf_rate: float,
 ) -> Dict[str, Dict[str, Any]]:
-    """Group listings by year and compute min/median/max price stats in both EUR and HUF."""
+    """Group listings by year and compute min/median/max price stats in both EUR and HUF.
+
+    Mirrors the ooyyo/bazos hardening:
+      - Type-validate the numeric fields BEFORE any comparison, so DOM/JSON
+        drift that yields a non-numeric price/year degrades gracefully instead
+        of raising TypeError (which would crash run-scraper with exit 1).
+      - Apply EUR + HUF sanity bounds to drop junk/mis-parsed prices.
+      - Dedup by detail URL when present, else a composite natural key
+        (search-page listings carry no URL — same tradeoff ooyyo documents).
+      - Count and log rejected/duplicate rows instead of silently dropping them.
+    """
     by_year: Dict[int, List[int]] = defaultdict(list)
     no_year: List[int] = []
+    seen_keys: set = set()
+    rejected_bounds = 0
+    rejected_dup = 0
 
     for item in listings:
-        price = item.get("price_eur")
-        if not price or price <= 0:
+        if not isinstance(item, dict):
             continue
+
+        price_eur = item.get("price_eur")
+        # Guard the type before comparing — a stray string/None must not raise.
+        if not isinstance(price_eur, (int, float)) or price_eur <= 0:
+            continue
+        if price_eur < EUR_PRICE_MIN or price_eur > EUR_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
+        price_huf = price_eur * eur_huf_rate
+        if price_huf < HUF_PRICE_MIN or price_huf > HUF_PRICE_MAX:
+            rejected_bounds += 1
+            continue
+
+        price_eur = int(price_eur)
         year = item.get("year")
-        if year and 1990 <= year <= 2030:
-            by_year[year].append(price)
+        year_ok = isinstance(year, int) and 1990 <= year <= 2030
+
+        url = item.get("source_url")
+        dedup_key: Any = url if url else (
+            price_eur,
+            year if year_ok else None,
+            item.get("mileage_km"),
+            item.get("fuel_type"),
+        )
+        if dedup_key in seen_keys:
+            rejected_dup += 1
+            continue
+        seen_keys.add(dedup_key)
+
+        if year_ok:
+            by_year[year].append(price_eur)
         else:
-            no_year.append(price)
+            no_year.append(price_eur)
+
+    if rejected_bounds or rejected_dup:
+        log.info(
+            "aggregate_by_year: rejected %d out-of-bounds, %d duplicates",
+            rejected_bounds, rejected_dup,
+        )
 
     result = {}
     for year in sorted(by_year.keys()):
@@ -641,8 +702,7 @@ def aggregate_by_year(
 
     if no_year:
         no_year.sort()
-        stats = _compute_stats(no_year, eur_huf_rate)
-        result["unknown_year"] = stats
+        result["unknown_year"] = _compute_stats(no_year, eur_huf_rate)
 
     return result
 
