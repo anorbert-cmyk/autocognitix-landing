@@ -1,0 +1,46 @@
+# Repo label inventory — single source of truth, reconciled by
+# .github/workflows/sync-labels.yml (gh label create --force).
+#
+# Why this file exists (DEVOPS): Dependabot assigns the labels below to the
+# PRs it opens (see .github/dependabot.yml), but Dependabot does NOT create
+# missing labels — it only warns "The following labels could not be found:
+# dependencies, github-actions, ..." and silently drops them. This file plus
+# the sync workflow guarantee every referenced label exists with an
+# intentional color + description before the first Dependabot PR lands.
+#
+# Editing rules:
+#   - Names under the "Dependabot" block MUST match .github/dependabot.yml
+#     byte-for-byte, or the mismatch warning comes back.
+#   - color is 6-hex WITHOUT the leading '#'. Quote it so YAML never parses
+#     an all-digit value (e.g. '000000') as a number.
+#   - Change a color/description and push to main -> the workflow re-syncs it
+#     in place (gh label create --force is create-or-update, non-destructive
+#     to unrelated labels).
+
+labels:
+  # --- Dependabot labels (must match .github/dependabot.yml EXACTLY) ---
+  - name: dependencies
+    color: '0366d6'
+    description: Pull requests that update a dependency file
+  - name: github-actions
+    color: '000000'
+    description: GitHub Actions workflow / action version updates
+  - name: javascript
+    color: 'f1e05a'
+    description: npm / JavaScript dependency updates
+  - name: python
+    color: '3572a5'
+    description: pip / Python dependency updates
+  - name: docker
+    color: '2496ed'
+    description: Docker base image updates
+
+  # --- Automation labels (referenced by .github/workflows/price-update.yml) ---
+  # Included so every label referenced anywhere under .github/ provably exists
+  # with a deliberate color instead of an API-default grey.
+  - name: automated
+    color: 'ededed'
+    description: Opened or maintained by an automated workflow
+  - name: pipeline-failure
+    color: 'd73a4a'
+    description: CI/CD pipeline or scheduled-job failure alert
