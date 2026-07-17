@@ -145,37 +145,54 @@ jobs:
           name: today-brands
           path: /tmp/
 
+      # Optional TLS-impersonation transport for Cloudflare-protected sources
+      # (hasznaltauto.hu). Best-effort: scrapers fall back to system curl /
+      # urllib if the install fails.
+      - name: Install curl_cffi (browser TLS impersonation, best-effort)
+        run: pip install 'curl_cffi>=0.13,<1.0' || echo "::warning title=curl_cffi install failed::Falling back to system curl/urllib transports"
+
       # Matrix values come from this workflow file (trusted source),
       # but pass via env for defence-in-depth consistency.
-      # run-scraper.py now exits(1) on silent-empty output (backend-engineer
-      # change). We let matrix cells fail loudly instead of masking with
-      # continue-on-error. `fail-fast: false` above ensures other scrapers
-      # keep running; aggregate job still runs via `if: always()`.
+      #
+      # Exit-code contract with run-scraper.py (2026-07-17):
+      #   0  -> data collected, cell green
+      #   78 -> source DEGRADED (0 observations / excessive failures, e.g.
+      #         bot-blocking). Cell stays green with a ::warning so ONE dead
+      #         source can't turn the whole daily pipeline red — the
+      #         aggregate job alerts via issue instead (see health step).
+      #   other -> real crash, cell goes red.
       - name: Run ${{ matrix.source.name }} scraper
         env:
           SCRAPER: ${{ matrix.source.script }}
           MAX_PER_MODEL: ${{ matrix.source.max_per_model }}
           OUTPUT: ${{ matrix.source.output }}
         run: |
+          set +e
           python scripts/run-scraper.py \
             --scraper "$SCRAPER" \
             --brands-file /tmp/today_brands.json \
             --max "$MAX_PER_MODEL" \
             --output "$OUTPUT"
+          rc=$?
+          set -e
+          if [ "$rc" -eq 78 ]; then
+            echo "::warning title=Source degraded::$SCRAPER produced no/low data (likely bot-block or site change). Remaining sources keep the pipeline alive."
+          elif [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
 
-      # Per-scraper post-condition: the output JSON must exist and contain
-      # at least MIN_OBS observations. Catches the silent-empty failure mode
-      # that hid behind continue-on-error for 30 days.
+      # Per-scraper post-condition: report observation count. 0 observations
+      # is a WARNING (degraded source — alerting happens in aggregate),
+      # a missing/corrupt file after a green scraper step is an error.
       # Heredoc is safe: no `${{ }}` interpolation inside the Python body.
-      - name: Validate scraper output non-empty
+      - name: Report scraper output stats
         if: always()
         env:
           OUTPUT_FILE: ${{ matrix.source.output }}
-          MIN_OBS: '1'
         run: |
           set -e
           if [ ! -s "$OUTPUT_FILE" ]; then
-            echo "::error title=Empty output::$OUTPUT_FILE missing or empty"
+            echo "::error title=Missing output::$OUTPUT_FILE missing or empty despite scraper exiting cleanly"
             exit 1
           fi
           OBS=$(python3 <<'PY'
@@ -199,10 +216,10 @@ jobs:
           print(count)
           PY
           )
-          echo "::notice::$OUTPUT_FILE: $OBS observations"
-          if [ "$OBS" -lt "$MIN_OBS" ]; then
-            echo "::error title=Insufficient data::$OUTPUT_FILE has only $OBS observations (min $MIN_OBS)"
-            exit 1
+          if [ "$OBS" -lt 1 ]; then
+            echo "::warning title=No observations::$OUTPUT_FILE has 0 observations"
+          else
+            echo "::notice::$OUTPUT_FILE: $OBS observations"
           fi
 
       - name: Upload scraper output
@@ -330,7 +347,66 @@ jobs:
           print(f'  Published price points: {meta.get("published_price_points", "?")}')
           PY
 
-      - name: Commit updated data to branch + open PR (branch-protection compatible)
+      # Per-source health census for the alerting step below. Runs before the
+      # commit step so alerting works even if the commit step fails.
+      - name: Compute per-source health
+        id: health
+        if: always()
+        run: |
+          python3 <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import os
+
+          SOURCES = {
+              "hasznaltauto.hu": "shared/data/hasznaltauto-prices.json",
+              "ooyyo.com": "shared/data/ooyyo-prices.json",
+              "autobazar.eu": "shared/data/autobazar-prices.json",
+              "bazos.sk": "shared/data/bazos-prices.json",
+          }
+
+          def count_obs(path):
+              try:
+                  with open(path, encoding="utf-8") as f:
+                      d = json.load(f)
+              except (OSError, json.JSONDecodeError):
+                  return 0
+              # Only count fresh files (downloaded artifacts overwrite the
+              # checked-in ones; a checked-in stale file still counts obs,
+              # which is fine — staleness shows up as "no data changes").
+              n = 0
+              for models in d.get("brands", {}).values():
+                  if not isinstance(models, dict):
+                      continue
+                  for years in models.values():
+                      if not isinstance(years, dict):
+                          continue
+                      for val in years.values():
+                          if isinstance(val, dict) and (val.get("avg") or val.get("prices")):
+                              n += 1
+                          elif isinstance(val, list) and val:
+                              n += 1
+              return n
+
+          counts = {name: count_obs(path) for name, path in SOURCES.items()}
+          degraded = sorted(name for name, n in counts.items() if n == 0)
+          summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+          import sys
+          print(f"Source health: {summary}", file=sys.stderr)
+          print(f"summary={summary}")
+          print(f"degraded={','.join(degraded)}")
+          print(f"degraded_count={len(degraded)}")
+          PY
+
+      # Commit strategy (2026-07-17 rewrite): push the daily data DIRECTLY to
+      # main. The previous branch->PR->auto-merge flow never landed a single
+      # PR in ~3 months: `gh pr create` with GITHUB_TOKEN requires the repo
+      # setting "Allow GitHub Actions to create and approve pull requests",
+      # which is disabled here — every run pushed an orphan data/price-update-*
+      # branch (85 piled up) and then died with exit 1. Direct push needs only
+      # `contents: write`, which this job already has. The branch+PR path is
+      # kept as a guarded FALLBACK for the case main gets branch protection
+      # later; no gh failure can fail the job any more.
+      - name: Commit updated data to main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -339,64 +415,145 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add shared/data/
           if git diff --staged --quiet; then
-            echo "No data changes to commit — skipping PR."
+            echo "No data changes to commit."
             exit 0
           fi
+          git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
+
+          # Direct push with rebase-retry (main may have moved during the run)
+          PUSHED=0
+          for i in 1 2 3; do
+            if git push origin HEAD:main; then
+              PUSHED=1
+              break
+            fi
+            echo "Push attempt $i failed — rebasing onto latest main and retrying..."
+            git pull --rebase origin main || true
+            sleep 5
+          done
+
+          if [ "$PUSHED" -eq 1 ]; then
+            echo "::notice title=Data updated::Daily price data pushed to main."
+            exit 0
+          fi
+
+          # Fallback: branch + PR (works only if the repo later enables
+          # 'Allow GitHub Actions to create and approve pull requests').
+          echo "::warning title=Direct push failed::Falling back to branch + PR flow."
           DATE=$(date -u +%Y-%m-%d)
           BRANCH="data/price-update-$DATE"
-          git checkout -b "$BRANCH"
-          git commit -m "chore: Daily price update (multi-source aggregation) [skip ci]"
-          git push --force origin "$BRANCH"
-          # Open PR (or reuse existing) + enable auto-merge
+          git checkout -B "$BRANCH"
+          git push --force origin "$BRANCH" || {
+            echo "::error title=Cannot push::Neither main nor $BRANCH accepts pushes — check token permissions."
+            exit 1
+          }
           if gh pr view "$BRANCH" --json number -q .number 2>/dev/null; then
-            echo "PR already exists for $BRANCH — pushing update"
+            echo "PR already exists for $BRANCH."
           else
             gh pr create --base main --head "$BRANCH" \
               --title "chore: Daily price update $DATE" \
-              --body "Automated daily price aggregation commit.\nSources that contributed live data this run are listed in the aggregate job log.\n\nThis PR is opened automatically by the Update Market Prices workflow. Merging will update the production baseline." \
-              --label "automated"
-            # Enable auto-merge squash so it lands without manual review (if branch protection allows)
-            gh pr merge "$BRANCH" --auto --squash --delete-branch || \
-              echo "::warning::auto-merge not enabled (likely missing admin right on GITHUB_TOKEN) — PR left open for manual review"
+              --body "Automated daily price aggregation commit. Direct push to main was rejected, so this PR was opened instead. Enable 'Allow GitHub Actions to create and approve pull requests' in Settings -> Actions -> General for this flow to work unattended." \
+              --label "automated" || \
+              echo "::warning title=PR creation failed::Branch $BRANCH pushed but PR could not be opened (repo setting 'Allow GitHub Actions to create and approve pull requests' is likely disabled). Data is on the branch awaiting manual merge."
+            gh pr merge "$BRANCH" --auto --squash --delete-branch || true
           fi
 
-      # Failure alerting: if any preceding step in this job (or any upstream
-      # job via `needs`) failed, open a single tracking issue. De-duplicates
-      # against existing open `pipeline-failure` issues so we don't spam.
+      # Alerting (2026-07-17 rewrite), three outcomes:
+      #   1. HARD FAILURE (aggregate failed or a scraper crashed)
+      #      -> open/keep a "pipeline failing" issue.
+      #   2. DEGRADED (run green, but >=1 source produced 0 observations)
+      #      -> open/keep a "sources degraded" issue listing dead sources.
+      #   3. HEALTHY -> auto-close any open pipeline-failure issues.
+      # De-duplicates by title so the daily cron never spams.
       # All untrusted values (run URL, date) are built from context + Date —
       # no user-controlled input is interpolated.
-      - name: Open issue on failure
-        # Fire if aggregate itself fails OR any scrape matrix cell failed.
-        # Graceful-regression makes aggregate succeed even when scrapers break,
-        # but we still want alerting when the data source is degraded.
-        if: failure() || needs.scrape.result == 'failure'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+      - name: Pipeline alerting (open/close tracking issue)
+        if: ${{ !cancelled() }}
+        env:
+          DEGRADED_SOURCES: ${{ steps.health.outputs.degraded }}
+          HEALTH_SUMMARY: ${{ steps.health.outputs.summary }}
+          HARD_FAILURE: ${{ (needs.scrape.result == 'failure' || job.status == 'failure') && 'true' || 'false' }}
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd  # v8.0.0
         with:
           script: |
+            const hardFailure = process.env.HARD_FAILURE === 'true';
+            const degraded = (process.env.DEGRADED_SOURCES || '').split(',').filter(Boolean);
+            const summary = process.env.HEALTH_SUMMARY || 'unknown';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const today = new Date().toISOString().split('T')[0];
+
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               labels: 'pipeline-failure',
             });
-            if (issues.some(i => i.title.includes('Market price pipeline failing'))) {
-              console.log('Existing pipeline-failure issue open — not duplicating');
+
+            const openAlert = async (kind, title, bodyLines) => {
+              if (issues.some(i => i.title.includes(kind))) {
+                console.log(`Existing "${kind}" issue open — not duplicating`);
+                return;
+              }
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: bodyLines.join('\n'),
+                labels: ['pipeline-failure', 'automated'],
+              });
+            };
+
+            if (hardFailure) {
+              await openAlert(
+                'Market price pipeline failing',
+                `[Auto] Market price pipeline failing — ${today}`,
+                [
+                  'The scheduled "Update Market Prices" workflow failed.',
+                  '',
+                  `- Run: ${runUrl}`,
+                  `- Source health: ${summary}`,
+                  '- Please investigate the failing job logs.',
+                  '',
+                  'This issue was auto-created by the workflow. It will not duplicate — it closes automatically once a run is fully healthy.',
+                ],
+              );
               return;
             }
-            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const today = new Date().toISOString().split('T')[0];
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `[Auto] Market price pipeline failing — ${today}`,
-              body: [
-                'The scheduled "Update Market Prices" workflow failed.',
-                '',
-                `- Run: ${runUrl}`,
-                '- Triggered by: scheduled cron 04:00 UTC',
-                '- Please investigate scraper silent-empty or aggregate regression.',
-                '',
-                'This issue was auto-created by the workflow. It will not duplicate — close when resolved.',
-              ].join('\n'),
-              labels: ['pipeline-failure', 'automated'],
-            });
+
+            if (degraded.length > 0) {
+              await openAlert(
+                'Market price sources degraded',
+                `[Auto] Market price sources degraded — ${degraded.join(', ')}`,
+                [
+                  'The daily price pipeline is running, but these sources produced 0 observations:',
+                  '',
+                  ...degraded.map(s => `- **${s}** (likely bot-blocking or a site redesign)`),
+                  '',
+                  `- Run: ${runUrl}`,
+                  `- Source health: ${summary}`,
+                  '',
+                  'The pipeline keeps publishing from the remaining sources.',
+                  'This issue was auto-created by the workflow. It will not duplicate — it closes automatically once all sources deliver data again.',
+                ],
+              );
+              return;
+            }
+
+            // Fully healthy — close any open auto-alerts.
+            for (const issue of issues) {
+              if (issue.title.startsWith('[Auto] Market price')) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: `Resolved: all sources delivered data on ${today} (${summary}). Run: ${runUrl}`,
+                });
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed',
+                });
+                console.log(`Closed resolved issue #${issue.number}`);
+              }
+            }

@@ -1,0 +1,68 @@
+name: Sync labels
+
+# Idempotently reconcile the repo's issue/PR labels from .github/labels.yml.
+#
+# Why (DEVOPS): Dependabot assigns labels (dependencies, github-actions,
+# javascript, python, docker — see .github/dependabot.yml) to the PRs it
+# opens, but it does NOT create labels that are missing; it only warns
+# "The following labels could not be found: ..." and drops them from the PR.
+# This workflow guarantees every referenced label exists with an intentional
+# color + description. `gh label create --force` is create-or-update, so
+# re-runs are safe and leave unrelated labels untouched.
+
+on:
+  push:
+    branches: [main]
+    # Only run when the label config (or this workflow) actually changes.
+    paths:
+      - .github/labels.yml
+      - .github/workflows/sync-labels.yml
+  workflow_dispatch:
+
+concurrency:
+  group: sync-labels
+  cancel-in-progress: false
+
+# Least privilege: labels live behind the issues API, so issues: write is the
+# only mutation scope needed; contents: read lets checkout read labels.yml.
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sync:
+    name: Reconcile labels from .github/labels.yml
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned by full commit SHA per repo convention (DEVOPS-M6); same SHA
+      # used across ci.yml / security-scan.yml / price-update.yml.
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Create/update labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Parse labels.yml -> JSON with python3 (guaranteed on ubuntu-latest).
+          # Deliberately NOT using `yq`: the two common yq builds (mikefarah Go
+          # vs kislyuk Python) take incompatible flags, so `yq -o=json` is not
+          # portable. PyYAML ships in the runner's system python3; install it on
+          # the rare chance it is absent (runners have network).
+          python3 -c 'import yaml' 2>/dev/null || python3 -m pip install --quiet pyyaml
+          python3 -c 'import json,sys,yaml; json.dump(yaml.safe_load(open(".github/labels.yml"))["labels"], sys.stdout)' > labels.json
+
+          # jq is guaranteed on ubuntu-latest (single, stable CLI). Iterate label
+          # objects; gh label create --force is create-or-update (idempotent).
+          while read -r label; do
+            name=$(jq -r '.name'        <<<"$label")
+            color=$(jq -r '.color'      <<<"$label")
+            desc=$(jq -r '.description' <<<"$label")
+            echo "Syncing label: ${name} (#${color})"
+            gh label create "${name}" \
+              --color "${color}" \
+              --description "${desc}" \
+              --force
+          done < <(jq -c '.[]' labels.json)
+
+          echo "Label sync complete."

@@ -187,6 +187,12 @@ def fetch_url(url: str, retries: int = 2) -> Optional[str]:
             if exc.code == 404:
                 log.debug("404 Not Found: %s", url)
                 return None
+            if exc.code == 403:
+                # Hard block (bot defense / geo). Don't burn retries — degrade
+                # gracefully to None so the scrape returns an empty result and
+                # run-scraper's silent-empty guard flags the source (exit 78).
+                log.warning("403 Forbidden on %s — source may be blocking; degrading gracefully", url)
+                return None
             if exc.code == 429:
                 wait = REQUEST_DELAY * attempt * 3
                 log.warning("Rate-limited (429) on %s — waiting %.1fs", url, wait)
@@ -540,7 +546,9 @@ def aggregate_by_year(
             seen_urls.add(url)
 
         price_eur = item.get("price_eur")
-        if not price_eur or price_eur <= 0:
+        # Guard the type before comparing — DOM/JSON drift yielding a
+        # non-numeric price must not raise TypeError and crash the run.
+        if not isinstance(price_eur, (int, float)) or price_eur <= 0:
             continue
         if price_eur < EUR_PRICE_MIN or price_eur > EUR_PRICE_MAX:
             rejected_bounds += 1
@@ -552,7 +560,7 @@ def aggregate_by_year(
             continue
 
         year = item.get("year")
-        if year and 1990 <= year <= 2030:
+        if isinstance(year, int) and 1990 <= year <= 2030:
             by_year[year].append(price_huf)
         else:
             no_year.append(price_huf)

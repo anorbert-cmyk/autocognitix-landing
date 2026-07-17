@@ -137,7 +137,7 @@ def test_aggregate_empty_inputs(tmp_path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_aggregate_schema_avg_only() -> None:
+def test_aggregate_schema_avg_only(tmp_path: Path) -> None:
     """
     A pre-aggregated scraper block {avg: X, min: Y, max: Z} with no prices[]
     MUST produce exactly one observation via the avg path. If the aggregator
@@ -145,6 +145,10 @@ def test_aggregate_schema_avg_only() -> None:
     toward the reported corners (triple-counting bug — DATA-M3 guard).
     """
     agg = _load_aggregate_module()
+    # Redirect paths so append_raw_observation() writes into tmp_path instead
+    # of polluting the REAL shared/data/observations-raw.jsonl audit log
+    # (this test previously leaked 'test-source' lines into the repo).
+    _redirect_paths(agg, tmp_path)
     source_data = json.loads((FIXTURES_DIR / "scraper_one_avg.json").read_text())
 
     # Call the pure function directly. eur_huf is irrelevant (currency=HUF).
@@ -246,8 +250,9 @@ def test_run_scraper_empty_result(tmp_path: Path, monkeypatch) -> None:
         with pytest.raises(SystemExit) as excinfo:
             run_scraper.main()
 
-    assert excinfo.value.code == 1, (
-        "Empty scraper output must exit 1 (silent-empty guard). "
+    assert excinfo.value.code == run_scraper.EXIT_SOURCE_DEGRADED, (
+        "Empty scraper output must exit EXIT_SOURCE_DEGRADED (78) so CI "
+        "warns without failing the whole pipeline (silent-empty guard). "
         f"Got exit code {excinfo.value.code}."
     )
 
@@ -314,7 +319,9 @@ def test_hasznaltauto_403_reraise(monkeypatch) -> None:
 
     # Stub sleeps to keep test fast (<100ms).
     monkeypatch.setattr(hp.time, "sleep", lambda *_args, **_kw: None)
-    # Stub both transports so curl vs urllib selection doesn't matter.
+    # Disable the optional curl_cffi transport (would do REAL network I/O)
+    # and stub both legacy transports so transport selection doesn't matter.
+    monkeypatch.setattr(hp, "_CFFI_AVAILABLE", False)
     monkeypatch.setattr(hp, "_fetch_via_curl", always_403_curl)
     monkeypatch.setattr(hp, "_fetch_via_urllib", always_403_urllib)
 
