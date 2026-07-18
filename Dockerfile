@@ -35,6 +35,11 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY robots.txt /usr/share/nginx/html/robots.txt
 
+# Site icons referenced in every page head - were never copied into the image,
+# so /favicon.ico and /apple-touch-icon.png returned 404 on every page load.
+COPY favicon.ico /usr/share/nginx/html/favicon.ico
+COPY apple-touch-icon.png /usr/share/nginx/html/apple-touch-icon.png
+
 # Copy site files
 COPY hu/ /usr/share/nginx/html/hu/
 COPY en/ /usr/share/nginx/html/en/
