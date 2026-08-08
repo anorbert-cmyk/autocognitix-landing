@@ -7,7 +7,7 @@
 pytest>=9.0.3,<10
 pytest-asyncio>=0.23,<1.4
 pytest-mock>=3.12
-pytest-cov>=5.0
+pytest-cov>=7.1.0
 # httpx is already a prod dep; respx pins the same line for wire-mocking.
 respx>=0.21,<0.24
 # TestClient import path: starlette.testclient.TestClient (already vendors httpx).
