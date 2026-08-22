@@ -65624,3 +65624,536 @@
 {"ts": "2026-07-17T16:19:34Z", "src": "bazos.sk", "brand": "Seat", "model": "Tarraco", "year": "2022", "price": 8589520.0, "currency": "HUF"}
 {"ts": "2026-07-17T16:19:34Z", "src": "bazos.sk", "brand": "Seat", "model": "Tarraco", "year": "2022", "price": 9245427.0, "currency": "HUF"}
 {"ts": "2026-07-17T16:19:34Z", "src": "bazos.sk", "brand": "Seat", "model": "Tarraco", "year": "2022", "price": 9579726.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2018", "price": 8566341.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2019", "price": 6128853.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2020", "price": 9333817.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 8300782.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2022", "price": 10093663.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 11540632.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2024", "price": 12290560.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2025", "price": 13683149.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC40", "year": "2026", "price": 17995613.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2010", "price": 2993246.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2015", "price": 5836829.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2016", "price": 7165538.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2017", "price": 6092350.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2018", "price": 8175455.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2019", "price": 6566889.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2020", "price": 11073550.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 10154860.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2022", "price": 14525760.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2023", "price": 14003463.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC60", "year": "2025", "price": 16057669.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2011", "price": 2551559.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2012", "price": 2747215.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2016", "price": 5412056.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2017", "price": 4248949.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2019", "price": 8724217.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2020", "price": 8434383.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2021", "price": 9711531.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2022", "price": 11020073.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2023", "price": 9487129.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2024", "price": 13830986.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "V60", "year": "2025", "price": 14575647.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2001", "price": 2518707.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2011", "price": 3829164.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2015", "price": 5037414.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2019", "price": 8828250.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2020", "price": 10173386.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2023", "price": 12316112.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2024", "price": 11300119.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "S60", "year": "2025", "price": 15657961.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2008", "price": 3281619.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 8027009.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2017", "price": 11275776.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2018", "price": 9306257.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2019", "price": 15688989.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 14214268.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2021", "price": 17627298.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2022", "price": 15327609.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2023", "price": 18245842.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2024", "price": 24757551.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2025", "price": 25277000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Volvo", "model": "XC90", "year": "2026", "price": 27997435.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2011", "price": 4376709.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 2927540.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2014", "price": 2810731.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2015", "price": 3009489.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2016", "price": 4741739.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2017", "price": 4542798.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2018", "price": 5836829.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2019", "price": 6215092.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2020", "price": 6749404.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2021", "price": 7296949.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2023", "price": 7496256.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2024", "price": 6726712.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "ASX", "year": "2026", "price": 9837558.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2007", "price": 2369044.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2011", "price": 2843583.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2012", "price": 2153677.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2013", "price": 839568.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2014", "price": 3040456.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2015", "price": 3952058.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2016", "price": 4924254.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2017", "price": 5836829.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2018", "price": 7223943.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2019", "price": 6339658.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2020", "price": 6512135.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2021", "price": 8486764.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2022", "price": 12776049.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2025", "price": 15659786.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Outlander", "year": "2026", "price": 8121917.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 6810243.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 6169615.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2020", "price": 5364115.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2021", "price": 6693737.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2022", "price": 7725586.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2023", "price": 9125750.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2024", "price": 10158541.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2016", "price": 3066252.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2018", "price": 3057126.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2019", "price": 2770577.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2020", "price": 3902170.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2021", "price": 4745876.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2022", "price": 4538965.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2023", "price": 4347324.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "Space Star", "year": "2025", "price": 5701586.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "1996", "price": 1423617.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2004", "price": 3650299.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2007", "price": 4562875.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2011", "price": 4177585.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2012", "price": 4927905.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2014", "price": 3978826.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2015", "price": 4562875.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2016", "price": 3646649.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2017", "price": 8379172.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2018", "price": 8448010.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2019", "price": 9722209.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2020", "price": 9987220.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2021", "price": 11230147.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Mitsubishi", "model": "L200", "year": "2022", "price": 8943417.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 3042525.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2012", "price": 2982203.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2013", "price": 3621097.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2014", "price": 4148565.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2015", "price": 3155015.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2016", "price": 4442415.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2018", "price": 5271033.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2020", "price": 4376709.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2021", "price": 4726955.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2016", "price": 6638070.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2017", "price": 5982841.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2018", "price": 8577839.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2020", "price": 6895416.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2021", "price": 8939584.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2022", "price": 11122464.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2023", "price": 17364633.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2024", "price": 15294391.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2025", "price": 26625288.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Giulia", "year": "2026", "price": 36977173.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2017", "price": 7734255.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2018", "price": 9257890.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2019", "price": 11746143.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2020", "price": 7937394.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2021", "price": 9122099.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2022", "price": 12545898.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2024", "price": 22355532.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2025", "price": 20424523.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2009", "price": 1510722.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2010", "price": 1993063.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2011", "price": 1910201.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2012", "price": 1252052.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2013", "price": 2214728.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2015", "price": 2699396.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2016", "price": 2640992.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2017", "price": 3708704.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "MiTo", "year": "2018", "price": 3372877.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Tonale", "year": "2022", "price": 8640260.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Tonale", "year": "2023", "price": 7920533.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Tonale", "year": "2024", "price": 10443995.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Tonale", "year": "2025", "price": 12369406.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "ooyyo.com", "brand": "Alfa Romeo", "model": "Tonale", "year": "2026", "price": 16772763.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2010", "price": 3650000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2012", "price": 2480000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2014", "price": 3500000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2016", "price": 7310000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2018", "price": 6930000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2019", "price": 7300000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2020", "price": 8240000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 8240000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2022", "price": 7960000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 10000000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC40", "year": "2025", "price": 14890000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 1900000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2010", "price": 2390000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2011", "price": 2180000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2012", "price": 3630000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2014", "price": 5310000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2015", "price": 2140000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2016", "price": 5620000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2017", "price": 5660000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2018", "price": 7260000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2020", "price": 11000000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 11100000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2022", "price": 12080000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2023", "price": 15140000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2024", "price": 17060000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2025", "price": 19020000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC60", "year": "2026", "price": 25390000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2010", "price": 3350000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2011", "price": 2790000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2012", "price": 2750000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2013", "price": 2790000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2014", "price": 2780000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2015", "price": 3430000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2016", "price": 3180000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2017", "price": 1970000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2018", "price": 4850000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2019", "price": 6220000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2020", "price": 8300000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2021", "price": 10070000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2022", "price": 10920000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2023", "price": 12390000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2024", "price": 12850000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "V60", "year": "2025", "price": 15010000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2002", "price": 900000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2003", "price": 1090000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2004", "price": 1450000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2009", "price": 1280000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2010", "price": 2740000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2011", "price": 2810000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2012", "price": 2790000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2014", "price": 2880000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2016", "price": 3870000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2019", "price": 17870000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2020", "price": 10550000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2021", "price": 8940000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2022", "price": 10420000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2023", "price": 15050000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2024", "price": 14800000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "S60", "year": "2025", "price": 25260000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2004", "price": 2450000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2005", "price": 730000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2006", "price": 1470000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2007", "price": 1130000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2008", "price": 2190000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2009", "price": 2140000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2010", "price": 3070000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2011", "price": 4360000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2012", "price": 4180000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2013", "price": 4050000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2014", "price": 6680000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2015", "price": 6140000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 6100000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2017", "price": 7180000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2018", "price": 7470000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2019", "price": 10130000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 3250000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2021", "price": 13590000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2024", "price": 21880000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2025", "price": 27930000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Volvo", "model": "XC90", "year": "2026", "price": 29170000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2010", "price": 1350000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2011", "price": 1830000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 2510000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2013", "price": 2340000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2014", "price": 2860000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2015", "price": 2950000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2016", "price": 3230000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2017", "price": 3860000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2018", "price": 4060000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2019", "price": 4810000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "ASX", "year": "2020", "price": 4710000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2006", "price": 730000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2007", "price": 1390000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2008", "price": 1850000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2009", "price": 1580000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2010", "price": 1670000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2011", "price": 2430000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2012", "price": 2120000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2013", "price": 3050000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2014", "price": 2360000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2015", "price": 3190000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2016", "price": 4060000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2017", "price": 4690000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2018", "price": 4820000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2019", "price": 5730000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2020", "price": 5600000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Outlander", "year": "2025", "price": 17990000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 6040000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 6150000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2020", "price": 6150000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2022", "price": 7630000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2023", "price": 7300000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2014", "price": 1420000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2018", "price": 2230000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2019", "price": 1710000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2020", "price": 3000000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2021", "price": 3410000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2022", "price": 3950000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Mitsubishi", "model": "Space Star", "year": "2024", "price": 3800000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 2290000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2012", "price": 2190000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2013", "price": 2190000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2014", "price": 3250000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2015", "price": 2930000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2016", "price": 3960000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2019", "price": 4560000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2016", "price": 6210000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2017", "price": 9330000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2018", "price": 5760000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2021", "price": 10950000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2022", "price": 10220000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2023", "price": 14330000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2024", "price": 13300000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2025", "price": 16490000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Giulia", "year": "2026", "price": 24580000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2017", "price": 6520000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2018", "price": 5470000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2019", "price": 7430000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2020", "price": 8390000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2021", "price": 10050000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2022", "price": 9460000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2023", "price": 12770000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2024", "price": 17860000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2025", "price": 22810000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2026", "price": 22140000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2009", "price": 1270000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2010", "price": 1120000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2011", "price": 1730000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2012", "price": 1800000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2015", "price": 1770000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "MiTo", "year": "2016", "price": 2740000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Tonale", "year": "2022", "price": 8760000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Tonale", "year": "2023", "price": 9070000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Tonale", "year": "2024", "price": 11930000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Tonale", "year": "2025", "price": 12950000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "autobazar.eu", "brand": "Alfa Romeo", "model": "Tonale", "year": "2026", "price": 16430000.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2018", "price": 8395325.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2018", "price": 9487130.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2019", "price": 6388025.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2019", "price": 7483115.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2019", "price": 10764735.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2020", "price": 7118085.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 6826061.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 7483115.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 9122100.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 9125385.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 9490780.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2021", "price": 12045990.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2022", "price": 6935205.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 7045079.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 7296950.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 7848145.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 7884283.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8027010.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8121917.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8209525.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8432193.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8559954.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8760355.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 8979738.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 9122100.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 9308265.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 9819307.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 9852160.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 10220475.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 10402990.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 11242559.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2023", "price": 12356266.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2024", "price": 12374517.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2026", "price": 11790469.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC40", "year": "2026", "price": 12688443.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2001", "price": 456287.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 2372695.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 2847234.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 3029749.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 3139258.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 3284905.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 3284905.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 3394779.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2009", "price": 4672384.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2010", "price": 1624383.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2011", "price": 3248767.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2013", "price": 5292935.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2016", "price": 3832815.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2016", "price": 5617812.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2017", "price": 5329438.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2017", "price": 5657965.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2018", "price": 6022995.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2019", "price": 5840115.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2019", "price": 7884648.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2019", "price": 7994157.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2020", "price": 5268843.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 6570540.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 6895052.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 7296950.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 7775139.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 9122100.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 9122100.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 10582220.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 10585505.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 10947250.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 10947250.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2021", "price": 12812553.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2022", "price": 11680960.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2022", "price": 14600835.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC60", "year": "2023", "price": 13502460.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2011", "price": 2445701.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2013", "price": 2007665.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2013", "price": 3281620.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2015", "price": 4084686.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2015", "price": 4340207.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2015", "price": 8246028.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2015", "price": 8578205.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 2186530.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 2372695.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 2737725.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 2920240.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 3102755.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 3281620.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 3281620.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 4011680.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 4087971.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 4909654.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 4927905.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 6169007.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 6238363.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 7300600.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2017", "price": 7848145.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2018", "price": 4927905.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2020", "price": 5329438.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2020", "price": 6205145.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2020", "price": 8395325.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2021", "price": 7629127.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2021", "price": 8578205.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2021", "price": 9122100.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2021", "price": 9852160.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2023", "price": 8359187.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "V60", "year": "2023", "price": 11166268.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2002", "price": 438036.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2006", "price": 912575.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2008", "price": 1989413.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2008", "price": 2336192.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2008", "price": 2661069.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2008", "price": 2737725.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2009", "price": 2044168.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2011", "price": 2263186.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2013", "price": 2992881.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2014", "price": 3062602.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2015", "price": 7482750.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2016", "price": 4672384.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2018", "price": 4011680.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2020", "price": 8943235.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2021", "price": 10403355.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2022", "price": 4562510.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2022", "price": 7296950.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2022", "price": 7410109.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2022", "price": 7629127.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2022", "price": 7738636.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "S60", "year": "2028", "price": 1277605.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2006", "price": 1642635.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2007", "price": 2792480.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 5106770.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 5840115.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 7264097.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 7373606.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 8322684.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2016", "price": 8760355.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2017", "price": 5913486.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2018", "price": 10947250.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 9855810.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 12042340.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 13870775.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Volvo", "model": "XC90", "year": "2020", "price": 15145095.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2011", "price": 1204599.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:23Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2011", "price": 1788647.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2011", "price": 1825150.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 2007665.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 2007665.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 2554845.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2012", "price": 3310822.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2013", "price": 1934659.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2013", "price": 2770578.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2015", "price": 4051833.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2016", "price": 2080671.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2016", "price": 3573644.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2016", "price": 4379995.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "ASX", "year": "2017", "price": 4011680.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2005", "price": 365030.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2007", "price": 1752144.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2007", "price": 1898156.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2008", "price": 1149844.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2009", "price": 803066.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2011", "price": 1241102.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2013", "price": 2186530.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2014", "price": 2372330.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2014", "price": 2518707.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2014", "price": 2883737.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2015", "price": 1091440.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2017", "price": 4489869.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Outlander", "year": "2021", "price": 8392040.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 5803977.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 5909836.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 6716552.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2018", "price": 6931920.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 5584959.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 5946339.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 6077750.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2019", "price": 6931920.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Eclipse Cross", "year": "2022", "price": 7264097.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Space Star", "year": "2004", "price": 543895.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Space Star", "year": "2019", "price": 1708340.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "Space Star", "year": "2021", "price": 2916590.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2001", "price": 876072.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2002", "price": 2737725.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2005", "price": 2555210.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2007", "price": 2555210.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2011", "price": 3281620.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2015", "price": 4854899.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2018", "price": 5982842.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2018", "price": 7300600.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Mitsubishi", "model": "L200", "year": "2021", "price": 6201860.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2000", "price": 1423617.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 1314108.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 1642635.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 1788647.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2011", "price": 3832815.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2012", "price": 2080671.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2012", "price": 2113524.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2012", "price": 2135426.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2013", "price": 1715276.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2013", "price": 2186530.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2013", "price": 2369045.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2014", "price": 2554845.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2015", "price": 2409198.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2015", "price": 3646650.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2016", "price": 2737725.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2016", "price": 3281620.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2018", "price": 4745025.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulietta", "year": "2019", "price": 4997261.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2011", "price": 1314108.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2016", "price": 6205510.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2017", "price": 5289285.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2017", "price": 5471800.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2018", "price": 4562510.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2018", "price": 6749405.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2019", "price": 6935570.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2019", "price": 8359187.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2019", "price": 8757070.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2019", "price": 20441680.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2021", "price": 10947250.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Giulia", "year": "2022", "price": 9819307.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2017", "price": 5840480.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2018", "price": 5475450.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2019", "price": 8213175.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2019", "price": 12958565.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2020", "price": 10403355.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2021", "price": 7227594.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2021", "price": 7592624.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2021", "price": 7661980.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Stelvio", "year": "2023", "price": 13757981.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "MiTo", "year": "2010", "price": 1241102.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "MiTo", "year": "2015", "price": 2336192.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "MiTo", "year": "2016", "price": 2737725.0, "currency": "HUF"}
+{"ts": "2026-08-22T04:58:24Z", "src": "bazos.sk", "brand": "Alfa Romeo", "model": "Tonale", "year": "2024", "price": 8027010.0, "currency": "HUF"}
